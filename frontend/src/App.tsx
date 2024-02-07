@@ -1,5 +1,4 @@
 import HomePage from "./components/LandingPage";
-
 function App() {
   return <HomePage />;
 }

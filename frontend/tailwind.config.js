@@ -18,7 +18,9 @@ module.exports = {
       colors: {
         'custom-text-gray':'#7B7777',
         'custom-bg-gray' : '#F1EEEE',
-        'custom-text-black': '#525050',
+        'custom-text-black' : '#525050',
+        'custom-text-orange' : '#F89939',
+        'custom-bg-black' : '#9B9B9B',
       }
     },
   },
