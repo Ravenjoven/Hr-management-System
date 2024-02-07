@@ -1,3 +1,14 @@
+import {Link} from "react-router-dom";
+const data=[
+  {
+    label:"HR",
+    to:"/Login"
+  },
+  {
+    label:"Ojt",
+    to:"/ojt"
+  }
+]
 function HomePage() {
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
@@ -81,6 +92,17 @@ function HomePage() {
                 adipiscing elit, sed do eiusmod tempor incididunt.
               </p>
               <div className="flex space-x-4 mx-auto my-auto pt-4">
+              <ul >
+                  {
+                    data.map((item, key)=>(
+                      <button key={key} className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
+                          <Link  to={item.to}>
+                                {item.label}
+                            </Link>
+                      </button>
+                    ))
+                  }
+                </ul>
                 <button className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
                   HR
                 </button>

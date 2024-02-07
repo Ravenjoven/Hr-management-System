@@ -1,7 +1,13 @@
-import HomePage from "./components/LandingPage";
+import RoutePage from "./Router/route";
 
 function App() {
-  return <HomePage />;
+  return (
+    <>
+      <RoutePage />;
+
+
+    </>
+  )
 }
 
 export default App;
