@@ -1,14 +1,20 @@
-import {Link} from "react-router-dom";
-const data=[
+import { Link } from "react-router-dom";
+const data = [
   {
-    label:"HR",
-    to:"/Login"
+    id: 1,
+    label: "HR",
+    to: "/login",
   },
   {
-    label:"Ojt",
-    to:"/ojt"
-  }
-]
+    id: 2,
+    label: "Ojt",
+    to: "/ojt",
+  },
+];
+const firstRoute = data[0].to;
+const firstLabel = data[0].label;
+const SecondRoute = data[1].to;
+const SecondLabel = data[1].label;
 function HomePage() {
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
@@ -92,22 +98,15 @@ function HomePage() {
                 adipiscing elit, sed do eiusmod tempor incididunt.
               </p>
               <div className="flex space-x-4 mx-auto my-auto pt-4">
-              <ul >
-                  {
-                    data.map((item, key)=>(
-                      <button key={key} className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
-                          <Link  to={item.to}>
-                                {item.label}
-                            </Link>
-                      </button>
-                    ))
-                  }
-                </ul>
                 <button className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
-                  HR
+                  <Link to={firstRoute} className="block w-full h-full">
+                    {firstLabel}
+                  </Link>
                 </button>
                 <button className="border-2 border-orange-400 hover:text-orange-400 hover:bg-orange-400 hover:text-white rounded-3xl text-custom-text-gray w-52 h-10">
-                  btn2
+                  <Link to={SecondRoute} className="block w-full h-full">
+                    {SecondLabel}
+                  </Link>
                 </button>
               </div>
             </div>

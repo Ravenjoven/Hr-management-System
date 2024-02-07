@@ -3,7 +3,7 @@ import RoutePage from "./Router/route";
 function App() {
   return (
     <>
-      <RoutePage />;
+      <RoutePage />
 
 
     </>
