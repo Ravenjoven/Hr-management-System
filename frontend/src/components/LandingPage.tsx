@@ -82,7 +82,7 @@ function HomePage() {
               </p>
               <div className="flex space-x-4 mx-auto my-auto pt-4">
                 <button className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
-                  btn1
+                  HR
                 </button>
                 <button className="border-2 border-orange-400 hover:text-orange-400 hover:bg-orange-400 hover:text-white rounded-3xl text-custom-text-gray w-52 h-10">
                   btn2
