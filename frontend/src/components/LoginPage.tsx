@@ -68,7 +68,7 @@ const Login = () => {
           </div>
         </nav>
         <section className="max-w-screen-xl flex mx-auto ml-5">
-          <div className="items-center pl-5 pt-2 mx-auto mt-[20px]">
+          <div className="pl-5 pt-2 ml-[90px] mt-[20px]">
           <svg
                 className="w-560 h-auto sm:w-full"
                 xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,7 @@ const Login = () => {
               tomorrow.
             </h1>
           </div>
-          <div className=" flex justify-center items-center mx-auto mt-[40px] h-[60vh]">
+          <div className="ml-[13%] mt-[40px]">
             <form
               className="bg-[#f89939] p-4 rounded-tr-[50px] p-[30px] rounded-bl-[50px] h-[100%]"
               action=""
@@ -125,24 +125,23 @@ const Login = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-[20px]"
                 placeholder="Enter your password"
               />
-              <p className="mt-2 text-sm text-white flex justify-center">or</p>
-              <div className="flex justify-center items-center ">
-                <button type="button" className="bg-blue-600 rounded-sm text-white p-2.5 w-full m-[2px]"><img src="../images/Gmail.png" alt="" className="w-[20px] mr-[20px] inline "/><span className="text-xs">Log in with Google</span></button>
-                
-              </div>
               <p
                 id="helper-text-explanation"
                 className="mt-2 text-xs text-white "
               >
-                Don't have account?{" "}
+                Don't have account?
                 <a
                   href="#"
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                   Sign up here!
                 </a>
-                
               </p>
+              <p className="mt-2 text-sm text-white flex justify-center">or</p>
+              <div className="flex justify-center items-center ">
+                <button type="button" className="bg-blue-600 rounded-sm text-white p-2.5 w-full m-[2px]"><img src="../images/Gmail.png" alt="" className="w-[20px] mr-[20px] inline "/><span className="text-xs">Log in with Google</span></button>
+              </div>
+              
               <div className="flex justify-center items-center">
                 <button
                   type="submit"
