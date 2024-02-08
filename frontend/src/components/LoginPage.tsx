@@ -1,4 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
+const data = [
+  {
+    id: 1,
+    label: "Sign In",
+    to: "/Dashboard",
+  },
+
+];
+const firstRoute = data[0].to;
+const firstLabel = data[0].label;
 const Login = () => {
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
@@ -147,7 +158,9 @@ const Login = () => {
                   type="submit"
                   className="mt-4 mx-auto text-sm border border-white bg-transparent hover:bg-gray-600 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 "
                 >
-                  Sign In
+                 <Link to={firstRoute} className="block w-full h-full">
+                    {firstLabel}
+                  </Link>
                 </button>
               </div>
             </form>

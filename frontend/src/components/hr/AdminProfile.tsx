@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import Sidebar from "../Sidebard";
+import Sidebar from "../Sidebar";
 
 function ProfilePage() {
   return (
