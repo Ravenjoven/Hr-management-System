@@ -30,6 +30,31 @@ function ProfilePage() {
             </div>
           </div>
         </nav>
+        <div className="border border-black">
+          <button
+            data-drawer-target="logo-sidebar"
+            data-drawer-toggle="logo-sidebar"
+            aria-controls="logo-sidebar"
+            type="button"
+            // onClick={() => setExpanded((curr) => !curr)}
+            className="cursor-pointer z-50 inline-flex items-center text-sm text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+          >
+            <span className="sr-only">Open sidebar</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 21"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                fill-rule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+              ></path>
+            </svg>
+          </button>
+        </div>
         <div className="mt-8 relative w-full">
           <Sidebar />
           <div className="content h-full max-w-full md:ml-[280px] z-1">
@@ -37,7 +62,7 @@ function ProfilePage() {
               <span className="my-auto pl-4">PERSONAL INFO</span>
             </div>
             <div className="flex">
-              <div className="left-div w-[400px] h-screen mt-4 border-[3px] rounded-2xl border-custom-text-orange">
+              <div className="left-div w-[400px] min-h-screen mt-4 border-[3px] rounded-2xl border-custom-text-orange">
                 <div className="border-b-[3px] border-custom-text-orange flex flex-col text-center justify-center items-center">
                   <div className="flex justify-center items-center border-[3px] border-custom-text-orange rounded-l-full rounded-br-full mt-8 mb-2 rounded-tr-lg h-40 w-40">
                     <img
