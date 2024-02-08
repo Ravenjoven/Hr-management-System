@@ -1,3 +1,5 @@
+import Navar from "./Navar";
+
 import { Link } from "react-router-dom";
 const data = [
   {
@@ -19,72 +21,9 @@ function HomePage() {
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
+        <Navar />
         <header className="h-90 bg-custom-bg-gray">
-          <nav>
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-full">
-              <div className="flex items-center justify-start">
-                <img src="../images/img2.png" className="h-10"></img>
-                <img src="../images/img3.png" className="h-10 pt-2" />
-              </div>
-              <button
-                data-collapse-toggle="navbar-default"
-                type="button"
-                className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="navbar-default"
-                aria-expanded="false"
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg
-                  className="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 17 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 1h15M1 7h15M1 13h15"
-                  />
-                </svg>
-              </button>
-              <div
-                className="hidden w-full md:block md:w-auto"
-                id="navbar-default"
-              >
-                <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-20 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                  <li>
-                    <a
-                      href="#"
-                      className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-orange-400 md:p-0 dark:text-white md:dark:text-blue-500"
-                      aria-current="page"
-                    >
-                      Home
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block py-2 px-3 md:text-custom-text-gray rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-400 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                    >
-                      About us
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block py-2 px-3 md:text-custom-text-gray rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-400 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                    >
-                      Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-          <section className="max-w-screen-xl flex mx-auto mt-10">
+          <section className="max-w-screen-xl flex mx-auto">
             <div className="w-full pl-5 pt-2">
               <h1 className="font-bold text-custom-text-gray text-4xl">
                 We're passionate about <br />
@@ -148,29 +87,154 @@ function HomePage() {
             </h2>
           </section>
           <section className="max-w-screen-xl grid grid-cols-3 gap-x-10 mx-auto justify-center items-center">
-            <div className="bg-custom-bg-gray w-full h-[350px] rounded-tr-[50px] rounded-b-[50px] z-50">
+            <div className="bg-custom-bg-gray w-full h-full rounded-tr-[50px] rounded-bl-[50px] z-20">
               <img
                 src="./images/sub1.png"
                 className="h-20 w-20  mx-auto mt-4"
               />
+              <h3 className="text-center font-semibold text-3xl text-custom-text-gray py-4">
+                Software Development <br />
+                Partner
+              </h3>
+              <p className="text-center text-custom-text-gray px-2">
+                We provide a full-service, world-class digital product design
+                and development, from validating your hypothesis, building your
+                dedicated team, launching an MVP, and right through to
+                commercialisation, accelerating growth, and ongoing support.
+              </p>
             </div>
-            <div className="bg-custom-bg-gray w-full h-[350px] rounded-tr-[50px] rounded-b-[50px] z-50">
+            <div className="bg-custom-bg-gray w-full h-full rounded-tr-[50px] rounded-bl-[50px] z-20">
               <img src="./images/sub2.png" className="h-20 w-20 mx-auto mt-4" />
+              <h3 className="text-center font-semibold text-3xl text-custom-text-gray py-4">
+                Cyber Protect
+              </h3>
+              <p className="text-center text-custom-text-gray px-2 pt-8">
+                It is essential and often overlooked to protect your digital
+                product and your customers information in our current world. We
+                provide comprehensive cyber-security testing to identify and
+                address potential vulnerabilities in your digital product and
+                protect your digital business and long-term investment.
+              </p>
             </div>
-            <div className="bg-custom-bg-gray w-full h-[350px] rounded-tr-[50px] rounded-b-[50px] z-50">
+            <div className="bg-custom-bg-gray w-full h-full rounded-tr-[50px] rounded-bl-[50px] z-20">
               <img src="./images/sub3.png" className="h-20 w-20 mx-auto mt-4" />
+              <h3 className="text-center font-semibold text-3xl text-custom-text-gray py-4">
+                Co-Build & Co-Invest <br />
+                Partner
+              </h3>
+              <p className="text-center text-custom-text-gray px-2 pb-2">
+                The TeraVault founding team is comprised of experience
+                entrepreneurs who have founded, scaled and exited technology
+                companies in Australia, Canada, the US, the UK, Thailand and the
+                Philippines. It is critical to have supportive and genuine
+                partners around you, providing technical advice to culture and
+                business strategy to investments, capital raising, and expansion
+                to other countries. We love getting our hands dirty and working
+                alongside amazing founders.
+              </p>
             </div>
           </section>
-          <div className="bg-orange-400 w-full h-60 absolute bottom-0 z-0"></div>
+          <div className="bg-orange-400 w-full h-80 absolute bottom-0 z-0"></div>
         </body>
         <>
-          <section className="max-w-screen-xl mx-auto my-4 h-32 flex items-center justify-center text-center">
-            <h3 className="text-2xl font-semibold text-custom-text-black">
-              Available Job's
-            </h3>
-          </section>
-          <section></section>
+          <div className="my-24">
+            <section className="max-w-screen-xl mx-auto my-4 h-40 flex flex-col items-center justify-center text-center">
+              <h4 className="text-xl font-medium text-custom-text-orange">
+                Popular Job Categories
+              </h4>
+              <h3 className="text-3xl font-bold text-custom-text-black mt-4">
+                Let's help you{" "}
+                <span className="text-custom-text-orange underline">
+                  choose
+                </span>{" "}
+                the
+                <br />
+                category you want.
+              </h3>
+              <p className="mt-4">
+                Lorem ipsum dolor sit amet, consectetur <br />
+                adipiscing elit, sed do eiusmod tempor incididunt.
+              </p>
+            </section>
+            <section className="flex flex-col mt-24 h-full max-w-screen-xl mx-auto">
+              <div className="grid grid-cols-4 gap-4">
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    IT/Computer
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    Financial Associate
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    Advertising / Media
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    Fullstack Developer
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    UI UX Designer
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    IT Consultant
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    Computer Engineering
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                  <h5 className="font-bold text-custom-text-black">
+                    IT Analyst
+                  </h5>
+                  <span className="text-custom-text-black">
+                    1 job available
+                  </span>
+                </div>
+              </div>
+            </section>
+          </div>
         </>
+        <footer className="h-full mt-32 bg-custom-bg-black">
+          <div className="py-4 flex flex-col justify-center items-center">
+            <img src="./images/footer-logo.png" className="h-32 w-32" />
+            <span className="text-gray-50 pt-4">
+              Copyright @ 2024 TERAVAULT, INC. dba Teravault Software. All
+              rights reversed
+            </span>
+          </div>
+        </footer>
       </>
     </div>
   );
