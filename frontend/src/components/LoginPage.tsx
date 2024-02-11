@@ -12,10 +12,10 @@ const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const Login = () => {
   return (
-    <div className="min-h-screen max-w-screen bg-white font-montserrat">
+    <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat h-full">
       <>
         <nav>
-          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-full ml-[115px]">
+          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-full ml-8 mr-8">
             <div className="flex items-center justify-start">
               <img src="../images/img2.png" className="h-10"></img>
               <img src="../images/img3.png" className="h-10 pt-2" />
@@ -45,7 +45,7 @@ const Login = () => {
               </svg>
             </button>
             <div
-              className="hidden w-full md:block md:w-auto mr-[80px]"
+              className="hidden w-full md:block md:w-auto mr-4"
               id="navbar-default"
             >
               <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-20 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -78,9 +78,9 @@ const Login = () => {
             </div>
           </div>
         </nav>
-        <section className="max-w-screen-xl flex mx-auto ml-5">
-          <div className="pl-5 pt-2 ml-[90px] mt-[20px]">
-          <svg
+        <section className="max-w-screen-xl flex ml-8 mr-8">
+          <div className="w-full pl-5 pt-2">
+              <svg
                 className="w-560 h-auto sm:w-full"
                 xmlns="http://www.w3.org/2000/svg"
                 version="1.1"
@@ -88,7 +88,7 @@ const Login = () => {
                 height="250"
                 preserveAspectRatio="none"
                 viewBox="0 0 1440 560"
-              >
+                >
                 <g mask='url("#SvgjsMask1004")' fill="none">
                   <path
                     d="M85.09 55.87L150.05 93.37L150.05 168.37L85.09 205.87L20.14 168.37L20.14 93.37zM85.09 505.87L150.05 543.37L150.05 618.37L85.09 655.87L20.14 618.37L20.14 543.37zM215 280.87L279.95 318.37L279.95 393.37L215 430.87L150.05 393.37L150.05 318.37zM344.91 55.87L409.86 93.37L409.86 168.37L344.91 205.87L279.95 168.37L279.95 93.37zM734.63 55.87L799.59 93.37L799.59 168.37L734.63 205.87L669.68 168.37L669.68 93.37zM734.63 505.87L799.59 543.37L799.59 618.37L734.63 655.87L669.68 618.37L669.68 543.37zM929.49 -56.63L994.45 -19.13L994.45 55.87L929.49 93.37L864.54 55.87L864.54 -19.13zM1254.26 55.87L1319.21 93.37L1319.21 168.37L1254.26 205.87L1189.31 168.37L1189.31 93.37zM1189.31 393.37L1254.26 430.87L1254.26 505.87L1189.31 543.37L1124.35 505.87L1124.35 430.87z"
@@ -114,9 +114,9 @@ const Login = () => {
               tomorrow.
             </h1>
           </div>
-          <div className="ml-[13%] mt-[40px]">
+          <div className="w-full flex justify-end mt-[40px]">
             <form
-              className="bg-[#f89939] p-4 rounded-tr-[50px] p-[30px] rounded-bl-[50px] h-[100%]"
+              className="bg-[#f89939] mr-8 p-4 rounded-tr-[50px] p-[30px] rounded-bl-[50px] h-full"
               action=""
             >
               
@@ -166,13 +166,15 @@ const Login = () => {
             </form>
           </div>
         </section>
-        <footer className="mt-[40px] bg-gray-600 text-center text-white p-4 text-xs">
-          <div className="flex justify-center items-center">
-            <img src="../images/img2.png" className="w-[60px] h-10 "></img> 
+        <footer className="w-full bg-gray-600 static bottom-0 text-center text-white p-4 text-xs">
+          <div className="grid content-end">
+            <div className="flex justify-center ">
+              <img src="../images/img2.png" className="w-[60px] h-10 "></img> 
+            </div>
+            <br />
+              Copyright &copy; 2024 TERAVAULT, INC. dba TeraVault Software. All
+              rights reserved
           </div>
-          <br />
-            Copyright &copy; 2024 TERAVAULT, INC. dba TeraVault Software. All
-            rights reserved
         </footer>
       </>
     </div>
