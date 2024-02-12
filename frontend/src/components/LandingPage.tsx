@@ -1,5 +1,22 @@
 import Navar from "./Navar";
 
+import { Link } from "react-router-dom";
+const data = [
+  {
+    id: 1,
+    label: "HR",
+    to: "/login",
+  },
+  {
+    id: 2,
+    label: "Ojt",
+    to: "/ojt",
+  },
+];
+const firstRoute = data[0].to;
+const firstLabel = data[0].label;
+const SecondRoute = data[1].to;
+const SecondLabel = data[1].label;
 function HomePage() {
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
@@ -21,10 +38,14 @@ function HomePage() {
               </p>
               <div className="flex space-x-4 mx-auto my-auto pt-4">
                 <button className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
-                  btn1
+                  <Link to={firstRoute} className="block w-full h-full">
+                    {firstLabel}
+                  </Link>
                 </button>
                 <button className="border-2 border-orange-400 hover:text-orange-400 hover:bg-orange-400 rounded-3xl text-custom-text-gray w-52 h-10">
-                  btn2
+                  <Link to={SecondRoute} className="block w-full h-full">
+                    {SecondLabel}
+                  </Link>
                 </button>
               </div>
             </div>
