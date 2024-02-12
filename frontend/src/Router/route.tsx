@@ -6,6 +6,7 @@ import LoginPage from "../components/LoginPage";
 import Dashboard from "../components/hr/Dashboard";
 import Profile from "../components/hr/AdminProfile";
 import AdminJobCategory from "../components/hr/AdminJobCategory";
+import AdminUserList from "../components/hr/AdminUserList";
 function router() {
   return (
     <>
@@ -14,6 +15,7 @@ function router() {
             <Route index path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/Dashboard" element={<Dashboard/>} />
+            <Route path="/Employee" element={<AdminUserList/>} />
             <Route path="/Jobs" element={<AdminJobCategory/>} />
             <Route path="/Profile" element={<Profile/>} />
             
