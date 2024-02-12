@@ -12,16 +12,15 @@ function router() {
   return (
     <>
       <Router>
-          <Routes>
-            <Route index path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/Dashboard" element={<Dashboard/>} />
-            <Route path="/EmployeeList" element={<AdminUserList/>} />
-            <Route path="/Jobs" />
-            <Route path="/Category" element={<AdminJobCategory/>} />            
-            <Route path="/Profile" element={<Profile/>} />
-            <Route path="/Attendance" element={<AdminAttendance/>} />
-          </Routes>
+        <Routes>
+          <Route index path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Employee" element={<AdminUserList />} />
+          <Route path="/Category" element={<AdminJobCategory />} />
+          <Route path="/Attendance" element={<AdminAttendance />} />
+          <Route path="/Profile" element={<Profile />} />
+        </Routes>
       </Router>
     </>
   );

@@ -43,10 +43,12 @@ const secondRoute = data[1].to;
 const secondLabel = data[1].label;
 const ThirdRoute = data[2].to;
 const ThirdLabel = data[2].label;
-const fourthRoute = data[3].to;
-const fourthLabel = data[3].label;
+const FourthRouter = data[3].to;
+const FourthLabel = data[3].label;
 const SixRoute = data[5].to;
 const SixLabel = data[5].label;
+const SevenRoute = data[6].to;
+const SevenLabel = data[6].label;
 interface SidebarProps {
   expanded: boolean;
 }
@@ -127,8 +129,8 @@ function Sidebar({ expanded }: SidebarProps) {
             >
               <path d="M1 5h1.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 1 0 0-2H8.576a3.228 3.228 0 0 0-6.152 0H1a1 1 0 1 0 0 2Zm18 4h-1.424a3.228 3.228 0 0 0-6.152 0H1a1 1 0 1 0 0 2h10.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 0 0 0-2Zm0 6H8.576a3.228 3.228 0 0 0-6.152 0H1a1 1 0 0 0 0 2h1.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 0 0 0-2Z" />
             </svg>
-            <Link to={fourthRoute} className="block w-full h-full">
-              {fourthLabel}
+            <Link to={FourthRouter} className="block w-full h-full">
+              {FourthLabel}
             </Link>
           </li>
           <li>
@@ -187,7 +189,9 @@ function Sidebar({ expanded }: SidebarProps) {
               <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
               <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
             </svg>
-            Leave Attendance
+            <Link to={SevenRoute} className="block w-full h-full">
+              {SevenLabel}
+            </Link>
           </li>
         </ol>
         <div className="mt-20 cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
