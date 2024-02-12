@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import RoutePage from "./Router/route";
-import Calendar from "./components/Calendar"
-import CategoryPage from "./components/hr/AdminJobCategory";
+import HomePage from "./components/LandingPage";
+import AdminProfile from "./components/hr/AdminProfile";
+import AdminJobCategory from "./components/hr/AdminJobCategory";
+import AdminAttendance from "./components/hr/AdminAttendance";
 function App() {
-  return <RoutePage />;
+  return <AdminAttendance />;
 }
 
 export default App;
