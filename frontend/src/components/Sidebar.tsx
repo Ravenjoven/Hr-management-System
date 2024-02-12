@@ -88,7 +88,7 @@ function Sidebar({ expanded }: SidebarProps) {
               </svg>
               <span className="text-sm">Employee Management</span>
             </a>
-            {isOpen && (
+            {/* {isOpen && (
               <ul className="text-sm border-t-2 border-b-2 shadow-inner shadow-gray-500">
                 <div className="text-center space-y-2 py-2">
                   <li className="cursor-pointer hover:bg-gray-100">
@@ -99,7 +99,7 @@ function Sidebar({ expanded }: SidebarProps) {
                   </li>
                 </div>
               </ul>
-            )}
+            )} */}
           </li>
           <span className="border-custom-text-gray border-b-1" />
           <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

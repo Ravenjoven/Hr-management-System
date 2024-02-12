@@ -15,7 +15,7 @@ function ProfilePage() {
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <AdminNavar />
-        <div>
+        <div className="fixed">
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
@@ -40,7 +40,7 @@ function ProfilePage() {
             </svg>
           </button>
         </div>
-        <div className="relative w-full">
+        <div className="relative w-full mt-8">
           <Sidebar expanded={expanded} />
           <div
             className={`content h-full max-w-full z-1  ${
