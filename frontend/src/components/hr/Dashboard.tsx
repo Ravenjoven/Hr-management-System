@@ -63,7 +63,7 @@ function Dashboard() {
             </div>
             <div className="m-4 mb-8 mt-8 text-black h-56 grid grid-cols-3 gap-4 content-center font-extrabold">
               <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
+                <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
                   <svg
                     className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true"
@@ -77,7 +77,7 @@ function Dashboard() {
                 </li>
               </div>
               <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
+                <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
                   <svg
                     className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true"
@@ -92,7 +92,7 @@ function Dashboard() {
                 </li>
               </div>
               <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
+                <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
                   <svg
                     className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true"
@@ -106,7 +106,7 @@ function Dashboard() {
                 </li>
               </div>
               <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
+                <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
                   <svg
                     className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true"
@@ -116,11 +116,11 @@ function Dashboard() {
                   >
                     <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                   </svg>
-                  EMPLOYEE MANAGEMENT
+                  EMPLOYEE <br />MANAGEMENT
                 </li>
               </div>
               <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
+                <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
                   <svg
                     className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true"
@@ -134,7 +134,7 @@ function Dashboard() {
                 </li>
               </div>
               <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
+                <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
                   <svg
                     className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true"
@@ -145,7 +145,7 @@ function Dashboard() {
                     <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
                     <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
                   </svg>
-                  LEAVE & ATTENDANCE
+                  LEAVE & <br />ATTENDANCE
                 </li>
               </div>
             </div>
