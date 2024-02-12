@@ -23,7 +23,7 @@ function HomePage() {
                 <button className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
                   btn1
                 </button>
-                <button className="border-2 border-orange-400 hover:text-orange-400 hover:bg-orange-400 hover:text-white rounded-3xl text-custom-text-gray w-52 h-10">
+                <button className="border-2 border-orange-400 hover:text-orange-400 hover:bg-orange-400 rounded-3xl text-custom-text-gray w-52 h-10">
                   btn2
                 </button>
               </div>

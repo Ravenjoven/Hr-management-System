@@ -1,47 +1,32 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import Sidebar from "../Sidebard";
+import Sidebar from "../Sidebar";
+import AdminNavar from "../AdminNavar";
+import { useState } from "react";
 
 function ProfilePage() {
+  const [expanded, setExpanded] = useState(false);
+  const toggleExpanded = () => {
+    setExpanded((prevState) => !prevState);
+  };
+
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
-        <nav className="border-b-4 border-gray-400 bg-white top-0 sticky z-50">
-          <div className="max-w-screen flex flex-wrap items-center justify-between mx-auto md:p-4 h-full">
-            <div className="flex items-center justify-start">
-              <img src="../images/img2.png" className="h-10"></img>
-              <img src="../images/img3.png" className="h-10 pt-2" />
-            </div>
-
-            <div className="block w-auto h-auto pr-4" id="navbar-default">
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-20 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li>
-                  <a
-                    href="#"
-                    className="block md:py-2 px-3 rounded md:bg-transparent md:text-orange-400 md:p-0 hover:text-blue-400"
-                    aria-current="page"
-                  >
-                    <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <div className="border border-black">
+        <AdminNavar />
+        <div>
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
             aria-controls="logo-sidebar"
             type="button"
-            // onClick={() => setExpanded((curr) => !curr)}
+            onClick={toggleExpanded}
             className="cursor-pointer z-50 inline-flex items-center text-sm text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           >
             <span className="sr-only">Open sidebar</span>
             <svg
-              className="w-6 h-6"
+              className="w-8 h-8 hover:bg-gray-100"
               aria-hidden="true"
               fill="currentColor"
               viewBox="0 0 20 21"
@@ -55,14 +40,18 @@ function ProfilePage() {
             </svg>
           </button>
         </div>
-        <div className="mt-8 relative w-full">
-          <Sidebar />
-          <div className="content h-full max-w-full md:ml-[280px] z-1">
+        <div className="relative w-full">
+          <Sidebar expanded={expanded} />
+          <div
+            className={`content h-full max-w-full z-1  ${
+              expanded ? "ml-0" : "ml-[280px]"
+            }`}
+          >
             <div className="upper-div md:min-w-full h-10 font-bold bg-custom-text-orange rounded flex text-white">
               <span className="my-auto pl-4">PERSONAL INFO</span>
             </div>
             <div className="flex">
-              <div className="left-div w-[400px] min-h-screen mt-4 border-[3px] rounded-2xl border-custom-text-orange">
+              <div className="left-div mt-4 w-[400px] min-h-screen border-[3px] rounded-2xl border-custom-text-orange">
                 <div className="border-b-[3px] border-custom-text-orange flex flex-col text-center justify-center items-center">
                   <div className="flex justify-center items-center border-[3px] border-custom-text-orange rounded-l-full rounded-br-full mt-8 mb-2 rounded-tr-lg h-40 w-40">
                     <img
