@@ -9,7 +9,7 @@ const data = [
   {
     id: 2,
     label: "Users",
-    to: "/Employee",
+    to: "/EmployeeList",
   },
   {
     id: 3,
@@ -19,12 +19,12 @@ const data = [
   {
     id: 4,
     label: "Category",
-    to: "/",
+    to: "/Category",
   },
   {
     id: 5,
     label: "Employee Management",
-    to: "/",
+    to: "/Management",
   },
   {
     id: 6,
@@ -34,7 +34,7 @@ const data = [
   {
     id: 7,
     label: "Leave Attendance",
-    to: "/",
+    to: "/Attendance",
   },
 ];
 const firstRoute = data[0].to;
@@ -43,6 +43,8 @@ const secondRoute = data[1].to;
 const secondLabel = data[1].label;
 const ThirdRoute = data[2].to;
 const ThirdLabel = data[2].label;
+const fourthRoute = data[3].to;
+const fourthLabel = data[3].label;
 const SixRoute = data[5].to;
 const SixLabel = data[5].label;
 interface SidebarProps {
@@ -125,7 +127,9 @@ function Sidebar({ expanded }: SidebarProps) {
             >
               <path d="M1 5h1.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 1 0 0-2H8.576a3.228 3.228 0 0 0-6.152 0H1a1 1 0 1 0 0 2Zm18 4h-1.424a3.228 3.228 0 0 0-6.152 0H1a1 1 0 1 0 0 2h10.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 0 0 0-2Zm0 6H8.576a3.228 3.228 0 0 0-6.152 0H1a1 1 0 0 0 0 2h1.424a3.228 3.228 0 0 0 6.152 0H19a1 1 0 0 0 0-2Z" />
             </svg>
-            Category
+            <Link to={fourthRoute} className="block w-full h-full">
+              {fourthLabel}
+            </Link>
           </li>
           <li>
             <a
