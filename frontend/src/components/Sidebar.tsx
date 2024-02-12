@@ -1,5 +1,48 @@
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
+const data = [
+  {
+    id: 1,
+    label: "Dashboard",
+    to: "/Dashboard",
+  },
+  {
+    id: 2,
+    label: "Users",
+    to: "/Employee",
+  },
+  {
+    id: 3,
+    label: "Jobs",
+    to: "/Jobs",
+  },
+  {
+    id: 4,
+    label: "Category",
+    to: "/",
+  },
+  {
+    id: 5,
+    label: "Employee Management",
+    to: "/",
+  },
+  {
+    id: 6,
+    label: "My Details",
+    to: "/Profile",
+  },
+  {
+    id: 7,
+    label: "Leave Attendance",
+    to: "/",
+  },
+];
+const firstRoute = data[0].to;
+const firstLabel = data[0].label;
+const ThirdRoute = data[2].to;
+const ThirdLabel = data[2].label;
+const SixRoute = data[5].to;
+const SixLabel = data[5].label;
 interface SidebarProps {
   expanded: boolean;
 }
@@ -32,7 +75,9 @@ function Sidebar({ expanded }: SidebarProps) {
               <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
               <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
             </svg>
-            Dashboard
+            <Link to={firstRoute} className="block w-full h-full">
+              {firstLabel}
+            </Link>
           </li>
           <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <svg
@@ -57,7 +102,9 @@ function Sidebar({ expanded }: SidebarProps) {
               <path d="M19.728 10.686c-2.38 2.256-6.153 3.381-9.875 3.381-3.722 0-7.4-1.126-9.571-3.371L0 10.437V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-7.6l-.272.286Z" />
               <path d="m.135 7.847 1.542 1.417c3.6 3.712 12.747 3.7 16.635.01L19.605 7.9A.98.98 0 0 1 20 7.652V6a2 2 0 0 0-2-2h-3V3a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v1H2a2 2 0 0 0-2 2v1.765c.047.024.092.051.135.082ZM10 10.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5ZM7 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H7V3Z" />
             </svg>
-            Jobs
+            <Link to={ThirdRoute} className="block w-full h-full">
+              {ThirdLabel}
+            </Link>
           </li>
           <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <svg
@@ -112,7 +159,9 @@ function Sidebar({ expanded }: SidebarProps) {
             >
               <path d="M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z" />
             </svg>
-            My Details
+            <Link to={SixRoute} className="block w-full h-full">
+              {SixLabel}
+            </Link>
           </li>
           <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <svg

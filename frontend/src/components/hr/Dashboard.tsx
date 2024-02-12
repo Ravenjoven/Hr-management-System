@@ -46,8 +46,8 @@ function Dashboard() {
           <div className="flex justify-end ">
             <img src="../images/dashboard-img.png" className="h-[400px]"></img>
           </div>
-          <div className="m-4 mt-8 text-black h-56 grid grid-cols-3 gap-4 content-center font-extrabold">
-            <div className="p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <div className="m-4 mb-8 mt-8 text-black h-56 grid grid-cols-3 gap-4 content-center font-extrabold">
+            <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
                 <svg
                   className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -61,7 +61,7 @@ function Dashboard() {
                 USERS
               </li>
             </div>
-            <div className="p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
                 <svg
                   className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -76,7 +76,7 @@ function Dashboard() {
                 JOBS
               </li>
             </div>
-            <div className="p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
                 <svg
                   className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -90,7 +90,7 @@ function Dashboard() {
                 CATEGORY
               </li>
             </div>
-            <div className="p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
                 <svg
                   className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -104,7 +104,7 @@ function Dashboard() {
                 EMPLOYEE MANAGEMENT
               </li>
             </div>
-            <div className="p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
                 <svg
                   className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -118,7 +118,7 @@ function Dashboard() {
                 MY DETAILS
               </li>
             </div>
-            <div className="p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
               <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg ">
                 <svg
                   className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
