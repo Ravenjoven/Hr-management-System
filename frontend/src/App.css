@@ -1,5 +1,9 @@
 .fc{
     border: 2px solid orange;
+    border-radius: 5px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 20px;
 }
 
 .fc-day-today {
