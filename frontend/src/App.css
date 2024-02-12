@@ -1,1 +1,8 @@
+.fc{
+    border: 2px solid orange;
+}
 
+.fc-day-today {
+    background-color: rgba(255, 150, 0, 1) !important;
+    /* You can adjust other styles like text color, border, etc. */
+}

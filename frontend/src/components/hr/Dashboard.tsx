@@ -39,9 +39,9 @@ function Dashboard() {
             <div className="flex mt-2 justify-center items-center text-black">
               CALENDAR
             </div>
-            <div className="mt-4 border-custom-text-orange text-black">
-              <Calendar />
-            </div>
+              <div className="mt-4 border-custom-text-orange text-black">
+                <Calendar />
+              </div>
           </div>
         </div>
       </div>

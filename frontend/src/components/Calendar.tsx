@@ -4,8 +4,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-
-
+import "../App.css" 
 function Calendar(){
    
     return (
@@ -22,7 +21,9 @@ function Calendar(){
                 height={'60vh'}
                 
             />
+            
         </>
     );
 }
 export default Calendar;
+

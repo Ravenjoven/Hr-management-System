@@ -114,7 +114,7 @@ const Login = () => {
               tomorrow.
             </h1>
           </div>
-          <div className="w-full flex justify-end mt-[40px]">
+          <div className="w-full flex justify-end mt-4">
             <form
               className="bg-[#f89939] mr-8 p-4 rounded-tr-[50px] p-[30px] rounded-bl-[50px] h-full"
               action=""
