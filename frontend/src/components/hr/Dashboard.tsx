@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { CiUser } from "react-icons/ci";
+
 import Sidebar from "../Sidebar";
 import Calendar from "../Calendar";
 
@@ -29,7 +29,7 @@ function Dashboard() {
           </div>
         </div>
       </nav>
-      <Sidebar />
+      <Sidebar expanded={false} />
       <div className="content h-screen mr-8 mt-2 md:ml-[280px] ">
         <div className="upper-div max-w-5xl rounded-tr-[30px] h-10 font-bold bg-custom-text-orange rounded flex text-white">
           <span className="my-auto pl-4">DASHBOARD</span>
@@ -44,7 +44,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="flex justify-end ">
-            <img src="../images/image.png" className="h-[400px]"></img>
+            <img src="../images/dashboard-img.png" className="h-[400px]"></img>
           </div>
           <div className="m-4 mt-8 text-black h-56 grid grid-cols-3 gap-4 content-center font-extrabold">
             <div className="p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

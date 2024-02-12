@@ -42,7 +42,7 @@ function HomePage() {
                     {firstLabel}
                   </Link>
                 </button>
-                <button className="border-2 border-orange-400 hover:text-orange-400 hover:bg-orange-400 hover:text-white rounded-3xl text-custom-text-gray w-52 h-10">
+                <button className="border-2 border-orange-400 hover:text-orange-400 hover:bg-orange-400 rounded-3xl text-custom-text-gray w-52 h-10">
                   <Link to={SecondRoute} className="block w-full h-full">
                     {SecondLabel}
                   </Link>
