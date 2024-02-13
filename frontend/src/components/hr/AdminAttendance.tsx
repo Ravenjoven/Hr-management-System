@@ -6,11 +6,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { useState } from "react";
+import Modal from "../Modal";
+import { SetStateAction, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function AdminAttendance() {
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
+
+  // const openModal = (employeeId: number | SetStateAction<null>) => {
+  //   setSelectedEmployeeId(employeeId);
+  //   setIsModalOpen(true);
+  // };
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -133,7 +142,8 @@ function AdminAttendance() {
                 {filteredEmployees.map((employee) => (
                   <div
                     key={employee.id}
-                    className="bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
+                    className=" border border-black bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
+                    // onClick={() => openModal(employee.id)}
                   >
                     <div className="flex items-center">
                       <img
@@ -163,15 +173,18 @@ function AdminAttendance() {
                         </span>
                       </div>
                     </div>
+                   
                   </div>
                 ))}
               </div>
+              {/* {isModalOpen && <Modal employeeId={selectedEmployeeId} onClose={() => setIsModalOpen(false)} />}
+             */}
             </div>
           </div>
         </div>
       </>
     </div>
   );
-}
+};
 
 export default AdminAttendance;
