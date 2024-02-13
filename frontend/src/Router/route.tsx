@@ -8,11 +8,13 @@ import Profile from "../components/hr/AdminProfile";
 import AdminJobCategory from "../components/hr/AdminJobCategory";
 import AdminUserList from "../components/hr/AdminUserList";
 import AdminAttendance from "../components/hr/AdminAttendance";
+import Jobs from "../components/hr/Jobs";
 function router() {
   return (
     <>
       <Router>
         <Routes>
+          <Route path="/Jobs" element={<Jobs />} />
           <Route index path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Dashboard" element={<Dashboard />} />
