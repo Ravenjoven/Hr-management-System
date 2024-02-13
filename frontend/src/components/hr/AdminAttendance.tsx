@@ -12,14 +12,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function AdminAttendance() {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
-
-  // const openModal = (employeeId: number | SetStateAction<null>) => {
-  //   setSelectedEmployeeId(employeeId);
-  //   setIsModalOpen(true);
-  // };
-  
+ 
   const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -143,7 +136,7 @@ function AdminAttendance() {
                   <div
                     key={employee.id}
                     className=" border border-black bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
-                    // onClick={() => openModal(employee.id)}
+                    // d
                   >
                     <div className="flex items-center">
                       <img
@@ -177,8 +170,7 @@ function AdminAttendance() {
                   </div>
                 ))}
               </div>
-              {/* {isModalOpen && <Modal employeeId={selectedEmployeeId} onClose={() => setIsModalOpen(false)} />}
-             */}
+             
             </div>
           </div>
         </div>
