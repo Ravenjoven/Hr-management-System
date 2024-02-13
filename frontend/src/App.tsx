@@ -1,6 +1,6 @@
-import HomePage from "./components/LandingPage";
+import Router from "./Router/route";
 function App() {
-  return <HomePage />;
+  return <Router />;
 }
 
 export default App;
