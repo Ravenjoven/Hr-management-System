@@ -11,6 +11,12 @@ function AdminUserList() {
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+  const [users, setUsers] = useState([
+    {
+      id: 0,
+      name: "Jezrael Suliano",
+    },
+  ]);
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -43,12 +49,14 @@ function AdminUserList() {
         <div className="relative w-full mt-8">
           <Sidebar expanded={expanded} />
           <div
-            className={`content h-full max-w-full z-1  ${
+            className={`content h-full max-w-full z-1   ${
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:min-w-full h-16 font-bold bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
-              <span className="pl-4 uppercase">company Employees</span>
+            <div className="upper-div md:min-w-full h-16  bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
+              <span className="pl-4 uppercase font-bold">
+                company Employees
+              </span>
               <div className="flex items-center justify-center flex-grow pl-4">
                 <div className="relative">
                   <FontAwesomeIcon
@@ -63,7 +71,7 @@ function AdminUserList() {
                 </div>
               </div>
               <div className=" ">
-                <button className=" border-[3px] border-custom-text-white m-4 bg-transparent text-white py-2 px-4 rounded">
+                <button className=" border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded">
                   Add Employees
                 </button>
               </div>
@@ -75,19 +83,16 @@ function AdminUserList() {
                   <thead className="text-xs text-black border-b-[3px] border-custom-text-orange  uppercase">
                     <tr className="capitalize">
                       <th scope="col" className="px-6 py-3">
-                        ID
+                        No.
                       </th>
                       <th scope="col" className="px-6 py-3">
                         NAME
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        DEPARTMENT
+                        POSITION
                       </th>
                       <th scope="col" className="px-6 py-3">
                         CONTACTS
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        REQUEST
                       </th>
                       <th scope="col" className="px-6 py-3">
                         HIRE DATE
@@ -108,7 +113,6 @@ function AdminUserList() {
                       <td className="px-6 py-4">Jezrael Suliano</td>
                       <td className="px-6 py-4">Software</td>
                       <td className="px-6 py-4">523123123</td>
-                      <td className="px-6 py-4">green circle</td>
                       <td className="px-6 py-4">02/01/2024</td>
                       <td className="px-6 py-4 space-x-2">
                         <a
@@ -141,7 +145,6 @@ function AdminUserList() {
                       <td className="px-6 py-4">Ranel Suliano</td>
                       <td className="px-6 py-4">Software</td>
                       <td className="px-6 py-4">523123123</td>
-                      <td className="px-6 py-4">green circle</td>
                       <td className="px-6 py-4">02/01/2024</td>
                       <td className="px-6 py-4 space-x-2">
                         <a
