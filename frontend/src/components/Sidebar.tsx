@@ -62,11 +62,6 @@ function Sidebar({ expanded }: SidebarProps) {
           expanded ? "-translate-x-full sm:translate-x-0" : "sm:translate-x-0"
         } ${expanded ? "sm:w-0 border-none" : "w-64 "}`}
       >
-        {/* <aside
-        className={`border-[3px] rounded-tr-2xl bg-white overflow-hidden border-custom-text-orange fixed mt-28 top-0 left-0 z-40 h-screen transition-transform -translate-x-full sm:translate-x-0 ${
-          expanded ? "w-0 border-none" : "w-64"
-        }`}
-      > */}
         <a href="#" className="flex items-center justify-center my-4">
           <img
             src="../images/img2.png"

@@ -1,9 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faPen,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 function Jobs() {
@@ -15,7 +17,7 @@ function Jobs() {
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <AdminNavar />
-        <div className="fixed">
+        <div className="fixed z-50">
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
@@ -47,8 +49,8 @@ function Jobs() {
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:min-w-full h-16 font-bold bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
-              <span className="pl-4 uppercase">JOBS LIST</span>
+            <div className="upper-div md:min-w-full h-16 bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
+              <span className="pl-4 uppercase font-bold">JOBS LIST</span>
               <div className="flex items-center justify-center flex-grow pl-4">
                 <div className="relative">
                   <FontAwesomeIcon
@@ -62,8 +64,8 @@ function Jobs() {
                   />
                 </div>
               </div>
-              <div className=" ">
-                <button className=" border-[3px] border-custom-text-white m-4 bg-transparent text-white py-2 px-4 rounded">
+              <div>
+                <button className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded">
                   Add Jobs
                 </button>
               </div>
@@ -99,7 +101,11 @@ function Jobs() {
                       >
                         Lorem Ipsum
                       </th>
-                      <td className="px-6 py-4">Lorem ipsum dolor sit amet. Ab odio atque et molestiae illo a nihil provident ut velit esse non beatae voluptatem nam omnis voluptas sit natus quia.</td>
+                      <td className="px-6 py-4">
+                        Lorem ipsum dolor sit amet. Ab odio atque et molestiae
+                        illo a nihil provident ut velit esse non beatae
+                        voluptatem nam omnis voluptas sit natus quia.
+                      </td>
                       <td className="px-6 py-4">10/20</td>
                       <td className="px-6 py-4">02/01/2024</td>
                       <td className="px-6 py-4 space-x-2">
@@ -130,7 +136,11 @@ function Jobs() {
                       >
                         Lorem Ipsum
                       </th>
-                      <td className="px-6 py-4">Lorem ipsum dolor sit amet. Ab odio atque et molestiae illo a nihil provident ut velit esse non beatae voluptatem nam omnis voluptas sit natus quia.</td>
+                      <td className="px-6 py-4">
+                        Lorem ipsum dolor sit amet. Ab odio atque et molestiae
+                        illo a nihil provident ut velit esse non beatae
+                        voluptatem nam omnis voluptas sit natus quia.
+                      </td>
                       <td className="px-6 py-4">10/20</td>
                       <td className="px-6 py-4">02/01/2024</td>
                       <td className="px-6 py-4 space-x-2">

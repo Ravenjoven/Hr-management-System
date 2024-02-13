@@ -89,7 +89,7 @@ function AdminAttendance() {
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:overflow-hidden md:min-w-full md:h-12 w-full h-full bg-custom-text-orange border-[3px] border-custom-text-orange md:flex  text-white">
+            <div className="upper-div md:min-w-full md:h-12 w-full h-full bg-custom-text-orange border-[3px] border-custom-text-orange md:flex  text-white">
               <span className="my-auto pl-4 uppercase font-bold">
                 leave & attendance
               </span>

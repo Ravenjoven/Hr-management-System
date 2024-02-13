@@ -1,13 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faPen,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 function AdminUserList() {
   const [expanded, setExpanded] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(10);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -15,13 +19,106 @@ function AdminUserList() {
     {
       id: 0,
       name: "Jezrael Suliano",
+      position: "Project Manager",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 1,
+      name: "Ranel Soliano",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 2,
+      name: "Arnel Carcella",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 3,
+      name: "Raven Joven",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 4,
+      name: "Aijem Aijem",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 5,
+      name: "Jezrael Suliano",
+      position: "Project Manager",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 6,
+      name: "Ranel Soliano",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 7,
+      name: "Arnel Carcella",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 8,
+      name: "Raven Joven",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 9,
+      name: "Aijem Aijem",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
+    },
+    {
+      id: 10,
+      name: "Aijem Aijem",
+      position: "Fullstack Developer",
+      contact: "0912345678",
+      date_hire: "02/01/2024",
     },
   ]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const filteredUsers = users.filter((user) => {
+    return (
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.position.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+  const handlePageClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  // Get current users
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(users.length / usersPerPage); i++) {
+    pageNumbers.push(i);
+  }
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <AdminNavar />
-        <div className="fixed">
+        <div className="fixed z-50">
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
@@ -65,18 +162,19 @@ function AdminUserList() {
                   />
                   <input
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     className="rounded-full border-[3px] border-custom-text-orange text-black pl-10 pr-4 py-2 w-80 h-10"
                     placeholder="Search"
                   />
                 </div>
               </div>
-              <div className=" ">
-                <button className=" border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded">
+              <div>
+                <button className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded">
                   Add Employees
                 </button>
               </div>
             </div>
-
             <div className="lower-div w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4">
               <div className="relative overflow-x-auto shadow-md">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -103,70 +201,43 @@ function AdminUserList() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {currentUsers.map((user, index) => (
+                      <tr
+                        key={user.id}
+                        className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
-                        1
-                      </th>
-                      <td className="px-6 py-4">Jezrael Suliano</td>
-                      <td className="px-6 py-4">Software</td>
-                      <td className="px-6 py-4">523123123</td>
-                      <td className="px-6 py-4">02/01/2024</td>
-                      <td className="px-6 py-4 space-x-2">
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="hover:text-green-500"
-                          />
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="hover:text-red-500"
-                          />
-                        </a>
-                      </td>
-                    </tr>
-                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        2
-                      </th>
-                      <td className="px-6 py-4">Ranel Suliano</td>
-                      <td className="px-6 py-4">Software</td>
-                      <td className="px-6 py-4">523123123</td>
-                      <td className="px-6 py-4">02/01/2024</td>
-                      <td className="px-6 py-4 space-x-2">
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="hover:text-green-500"
-                          />
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="hover:text-red-500"
-                          />
-                        </a>
-                      </td>
-                    </tr>
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-4">{user.name}</td>
+                        <td className="px-6 py-4">{user.position}</td>
+                        <td className="px-6 py-4">{user.contact}</td>
+                        <td className="px-6 py-4">{user.date_hire}</td>
+                        <td className="px-6 py-4 space-x-2">
+                          <a
+                            href="#"
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            <FontAwesomeIcon
+                              icon={faPen}
+                              className="hover:text-green-500"
+                            />
+                          </a>
+                          <a
+                            href="#"
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              className="hover:text-red-500"
+                            />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
                 <nav
@@ -176,70 +247,61 @@ function AdminUserList() {
                   <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                     Showing{" "}
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      1-10
+                      {indexOfFirstUser + 1}-
+                      {indexOfLastUser > filteredUsers.length
+                        ? filteredUsers.length
+                        : indexOfLastUser}
                     </span>{" "}
                     of{" "}
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      1000
+                      {filteredUsers.length}
                     </span>
                   </span>
-                  <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                  <ul
+                    className="flex items-center flex-column flex-wrap md:flex-row justify-between"
+                    aria-label="Table navigation"
+                  >
+                    {/* Render Previous button */}
                     <li>
-                      <a
-                        href="#"
+                      <button
+                        onClick={() => handlePageClick(currentPage - 1)}
+                        disabled={currentPage === 1}
                         className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         Previous
-                      </a>
+                      </button>
                     </li>
-                    <li>
-                      <a
-                        href="#"
+
+                    {/* Render pagination buttons */}
+                    {pageNumbers.map((number) => (
+                      <li
+                        key={number}
                         className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
-                        1
-                      </a>
-                    </li>
+                        <button
+                          onClick={() => handlePageClick(number)}
+                          className={`${
+                            number === currentPage
+                              ? "bg-custom-text-orange text-white w-10 rounded-full"
+                              : "text-gray-500 bg-white"
+                          }`}
+                        >
+                          {number}
+                        </button>
+                      </li>
+                    ))}
+
+                    {/* Render Next button */}
                     <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        2
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        aria-current="page"
-                        className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                      >
-                        3
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        4
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        5
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
+                      <button
+                        onClick={() => handlePageClick(currentPage + 1)}
+                        disabled={
+                          currentPage === Math.ceil(users.length / usersPerPage)
+                        }
                         className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         Next
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </nav>
