@@ -57,7 +57,7 @@ function AdminAttendance() {
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <AdminNavar />
-        <div className="fixed">
+        <div className="fixed z-50">
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
@@ -85,15 +85,15 @@ function AdminAttendance() {
         <div className="relative w-full mt-8">
           <Sidebar expanded={expanded} />
           <div
-            className={`content min-h-screen max-w-full z-1 rounded border-[3px] border-custom-text-orange  ${
+            className={`content min-h-screen overflow-y-auto scrollbar-hide max-w-full rounded border-[3px] border-custom-text-orange  ${
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:overflow-hidden overflow-scroll md:min-w-full h-12 bg-custom-text-orange border-[3px] border-custom-text-orange flex text-white">
+            <div className="upper-div md:overflow-hidden md:min-w-full md:h-12 w-full h-full bg-custom-text-orange border-[3px] border-custom-text-orange md:flex  text-white">
               <span className="my-auto pl-4 uppercase font-bold">
                 leave & attendance
               </span>
-              <div className="flex justify-center items-center flex-grow">
+              <div className="flex md:justify-center md:items-center flex-grow">
                 <div className="relative">
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
@@ -112,7 +112,7 @@ function AdminAttendance() {
                 <div className="relative flex items-center">
                   <FontAwesomeIcon
                     icon={faCalendarDays}
-                    className="absolute z-50 left-4 w-4 h-4 flex items-center pointer-events-none text-custom-text-orange"
+                    className="absolute left-4 w-4 h-4 flex z-10 items-center pointer-events-none text-custom-text-orange"
                   />
                   <DatePicker
                     selected={selectedDate}
@@ -129,7 +129,7 @@ function AdminAttendance() {
               </div>
             </div>
             <div className="lower-di flex flex-col m-10">
-              <div className="grid gap-5 grid-cols-5">
+              <div className="grid gap-5 md:grid-cols-5 grid-cols-1">
                 {filteredEmployees.map((employee) => (
                   <div
                     key={employee.id}
@@ -142,7 +142,7 @@ function AdminAttendance() {
                         className="w-24 h-24 text-custom-text-black my-2"
                       />
                     </div>
-                    <div className="text-center text-custom-text-black">
+                    <div className="text-center text-custom-text-black capitalize">
                       {employee.name}
                     </div>
                     <div className="flex space-x-4 m-4">
