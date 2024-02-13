@@ -11,11 +11,48 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function AdminAttendance() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [employees, setEmployees] = useState([
+    {
+      id: 0,
+      img: "../images/profile-image.png",
+      name: "Ranel Soliano",
+      attendance: "P",
+    },
+    {
+      id: 1,
+      img: "../images/profile-image.png",
+      name: "Arnel Carcella",
+      attendance: "A",
+    },
+    {
+      id: 2,
+      img: "../images/profile-image.png",
+      name: "Jezrael Suliano",
+      attendance: "L",
+    },
+    {
+      id: 3,
+      img: "../images/profile-image.png",
+      name: "Raven Joven",
+      attendance: "P",
+    },
+    {
+      id: 4,
+      img: "../images/profile-image.png",
+      name: "Aijem Aijem",
+      attendance: "A",
+    },
+  ]);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
-  const [selectedDate, setSelectedDate] = useState(null);
+  const filteredEmployees = employees.filter((employee) =>
+    employee.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -48,7 +85,7 @@ function AdminAttendance() {
         <div className="relative w-full mt-8">
           <Sidebar expanded={expanded} />
           <div
-            className={`content h-full max-w-full z-1 rounded border-[3px] border-custom-text-orange  ${
+            className={`content min-h-screen max-w-full z-1 rounded border-[3px] border-custom-text-orange  ${
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
@@ -66,6 +103,8 @@ function AdminAttendance() {
                     type="text"
                     className="rounded-full border-[3px] border-custom-text-orange text-black pl-10 pr-4 py-2 w-80 h-10"
                     placeholder="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
               </div>
@@ -87,6 +126,45 @@ function AdminAttendance() {
                     className="absolute top-1/2 transform -translate-y-1/2 right-4 w-4 h-4 text-custom-text-orange"
                   />
                 </div>
+              </div>
+            </div>
+            <div className="lower-di flex flex-col m-10">
+              <div className="grid gap-5 grid-cols-5">
+                {filteredEmployees.map((employee) => (
+                  <div
+                    key={employee.id}
+                    className="bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
+                  >
+                    <div className="flex items-center">
+                      <img
+                        src={employee.img}
+                        alt=""
+                        className="w-24 h-24 text-custom-text-black my-2"
+                      />
+                    </div>
+                    <div className="text-center text-custom-text-black">
+                      {employee.name}
+                    </div>
+                    <div className="flex space-x-4 m-4">
+                      <div
+                        className={`border-[3px] rounded-full w-10 h-10 flex justify-center items-center
+                        ${
+                          employee.attendance === "P"
+                            ? "bg-green-400 border-green-400"
+                            : employee.attendance === "A"
+                            ? "bg-red-400 border-red-400"
+                            : employee.attendance === "L"
+                            ? "bg-orange-400 border-orange-400"
+                            : ""
+                        }`}
+                      >
+                        <span className="text-[20px] text-white">
+                          {employee.attendance}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
