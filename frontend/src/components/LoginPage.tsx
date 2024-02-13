@@ -11,7 +11,7 @@ const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const Login = () => {
   return (
-    <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat h-full">
+    <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <nav>
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-full ml-8 mr-8">

@@ -55,10 +55,10 @@ function Dashboard() {
                 <Calendar />
               </div>
             </div>
-            <div className=" flex justify-end">
+            <div className="flex justify-end">
               <img
                 src="../images/dashboard-img.png"
-                className="h-[400px]  w-[20%] m-4"
+                className="h-[400px]  w-[20%] m-4 sm:block hidden"
               ></img>
             </div>
             <div className="m-4 mb-8 mt-8 text-black h-56 grid grid-cols-3 gap-4 content-center font-extrabold">
