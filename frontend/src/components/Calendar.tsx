@@ -8,28 +8,38 @@ import listPlugin from '@fullcalendar/list'
 import "../App.css" 
 
 export default class Calendar extends React.Component {
-    render() {
-      return (
+  state = {
+    events: [], // Initialize with an empty array
+  };
+
+
+  render() {
+    return (
+      <div>
         <FullCalendar
-          plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin ]}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
           initialView="dayGridMonth"
-          dateClick={this.handleDateClick}
-          headerToolbar={
-            {
-                start: 'prev,next', // will normally be on the left. if RTL, will be on the right
-                center: 'title',
-                end: 'dayGridMonth' 
-            }
-        }
+          dateClick={this.handleDateClick} // Attach the dateClick handler
+          events={this.state.events} // Pass the events array
+          height={"400px"}
         />
-      )
-    }
-    handleDateClick = (arg) => { // bind with an arrow function
-        alert(arg.dateStr)
-      }
-    
+      </div>
+      
+    );
   }
-
-
-
-
+  handleDateClick = (arg) => {
+    // This function will be called when the user clicks on a date
+    // You can add your custom logic here
+    
+    const newEvent = {
+      title: 'New Event',
+      date: arg.dateStr,
+    };
+  
+    // Update the events array in the state
+    this.setState((prevState) => ({
+      events: [...prevState.events, newEvent],
+    }));
+  };
+  
+}
