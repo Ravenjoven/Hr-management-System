@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
+import Modal from "../Modal/AddEmployeeModal";
 import {
   faMagnifyingGlass,
   faPen,
   faTrash,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
@@ -21,86 +23,111 @@ function AdminUserList() {
       name: "Jezrael Suliano",
       position: "Project Manager",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Full Time",
+      date_hire: "03/01/2024",
     },
     {
       id: 1,
       name: "Ranel Soliano",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Freelance",
+      date_hire: "04/01/2024",
     },
     {
       id: 2,
       name: "Arnel Carcella",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Partime",
+      date_hire: "05/01/2024",
     },
     {
       id: 3,
       name: "Raven Joven",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "OJT",
+      date_hire: "06/01/2024",
     },
     {
       id: 4,
       name: "Aijem Aijem",
       position: "Fullstack Developer",
-      contact: "0912345678",
-      date_hire: "02/01/2024",
+      contact: "090991231",
+      type: "Full Time",
+      date_hire: "07/10/2024",
     },
     {
       id: 5,
       name: "Jezrael Suliano",
       position: "Project Manager",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "OJT",
+      date_hire: "02/09/2024",
     },
     {
       id: 6,
       name: "Ranel Soliano",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Full Time",
+      date_hire: "02/08/2024",
     },
     {
       id: 7,
       name: "Arnel Carcella",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Full Time",
+      date_hire: "02/07/2024",
     },
     {
       id: 8,
       name: "Raven Joven",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Full Time",
+      date_hire: "02/06/2024",
     },
     {
       id: 9,
       name: "Aijem Aijem",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Full Time",
+      date_hire: "02/03/2024",
     },
     {
       id: 10,
       name: "Aijem Aijem",
       position: "Fullstack Developer",
       contact: "0912345678",
-      date_hire: "02/01/2024",
+      type: "Full Time",
+      date_hire: "02/04/2024",
     },
   ]);
   const [searchQuery, setSearchQuery] = useState("");
   const filteredUsers = users.filter((user) => {
     return (
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.position.toLowerCase().includes(searchQuery.toLowerCase())
+      user.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.contact.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.date_hire.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const spinnerStyle = {
+    fontSize: "24px",
+    animation: "spin 1s linear infinite",
+  };
   const handlePageClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -170,9 +197,19 @@ function AdminUserList() {
                 </div>
               </div>
               <div>
-                <button className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded">
+                <button
+                  onClick={openModal}
+                  className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded"
+                >
                   Add Employees
                 </button>
+                {isOpen && (
+                  <Modal
+                    isOpen={isOpen}
+                    onClose={closeModal}
+                    title="Add Employee"
+                  ></Modal>
+                )}
               </div>
             </div>
             <div className="lower-div w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4">
@@ -193,6 +230,9 @@ function AdminUserList() {
                         CONTACTS
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Type
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         HIRE DATE
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -200,7 +240,9 @@ function AdminUserList() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody
+                    className={`${currentUsers.length > 0 ? "" : "hidden"}`}
+                  >
                     {currentUsers.map((user, index) => (
                       <tr
                         key={user.id}
@@ -215,6 +257,7 @@ function AdminUserList() {
                         <td className="px-6 py-4">{user.name}</td>
                         <td className="px-6 py-4">{user.position}</td>
                         <td className="px-6 py-4">{user.contact}</td>
+                        <td className="px-6 py-4">{user.type}</td>
                         <td className="px-6 py-4">{user.date_hire}</td>
                         <td className="px-6 py-4 space-x-2">
                           <a
@@ -240,6 +283,18 @@ function AdminUserList() {
                     ))}
                   </tbody>
                 </table>
+                <section
+                  className={`${
+                    currentUsers.length === 0 ? "block" : "hidden"
+                  }`}
+                >
+                  <div className="flex items-center justify-center mt-4">
+                    <FontAwesomeIcon icon={faSpinner} style={spinnerStyle} />
+                  </div>
+                  <h1 className="text-center font-bold text-[20px] text-custom-text-black my-4">
+                    No Data Found
+                  </h1>
+                </section>
                 <nav
                   className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-8"
                   aria-label="Table navigation"

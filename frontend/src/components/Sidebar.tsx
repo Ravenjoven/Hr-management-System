@@ -66,7 +66,7 @@ function Sidebar({ expanded }: SidebarProps) {
           <img
             src="../images/img2.png"
             className="h-14 w-14 me-3"
-            alt="Flowbite Logo"
+            alt="Teravault Logo"
           />
         </a>
         <ol className="space-y-2 font-medium">

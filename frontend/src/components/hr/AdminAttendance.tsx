@@ -13,7 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function AdminAttendance() {
   const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [employees, setEmployees] = useState([
     {
       id: 0,
@@ -116,7 +116,7 @@ function AdminAttendance() {
                   />
                   <DatePicker
                     selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
+                    onChange={(date) => setSelectedDate(date as Date)}
                     dateFormat="MMMM d, yyyy"
                     className="rounded-xl border-[3px] border-custom-text-orange h-10 text-center text-black py-2 w-80 cursor-pointer"
                     placeholderText="Select a date"

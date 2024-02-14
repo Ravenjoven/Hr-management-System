@@ -10,9 +10,102 @@ import { useState } from "react";
 
 function Jobs() {
   const [expanded, setExpanded] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [JobsPerPage] = useState(10);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+  const [jobs, setJobs] = useState([
+    {
+      id: 0,
+      jobName: "Financial Associate",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 10,
+      date_createad: "02/14/24",
+    },
+    {
+      id: 1,
+      jobName: "Computer Hardware",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
+    },
+    {
+      id: 2,
+      jobName: "Advertising Media",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
+    },
+    {
+      id: 3,
+      jobName: "UI/UX Designer",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
+    },
+    {
+      id: 4,
+      jobName: "IT Analyst",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
+    },
+    {
+      id: 5,
+      jobName: "IT Consultant",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
+    },
+    {
+      id: 6,
+      jobName: "Fullstack Developer",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
+    },
+    {
+      id: 7,
+      jobName: "Computer Engineering",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
+    },
+  ]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const filteredJobs = jobs.filter((job) => {
+    return (
+      job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.jobDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.jobLimit
+        .toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      job.date_createad.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+  const handlePageClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+  // Get current users
+  const indexOfLastJobs = currentPage * JobsPerPage;
+  const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(jobs.length / JobsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -59,6 +152,8 @@ function Jobs() {
                   />
                   <input
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     className="rounded-full border-[3px] border-custom-text-orange text-black pl-10 pr-4 py-2 w-80 h-10"
                     placeholder="Search"
                   />
@@ -77,6 +172,9 @@ function Jobs() {
                   <thead className="text-xs text-black border-b-[3px] border-custom-text-orange  uppercase">
                     <tr className="capitalize">
                       <th scope="col" className="px-6 py-3">
+                        No.
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Job Name
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -94,76 +192,43 @@ function Jobs() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {currentJobs.map((job, index) => (
+                      <tr
+                        key={job.id}
+                        className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
-                        Lorem Ipsum
-                      </th>
-                      <td className="px-6 py-4">
-                        Lorem ipsum dolor sit amet. Ab odio atque et molestiae
-                        illo a nihil provident ut velit esse non beatae
-                        voluptatem nam omnis voluptas sit natus quia.
-                      </td>
-                      <td className="px-6 py-4">10/20</td>
-                      <td className="px-6 py-4">02/01/2024</td>
-                      <td className="px-6 py-4 space-x-2">
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="hover:text-green-500"
-                          />
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="hover:text-red-500"
-                          />
-                        </a>
-                      </td>
-                    </tr>
-                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Lorem Ipsum
-                      </th>
-                      <td className="px-6 py-4">
-                        Lorem ipsum dolor sit amet. Ab odio atque et molestiae
-                        illo a nihil provident ut velit esse non beatae
-                        voluptatem nam omnis voluptas sit natus quia.
-                      </td>
-                      <td className="px-6 py-4">10/20</td>
-                      <td className="px-6 py-4">02/01/2024</td>
-                      <td className="px-6 py-4 space-x-2">
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="hover:text-green-500"
-                          />
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="hover:text-red-500"
-                          />
-                        </a>
-                      </td>
-                    </tr>
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-4">{job.jobName}</td>
+                        <td className="px-6 py-4">{job.jobDescription}</td>
+                        <td className="px-6 py-4">{job.jobLimit}</td>
+                        <td className="px-6 py-4">{job.date_createad}</td>
+                        <td className="px-6 py-4 space-x-2">
+                          <a
+                            href="#"
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            <FontAwesomeIcon
+                              icon={faPen}
+                              className="hover:text-green-500"
+                            />
+                          </a>
+                          <a
+                            href="#"
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              className="hover:text-red-500"
+                            />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
                 <nav
@@ -173,70 +238,61 @@ function Jobs() {
                   <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                     Showing{" "}
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      1-10
+                      {indexOfFirstJobs + 1}-
+                      {indexOfLastJobs > filteredJobs.length
+                        ? filteredJobs.length
+                        : indexOfLastJobs}
                     </span>{" "}
                     of{" "}
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      1000
+                      {filteredJobs.length}
                     </span>
                   </span>
-                  <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                  <ul
+                    className="flex items-center flex-column flex-wrap md:flex-row justify-between"
+                    aria-label="Table navigation"
+                  >
+                    {/* Render Previous button */}
                     <li>
-                      <a
-                        href="#"
+                      <button
+                        onClick={() => handlePageClick(currentPage - 1)}
+                        disabled={currentPage === 1}
                         className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         Previous
-                      </a>
+                      </button>
                     </li>
-                    <li>
-                      <a
-                        href="#"
+
+                    {/* Render pagination buttons */}
+                    {pageNumbers.map((number) => (
+                      <li
+                        key={number}
                         className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
-                        1
-                      </a>
-                    </li>
+                        <button
+                          onClick={() => handlePageClick(number)}
+                          className={`${
+                            number === currentPage
+                              ? "bg-custom-text-orange text-white w-10 rounded-full"
+                              : "text-gray-500 bg-white"
+                          }`}
+                        >
+                          {number}
+                        </button>
+                      </li>
+                    ))}
+
+                    {/* Render Next button */}
                     <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        2
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        aria-current="page"
-                        className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                      >
-                        3
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        4
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        5
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
+                      <button
+                        onClick={() => handlePageClick(currentPage + 1)}
+                        disabled={
+                          currentPage === Math.ceil(jobs.length / JobsPerPage)
+                        }
                         className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
                         Next
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </nav>
