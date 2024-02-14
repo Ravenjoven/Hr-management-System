@@ -58,7 +58,7 @@ function Dashboard() {
               </div>
               
               <div className="flex flex-col w-[20%] m-8 border-custom-text-orange">
-                <div className="h-[110px] m-2 p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                {/* <div className="h-[110px] m-2 p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                   TOTAL EMPLOYEE
                 </div>
                 <div className="h-[110px] m-2 p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -66,11 +66,11 @@ function Dashboard() {
                 </div>
                 <div className="h-[110px] m-2 p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                   FEMALE
-                </div>
-                {/* <img
+                </div> */}
+                <img
                   src="../images/dashboard-img.png"
                   className="h-[400px]  w-full sm:block hidden"
-                ></img> */}
+                ></img>
               </div>
             </div>
             <div className="mt-[10%] m-8 text-black grid grid-cols-3 gap-4 font-extrabold">
