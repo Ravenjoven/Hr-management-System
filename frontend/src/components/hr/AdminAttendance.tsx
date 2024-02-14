@@ -52,8 +52,9 @@ function AdminAttendance() {
   const filteredEmployees = employees.filter((employee) =>
     employee.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
- 
 
+  
+ 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -135,8 +136,7 @@ function AdminAttendance() {
                   <div
                     key={employee.id}
                     className=" bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
-                    data-modal-target="default-modal"
-                    data-modal-toggle="default-modal"
+                    
                   >
                     <div className="flex items-center">
                       <img
@@ -170,6 +170,8 @@ function AdminAttendance() {
                 ))}
               </div>
             </div>
+             
+            
           </div>
         </div>
       </>
