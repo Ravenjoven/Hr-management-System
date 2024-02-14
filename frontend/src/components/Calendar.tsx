@@ -9,7 +9,7 @@ import "../App.css"
 
 export default class Calendar extends React.Component {
   state = {
-    events: [], // Initialize with an empty array
+    events: [], 
   };
 
 
@@ -19,24 +19,25 @@ export default class Calendar extends React.Component {
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
           initialView="dayGridMonth"
-          dateClick={this.handleDateClick} // Attach the dateClick handler
-          events={this.state.events} // Pass the events array
+          headerToolbar={{
+            start: "prev,next",
+            center: "title",
+            end:"dayGridMonth,timeGridWeek,timeGridDay"
+          }}
+          dateClick={this.handleDateClick}
+          events={this.state.events}
           height={"400px"}
         />
       </div>
       
     );
   }
-  handleDateClick = (arg) => {
-    // This function will be called when the user clicks on a date
-    // You can add your custom logic here
-    
+  handleDateClick = (arg: { dateStr: any }) => {
     const newEvent = {
       title: 'New Event',
       date: arg.dateStr,
     };
   
-    // Update the events array in the state
     this.setState((prevState) => ({
       events: [...prevState.events, newEvent],
     }));
