@@ -114,6 +114,9 @@ function AdminJobCategory() {
                         job applicants
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        date end
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Action
                       </th>
                     </tr>
@@ -132,6 +135,7 @@ function AdminJobCategory() {
                         and repairing the organization's hardware.
                       </td>
                       <td className="px-6 py-4">123</td>
+                      <td className="px-6 py-4">02/28/24</td>
                       <td className="px-6 py-4 space-x-2">
                         <a
                           href="#"
@@ -174,6 +178,7 @@ function AdminJobCategory() {
                         build both the front end and the back end of a website.{" "}
                       </td>
                       <td className="px-6 py-4">50</td>
+                      <td className="px-6 py-4">02/28/24</td>
                       <td className="px-6 py-4 space-x-2">
                         <a
                           href="#"

@@ -14,8 +14,8 @@ function router() {
     <>
       <Router>
         <Routes>
-          <Route path="/Jobs" element={<Jobs />} />
           <Route index path="/" element={<HomePage />} />
+          <Route path="/Jobs" element={<Jobs />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/EmployeeList" element={<AdminUserList />} />

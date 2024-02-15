@@ -11,3 +11,8 @@
     background-color: rgba(255, 150, 0, 0.5) !important;
     /* You can adjust other styles like text color, border, etc. */
 }
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

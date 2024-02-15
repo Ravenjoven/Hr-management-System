@@ -13,7 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function AdminAttendance() {
   const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [employees, setEmployees] = useState([
     {
       id: 0,
@@ -91,7 +91,7 @@ function AdminAttendance() {
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:overflow-hidden md:min-w-full md:h-12 w-full h-full bg-custom-text-orange border-[3px] border-custom-text-orange md:flex  text-white">
+            <div className="upper-div md:min-w-full md:h-12 w-full h-full bg-custom-text-orange border-[3px] border-custom-text-orange md:flex  text-white">
               <span className="my-auto pl-4 uppercase font-bold">
                 leave & attendance
               </span>
@@ -118,7 +118,7 @@ function AdminAttendance() {
                   />
                   <DatePicker
                     selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
+                    onChange={(date) => setSelectedDate(date as Date)}
                     dateFormat="MMMM d, yyyy"
                     className="rounded-xl border-[3px] border-custom-text-orange h-10 text-center text-black py-2 w-80 cursor-pointer"
                     placeholderText="Select a date"

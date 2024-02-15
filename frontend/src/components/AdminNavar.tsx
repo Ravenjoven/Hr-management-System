@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
 function AdminNavar() {
   return (
     <nav className="border-b-4 border-gray-400 bg-white top-0 sticky z-50">
@@ -10,14 +10,23 @@ function AdminNavar() {
         </div>
 
         <div className="block w-auto h-auto pr-4" id="navbar-default">
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-20 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a
                 href="#"
-                className="block md:py-2 px-3 rounded md:bg-transparent md:text-orange-400 md:p-0 hover:text-blue-400"
+                className="block md:py-2 rounded md:bg-transparent md:text-orange-400 md:p-0 hover:text-blue-400"
                 aria-current="page"
               >
                 <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block md:py-2 rounded md:bg-transparent md:text-orange-400 md:p-0 hover:text-blue-400"
+                aria-current="page"
+              >
+                <FontAwesomeIcon icon={faUser} className="w-6 h-6" />
               </a>
             </li>
           </ul>
