@@ -9,6 +9,8 @@ import AdminJobCategory from "../components/hr/AdminJobCategory";
 import AdminUserList from "../components/hr/AdminUserList";
 import AdminAttendance from "../components/hr/AdminAttendance";
 import Jobs from "../components/hr/Jobs";
+
+import UserDetail from "../components/OJT/UserDetail";
 function router() {
   return (
     <>
@@ -22,6 +24,9 @@ function router() {
           <Route path="/Category" element={<AdminJobCategory />} />
           <Route path="/Attendance" element={<AdminAttendance />} />
           <Route path="/Profile" element={<Profile />} />
+
+
+          <Route path="/UserProfile" element={<UserDetail />} />
         </Routes>
       </Router>
     </>
