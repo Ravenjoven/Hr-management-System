@@ -14,7 +14,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
   return (
     <>
       {isOpen && (
-        <div className="fixed z-50 inset-0 overflow-y-auto w-full h-full">
+        <div className="fixed z-50 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div
               className="fixed inset-0 transition-opacity"
@@ -30,21 +30,21 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
               &#8203;
             </span>
             <div
-              className="inline-block w-full h-full align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+              className="inline-block bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-headline"
             >
               <div>
-                <div className="mt-3 text-center sm:mt-0 sm:text-left w-full h-full">
+                <div className="mt-3 text-center sm:mt-0 sm:text-left">
                   <h3
                     className="text-lg font-medium leading-6 text-gray-900"
                     id="modal-headline"
                   >
                     {title}
                   </h3>
-                  <div className="mt-2 text-black flex flex-col w-full">
-                    <div className="grid grid-cols-2 gap-x-4">
+                  <div className="mt-2 text-black flex flex-col">
+                    <div className="grid grid-cols-2 gap-4">
                       <input
                         type="text"
                         placeholder="Name"
@@ -53,6 +53,16 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                       <input
                         type="text"
                         placeholder="Lastname"
+                        className="border-[3px] border-custom-text-gray rounded pl-2 w-full h-10"
+                      />
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        className="border-[3px] border-custom-text-gray rounded pl-2 w-full h-10"
+                      />
+                      <input
+                        type="date"
+                        placeholder="Birthday"
                         className="border-[3px] border-custom-text-gray rounded pl-2 w-full h-10"
                       />
                     </div>

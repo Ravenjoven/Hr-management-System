@@ -8,6 +8,7 @@ import Profile from "../components/hr/AdminProfile";
 import AdminJobCategory from "../components/hr/AdminJobCategory";
 import AdminUserList from "../components/hr/AdminUserList";
 import AdminAttendance from "../components/hr/AdminAttendance";
+import AdminEmployeeManagement from "../components/hr/AdminEmployeeManagement";
 import Jobs from "../components/hr/Jobs";
 function router() {
   return (
@@ -21,6 +22,10 @@ function router() {
           <Route path="/Employee" element={<AdminUserList />} />
           <Route path="/Category" element={<AdminJobCategory />} />
           <Route path="/Attendance" element={<AdminAttendance />} />
+          <Route
+            path="/EmployeeManagement"
+            element={<AdminEmployeeManagement />}
+          />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
       </Router>
