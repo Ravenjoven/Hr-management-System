@@ -54,20 +54,20 @@ function UserProfile() {
                   className="flex w-[105px] h-[100px] border-[5px] border-gray-300 rounded-full p-3 m-8"
                 />
               </div>
-              <div className=" flex flex-col text-center justify-center items-center">
-                <h4 className="text-custom-text-black font-bold">JOHN DOE</h4>
-                <span className="text-custom-text-gray font-semibold p-1">
+              <div className=" flex flex-col text-center justify-center items-center  ">
+                <p className="text-custom-text-black font-bold text-2xl">JOHN DOE</p>
+                <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
               </div>
               <div className="flex flex-col m-12">
-                <div>
-                  <h4 className="text-custom-text-black font-bold">EMAIL</h4>
+                <div className="p-2">
+                  <h4 className="text-custom-text-black font-bold">EMAIL ID</h4>
                   <span className="text-custom-text-gray font-semibold">
                     johndoe@gmail.com
                   </span>
                 </div>
-                <div>
+                <div className="p-2">
                   <h4 className="text-custom-text-black font-bold">NUMBER</h4>
                   <span className="text-custom-text-gray font-semibold">
                     1234567890
@@ -75,13 +75,13 @@ function UserProfile() {
                 </div>
               </div>
               <div className="flex flex-col m-12">
-                <div>
+                <div className="p-2">
                   <h4 className="text-custom-text-black font-bold">MENTOR</h4>
-                  <span className="text-custom-text-gray font-semibold">
+                  <span className="text-custom-text-gray font-semibold ">
                     johndoe
                   </span>
                 </div>
-                <div>
+                <div className="p-2">
                   <h4 className="text-custom-text-black font-bold">SCHEDULE</h4>
                   <span className="text-custom-text-gray font-semibold">
                     6am - 3pm
@@ -93,7 +93,7 @@ function UserProfile() {
               <div className="left-div mt-4 w-[400px] min-h-screen border-[3px] rounded-2xl bg-white text-black p-4">
                 <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3">
                 <div>
-                    <h1 className="font-bold p-2" >PERSONAL INFO</h1>
+                    <h1 className="font-bold p-2  text-xl" >PERSONAL INFO</h1>
                 </div>
                   <div>
                     Fullname :{" "}
@@ -149,7 +149,7 @@ function UserProfile() {
                 <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl">
                   <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3">
                     <div>
-                        <h1>SKILLS</h1>
+                        <h1 className=" text-xl">SKILLS</h1>
                     </div>
                   </div>
                 </div>
