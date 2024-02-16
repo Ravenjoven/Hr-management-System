@@ -64,7 +64,7 @@ export default class Calendar extends React.Component {
 
   handleEventClick = (clickInfo) => {
     const eventId = clickInfo.event.id;
-    const updatedTitle = alert('Enter a new title for the event');
+    const updatedTitle = prompt('Enter a new title for the event');
     if (updatedTitle) {
       const updatedEvents = this.state.events.map(event => {
         if (event.id === eventId) {
