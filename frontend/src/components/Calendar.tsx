@@ -9,7 +9,18 @@ import "../App.css"
 
 export default class Calendar extends React.Component {
   state = {
-    events: [], 
+    events: [
+      {
+        title:'this is a event',
+        start:'2024-02-17'
+
+      },
+      {
+        title:'this is a another event',
+        start:'2024-02-18'
+
+      },
+    ], 
   };
 
 
@@ -34,7 +45,7 @@ export default class Calendar extends React.Component {
   }
   handleDateClick = (arg: { dateStr: any }) => {
     const newEvent = {
-      title: 'New Event',
+      title: prompt('Enter a event'),
       date: arg.dateStr,
     };
   
@@ -42,5 +53,5 @@ export default class Calendar extends React.Component {
       events: [...prevState.events, newEvent],
     }));
   };
-  
 }
+
