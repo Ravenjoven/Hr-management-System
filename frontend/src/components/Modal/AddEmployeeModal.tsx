@@ -1,13 +1,32 @@
 import { ChangeEvent, useState } from "react";
+import MultiSelect from "multiselect-react-dropdown";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   positions: string[];
+  types: string[];
 }
 
-function Modal({ isOpen, onClose, title, positions }: ModalProps) {
+function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
+  const skills = [
+    { name: "Hardworking", value: "option1" },
+    { name: "Time Management", value: "option2" },
+    { name: "Critical Thinking", value: "option3" },
+    { name: "Technincal", value: "option4" },
+  ];
+
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const onSelect = (selectedList: any) => {
+    setSelectedSkills(selectedList);
+  };
+
+  const onRemove = (selectedList: any) => {
+    setSelectedSkills(selectedList);
+  };
+
   const handleClose = () => {
     onClose && onClose();
   };
@@ -18,7 +37,7 @@ function Modal({ isOpen, onClose, title, positions }: ModalProps) {
     phoneNumber: "",
     address: "",
     position: "",
-    type: "Fulltime",
+    type: "",
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,11 +123,15 @@ function Modal({ isOpen, onClose, title, positions }: ModalProps) {
                       </div>
                     </div>
                     <div className="my-4">
-                      <label htmlFor="lastname">Address</label>
-                      <input
-                        type="text"
-                        placeholder="Complete address.."
-                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                      <label htmlFor="lastname">Skills</label>
+                      <MultiSelect
+                        options={skills}
+                        selectedValues={selectedSkills}
+                        onSelect={onSelect}
+                        onRemove={onRemove}
+                        displayValue="name"
+                        placeholder="Input skills here..."
+                        className="pt-2 h-full"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -131,53 +154,44 @@ function Modal({ isOpen, onClose, title, positions }: ModalProps) {
                       </div>
                       <div>
                         <label htmlFor="lastname">Type</label>
-                        <select
+                        <input
+                          type="text"
+                          placeholder="Type"
+                          className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                          value={formData.type}
                           name="type"
-                          className="uppercase border border-custom-text-gray rounded pl-2 w-full h-10"
-                        >
-                          <option
-                            value="Fulltime"
-                            className="text-custom-text-gray"
-                            selected
-                          >
-                            Full Time
-                          </option>
-                          <option
-                            value="Parttime"
-                            className="text-custom-text-gray"
-                          >
-                            Part Time
-                          </option>
-                          <option
-                            value="Intern"
-                            className="text-custom-text-gray"
-                          >
-                            Intern
-                          </option>
-                        </select>
+                          onChange={handleChange}
+                          list="types-list"
+                        />
+                        <datalist id="types-list">
+                          {types.map((types, index) => (
+                            <option key={index} value={types} />
+                          ))}
+                        </datalist>
                       </div>
                     </div>
                     <div className="my-4">
-                      <label htmlFor="lastname">Skills</label>
-                      <textarea
-                        placeholder="Input skills here..."
-                        className="border border-custom-text-gray rounded pl-2 w-full h-full"
+                      <label htmlFor="lastname">Address</label>
+                      <input
+                        type="text"
+                        placeholder="Complete address.."
+                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+              <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Save
                 </button>
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full md:inline-flex inlune-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Close
                 </button>

@@ -16,14 +16,6 @@ interface FormData {
 
 function AdminUserList() {
   const [expanded, setExpanded] = useState(false);
-  // const [formDataArray, setFormDataArray] = useState<{ [key: string]: any }[]>(
-  //   []
-  // );
-  // const handleSaveData = (data: FormData) => {
-  //   setFormDataArray([...formDataArray, data]);
-
-  //   console.log(setFormDataArray);
-  // };
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const toggleExpanded = () => {
@@ -124,6 +116,7 @@ function AdminUserList() {
     "Frontend Developer",
     "Project Manager",
   ]);
+  const [types, setTypes] = useState(["Full Time", "Part Time", "Intern"]);
   const [searchQuery, setSearchQuery] = useState("");
   const filteredUsers = users.filter((user) => {
     return (
@@ -226,6 +219,7 @@ function AdminUserList() {
                     onClose={closeModal}
                     title="Add Employee"
                     positions={positions}
+                    types={types}
                   ></Modal>
                 )}
               </div>
