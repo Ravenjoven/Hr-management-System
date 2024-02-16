@@ -1,142 +1,107 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import Modal from "../Modal/AddEmployeeModal";
 import {
   faMagnifyingGlass,
   faPen,
   faTrash,
-  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-function AdminUserList() {
+function Jobs() {
   const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(10);
+  const [JobsPerPage] = useState(10);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
-  const [users, setUsers] = useState([
+  const [jobs, setJobs] = useState([
     {
       id: 0,
-      name: "Jezrael Suliano",
-      position: "Project Manager",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "03/01/2024",
+      jobName: "Financial Associate",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 10,
+      date_createad: "02/14/24",
     },
     {
       id: 1,
-      name: "Ranel Soliano",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Freelance",
-      date_hire: "04/01/2024",
+      jobName: "Computer Hardware",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
     },
     {
       id: 2,
-      name: "Arnel Carcella",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Partime",
-      date_hire: "05/01/2024",
+      jobName: "Advertising Media",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
     },
     {
       id: 3,
-      name: "Raven Joven",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "OJT",
-      date_hire: "06/01/2024",
+      jobName: "UI/UX Designer",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
     },
     {
       id: 4,
-      name: "Aijem Aijem",
-      position: "Fullstack Developer",
-      contact: "090991231",
-      type: "Full Time",
-      date_hire: "07/10/2024",
+      jobName: "IT Analyst",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
     },
     {
       id: 5,
-      name: "Jezrael Suliano",
-      position: "Project Manager",
-      contact: "0912345678",
-      type: "OJT",
-      date_hire: "02/09/2024",
+      jobName: "IT Consultant",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
     },
     {
       id: 6,
-      name: "Ranel Soliano",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/08/2024",
+      jobName: "Fullstack Developer",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
     },
     {
       id: 7,
-      name: "Arnel Carcella",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/07/2024",
-    },
-    {
-      id: 8,
-      name: "Raven Joven",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/06/2024",
-    },
-    {
-      id: 9,
-      name: "Aijem Aijem",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/03/2024",
-    },
-    {
-      id: 10,
-      name: "Aijem Aijem",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/04/2024",
+      jobName: "Computer Engineering",
+      jobDescription:
+        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobLimit: 5,
+      date_createad: "02/14/24",
     },
   ]);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredUsers = users.filter((user) => {
+  const filteredJobs = jobs.filter((job) => {
     return (
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.contact.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.date_hire.toLowerCase().includes(searchQuery.toLowerCase())
+      job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.jobDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.jobLimit
+        .toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      job.date_createad.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => {
-    setIsOpen(true);
-  };
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-  const spinnerStyle = {
-    fontSize: "24px",
-    animation: "spin 1s linear infinite",
-  };
   const handlePageClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
   // Get current users
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const indexOfLastJobs = currentPage * JobsPerPage;
+  const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(users.length / usersPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(jobs.length / JobsPerPage); i++) {
     pageNumbers.push(i);
   }
   // Change page
@@ -173,14 +138,12 @@ function AdminUserList() {
         <div className="relative w-full mt-8">
           <Sidebar expanded={expanded} />
           <div
-            className={`content h-full max-w-full z-1   ${
+            className={`content h-full max-w-full z-1  ${
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:min-w-full h-16  bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
-              <span className="pl-4 uppercase font-bold">
-                company Employees
-              </span>
+            <div className="upper-div md:min-w-full h-16 bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
+              <span className="pl-4 uppercase font-bold">JOBS LIST</span>
               <div className="flex items-center justify-center flex-grow pl-4">
                 <div className="relative">
                   <FontAwesomeIcon
@@ -197,21 +160,12 @@ function AdminUserList() {
                 </div>
               </div>
               <div>
-                <button
-                  onClick={openModal}
-                  className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded"
-                >
-                  Add Employees
+                <button className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded">
+                  Add Jobs
                 </button>
-                {isOpen && (
-                  <Modal
-                    isOpen={isOpen}
-                    onClose={closeModal}
-                    title="Add Employee"
-                  ></Modal>
-                )}
               </div>
             </div>
+
             <div className="lower-div w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4">
               <div className="relative overflow-x-auto shadow-md">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -221,31 +175,26 @@ function AdminUserList() {
                         No.
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        NAME
+                        Job Name
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        POSITION
+                        Description
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        CONTACTS
+                        Limits
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Type
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        HIRE DATE
+                        Date Created
                       </th>
                       <th scope="col" className="px-6 py-3">
                         ACTIONS
                       </th>
                     </tr>
                   </thead>
-                  <tbody
-                    className={`${currentUsers.length > 0 ? "" : "hidden"}`}
-                  >
-                    {currentUsers.map((user, index) => (
+                  <tbody>
+                    {currentJobs.map((job, index) => (
                       <tr
-                        key={user.id}
+                        key={job.id}
                         className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
                         <th
@@ -254,11 +203,10 @@ function AdminUserList() {
                         >
                           {index + 1}
                         </th>
-                        <td className="px-6 py-4">{user.name}</td>
-                        <td className="px-6 py-4">{user.position}</td>
-                        <td className="px-6 py-4">{user.contact}</td>
-                        <td className="px-6 py-4">{user.type}</td>
-                        <td className="px-6 py-4">{user.date_hire}</td>
+                        <td className="px-6 py-4">{job.jobName}</td>
+                        <td className="px-6 py-4">{job.jobDescription}</td>
+                        <td className="px-6 py-4">{job.jobLimit}</td>
+                        <td className="px-6 py-4">{job.date_createad}</td>
                         <td className="px-6 py-4 space-x-2">
                           <a
                             href="#"
@@ -283,18 +231,6 @@ function AdminUserList() {
                     ))}
                   </tbody>
                 </table>
-                <section
-                  className={`${
-                    currentUsers.length === 0 ? "block" : "hidden"
-                  }`}
-                >
-                  <div className="flex items-center justify-center mt-4">
-                    <FontAwesomeIcon icon={faSpinner} style={spinnerStyle} />
-                  </div>
-                  <h1 className="text-center font-bold text-[20px] text-custom-text-black my-4">
-                    No Data Found
-                  </h1>
-                </section>
                 <nav
                   className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-8"
                   aria-label="Table navigation"
@@ -302,14 +238,14 @@ function AdminUserList() {
                   <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
                     Showing{" "}
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      {indexOfFirstUser + 1}-
-                      {indexOfLastUser > filteredUsers.length
-                        ? filteredUsers.length
-                        : indexOfLastUser}
+                      {indexOfFirstJobs + 1}-
+                      {indexOfLastJobs > filteredJobs.length
+                        ? filteredJobs.length
+                        : indexOfLastJobs}
                     </span>{" "}
                     of{" "}
                     <span className="font-semibold text-gray-900 dark:text-white">
-                      {filteredUsers.length}
+                      {filteredJobs.length}
                     </span>
                   </span>
                   <ul
@@ -351,7 +287,7 @@ function AdminUserList() {
                       <button
                         onClick={() => handlePageClick(currentPage + 1)}
                         disabled={
-                          currentPage === Math.ceil(users.length / usersPerPage)
+                          currentPage === Math.ceil(jobs.length / JobsPerPage)
                         }
                         className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                       >
@@ -368,4 +304,4 @@ function AdminUserList() {
     </div>
   );
 }
-export default AdminUserList;
+export default Jobs;

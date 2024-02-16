@@ -11,7 +11,7 @@ function Dashboard() {
   return (
     <div className="min-h-screen max-w-full bg-white font-montserrat">
       <AdminNavar />
-      <div className="fixed">
+      <div className="fixed z-50">
         <button
           data-drawer-target="logo-sidebar"
           data-drawer-toggle="logo-sidebar"

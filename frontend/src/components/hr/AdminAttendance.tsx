@@ -11,16 +11,53 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function AdminAttendance() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [employees, setEmployees] = useState([
+    {
+      id: 0,
+      img: "../images/profile-image.png",
+      name: "Ranel Soliano",
+      attendance: "P",
+    },
+    {
+      id: 1,
+      img: "../images/profile-image.png",
+      name: "Arnel Carcella",
+      attendance: "A",
+    },
+    {
+      id: 2,
+      img: "../images/profile-image.png",
+      name: "Jezrael Suliano",
+      attendance: "L",
+    },
+    {
+      id: 3,
+      img: "../images/profile-image.png",
+      name: "Raven Joven",
+      attendance: "P",
+    },
+    {
+      id: 4,
+      img: "../images/profile-image.png",
+      name: "Aijem Aijem",
+      attendance: "A",
+    },
+  ]);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
-  const [selectedDate, setSelectedDate] = useState(null);
+  const filteredEmployees = employees.filter((employee) =>
+    employee.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <AdminNavar />
-        <div className="fixed">
+        <div className="fixed z-50">
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
@@ -48,15 +85,15 @@ function AdminAttendance() {
         <div className="relative w-full mt-8">
           <Sidebar expanded={expanded} />
           <div
-            className={`content h-full max-w-full z-1 rounded border-[3px] border-custom-text-orange  ${
+            className={`content min-h-screen overflow-y-auto scrollbar-hide max-w-full rounded border-[3px] border-custom-text-orange  ${
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:overflow-hidden overflow-scroll md:min-w-full h-12 bg-custom-text-orange border-[3px] border-custom-text-orange flex text-white">
+            <div className="upper-div md:min-w-full md:h-12 w-full h-full bg-custom-text-orange border-[3px] border-custom-text-orange md:flex  text-white">
               <span className="my-auto pl-4 uppercase font-bold">
                 leave & attendance
               </span>
-              <div className="flex justify-center items-center flex-grow">
+              <div className="flex md:justify-center md:items-center flex-grow">
                 <div className="relative">
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
@@ -66,6 +103,8 @@ function AdminAttendance() {
                     type="text"
                     className="rounded-full border-[3px] border-custom-text-orange text-black pl-10 pr-4 py-2 w-80 h-10"
                     placeholder="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
               </div>
@@ -73,11 +112,11 @@ function AdminAttendance() {
                 <div className="relative flex items-center">
                   <FontAwesomeIcon
                     icon={faCalendarDays}
-                    className="absolute z-50 left-4 w-4 h-4 flex items-center pointer-events-none text-custom-text-orange"
+                    className="absolute left-4 w-4 h-4 flex z-10 items-center pointer-events-none text-custom-text-orange"
                   />
                   <DatePicker
                     selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
+                    onChange={(date) => setSelectedDate(date as Date)}
                     dateFormat="MMMM d, yyyy"
                     className="rounded-xl border-[3px] border-custom-text-orange h-10 text-center text-black py-2 w-80 cursor-pointer"
                     placeholderText="Select a date"
@@ -87,6 +126,45 @@ function AdminAttendance() {
                     className="absolute top-1/2 transform -translate-y-1/2 right-4 w-4 h-4 text-custom-text-orange"
                   />
                 </div>
+              </div>
+            </div>
+            <div className="lower-di flex flex-col m-10">
+              <div className="grid gap-5 md:grid-cols-5 grid-cols-1">
+                {filteredEmployees.map((employee) => (
+                  <div
+                    key={employee.id}
+                    className="bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
+                  >
+                    <div className="flex items-center">
+                      <img
+                        src={employee.img}
+                        alt=""
+                        className="w-24 h-24 text-custom-text-black my-2"
+                      />
+                    </div>
+                    <div className="text-center text-custom-text-black capitalize">
+                      {employee.name}
+                    </div>
+                    <div className="flex space-x-4 m-4">
+                      <div
+                        className={`border-[3px] rounded-full w-10 h-10 flex justify-center items-center
+                        ${
+                          employee.attendance === "P"
+                            ? "bg-green-400 border-green-400"
+                            : employee.attendance === "A"
+                            ? "bg-red-400 border-red-400"
+                            : employee.attendance === "L"
+                            ? "bg-orange-400 border-orange-400"
+                            : ""
+                        }`}
+                      >
+                        <span className="text-[20px] text-white">
+                          {employee.attendance}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
