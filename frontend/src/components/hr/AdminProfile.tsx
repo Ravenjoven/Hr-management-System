@@ -5,7 +5,7 @@ import Sidebar from "../Sidebar";
 import AdminNavar from "../AdminNavar";
 import { useState } from "react";
 
-function ProfilePage() {
+function AdminProfile() {
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -173,4 +173,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default AdminProfile;

@@ -11,7 +11,7 @@ function AdminNavar() {
 
         <div className="block w-auto h-auto pr-4" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
+            <li className="flex space-x-4">
               <a
                 href="#"
                 className="block md:py-2 rounded md:bg-transparent md:text-orange-400 md:p-0 hover:text-blue-400"
@@ -19,8 +19,6 @@ function AdminNavar() {
               >
                 <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
               </a>
-            </li>
-            <li>
               <a
                 href="#"
                 className="block md:py-2 rounded md:bg-transparent md:text-orange-400 md:p-0 hover:text-blue-400"

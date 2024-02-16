@@ -10,8 +10,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
+interface FormData {
+  [key: string]: any;
+}
+
 function AdminUserList() {
   const [expanded, setExpanded] = useState(false);
+  // const [formDataArray, setFormDataArray] = useState<{ [key: string]: any }[]>(
+  //   []
+  // );
+  // const handleSaveData = (data: FormData) => {
+  //   setFormDataArray([...formDataArray, data]);
+
+  //   console.log(setFormDataArray);
+  // };
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const toggleExpanded = () => {
@@ -106,6 +118,11 @@ function AdminUserList() {
       type: "Full Time",
       date_hire: "02/04/2024",
     },
+  ]);
+  const [positions, setPositions] = useState([
+    "Backend Developer",
+    "Frontend Developer",
+    "Project Manager",
   ]);
   const [searchQuery, setSearchQuery] = useState("");
   const filteredUsers = users.filter((user) => {
@@ -208,6 +225,7 @@ function AdminUserList() {
                     isOpen={isOpen}
                     onClose={closeModal}
                     title="Add Employee"
+                    positions={positions}
                   ></Modal>
                 )}
               </div>
