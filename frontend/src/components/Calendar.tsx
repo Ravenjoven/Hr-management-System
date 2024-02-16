@@ -11,17 +11,24 @@ export default class Calendar extends React.Component {
   state = {
     events: [
       {
-        title:'this is a event',
-        start:'2024-02-17'
+        id:1,
+        title:'event',
+        start:'2024-02-16'
 
       },
-      {
-        title:'this is a another event',
-        start:'2024-02-18'
+      // {
+      //   title:'this is a event',
+      //   start:'2024-02-17'
 
-      },
+      // },
+      // {
+      //   title:'this is a another event',
+      //   start:'2024-02-18'
+
+      // },
     ], 
   };
+ 
 
 
   render() {
@@ -36,6 +43,7 @@ export default class Calendar extends React.Component {
             end:"dayGridMonth,timeGridWeek,timeGridDay"
           }}
           dateClick={this.handleDateClick}
+          eventClick={this.handleEventClick}
           events={this.state.events}
           height={"400px"}
         />
@@ -53,5 +61,22 @@ export default class Calendar extends React.Component {
       events: [...prevState.events, newEvent],
     }));
   };
+
+  handleEventClick = (clickInfo) => {
+    const eventId = clickInfo.event.id;
+    const updatedTitle = alert('Enter a new title for the event');
+    if (updatedTitle) {
+      const updatedEvents = this.state.events.map(event => {
+        if (event.id === eventId) {
+          return { ...event, title: updatedTitle };
+        } else {
+          return event;
+        }
+      });
+      this.setState({ events: updatedEvents });
+    }
+  };
+  
+  
 }
 
