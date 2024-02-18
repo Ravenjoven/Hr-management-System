@@ -10,6 +10,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
+interface FormData {
+  [key: string]: any;
+}
+
 function AdminUserList() {
   const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,6 +111,12 @@ function AdminUserList() {
       date_hire: "02/04/2024",
     },
   ]);
+  const [positions, setPositions] = useState([
+    "Backend Developer",
+    "Frontend Developer",
+    "Project Manager",
+  ]);
+  const [types, setTypes] = useState(["Full Time", "Part Time", "Intern"]);
   const [searchQuery, setSearchQuery] = useState("");
   const filteredUsers = users.filter((user) => {
     return (
@@ -208,6 +218,8 @@ function AdminUserList() {
                     isOpen={isOpen}
                     onClose={closeModal}
                     title="Add Employee"
+                    positions={positions}
+                    types={types}
                   ></Modal>
                 )}
               </div>

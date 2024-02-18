@@ -23,7 +23,9 @@ module.exports = {
         'custom-text-black' : '#525050',
         'custom-text-orange' : '#F89939',
         'custom-bg-black' : '#9B9B9B',
-        'custom-text-smooth' : '#E9EBF2',
+        'custom-bg-orange': '#F79A38',
+        'custom-bg-smooth': '#EAECF1'
+        
       }
     },
   },
