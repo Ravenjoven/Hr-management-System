@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
+import AddJobModal from "../Modal/AddJobModal";
 import {
   faMagnifyingGlass,
   faPen,
@@ -12,6 +13,13 @@ function Jobs() {
   const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -160,9 +168,19 @@ function Jobs() {
                 </div>
               </div>
               <div>
-                <button className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded">
+                <button
+                  onClick={openModal}
+                  className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded"
+                >
                   Add Jobs
                 </button>
+                {isOpen && (
+                  <AddJobModal
+                    isOpen={isOpen}
+                    onClose={closeModal}
+                    title="Add Job"
+                  ></AddJobModal>
+                )}
               </div>
             </div>
 

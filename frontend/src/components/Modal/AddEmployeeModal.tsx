@@ -9,7 +9,13 @@ interface ModalProps {
   types: string[];
 }
 
-function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
+function AddEmployeeModal({
+  isOpen,
+  onClose,
+  title,
+  positions,
+  types,
+}: ModalProps) {
   const skills = [
     { name: "Hardworking", value: "option1" },
     { name: "Time Management", value: "option2" },
@@ -19,12 +25,20 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
 
   const [selectedSkills, setSelectedSkills] = useState([]);
 
-  const onSelect = (selectedList: any) => {
+  const handleSelectSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
+    setFormData({
+      ...formData,
+      jobSkils: selectedList,
+    });
   };
 
-  const onRemove = (selectedList: any) => {
+  const handleRemoveSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
+    setFormData({
+      ...formData,
+      jobSkils: selectedList,
+    });
   };
 
   const handleClose = () => {
@@ -35,6 +49,7 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
     dateOfBirth: "",
     email: "",
     phoneNumber: "",
+    jobSkils: [],
     address: "",
     position: "",
     type: "",
@@ -48,10 +63,9 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
     });
   };
 
-  // const handleClick = () => {
-  //   onSave(formData);
-  //   handleClose();
-  // };
+  const handleSaveData = () => {
+    console.log("Form Data:", formData);
+  };
 
   return (
     <>
@@ -90,17 +104,33 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
                   <div className="mt-4 text-black flex flex-col">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="firstname">Fullname</label>
+                        <label htmlFor="Fullname">Fullname</label>
                         <input
                           type="text"
+                          id="Fullname"
+                          value={formData.fullname}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              fullname: e.target.value,
+                            })
+                          }
                           placeholder="Fullname"
-                          className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                          className="border capitalize border-custom-text-gray rounded pl-2 w-full h-10"
                         />
                       </div>
                       <div>
                         <label htmlFor="date-of-birth">Date of Birth</label>
                         <input
                           type="date"
+                          id="date-of-birth"
+                          value={formData.dateOfBirth}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              dateOfBirth: e.target.value,
+                            })
+                          }
                           placeholder="Birthday"
                           className="border border-custom-text-gray rounded pl-2 w-full h-10"
                         />
@@ -109,6 +139,14 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
                         <label htmlFor="email">Email</label>
                         <input
                           type="email"
+                          id="email"
+                          value={formData.email}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              email: e.target.value,
+                            })
+                          }
                           placeholder="example@gmail.com"
                           className="border border-custom-text-gray rounded pl-2 w-full h-10"
                         />
@@ -117,18 +155,27 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
                         <label htmlFor="lastname">Phone Number</label>
                         <input
                           type="text"
+                          id="lastname"
+                          value={formData.phoneNumber}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              phoneNumber: e.target.value,
+                            })
+                          }
                           placeholder="+123456789"
                           className="border border-custom-text-gray rounded pl-2 w-full h-10"
                         />
                       </div>
                     </div>
                     <div className="my-4">
-                      <label htmlFor="lastname">Skills</label>
+                      <label htmlFor="Skills">Skills</label>
                       <MultiSelect
                         options={skills}
+                        id="Skills"
                         selectedValues={selectedSkills}
-                        onSelect={onSelect}
-                        onRemove={onRemove}
+                        onSelect={handleSelectSkills}
+                        onRemove={handleRemoveSkills}
                         displayValue="name"
                         placeholder="Input skills here..."
                         className="pt-2 h-full"
@@ -136,14 +183,20 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="position">Position</label>
+                        <label htmlFor="Position">Position</label>
                         <input
                           type="text"
+                          id="position"
+                          value={formData.position}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              position: e.target.value,
+                            })
+                          }
                           placeholder="Position"
                           className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                          value={formData.position}
                           name="position"
-                          onChange={handleChange}
                           list="positions-list"
                         />
                         <datalist id="positions-list">
@@ -153,14 +206,20 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
                         </datalist>
                       </div>
                       <div>
-                        <label htmlFor="lastname">Type</label>
+                        <label htmlFor="Type">Type</label>
                         <input
                           type="text"
+                          id="Type"
+                          value={formData.type}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              type: e.target.value,
+                            })
+                          }
                           placeholder="Type"
                           className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                          value={formData.type}
                           name="type"
-                          onChange={handleChange}
                           list="types-list"
                         />
                         <datalist id="types-list">
@@ -171,11 +230,19 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
                       </div>
                     </div>
                     <div className="my-4">
-                      <label htmlFor="lastname">Address</label>
+                      <label htmlFor="Address">Address</label>
                       <input
                         type="text"
+                        id="Address"
+                        value={formData.address}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            address: e.target.value,
+                          })
+                        }
                         placeholder="Complete address.."
-                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                        className="border capitalize border-custom-text-gray rounded pl-2 w-full h-10"
                       />
                     </div>
                   </div>
@@ -184,6 +251,7 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
                 <button
                   type="button"
+                  onClick={handleSaveData}
                   className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Save
@@ -204,4 +272,4 @@ function Modal({ isOpen, onClose, title, positions, types }: ModalProps) {
   );
 }
 
-export default Modal;
+export default AddEmployeeModal;
