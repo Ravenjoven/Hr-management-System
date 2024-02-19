@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import Modal from "../Modal/AddEmployeeModal";
 import {
   faMagnifyingGlass,
   faPen,
@@ -9,21 +8,16 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import AddEmployeeModal from "../Modal/AddEmployeeModal";
+import ViewEmployeeModal from "../Modal/ViewEmployeeModal";
 
 interface FormData {
   [key: string]: any;
 }
 
 function AdminUserList() {
+  const [selectedUser, setSelectedUser] = useState(null);
   const [expanded, setExpanded] = useState(false);
-  // const [formDataArray, setFormDataArray] = useState<{ [key: string]: any }[]>(
-  //   []
-  // );
-  // const handleSaveData = (data: FormData) => {
-  //   setFormDataArray([...formDataArray, data]);
-
-  //   console.log(setFormDataArray);
-  // };
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const toggleExpanded = () => {
@@ -124,6 +118,7 @@ function AdminUserList() {
     "Frontend Developer",
     "Project Manager",
   ]);
+  const [types, setTypes] = useState(["Full Time", "Part Time", "Intern"]);
   const [searchQuery, setSearchQuery] = useState("");
   const filteredUsers = users.filter((user) => {
     return (
@@ -140,6 +135,15 @@ function AdminUserList() {
   };
   const closeModal = () => {
     setIsOpen(false);
+  };
+  const [isViewModal, setViewModal] = useState(false);
+  const openViewModal = (user: any) => {
+    setSelectedUser(user);
+    setViewModal(true);
+  };
+  const closeViewModal = () => {
+    setViewModal(false);
+    setSelectedUser(null);
   };
   const spinnerStyle = {
     fontSize: "24px",
@@ -221,12 +225,13 @@ function AdminUserList() {
                   Add Employees
                 </button>
                 {isOpen && (
-                  <Modal
+                  <AddEmployeeModal
                     isOpen={isOpen}
                     onClose={closeModal}
                     title="Add Employee"
                     positions={positions}
-                  ></Modal>
+                    types={types}
+                  ></AddEmployeeModal>
                 )}
               </div>
             </div>
@@ -278,27 +283,29 @@ function AdminUserList() {
                         <td className="px-6 py-4">{user.type}</td>
                         <td className="px-6 py-4">{user.date_hire}</td>
                         <td className="px-6 py-4 space-x-2">
-                          <a
-                            href="#"
+                          <button
+                            onClick={() => openViewModal(user)}
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                           >
                             <FontAwesomeIcon
                               icon={faPen}
                               className="hover:text-green-500"
                             />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
+                          </button>
+                          <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             <FontAwesomeIcon
                               icon={faTrash}
                               className="hover:text-red-500"
                             />
-                          </a>
+                          </button>
                         </td>
                       </tr>
                     ))}
+                    <ViewEmployeeModal
+                      isView={isViewModal}
+                      isClose={closeViewModal}
+                      user={selectedUser}
+                    />
                   </tbody>
                 </table>
                 <section
