@@ -9,12 +9,12 @@ const data = [
   {
     id: 2,
     label: "My Details",
-    // to: "/Employee",
+    to: "/Employee",
   },
   {
     id: 3,
     label: "Leave & Attendance",
-    // to: "/Jobs",
+    to: "/Jobs",
   },
 ];
 const firstRoute = data[0].to;

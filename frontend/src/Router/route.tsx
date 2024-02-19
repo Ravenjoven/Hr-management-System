@@ -13,6 +13,7 @@ import Jobs from "../components/hr/Jobs";
 import OjtJobList from "../components/OJT/OjtJobs";
 
 import UserDetail from "../components/OJT/UserDetail";
+import OjtAttendance from "../components/OJT/OjtAttendance";
 function router() {
   return (
     <>
@@ -34,6 +35,7 @@ function router() {
 
 
           <Route path="/UserProfile" element={<UserDetail />} />
+          <Route path="/OjtAttendance" element={<OjtAttendance />} />
         </Routes>
       </Router>
     </>
