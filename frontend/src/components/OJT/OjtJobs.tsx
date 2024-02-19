@@ -215,7 +215,7 @@ function OjtJobList() {
                       <span className="text-custom-text-green">
                       Frontend 
                       </span>
-                    </div>
+                    </div>  
                     <div>
                       <span className="text-[10px] text-custom-text-black">
                         10 applicants
@@ -234,7 +234,7 @@ function OjtJobList() {
                     />
                   </div>
                   <div className="flex justify-end">
-                    <button className="bg-custom-bg-orange mt-12 mr-12 p-2 rounded-xl text-white flex items-center">
+                    <button  className="bg-custom-bg-orange mt-12 mr-12 p-2 rounded-xl text-white flex items-center">
                       Apply now
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
