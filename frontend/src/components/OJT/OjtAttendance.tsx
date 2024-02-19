@@ -6,6 +6,7 @@ import {
   faTrash,
   faPen,
   faUser,
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
@@ -63,9 +64,9 @@ function OjtAttendance() {
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="flex flex-col">
+            <div className="flex flex-col justify-center">
               <div className="flex flex-row">
-                <div className="bg-white m-2 rounded-[30px]">
+                <div className="bg-white m-2 rounded-[20px]">
                   <div className="flex flex-col p-8 justify-center items-center">
                     <div>
                       <FontAwesomeIcon
@@ -77,33 +78,78 @@ function OjtAttendance() {
                       <p className="font-bold text-xl">Jhon doe</p>
                     </div>
                     <div>
-                      <p className="text-gray-500 font-semibold p-1 text-m">Software Developer</p>
+                      <p className="text-gray-500 font-semibold p-1 text-m">
+                        Software Developer
+                      </p>
                     </div>
                     <div className="flex flex-row ">
                       <div>
-                        <button type="button" className="bg-green-500 rounded-[4px] p-2 w-18 m-2" >time in</button>
+                        <button
+                          type="button"
+                          className="bg-green-500 rounded-[4px] p-2 w-18 m-2"
+                        >
+                          time in
+                        </button>
                       </div>
                       <div>
-                        <button type="button" className="bg-red-500 p-2 w-18 m-2" >time out</button>
+                        <button
+                          type="button"
+                          className="bg-red-500 p-2 w-18 m-2"
+                        >
+                          time out
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <div className="flex flex-row">
-                    <div className="bg-white m-2 w-full h-full">
-                      sdasdhsjadh
+                  <div className="flex flex-row m-2 justify-center items-center">
+                    <div className="bg-white p-8 rounded-[20px] w-full h-[80%] flex flex-col">
+                      <div className="">
+                        <FontAwesomeIcon
+                          icon={faClock}
+                          className="w-[50px] h-[50px] flex justify-start"
+                        />
+                      </div>
+                      <div className="">
+                        <p className="text-gray-500 font-bold text-[200%]">
+                          CLOCK
+                        </p>
+                      </div>
                     </div>
-                    <div className="bg-white m-2 w-full h-full">
-                      sdasdhsjadh
+                    <div className="bg-white m-2 p-4 rounded-[20px] w-full h-[80%]">
+                      <div className="">
+                        <p className="text-gray-500 font-bold text-[200%]">
+                          Cebu, Phillippines
+                        </p>
+                      </div>
+                      <div className="">
+                        <p>
+                          3 : 40 :20 <span className="text-blue-500">PM</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-row">
-                    <div className="bg-white m-2 w-full h-full">
-                      sdasdhsjadh
+                    <div className="bg-white m-2 p-4 rounded-[20px] w-full h-[80%]">
+                      <div className="">
+                        <p className="text-blue-300 font-bold text-[200%]">
+                          12h 13m
+                        </p>
+                      </div>
+                      <div className="">
+                        <p>Total hours worked</p>
+                      </div>
                     </div>
-                    <div className="bg-white m-2 w-full h-full">
-                      sdasdhsjadh
+                    <div className="bg-white m-2 p-4 rounded-[20px] w-full h-[80%]">
+                      <div className="">
+                        <p className="text-red-400 font-bold text-[200%]">
+                          640h 0m
+                        </p>
+                      </div>
+                      <div className="">
+                        <p>Work hours required</p>
+                      </div>
                     </div>
                   </div>
                 </div>
