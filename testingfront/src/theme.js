@@ -1,14 +1,18 @@
 import { createTheme } from '@mui/material/styles';
-import { grey } from '@mui/material/colors';
+import { blueGrey } from '@mui/material/colors';
 
 export const theme = createTheme({
     palette: {
         primary: {
-            main: '#ffffff' // white color
+            main: blueGrey[800], // Assuming you meant a darker shade for primary
         },
         secondary: {
-            main: grey[300], // light grey color
-            midNightBlue: "#003366"
+            main: blueGrey[700],
+        },
+        // Define custom colors here if you need to use them across your app
+        custom: {
+            white: "#ffffff",
+            midNightBlue: "#003366",
         }
     }
 });

@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import Navbar from '../component/Navbar';
-import Header from '../component/Header';
+import Navbar from '../component/Navbar'
+import Header from '../component/Header'
 import { Stack, Box, Container, Card, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux'
 import { jobLoadAction } from '../redux/actions/jobActions';
+import { jobTypeAction, jobTypeLoadAction } from '../redux/actions/jobTypeActions';
 import { useParams } from 'react-router-dom';
+import CardElement from '../component/CardElement'
+import Pagination from '@mui/material/Pagination'
+import Footer from '../component/Footer'
+import LoadingBox from '../component/LoadingBox'; 
+import SelectComponent from '../component/SelectComponent';
 
 const Home = () => {
   const { jobs, setUniqueLocation, pages, loading } = useSelector (state =>state.loadJobs)
@@ -17,7 +23,16 @@ const Home = () => {
   useEffect(()=>{
     dispatch(jobLoadAction(page, keyword, cat, location));
 
-  },[page, keyword, cat, location])
+  },[page, keyword, cat, location]);
+
+  useEffect(()=>{
+    dispatch(jobTypeLoadAction());
+  },[]);
+
+  const handleChangeCategory = (e) =>{
+    setCat(e.target.value);
+
+  }
   return (
     <>
       <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
@@ -35,18 +50,47 @@ const Home = () => {
                     Filter job by category
                   </Typography>
                 </Box>
+                <SelectComponent handleChangeCategory={handleChangeCategory} cat={cat}/>
               </Card>
             </Box>
             <Box sx={{ flex: 5, p: 2 }}>
-              {
-                jobs && jobs.map(job => (
-                  <h1>{job.title}</h1>
-                ))
-              }
-            </Box>
+  {loading ? (
+    // Display the LoadingBox component when data is loading
+    <LoadingBox />
+  ) : jobs && jobs.length === 0 ? (
+    // Display "No result found" if there are no jobs
+    <Box
+      sx={{
+        minHeight: '350px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <h2>No result found!</h2>
+    </Box>
+  ) : (
+    // Display jobs if not loading and jobs are present
+    jobs.map((job, i) => (
+      <CardElement
+        key={i}
+        id={job._id}
+        jobTitle={job.title}
+        description={job.description}
+        category={job.jobType ? job.jobType.jobTypeName : "No category"}
+        location={job.location}
+      />
+    ))
+  )}
+  <Stack spacing={2}>
+    <Pagination page={page} count={pages === 0 ? 1 : pages} onChange={(event, value) => setPage(value)} />
+  </Stack>
+</Box>
+
           </Stack>  
         </Container>
       </Box>
+      <Footer/>
     </>
   );
 };

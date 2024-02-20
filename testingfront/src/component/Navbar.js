@@ -55,7 +55,7 @@ function Navbar() {
             textDecoration: 'none',
           }}
         >
-          Job Posting
+          
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
@@ -125,7 +125,7 @@ function Navbar() {
         </Box>
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 1 }}>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
             </IconButton>
           </Tooltip>
@@ -157,4 +157,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Navbar
