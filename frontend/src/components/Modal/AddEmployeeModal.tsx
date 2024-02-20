@@ -115,7 +115,7 @@ function AddEmployeeModal({
                               fullname: e.target.value,
                             })
                           }
-                          placeholder="Fullname"
+                          placeholder="Complete Name"
                           className="border capitalize border-custom-text-gray rounded pl-2 w-full h-10"
                         />
                       </div>
