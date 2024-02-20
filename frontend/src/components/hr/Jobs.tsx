@@ -114,6 +114,43 @@ function Jobs() {
   }
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const [showFirstRow, setShowFirstRow] = useState(false);
+
+  const handleClick =
+    (jobId: number) => (event: React.MouseEvent<HTMLTableDataCellElement>) => {
+      alert(`Clicked job with ID ${jobId}`);
+      setShowFirstRow(!showFirstRow);
+    };
+
+  const [applicant, setApplicant] = useState([
+    {
+      id: 0,
+      applicantName: "Jezrael Suliano",
+      date_applied: "03/15/24",
+    },
+    {
+      id: 1,
+      applicantName: "Ranel Soliano",
+      date_applied: "03/15/24",
+    },
+    {
+      id: 2,
+      applicantName: "Arnel Carcella",
+      date_applied: "03/15/24",
+    },
+    {
+      id: 3,
+      applicantName: "Raven Joven",
+      date_applied: "03/15/24",
+    },
+    {
+      id: 4,
+      applicantName: "Aijem Aijem",
+      date_applied: "03/15/24",
+    },
+  ]);
+
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -188,7 +225,12 @@ function Jobs() {
               <div className="relative overflow-x-auto shadow-md">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-black border-b-[3px] border-custom-text-orange  uppercase">
-                    <tr className="capitalize">
+                    {/* First row */}
+                    <tr
+                      className={`all_data capitalize ${
+                        showFirstRow ? "hidden" : "visible"
+                      }`}
+                    >
                       <th scope="col" className="px-6 py-3">
                         No.
                       </th>
@@ -208,8 +250,28 @@ function Jobs() {
                         ACTIONS
                       </th>
                     </tr>
+                    {/* Second row */}
+                    <tr
+                      className={`eachData capitalize ${
+                        showFirstRow ? "visible" : "hidden"
+                      }`}
+                    >
+                      <th scope="col" className="px-6 py-3">
+                        No.
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Applicant Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Date Applied
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Action
+                      </th>
+                    </tr>
                   </thead>
                   <tbody>
+                    {/*all data*/}
                     {currentJobs.map((job, index) => (
                       <tr
                         key={job.id}
@@ -223,8 +285,53 @@ function Jobs() {
                         </th>
                         <td className="px-6 py-4">{job.jobName}</td>
                         <td className="px-6 py-4">{job.jobDescription}</td>
-                        <td className="px-6 py-4">{job.jobLimit}</td>
+                        <td
+                          onClick={handleClick(job.id)}
+                          className="px-6 py-4 cursor-pointer text-green-600 font-semibold"
+                        >
+                          {job.jobLimit}
+                        </td>
                         <td className="px-6 py-4">{job.date_createad}</td>
+                        <td className="px-6 py-4 space-x-2">
+                          <a
+                            href="#"
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            <FontAwesomeIcon
+                              icon={faPen}
+                              className="hover:text-green-500"
+                            />
+                          </a>
+                          <a
+                            href="#"
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          >
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              className="hover:text-red-500"
+                            />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                    {/*individual data*/}
+                    {applicant.map((jobApplicant, index) => (
+                      <tr
+                        key={jobApplicant.id}
+                        className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-4">
+                          {jobApplicant.applicantName}
+                        </td>
+                        <td className="px-6 py-4">
+                          {jobApplicant.date_applied}
+                        </td>
                         <td className="px-6 py-4 space-x-2">
                           <a
                             href="#"

@@ -55,13 +55,13 @@ export default function ViewEmployeeModal({
                     >
                       Employee Details
                     </h3>
-                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    {/* <h3 className="text-lg font-medium leading-6 text-gray-900">
                       {user && ( // Check if user exists
                         <h3 className="text-lg font-medium leading-6 text-gray-900">
                           user id: {user.id}
                         </h3>
                       )}
-                    </h3>
+                    </h3> */}
                     <button
                       onClick={handleClose}
                       className="text-lg font-medium leading-6 text-gray-900"
@@ -73,17 +73,32 @@ export default function ViewEmployeeModal({
                     </button>
                   </div>
                   <hr />
-                  <div className="mt-2 flex flex-col">
-                    <div className="flex justify-center items-center">
+                  <div className="mt-2 flex">
+                    <div className="flex justify-start items-left">
                       <img
-                        src="./images/img2.jpg"
-                        className="h-36 w-36 rounded-full border "
+                        src="./images/office.png"
+                        className="h-36 w-36 rounded-2xl border border-custom-text-black"
                       />
                     </div>
-                    <div className="details">
-                      Name: <span>{user?.name}</span>
+                    <div className="details flex flex-col pl-10 py-2 space-y-2">
+                      <div>
+                        Name: <span>{user?.name}</span>
+                      </div>
+                      <div>
+                        Position: <span>{user?.position}</span>
+                      </div>
+                      <div>
+                        Contact: <span>{user?.contact}</span>
+                      </div>
+                      <div>
+                        Type: <span>{user?.type}</span>
+                      </div>
+                      <div>
+                        Hire Date: <span>{user?.date_hire}</span>
+                      </div>
                     </div>
                   </div>
+                  <hr className="text-custom-text-black mt-2" />
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@ import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
 import {
   faMagnifyingGlass,
-  faPen,
+  faEye,
   faTrash,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
@@ -288,7 +288,7 @@ function AdminUserList() {
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                           >
                             <FontAwesomeIcon
-                              icon={faPen}
+                              icon={faEye}
                               className="hover:text-green-500"
                             />
                           </button>
