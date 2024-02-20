@@ -45,10 +45,23 @@ const Calendar: React.FC = () => {
   };
 
   const handleEventClick = (clickInfo: any) => {
+    // const eventId = clickInfo.event.id;
+    // const updatedTitle = alert(eventId );
     const title =clickInfo.event.title;
     const start = clickInfo.event.start;
+    // const start =alert(date );
     setSelectedDate(start);
     setIsModalOpen(true);
+    // if (updatedTitle) {
+    //   const updatedEvents = events.map((event) => {
+    //     if (event.id === eventId) {
+    //       return { ...event, title: updatedTitle };
+    //     } else {
+    //       return event;
+    //     }
+    //   });
+    //   setEvents(updatedEvents);
+    // }
   };
 
   const closeModal = () => {
@@ -61,7 +74,6 @@ const Calendar: React.FC = () => {
       {isModalOpen && selectedDate !== null && 
         <ModalComponent 
           date={selectedDate} 
-          start={selectedDate}
           onClose={closeModal} 
         />
       }

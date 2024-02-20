@@ -3,10 +3,10 @@ import React, {useState} from "react";
 interface ModalProps {
   onClose: () => void;
   date: string; // Assuming date is a string
-  start: string;
+
 }
 
-const ModalComponent: React.FC<ModalProps> = ({ start, date, onClose }) => {
+const ModalComponent: React.FC<ModalProps> = ({  date, onClose }) => {
   const handleClose = () => {
     onClose && onClose();
   };
