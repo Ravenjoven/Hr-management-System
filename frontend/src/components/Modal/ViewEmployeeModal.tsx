@@ -5,7 +5,7 @@ interface ModalProps {
   isView: boolean;
   isClose: () => void;
   user: {
-    id: string;
+    id: number;
     name: string;
     position: string;
     contact: string;

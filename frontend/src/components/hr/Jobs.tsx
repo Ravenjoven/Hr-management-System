@@ -6,14 +6,30 @@ import {
   faMagnifyingGlass,
   faPen,
   faTrash,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import ViewApplicantDetails from "../Modal/ViewApplicantDetails";
 
 function Jobs() {
   const [expanded, setExpanded] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showAllData, setShowAllData] = useState(true);
+  const [showFirstRow, setShowFirstRow] = useState(false);
+  const [isViewApplicantModal, setViewApplicantModal] = useState(false);
+
+  const openViewApplicantModal = (user: any) => {
+    setSelectedApplicant(user);
+    setViewApplicantModal(true);
+  };
+  const closeViewModal = () => {
+    setViewApplicantModal(false);
+    setSelectedApplicant(null);
+  };
   const openModal = () => {
     setIsOpen(true);
   };
@@ -89,7 +105,44 @@ function Jobs() {
       date_createad: "02/14/24",
     },
   ]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [applicants, setApplicants] = useState([
+    {
+      id: 0,
+      applicantName: "Jezrael Suliano",
+      position: "Fullstack Developer",
+      year_experience: "1",
+      date_applied: "03/15/24",
+      img: "./images/cv1.png",
+    },
+    {
+      id: 1,
+      applicantName: "Ranel Soliano",
+      position: "Fullstack Developer",
+      year_experience: "1",
+      date_applied: "03/15/24",
+    },
+    {
+      id: 2,
+      applicantName: "Arnel Carcella",
+      position: "Fullstack Developer",
+      year_experience: "1",
+      date_applied: "03/15/24",
+    },
+    {
+      id: 3,
+      applicantName: "Raven Joven",
+      position: "Fullstack Developer",
+      year_experience: "1",
+      date_applied: "03/15/24",
+    },
+    {
+      id: 4,
+      applicantName: "Aijem Aijem",
+      position: "Fullstack Developer",
+      year_experience: "1",
+      date_applied: "03/15/24",
+    },
+  ]);
   const filteredJobs = jobs.filter((job) => {
     return (
       job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -99,6 +152,19 @@ function Jobs() {
         .toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
       job.date_createad.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+  const filteredApplicants = applicants.filter((applicant) => {
+    return (
+      applicant.applicantName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      applicant.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      applicant.year_experience
+        .toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      applicant.date_applied.toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
   const handlePageClick = (pageNumber: number) => {
@@ -115,41 +181,23 @@ function Jobs() {
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const [showFirstRow, setShowFirstRow] = useState(false);
-
   const handleClick =
     (jobId: number) => (event: React.MouseEvent<HTMLTableDataCellElement>) => {
-      alert(`Clicked job with ID ${jobId}`);
+      console.log(`Clicked job with ID ${jobId}`);
+      setShowAllData(!showAllData);
       setShowFirstRow(!showFirstRow);
     };
 
-  const [applicant, setApplicant] = useState([
-    {
-      id: 0,
-      applicantName: "Jezrael Suliano",
-      date_applied: "03/15/24",
-    },
-    {
-      id: 1,
-      applicantName: "Ranel Soliano",
-      date_applied: "03/15/24",
-    },
-    {
-      id: 2,
-      applicantName: "Arnel Carcella",
-      date_applied: "03/15/24",
-    },
-    {
-      id: 3,
-      applicantName: "Raven Joven",
-      date_applied: "03/15/24",
-    },
-    {
-      id: 4,
-      applicantName: "Aijem Aijem",
-      date_applied: "03/15/24",
-    },
-  ]);
+  const handleShowAllData =
+    (applicantId: number) => (event: React.MouseEvent<HTMLButtonElement>) => {
+      alert(applicantId);
+    };
+
+  const handleResetTable = () => {
+    setShowAllData(!showAllData);
+    setShowFirstRow(!showFirstRow);
+    setShowAllData(true);
+  };
 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
@@ -188,7 +236,22 @@ function Jobs() {
             }`}
           >
             <div className="upper-div md:min-w-full h-16 bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
-              <span className="pl-4 uppercase font-bold">JOBS LIST</span>
+              {showAllData && (
+                <div
+                  onClick={() => setShowAllData(true)}
+                  className="pl-4 uppercase font-bold"
+                >
+                  JOB LIST
+                </div>
+              )}
+              {!showAllData && (
+                <div
+                  onClick={() => handleResetTable()}
+                  className="md:px-4 border md:ml-4 rounded border-white uppercase font-bold cursor-pointer hover:bg-blue-300"
+                >
+                  Back
+                </div>
+              )}
               <div className="flex items-center justify-center flex-grow pl-4">
                 <div className="relative">
                   <FontAwesomeIcon
@@ -241,13 +304,13 @@ function Jobs() {
                         Description
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Limits
+                        Applicants
                       </th>
                       <th scope="col" className="px-6 py-3">
                         Date Created
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        ACTIONS
+                        Actions
                       </th>
                     </tr>
                     {/* Second row */}
@@ -263,6 +326,12 @@ function Jobs() {
                         Applicant Name
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Position
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Year Experience
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Date Applied
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -272,88 +341,92 @@ function Jobs() {
                   </thead>
                   <tbody>
                     {/*all data*/}
-                    {currentJobs.map((job, index) => (
-                      <tr
-                        key={job.id}
-                        className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {showAllData &&
+                      currentJobs.map((job, index) => (
+                        <tr
+                          key={job.id}
+                          className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
-                          {index + 1}
-                        </th>
-                        <td className="px-6 py-4">{job.jobName}</td>
-                        <td className="px-6 py-4">{job.jobDescription}</td>
-                        <td
-                          onClick={handleClick(job.id)}
-                          className="px-6 py-4 cursor-pointer text-green-600 font-semibold"
-                        >
-                          {job.jobLimit}
-                        </td>
-                        <td className="px-6 py-4">{job.date_createad}</td>
-                        <td className="px-6 py-4 space-x-2">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            <FontAwesomeIcon
-                              icon={faPen}
-                              className="hover:text-green-500"
-                            />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                            {index + 1}
+                          </th>
+                          <td className="px-6 py-4">{job.jobName}</td>
+                          <td className="px-6 py-4">{job.jobDescription}</td>
+                          <td
+                            onClick={handleClick(job.id)}
+                            className="px-6 py-4 cursor-pointer text-green-600 font-semibold"
                           >
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              className="hover:text-red-500"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
+                            {job.jobLimit}
+                          </td>
+                          <td className="px-6 py-4">{job.date_createad}</td>
+                          <td className="px-6 py-4 space-x-2">
+                            <a
+                              href="#"
+                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                            >
+                              <FontAwesomeIcon
+                                icon={faPen}
+                                className="hover:text-green-500"
+                              />
+                            </a>
+                            <a
+                              href="#"
+                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                            >
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                className="hover:text-red-500"
+                              />
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
                     {/*individual data*/}
-                    {applicant.map((jobApplicant, index) => (
-                      <tr
-                        key={jobApplicant.id}
-                        className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    {!showAllData &&
+                      filteredApplicants.map((jobApplicant, index) => (
+                        <tr
+                          key={jobApplicant.id}
+                          className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
-                          {index + 1}
-                        </th>
-                        <td className="px-6 py-4">
-                          {jobApplicant.applicantName}
-                        </td>
-                        <td className="px-6 py-4">
-                          {jobApplicant.date_applied}
-                        </td>
-                        <td className="px-6 py-4 space-x-2">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            <FontAwesomeIcon
-                              icon={faPen}
-                              className="hover:text-green-500"
-                            />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              className="hover:text-red-500"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
+                            {index + 1}
+                          </th>
+                          <td className="px-6 py-4 ">
+                            {jobApplicant.applicantName}
+                          </td>
+                          <td className="px-6 py-4">{jobApplicant.position}</td>
+                          <td className="px-6 py-4">
+                            {jobApplicant.year_experience}
+                          </td>
+                          <td className="px-6 py-4">
+                            {jobApplicant.date_applied}
+                          </td>
+                          <td className="px-6 py-4 space-x-2">
+                            <button
+                              onClick={() =>
+                                openViewApplicantModal(jobApplicant)
+                              }
+                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                            >
+                              <FontAwesomeIcon
+                                icon={faEye}
+                                className="hover:text-green-500"
+                              />
+                            </button>
+                          </td>
+                          <ViewApplicantDetails
+                            isOpen={isViewApplicantModal}
+                            isClose={closeViewModal}
+                            user={selectedApplicant}
+                          />
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
                 <nav
