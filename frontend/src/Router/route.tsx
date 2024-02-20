@@ -14,6 +14,13 @@ import OjtJobList from "../components/OJT/OjtJobs";
 
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
+
+
+
+
+
+
+
 function router() {
   return (
     <>
