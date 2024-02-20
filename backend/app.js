@@ -10,6 +10,9 @@ const errorHandler = require("./middleware/error");
 //import routes
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const jobTypeRoutes = require("./routes/jobTypeRoutes");
+const jobRoute = require("./routes/jobsRoutes");
+const jobTypeModels = require("./models/jobTypeModels");
 //database connection
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -35,7 +38,8 @@ app.use(cors());
 //})
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
-
+app.use('/api', jobTypeRoutes);
+app.use('/api', jobRoute);
 
 //error middleware
 app.use(errorHandler);
