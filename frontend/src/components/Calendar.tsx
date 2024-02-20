@@ -14,6 +14,16 @@ const Calendar: React.FC = () => {
       title: "event",
       start: "2024-02-16",
     },
+    {
+      id: 2,
+      title: "new event",
+      start: "2024-02-17",
+    },
+    {
+      id: 2,
+      title: "sadsahdjsajd",
+      start: "2024-02-18T09:00:00",
+    }
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -22,21 +32,23 @@ const Calendar: React.FC = () => {
     const selectedDate = arg.dateStr;
     setSelectedDate(selectedDate);
     setIsModalOpen(true);
+    //const selectedDate = arg.dateStr;
+    // const selectedTime = prompt("Please enter the time (HH:MM):"); /
+    
+    // if (selectedTime) {
+    //     const events = {
+    //         id: 4,
+    //         title: "sadsahdjsajd",
+    //         start: `${selectedDate}T${selectedTime}:00`
+    //     };
+    // }
   };
 
   const handleEventClick = (clickInfo: any) => {
-    const eventId = clickInfo.event.id;
-    const updatedTitle = prompt("Enter a new title for the event");
-    if (updatedTitle) {
-      const updatedEvents = events.map((event) => {
-        if (event.id === eventId) {
-          return { ...event, title: updatedTitle };
-        } else {
-          return event;
-        }
-      });
-      setEvents(updatedEvents);
-    }
+    const title =clickInfo.event.title;
+    const start = clickInfo.event.start;
+    setSelectedDate(start);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
@@ -49,6 +61,7 @@ const Calendar: React.FC = () => {
       {isModalOpen && selectedDate !== null && 
         <ModalComponent 
           date={selectedDate} 
+          start={selectedDate}
           onClose={closeModal} 
         />
       }

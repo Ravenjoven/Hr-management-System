@@ -3,9 +3,10 @@ import React from "react";
 interface ModalProps {
   onClose: () => void;
   date: string; // Assuming date is a string
+  start: string;
 }
 
-const ModalComponent: React.FC<ModalProps> = ({ date, onClose }) => {
+const ModalComponent: React.FC<ModalProps> = ({ start, date, onClose }) => {
   const handleClose = () => {
     onClose && onClose();
   };
@@ -35,10 +36,15 @@ const ModalComponent: React.FC<ModalProps> = ({ date, onClose }) => {
           >
             <div className="text-custom-text-black">
               <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                <span>Add Event</span>
+                <span>Events And Reminders</span>
                 <hr />
-                <div className="mt-4 text-black flex flex-col">
-                  <div className="grid grid-cols-2 gap-4">
+                <div  className="w-full flex flex-col mb-2 justify-center items-center hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                  <div className="w-full p-2 flex justify-center items-center">+</div>
+                  <p className="flex justify-center items-center">There's no event or reminder</p>
+                </div>
+                {/* <div className="mt-4 text-black flex flex-col">
+                  <div className="flex flex-col p-4">
                     <div>
                       <label htmlFor="firstname">Event</label>
                       <input
@@ -56,8 +62,16 @@ const ModalComponent: React.FC<ModalProps> = ({ date, onClose }) => {
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
                       />
                     </div>
+                    <div>
+                      <label htmlFor="time-of-Event">HH:MM AM/PM</label>
+                      <input
+                        type="time"
+                        placeholder="Time"
+                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                      />
+                    </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
@@ -79,17 +93,6 @@ const ModalComponent: React.FC<ModalProps> = ({ date, onClose }) => {
         </div>
       </div>
     </>
-  );
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={handleClose}>
-          &times;
-        </span>
-        <h2>Selected Date</h2>
-        <p>{date}</p>
-      </div>
-    </div>
   );
 };
 

@@ -11,7 +11,6 @@ import AdminAttendance from "../components/hr/AdminAttendance";
 import AdminEmployeeManagement from "../components/hr/AdminEmployeeManagement";
 import Jobs from "../components/hr/Jobs";
 import OjtJobList from "../components/OJT/OjtJobs";
-
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
 
@@ -39,8 +38,6 @@ function router() {
             element={<AdminEmployeeManagement />}
           />
           <Route path="/Profile" element={<Profile />} />
-
-
           <Route path="/UserProfile" element={<UserDetail />} />
           <Route path="/OjtAttendance" element={<OjtAttendance />} />
         </Routes>
