@@ -10,11 +10,20 @@ import AdminUserList from "../components/hr/AdminUserList";
 import AdminAttendance from "../components/hr/AdminAttendance";
 import AdminEmployeeManagement from "../components/hr/AdminEmployeeManagement";
 import Jobs from "../components/hr/Jobs";
+import OjtJobList from "../components/OJT/OjtJobs";
+
+
+
+
+
+
+
 function router() {
   return (
     <>
       <Router>
         <Routes>
+          <Route path="/Ojt" element={<OjtJobList/>} />
           <Route index path="/" element={<HomePage />} />
           <Route path="/Jobs" element={<Jobs />} />
           <Route path="/login" element={<LoginPage />} />
