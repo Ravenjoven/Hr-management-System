@@ -12,7 +12,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="min-h-screen max-w-screen bg-custom-text-smooth font-montserrat">
+    <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
       <>
         <UserNavar />
         <div className="fixed">
