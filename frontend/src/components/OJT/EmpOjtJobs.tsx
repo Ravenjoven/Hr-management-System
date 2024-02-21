@@ -67,13 +67,13 @@ function OjtJobList() {
           </button>
         </div>
         <div className="relative w-full mt-2 bg-custom-bg-smooth">
-          <UnEmpSidebar expanded={expanded} />
+          <OjtSidebar expanded={expanded} />
           <div
             className={`content h-full max-w-full z-1  ${
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="flex ml-2">
+            <div className="flex">
               <div className="left-div mt-4 w-[400px] rounded-2xl">
                 <div>
                   <span className="text-4xl font-bold text-custom-text-black">
