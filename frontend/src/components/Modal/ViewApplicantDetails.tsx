@@ -21,6 +21,10 @@ interface ModalProps {
     letter: string;
     date_applied: string;
     img: string;
+    email: string;
+    contact_number: string;
+    linkedIn: string;
+    skills: string[];
     files: string;
   } | null;
 }
@@ -48,7 +52,7 @@ export default function ViewApplicantDetails({
         <div className="fixed z-50 inset-0 overflow-y-auto font-montserrat flex items-center justify-center">
           <div className="absolute inset-0 bg-gray-500 opacity-20"></div>
           <div
-            className="bg-white md:w-[800px] w-full rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden transform transition-all"
+            className="bg-white md:w-[1215px] w-full rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden transform transition-all"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-headline"
@@ -73,19 +77,58 @@ export default function ViewApplicantDetails({
                   </button>
                 </div>
                 <hr className="mb-2" />
-                <div className="flex flex-col mt-2">
+                <div className="flex flex-col ">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="left-details w-full h-full">
-                      <div className="text-left py-2 border">
+                      <div className="text-left py-2">
                         <span className="font-bold">Application Letter</span>
-                        <div className="mt-2 break-words">{user?.letter}</div>
+                        <div className="mt-2 break-words normal-case">
+                          {user?.letter}
+                        </div>
+                      </div>
+                      <div className="text-left py-2 mt-2">
+                        <span className="font-bold ">Other Information</span>
+                        <div className="mt-2 flex flex-col">
+                          <div>
+                            Email:{" "}
+                            <span className="normal-case">{user?.email}</span>
+                          </div>
+                          <div>
+                            Contact Number:{" "}
+                            <span className="normal-case">
+                              {user?.contact_number}
+                            </span>
+                          </div>
+                          <div>
+                            LinkedIn:{" "}
+                            <a
+                              href={user?.linkedIn}
+                              className="normal-case text-[10px] font-bold text-blue-700 border-b border-blue-700"
+                            >
+                              {user?.linkedIn}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-left py-2 mt-2">
+                        <span className="font-bold">Skills</span>
+                        <div className="mt-2 flex flex-col">
+                          {user?.skills.map((skill, index) => (
+                            <div key={index} className="mb-1">
+                              {skill}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                    <div className="right-details border-4 border-gray-400 w-full md:h-[500px] h-full flex justify-center items-center">
+                    <div
+                      title="Click to view the image"
+                      className="right-details border-4 border-gray-400 w-full md:h-[440px] h-full flex justify-center items-center"
+                    >
                       {user?.files ? (
                         <div
                           onClick={handleImageClick}
-                          className="h-full w-full cursor-pointer overflow-auto relative"
+                          className="h-full w-full cursor-pointer overflow-y-scroll overflow-x-hidden"
                         >
                           <PdfViewer files={user?.files} />
                         </div>
@@ -99,16 +142,16 @@ export default function ViewApplicantDetails({
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
                 <button
                   type="button"
-                  className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Move to pending
-                </button>
-                <button
-                  type="button"
                   onClick={handleClose}
                   className="w-full md:inline-flex inlune-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Rejected
+                </button>
+                <button
+                  type="button"
+                  className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Move to pending
                 </button>
               </div>
             </div>
