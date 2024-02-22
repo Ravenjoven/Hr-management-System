@@ -9,7 +9,7 @@ const data = [
 ];
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
-const Login = () => {
+const OjtLogin = () => {
   return (
     <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat h-full">
       <>
@@ -187,4 +187,4 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+export default OjtLogin;

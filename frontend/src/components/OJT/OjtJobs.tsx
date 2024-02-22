@@ -73,7 +73,7 @@ function OjtJobList() {
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="flex ml-2">
+            <div className="flex ml-2 ">
               <div className="left-div mt-4 w-[400px] rounded-2xl">
                 <div>
                   <span className="text-4xl font-bold text-custom-text-black">
@@ -98,7 +98,7 @@ function OjtJobList() {
                     25 jobs posted
                   </span>
                 </div>
-                <div className=" w-96 h-[450px] overflow-y-auto scrollbar-thin overflow-hidden">
+                <div className=" w-96 h-[450px] overflow-y-auto scrollbar-thin overflow-hidden min-h-screen">
                   <div className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700 ">
                     <div>
                       <span className="text-custom-text-orange text-xs">
@@ -111,9 +111,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -121,6 +119,107 @@ function OjtJobList() {
                       </span>
                     </div>
                   </div>
+                  <div className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700 ">
+                    <div>
+                      <span className="text-custom-text-orange text-xs">
+                        february 00, 2024
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-custom-text-black">
+                        Software Developer
+                      </span>
+                    </div>
+                    <div className="text-xs font-bold text-custom-text-black">
+                      <span className="text-custom-text-green">Frontend</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-custom-text-black">
+                        10 applicants
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700 ">
+                    <div>
+                      <span className="text-custom-text-orange text-xs">
+                        february 00, 2024
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-custom-text-black">
+                        Software Developer
+                      </span>
+                    </div>
+                    <div className="text-xs font-bold text-custom-text-black">
+                      <span className="text-custom-text-green">Frontend</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-custom-text-black">
+                        10 applicants
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700 ">
+                    <div>
+                      <span className="text-custom-text-orange text-xs">
+                        february 00, 2024
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-custom-text-black">
+                        Software Developer
+                      </span>
+                    </div>
+                    <div className="text-xs font-bold text-custom-text-black">
+                      <span className="text-custom-text-green">Frontend</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-custom-text-black">
+                        10 applicants
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700 ">
+                    <div>
+                      <span className="text-custom-text-orange text-xs">
+                        february 00, 2024
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-custom-text-black">
+                        Software Developer
+                      </span>
+                    </div>
+                    <div className="text-xs font-bold text-custom-text-black">
+                      <span className="text-custom-text-green">Frontend</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-custom-text-black">
+                        10 applicants
+                      </span>
+                    </div>
+                  </div>
+                  <div className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700 ">
+                    <div>
+                      <span className="text-custom-text-orange text-xs">
+                        february 00, 2024
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-bold text-custom-text-black">
+                        Software Developer
+                      </span>
+                    </div>
+                    <div className="text-xs font-bold text-custom-text-black">
+                      <span className="text-custom-text-green">Frontend</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-custom-text-black">
+                        10 applicants
+                      </span>
+                    </div>
+                  </div>
+
                   <div className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700 ">
                     <div>
                       <span className="text-custom-text-orange text-xs">
@@ -133,9 +232,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -155,9 +252,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -177,9 +272,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -199,9 +292,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -221,10 +312,8 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
-                    </div>  
+                      <span className="text-custom-text-green">Frontend</span>
+                    </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
                         10 applicants
@@ -243,7 +332,10 @@ function OjtJobList() {
                     />
                   </div>
                   <div className="flex justify-end">
-                    <button onClick={openModal}  className="bg-custom-bg-orange mt-12 mr-12 p-2 rounded-xl text-white flex items-center">
+                    <button
+                      onClick={openModal}
+                      className="bg-custom-bg-orange mt-12 mr-12 p-2 rounded-xl text-white flex items-center"
+                    >
                       Apply now
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +356,7 @@ function OjtJobList() {
                     </button>
                     <Modal isOpen={isModalOpen} onClose={closeModal} />
                   </div>
-                  <div className="mt-10  w-2">
+                  <div className="mt-10  w-2 ">
                     <span className="text-custom-text-black ml-9 text-5xl font-bold">
                       Software <span className="ml-9">Developer</span>
                     </span>

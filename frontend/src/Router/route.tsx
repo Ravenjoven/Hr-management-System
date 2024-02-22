@@ -11,19 +11,17 @@ import AdminAttendance from "../components/hr/AdminAttendance";
 import AdminEmployeeManagement from "../components/hr/AdminEmployeeManagement";
 import Jobs from "../components/hr/Jobs";
 import OjtJobList from "../components/OJT/OjtJobs";
-
-
-
-
-
-
+import CompDetails from "../components/hr/CompanyDetails";
+import OjtLogin from "../components/OJT/OjtLogin";
 
 function router() {
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/Ojt" element={<OjtJobList/>} />
+          <Route index path="/OjtJoblist" element={<OjtJobList />} />
+          <Route index path="/Company" element={<CompDetails />} />
+          <Route path="/Ojt" element={<OjtLogin />} />
           <Route index path="/" element={<HomePage />} />
           <Route path="/Jobs" element={<Jobs />} />
           <Route path="/login" element={<LoginPage />} />
