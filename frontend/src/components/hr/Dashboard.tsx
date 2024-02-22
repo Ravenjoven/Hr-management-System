@@ -125,7 +125,7 @@ function Dashboard() {
               </a>
               <a href="/Management">
                 <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
+                  <li className="cursor-pointer flex items-center justify-center text-gray-900 rounded-lg ">
                     <svg
                       className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                       aria-hidden="true"
@@ -142,7 +142,7 @@ function Dashboard() {
               </a>
               <a href="/Company">
                 <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
+                  <li className="cursor-pointer flex items-center justify-center text-gray-900 rounded-lg ">
                     <svg
                       className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                       aria-hidden="true"
@@ -158,7 +158,7 @@ function Dashboard() {
               </a>
               <a href="/Attendance">
                 <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
+                  <li className="cursor-pointer flex items-center justify-center text-gray-900 rounded-lg ">
                     <svg
                       className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                       aria-hidden="true"

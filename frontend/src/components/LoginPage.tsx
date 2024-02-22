@@ -117,7 +117,7 @@ const Login = () => {
         <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs">
           <div className="grid content-end">
             <div className="flex justify-center ">
-              <img src="../images/img2.png" className="w-[60px] h-10 "></img> 
+              <img src="../images/img2.png" className="w-[40px] h-10 "></img> 
             </div>
             <br />
               Copyright &copy; 2024 TERAVAULT, INC. dba TeraVault Software. All
