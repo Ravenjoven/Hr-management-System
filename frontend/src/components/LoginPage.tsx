@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Navar from "./Navar";
 const data = [
   {
     id: 1,
@@ -11,74 +12,12 @@ const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const Login = () => {
   return (
-    <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat h-full">
+    <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat">
       <>
-        <nav>
-          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-full ml-8 mr-8">
-            <div className="flex items-center justify-start">
-              <img src="../images/img2.png" className="h-10"></img>
-              <img src="../images/img3.png" className="h-10 pt-2" />
-            </div>
-            <button
-              data-collapse-toggle="navbar-default"
-              type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 ml-0"
-              aria-controls="navbar-default"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 1h15M1 7h15M1 13h15"
-                />
-              </svg>
-            </button>
-            <div
-              className="hidden w-full md:block md:w-auto mr-4"
-              id="navbar-default"
-            >
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-20 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-orange-400 md:p-0 dark:text-white md:dark:text-blue-500"
-                    aria-current="page"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-3 md:text-custom-text-gray rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-400 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >
-                    About us
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 px-3 md:text-custom-text-gray rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-400 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Navar />
         <section className="max-w-screen-xl flex ml-8 mr-8">
           <div className="w-full pl-5 pt-2">
+           
             <svg
               className="w-560 h-auto sm:w-full"
               xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +44,7 @@ const Login = () => {
                 ></path>
               </g>
             </svg>
-            <h1 className="font-bold text-custom-text-gray text-4xl">
+            <h1 className="font-bold text-custom-text-gray text-2xl">
               We're passionate about <br />
               helping entrepreneurs change <br />
               the world and build a better
@@ -115,7 +54,7 @@ const Login = () => {
           </div>
           <div className="w-full flex justify-end mt-4">
             <form
-              className="bg-[#f89939] mr-8 p-4 rounded-tr-[50px] p-[30px] rounded-bl-[50px] h-full"
+              className="bg-custom-text-orange mr-8 rounded-tr-[50px] p-[30px] rounded-bl-[50px] h-full"
               action=""
             >
               <input
@@ -126,6 +65,7 @@ const Login = () => {
                 placeholder="name@gmail.com"
               />
 
+
               <input
                 type="password"
                 id="password"
@@ -133,9 +73,35 @@ const Login = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-[20px]"
                 placeholder="Enter your password"
               />
+              <button
+                type="submit"
+                className="flex justify-center items-center mt-4 mx-auto text-sm border border-white bg-transparent hover:bg-gray-600 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 "
+              >
+                <Link to={firstRoute} className="block w-full h-full">
+                  {firstLabel}
+                </Link>
+              </button>
+              <div className="mt-4 grid grid-cols-3 items-center text-black">
+                <hr className="border-black" />
+                <p className="text-center text-sm">OR</p>
+                <hr className="border-black" />
+              </div>
+
+              <button
+                type="button"
+                className="flex justify-center items-center mt-4 bg-white rounded-xl p-2.5 w-full m-[2px]"
+              >
+                <img
+                  src="../images/Gmail.png"
+                  alt=""
+                  className="w-[20px] mr-[20px] inline "
+                />
+                <span className="text-xs">Log in with Google</span>
+              </button>
+
               <p
                 id="helper-text-explanation"
-                className="mt-2 text-xs text-white "
+                className="mt-8 text-xs text-white"
               >
                 Don't have account?
                 <a
@@ -145,42 +111,17 @@ const Login = () => {
                   Sign up here!
                 </a>
               </p>
-              <p className="mt-2 text-sm text-white flex justify-center">or</p>
-              <div className="flex justify-center items-center ">
-                <button
-                  type="button"
-                  className="bg-blue-600 rounded-sm text-white p-2.5 w-full m-[2px]"
-                >
-                  <img
-                    src="../images/Gmail.png"
-                    alt=""
-                    className="w-[20px] mr-[20px] inline "
-                  />
-                  <span className="text-xs">Log in with Google</span>
-                </button>
-              </div>
-
-              <div className="flex justify-center items-center">
-                <button
-                  type="submit"
-                  className="mt-4 mx-auto text-sm border border-white bg-transparent hover:bg-gray-600 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 "
-                >
-                  <Link to={firstRoute} className="block w-full h-full">
-                    {firstLabel}
-                  </Link>
-                </button>
-              </div>
             </form>
           </div>
         </section>
-        <footer className="w-full bg-gray-600 static bottom-0 text-center text-white p-4 text-xs">
+        <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs">
           <div className="grid content-end">
             <div className="flex justify-center ">
-              <img src="../images/img2.png" className="w-[60px] h-10 "></img>
+              <img src="../images/img2.png" className="w-[40px] h-10 "></img> 
             </div>
             <br />
-            Copyright &copy; 2024 TERAVAULT, INC. dba TeraVault Software. All
-            rights reserved
+              Copyright &copy; 2024 TERAVAULT, INC. dba TeraVault Software. All
+              rights reserved
           </div>
         </footer>
       </>
