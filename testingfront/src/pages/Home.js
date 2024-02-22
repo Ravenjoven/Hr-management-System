@@ -1,16 +1,19 @@
-import React, {useEffect, useState} from 'react'
-import Navbar from '../component/Navbar'
-import Header from '../component/Header'
-import { Stack, Box, Container, Card, Typography, useTheme } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import Navbar from '../component/Navbar';
+import Header from '../component/Header';
+import { Stack, Box, Container, Card, Typography, useTheme, MenuList, MenuItem, ListItemIcon } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/LocationOn'; // Added import
+import { Link } from 'react-router-dom'; // Added import
+import { useDispatch, useSelector } from 'react-redux';
 import { jobLoadAction } from '../redux/actions/jobActions';
 import { jobTypeAction, jobTypeLoadAction } from '../redux/actions/jobTypeActions';
 import { useParams } from 'react-router-dom';
-import CardElement from '../component/CardElement'
-import Pagination from '@mui/material/Pagination'
-import Footer from '../component/Footer'
+import CardElement from '../component/CardElement';
+import Pagination from '@mui/material/Pagination';
+import Footer from '../component/Footer';
 import LoadingBox from '../component/LoadingBox'; 
 import SelectComponent from '../component/SelectComponent';
+
 
 const Home = () => {
   const { jobs, setUniqueLocation, pages, loading } = useSelector (state =>state.loadJobs)
@@ -49,6 +52,21 @@ const Home = () => {
                   <Typography sx={{ color: theme.palette.secondary.main, fontWeight: 600 }}>
                     Filter job by category
                   </Typography>
+                  <MenuList>
+                                        {
+                                            setUniqueLocation && setUniqueLocation.map((location, i) => (
+                                                <MenuItem key={i}>
+                                                    <ListItemIcon>
+                                                    <LocationOnIcon sx={{ color: theme.palette.secondary.main, fontSize: 18 }} />
+
+                                                    </ListItemIcon>
+                                                    <Link to={`/search/location/${location}`}>{location}</Link>
+                                                </MenuItem>
+
+                                            ))
+                                        }
+
+                                    </MenuList>
                 </Box>
                 <SelectComponent handleChangeCategory={handleChangeCategory} cat={cat}/>
               </Card>
