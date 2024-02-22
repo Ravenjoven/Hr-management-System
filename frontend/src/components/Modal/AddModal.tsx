@@ -2,19 +2,20 @@ import React, {useState} from "react";
 
 interface ModalProps {
   onClose: () => void;
-  event:any;
 
+  selectedDate: Date | null; // Assuming date is a string
+  
 }
 
-
-const ModalComponent: React.FC<ModalProps> = ({event, onClose}) => {
-
+const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
   const handleClose = () => {
     onClose && onClose();
   };
+  
   return (
     <>
-      <div className="fixed z-50 inset-0 overflow-y-auto">
+    
+        <div className="fixed z-50 inset-0 overflow-y-auto">
         <div className="flex items-center justify-center min-w-screen min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <div
             className="fixed inset-0 transition-opacity"
@@ -39,25 +40,41 @@ const ModalComponent: React.FC<ModalProps> = ({event, onClose}) => {
               <div className="mt-3 text-center sm:mt-0 sm:text-left">
                 <span>Events And Reminders</span>
                 <hr />
-                <div className="w-full p-8 flex flex-col mb-2 justify-center items-center  sm:ml-3 sm:w-auto sm:text-sm">
-                 
-                  <p className="flex justify-center items-center">
-                    {event.title}
-                  </p>
-                  <p className="flex justify-center items-center">
-                    {event.startStr}
-                  </p>
+               
+                <div className="mt-4 text-black flex flex-col">
+                  <div className="flex flex-col p-4">
+                  <div>
+                      <label htmlFor="date-of-Event">Date</label>
+                      {selectedDate && <p>Add event for: {selectedDate.toLocaleDateString()}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor="firstname">Event</label>
+                      <input
+                        type="text"
+                        placeholder="Create Event"
+                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                      />
+                    </div>
+                   
+                    <div>
+                      <label htmlFor="time-of-Event">HH:MM AM/PM</label>
+                      <input
+                        type="time"
+                        placeholder="Time"
+                        
+                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                      />
+                    </div>
+                  </div>
                 </div>
-              
               </div>
             </div>
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
               <button
-             
                 type="button"
                 className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
               >
-                Add 
+                Save
               </button>
               <button
                 type="button"
@@ -70,8 +87,9 @@ const ModalComponent: React.FC<ModalProps> = ({event, onClose}) => {
           </div>
         </div>
       </div>
+     
     </>
   );
 };
 
-export default ModalComponent;
+export default AddModal;

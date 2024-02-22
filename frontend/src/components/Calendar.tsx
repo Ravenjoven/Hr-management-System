@@ -1,68 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
-import ModalComponent from './Modal/EventModal';
+import ModalComponent from "./Modal/EventModal";
 import "../App.css";
+import AddModal from "./Modal/AddModal";
 
 const Calendar: React.FC = () => {
   const [events, setEvents] = useState([
     {
       id: 1,
       title: "event",
-      start: "2024-02-16",
+      date: "2024-02-16",
     },
     {
       id: 2,
       title: "new event",
-      start: "2024-02-17",
+      date: "2024-02-17",
     },
     {
       id: 2,
       title: "sadsahdjsajd",
-      start: "2024-02-18T09:00:00",
-    }
+      date: "2024-02-18T09:00:00",
+    },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
-  const handleDateClick = (arg: { dateStr: any }) => {
-    const selectedDate = arg.dateStr;
-    setSelectedDate(selectedDate);
+  const handleDateClick = (info: any) => {
+    setSelectedDate(info.date);
+    setIsAddModalOpen(true);
+  };
+  const handleEventClick = (info: any) => {
+    setSelectedEvent(info.event);
     setIsModalOpen(true);
-    //const selectedDate = arg.dateStr;
-    // const selectedTime = prompt("Please enter the time (HH:MM):"); /
-    
-    // if (selectedTime) {
-    //     const events = {
-    //         id: 4,
-    //         title: "sadsahdjsajd",
-    //         start: `${selectedDate}T${selectedTime}:00`
-    //     };
-    // }
   };
 
-  const handleEventClick = (clickInfo: any) => {
-    // const eventId = clickInfo.event.id;
-    // const updatedTitle = alert(eventId );
-    const title =clickInfo.event.title;
-    const start = clickInfo.event.start;
-    // const start =alert(date );
-    setSelectedDate(start);
-    setIsModalOpen(true);
-    // if (updatedTitle) {
-    //   const updatedEvents = events.map((event) => {
-    //     if (event.id === eventId) {
-    //       return { ...event, title: updatedTitle };
-    //     } else {
-    //       return event;
-    //     }
-    //   });
-    //   setEvents(updatedEvents);
-    // }
-  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -71,19 +48,21 @@ const Calendar: React.FC = () => {
 
   return (
     <div>
-      {isModalOpen && selectedDate !== null && 
-        <ModalComponent 
-          date={selectedDate} 
-          onClose={closeModal} 
+      {isAddModalOpen && selectedDate !== null && (
+        <AddModal selectedDate={selectedDate} onClose={closeModal} />
+      )}
+      
+      {isModalOpen && (
+        <ModalComponent
+          
+          event={selectedEvent}
+          onClose={closeModal}
+          
         />
-      }
+      )}
+
       <FullCalendar
-        plugins={[
-          dayGridPlugin,
-          timeGridPlugin,
-          interactionPlugin,
-          listPlugin,
-        ]}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
         initialView="dayGridMonth"
         headerToolbar={{
           start: "prev,next",
