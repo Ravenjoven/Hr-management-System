@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,15 +9,31 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [contact, setContact] = useState('');
-  const [skillsRequirements, setSkillsRequirements] = useState('');
+  const [skills, setSkills] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here, you can send data to server or do something else
-    console.log('Form submitted:', { fullName, email, contact, skillsRequirements });
+    console.log('Form submitted:', { fullName, email, contact, skills });
     onClose();
   };
-
+    const [appName, setAppName] = useState('');
+    const AppHandleFileChange = (event: any) => {
+        const file = event.target.files[0];
+        if (file) {
+            setAppName(file.name);
+        }
+        
+    };
+    const fileInputRef = useRef(null);
+    const handleFileChange = (event: any) => {
+        const selectedFiles = event.target.files;
+        if (selectedFiles.length > 0) {
+            // Here you can perform any action with the selected file(s)
+           console.log(selectedFiles)
+        }
+      };
+      
   return (
     <>
       {isOpen && (
@@ -39,10 +55,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:text-left w-full">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                      <h3 className="text- leading-6 font-medium text-gray-900" id="modal-headline">
                         Enter Your Information
                       </h3>
-                      <div className="mt-5">
+                      <div className="mt-5 font-normal">
                         <div className="mb-4">
                           <input
                             type="text"
@@ -71,11 +87,49 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                           />
                         </div>
                         <div className="mb-4">
+                          <input
+                            type="tel"
+                            placeholder="LinkedIn Profile"
+                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            onChange={(e) => setContact(e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="mb-4" >
+                          <textarea 
+                           rows={4}
+                           placeholder='Application Letter'
+                           className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          name="application" id="applicaion"></textarea>
+                        </div>
+                        <div className=' mb-4 flex flex-row justify-between'>
+                        <div className="relative">
+            <label htmlFor="fileInput" className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer">
+                <span className="mr-2">RESUME</span>
+                {appName && (
+                <span className="block p-2 text-sm text-gray-500">{appName}</span>
+            )}
+                <input
+                     name="fileInput"
+                     id="fileInput"
+                    type="file"
+                    className="hidden"
+                    onChange={AppHandleFileChange}
+                />
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24">
+                    <path fill="#6e6e6e" d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
+                </svg>
+            </label>
+           
+        </div>
+
+                        </div>
+                        <div className="mb-4">
                           <textarea
-                            placeholder="Skills Requirements"
+                            placeholder="Skills"
                             className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             rows={4}
-                            onChange={(e) => setSkillsRequirements(e.target.value)}
+                            onChange={(e) => setSkills(e.target.value)}
                             required
                           ></textarea>
                         </div>
