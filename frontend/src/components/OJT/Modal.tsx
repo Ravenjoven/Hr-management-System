@@ -95,10 +95,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             required
                           />
                         </div>
+                        <div className="mb-4" >
+                          <textarea 
+                           rows={4}
+                           placeholder='Application Letter'
+                           className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          name="application" id="applicaion"></textarea>
+                        </div>
                         <div className=' mb-4 flex flex-row justify-between'>
                         <div className="relative">
             <label htmlFor="fileInput" className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer">
-                <span className="mr-2">APPLICATION</span>
+                <span className="mr-2">RESUME</span>
                 {appName && (
                 <span className="block p-2 text-sm text-gray-500">{appName}</span>
             )}
@@ -115,25 +122,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             </label>
            
         </div>
-        <div className="relative">
-            <label htmlFor="fileInput" className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer">
-                <span className="mr-2">RESUME</span>
-                {appName && (
-                <span className="block p-2 text-sm text-gray-500">{appName}</span>
-            )}
-                <input
-                    ref={fileInputRef}
-                    id="fileInput"
-                    type="file"
-                    className="hidden"
-                    onChange={handleFileChange}
-                    multiple  // Allow multiple file selection
-                />
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24">
-                    <path fill="#6e6e6e" d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
-                </svg>
-            </label>
-        </div>
+
                         </div>
                         <div className="mb-4">
                           <textarea
