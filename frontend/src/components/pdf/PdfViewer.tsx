@@ -14,7 +14,7 @@ export default function PdfViewer({ files }: PdfViewerProps) {
   }
 
   return (
-    <div>
+    <div className="font-montserrat">
       <Document
         file={files}
         onLoadSuccess={onDocumentLoadSuccess}
@@ -27,7 +27,7 @@ export default function PdfViewer({ files }: PdfViewerProps) {
         />
       </Document>
       {numPages && (
-        <p className="text-black w-full bg-white">
+        <p className="text-black w-full bg-white pl-2">
           Page {pageNumber} of {numPages}
         </p>
       )}
