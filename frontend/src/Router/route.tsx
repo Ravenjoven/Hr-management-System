@@ -14,7 +14,7 @@ import OjtJobList from "../components/OJT/OjtJobs";
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
 
-
+import CompDetails from "../components/hr/CompanyDetails";
 
 
 
@@ -33,6 +33,7 @@ function router() {
           <Route path="/EmployeeList" element={<AdminUserList />} />
           <Route path="/Category" element={<AdminJobCategory />} />
           <Route path="/Attendance" element={<AdminAttendance />} />
+          <Route path="/Company" element={<CompDetails />} />
           <Route
             path="/EmployeeManagement"
             element={<AdminEmployeeManagement />}

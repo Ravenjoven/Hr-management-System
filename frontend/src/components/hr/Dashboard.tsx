@@ -140,7 +140,7 @@ function Dashboard() {
                   </li>
                 </div>
               </a>
-              <a href="/Profile">
+              <a href="/Company">
                 <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                   <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
                     <svg
