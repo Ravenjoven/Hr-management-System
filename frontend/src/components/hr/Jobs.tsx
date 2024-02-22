@@ -111,7 +111,11 @@ function Jobs() {
       applicantName: "Jezrael Suliano",
       position: "Fullstack Developer",
       year_experience: "1",
+      status: 0,
       date_applied: "03/15/24",
+      files: "./files/formal.pdf",
+      letter:
+        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
       img: "./images/cv1.png",
     },
     {
@@ -345,7 +349,7 @@ function Jobs() {
                       currentJobs.map((job, index) => (
                         <tr
                           key={job.id}
-                          className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          className="bg-white capitalize border-b text-black dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
                           <th
                             scope="row"
@@ -357,9 +361,11 @@ function Jobs() {
                           <td className="px-6 py-4">{job.jobDescription}</td>
                           <td
                             onClick={handleClick(job.id)}
-                            className="px-6 py-4 cursor-pointer text-green-600 font-semibold"
+                            className="px-6 py-4 cursor-pointer text-blue-600 font-semibold"
                           >
-                            {job.jobLimit}
+                            <div className="rounded-full w-10 text-center flex justify-center items-center mx-auto  hover:text-green-600">
+                              {job.jobLimit}
+                            </div>
                           </td>
                           <td className="px-6 py-4">{job.date_createad}</td>
                           <td className="px-6 py-4 space-x-2">

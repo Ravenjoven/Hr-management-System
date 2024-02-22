@@ -1,6 +1,13 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { pdfjs } from "react-pdf";
+import PdfViewer from "../pdf/PdfViewer";
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.js",
+  import.meta.url
+).toString();
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,8 +17,11 @@ interface ModalProps {
     applicantName: string;
     position: string;
     year_experience: string;
+    status: number;
+    letter: string;
     date_applied: string;
     img: string;
+    files: string;
   } | null;
 }
 
@@ -20,17 +30,17 @@ export default function ViewApplicantDetails({
   isClose,
   user,
 }: ModalProps) {
-  const [isImageClicked, setIsImageClicked] = useState(false);
+  const [isFilesClicked, setIsFilesClicked] = useState(false);
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation(); // Prevent event bubbling
     isClose && isClose();
   };
   const handleImageClick = () => {
-    setIsImageClicked(true);
+    setIsFilesClicked(true);
   };
 
   const handleCloseImage = () => {
-    setIsImageClicked(false);
+    setIsFilesClicked(false);
   };
   return (
     <>
@@ -50,7 +60,7 @@ export default function ViewApplicantDetails({
                     className="text-lg font-medium leading-6 text-gray-900"
                     id="modal-headline"
                   >
-                    Application Details
+                    {user?.applicantName}
                   </h3>
                   <button
                     onClick={handleClose}
@@ -66,16 +76,22 @@ export default function ViewApplicantDetails({
                 <div className="flex flex-col mt-2">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="left-details w-full h-full">
-                      <div className="text-center py-2 border">
-                        Inputed Information from jobs
+                      <div className="text-left py-2 border">
+                        <span className="font-bold">Application Letter</span>
+                        <div className="mt-2 break-words">{user?.letter}</div>
                       </div>
                     </div>
-                    <div className="right-details border border-black w-full md:h-[500px] h-full">
-                      <img
-                        src={user?.img}
-                        onClick={handleImageClick}
-                        className="h-full w-full cursor-pointer"
-                      />
+                    <div className="right-details border-4 border-gray-400 w-full md:h-[500px] h-full flex justify-center items-center">
+                      {user?.files ? (
+                        <div
+                          onClick={handleImageClick}
+                          className="h-full w-full cursor-pointer overflow-auto relative"
+                        >
+                          <PdfViewer files={user?.files} />
+                        </div>
+                      ) : (
+                        <h1>No File Uploaded</h1>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -97,15 +113,13 @@ export default function ViewApplicantDetails({
               </div>
             </div>
           </div>
-          {/* Modal for displaying the image */}
-          {isImageClicked && (
+          {/* Modal for displaying the pdf */}
+          {isFilesClicked && user?.files && (
             <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-75">
               <div className="max-w-screen-lg">
-                <img
-                  src={user?.img}
-                  alt="Full Screen"
-                  className="max-w-full md:h-[640px]"
-                />
+                <div className="max-w-full md:h-[640px] overflow-y-auto">
+                  <PdfViewer files={user.files} />
+                </div>
                 <button
                   onClick={handleCloseImage}
                   className="absolute top-4 right-4 text-white text-lg focus:outline-none"

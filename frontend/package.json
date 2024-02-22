@@ -33,7 +33,11 @@
     "react": "^18.2.0",
     "react-datepicker": "^6.1.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-google-login": "^5.2.2",
+=======
+    "react-pdf": "^7.7.0",
+>>>>>>> d2903947d45038f59ded4e8d68fa01b51ae1f389
     "react-router-dom": "^6.22.0"
   },
   "devDependencies": {
