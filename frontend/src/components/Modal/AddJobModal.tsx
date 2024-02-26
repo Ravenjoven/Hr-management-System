@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
+import ReviewAddJobsModal from "./ReviewAddJobsModal";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,6 +9,17 @@ interface ModalProps {
 }
 
 function Modal({ isOpen, onClose, title }: ModalProps) {
+  const [formData, setFormData] = useState({
+    jobName: "",
+    jobDescription: "",
+    jobType: "",
+    jobRoles: "",
+    jobCategory: "",
+    jobSkills: [],
+    jobSetUp: "",
+    jobExperience: "",
+    jobSalary: [0, 1],
+  });
   const [categories, setCategories] = useState([
     {
       id: 0,
@@ -26,31 +38,26 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobCategory: "Fullstack Developer",
     },
   ]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isExperienceRequired, setIsExperienceRequired] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
   const skills = [
     { name: "Hardworking", value: "Hardworking" },
     { name: "Time Management", value: "Time Management" },
     { name: "Critical Thinking", value: "Critical Thinking" },
     { name: "Technincal", value: "Technincal" },
   ];
-
-  const [isExperienceRequired, setIsExperienceRequired] = useState(false);
-
   const handleCheckboxChange = (event: any) => {
     setIsExperienceRequired(event.target.checked);
   };
-
-  const [currentPage, setCurrentPage] = useState(1);
-
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
   };
-
   const previousPage = () => {
     setCurrentPage(currentPage - 1);
   };
-
-  const [selectedSkills, setSelectedSkills] = useState([]);
-
   const handleSelectSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
     setFormData({
@@ -58,7 +65,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobSkills: selectedList,
     });
   };
-
   const handleRemoveSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
     setFormData({
@@ -66,7 +72,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobSkills: selectedList,
     });
   };
-
   const handleCategoryClick = (category: any) => {
     console.log("Category clicked:", category);
     setFormData({
@@ -77,26 +82,13 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
   const handleClose = () => {
     onClose && onClose();
   };
-  const [formData, setFormData] = useState({
-    jobName: "",
-    jobDescription: "",
-    jobType: "",
-    jobRoles: "",
-    jobCategory: "",
-    jobSkills: [],
-    jobSetUp: "",
-    jobExperience: "",
-    jobSalary: "",
-  });
-
-  const handleTypeButtonClick = (type: any) => {
+  const handleTypeButtonClick = (type: string) => {
     console.log("Type clicked:", type);
     setFormData({
       ...formData,
       jobType: type,
     });
   };
-
   const handleSetupButtonClick = (val: any) => {
     console.log("Setup clicked:", val);
     setFormData({
@@ -104,20 +96,25 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobSetUp: val,
     });
   };
-
   const handleSaveData = () => {
     console.log("Form Data:", formData);
-    setFormData({
-      jobName: "",
-      jobDescription: "",
-      jobType: "",
-      jobRoles: "",
-      jobCategory: "",
-      jobSkills: [],
-      jobSetUp: "",
-      jobExperience: "",
-      jobSalary: "",
-    });
+    setIsReviewModalOpen(true);
+    // console.log("Form Data:", formData);
+    // setFormData({
+    //   jobName: "",
+    //   jobDescription: "",
+    //   jobType: "",
+    //   jobRoles: "",
+    //   jobCategory: "",
+    //   jobSkills: [],
+    //   jobSetUp: "",
+    //   jobExperience: "",
+    //   jobSalary: "",
+    // });
+    // setIsReviewModalOpen(true);
+  };
+  const handleCloseReviewModal = () => {
+    setIsReviewModalOpen(!isReviewModalOpen);
   };
 
   return (
@@ -192,7 +189,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                             jobDescription: e.target.value,
                           })
                         }
-                        className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
                     <div className="mt-4">
@@ -224,7 +221,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                     <div className="mt-4">
                       <h6>
                         <span className="text-red-600 pr-1">*</span>How many
-                        open roles?
+                        open slots?
                       </h6>
                       <input
                         type="number"
@@ -265,7 +262,9 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                       {categories.map((category) => (
                         <button
                           key={category.id}
-                          onClick={() => handleCategoryClick(category)}
+                          onClick={() =>
+                            handleCategoryClick(category.jobCategory)
+                          }
                           className="text-blue-700 h-10 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                         >
                           {category.jobCategory}
@@ -342,6 +341,16 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">From</h6>
                         <input
                           type="number"
+                          value={formData.jobSalary[0]}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              jobSalary: [
+                                parseInt(e.target.value), // Convert to number
+                                formData.jobSalary[0],
+                              ],
+                            })
+                          }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                       </div>
@@ -349,6 +358,16 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">To</h6>
                         <input
                           type="number"
+                          value={formData.jobSalary[1]}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              jobSalary: [
+                                parseInt(e.target.value), // Convert to number
+                                formData.jobSalary[1],
+                              ],
+                            })
+                          }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                       </div>
@@ -356,13 +375,22 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
-                  <button
-                    type="button"
-                    onClick={handleSaveData}
-                    className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  >
-                    Save
-                  </button>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={handleSaveData}
+                      className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-800 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
+                      Review
+                    </button>
+                    {isReviewModalOpen && (
+                      <ReviewAddJobsModal
+                        isOpen={isReviewModalOpen}
+                        isClose={handleCloseReviewModal}
+                        formData={formData}
+                      />
+                    )}
+                  </div>
                   <div className="last-page-btn">
                     <button
                       type="button"
