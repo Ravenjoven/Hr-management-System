@@ -60,7 +60,7 @@ function Sidebar({ expanded }: SidebarProps) {
   return (
     <div>
       <aside
-        className={`border-[3px] rounded-tr-2xl bg-white mt-28 overflow-hidden border-custom-text-orange fixed top-0 left-0 z-40 h-screen transition-transform${
+        className={`border-[3px] rounded-tr-2xl bg-white mt-28 overflow-hidden border-custom-text-orange fixed top-0 left-0 z-40 h-screen transition-transform ${
           expanded ? "-translate-x-full sm:translate-x-0" : "sm:translate-x-0"
         } ${expanded ? "sm:w-0 border-none" : "w-64 "}`}
       >
