@@ -143,7 +143,7 @@ export default function ViewApplicantDetails({
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="w-full md:inline-flex inlune-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Rejected
                 </button>
@@ -160,7 +160,7 @@ export default function ViewApplicantDetails({
           {isFilesClicked && user?.files && (
             <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-75">
               <div className="max-w-screen-lg">
-                <div className="max-w-full md:h-[640px] overflow-y-auto">
+                <div className="max-w-screen max-h-screen overflow-y-auto">
                   <PdfViewer files={user.files} />
                 </div>
                 <button

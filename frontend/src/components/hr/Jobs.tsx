@@ -4,12 +4,12 @@ import Sidebar from "../Sidebar";
 import AddJobModal from "../Modal/AddJobModal";
 import {
   faMagnifyingGlass,
-  faPen,
   faTrash,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import ViewApplicantDetails from "../Modal/ViewApplicantDetails";
+import ViewEditJobsModal from "../Modal/ViewEditJobsModal";
 
 function Jobs() {
   const [expanded, setExpanded] = useState(false);
@@ -18,6 +18,7 @@ function Jobs() {
   const [JobsPerPage] = useState(10);
   const [ApplicantPerPage] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
+  const [isViewJobs, setViewJobs] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllData, setShowAllData] = useState(true);
   const [showFirstRow, setShowFirstRow] = useState(false);
@@ -36,6 +37,7 @@ function Jobs() {
   };
   const closeModal = () => {
     setIsOpen(false);
+    setViewJobs(false);
   };
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -250,6 +252,7 @@ function Jobs() {
   };
   const handleViewClick = (jobId: number) => {
     console.log(`Clicked job with ID ${jobId}`);
+    setViewJobs(true);
   };
 
   const handleShowAllData = (applicantId: number) => {
@@ -443,21 +446,18 @@ function Jobs() {
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                               >
                                 <FontAwesomeIcon
-                                  icon={faPen}
-                                  className="hover:text-green-500"
-                                />
-                              </a>
-                              <a
-                                href="#"
-                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                              >
-                                <FontAwesomeIcon
                                   icon={faTrash}
                                   className="hover:text-red-500"
                                 />
                               </a>
                             </div>
                           </td>
+                          <div>
+                            <ViewEditJobsModal
+                              isViewJobs={isViewJobs}
+                              isCloseJobs={closeModal}
+                            />
+                          </div>
                         </tr>
                       ))}
                     {/*individual data*/}
