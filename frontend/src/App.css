@@ -11,7 +11,11 @@
     background-color: rgba(255, 150, 0, 0.5) !important;
     /* You can adjust other styles like text color, border, etc. */
 }
-
+/* .fc .fc-button{
+  background-color: blue;
+  height: 30px;
+  width: 20px;
+} */
 .scroll-container {
   width: 100%; /* Adjust width as needed */
   height: 500px; /* Adjust height as needed */

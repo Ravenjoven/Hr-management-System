@@ -32,7 +32,7 @@ function AdminNavar() {
                 </a>
               </div>
               <a
-                href="#"
+                href="/Profile"
                 className="block md:py-2 rounded md:bg-transparent md:text-orange-400 md:p-0 hover:text-blue-400"
                 aria-current="page"
               >
