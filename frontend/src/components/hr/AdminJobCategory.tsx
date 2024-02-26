@@ -56,7 +56,7 @@ function AdminJobCategory() {
                   <h1 className="font-bold pl-4 w-full text-custom-text-gray text-3xl">
                     We're passionate about <br />
                     helping entrepreneurs <br /> change the world and build{" "}
-                    <br />a better tomorrow.
+                    <br />a better tomorrowa sbdkjsjagd kjsa gdkjsak jgdkjsam.
                   </h1>
                 </div>
                 <div className="w-full">
