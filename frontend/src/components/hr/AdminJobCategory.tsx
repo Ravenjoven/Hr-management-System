@@ -4,9 +4,33 @@ import Sidebar from "../Sidebar";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+// interface Job {
+//   jobTypeName: string;
+//   user: string;
+//   createdAt: string;
+//   // Other properties
+// }
 
 function AdminJobCategory() {
+  // const [jobs, setJobs] = useState<Job[]>([]);
+  // useEffect(() => {
+  //   const fetchJobs = async () => {
+  //     try {
+  //       const response = await axios.get<Job[]>(
+  //         "http://localhost:9000/api/type/jobs"
+  //       );
+  //       setJobs(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching jobs:", error);
+  //     }
+  //   };
+
+  //   fetchJobs();
+  // }, []);
+
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -132,7 +156,7 @@ function AdminJobCategory() {
                       <td className="px-6 py-4">
                         maintaining computer systems, troubleshooting errors,{" "}
                         <br />
-                        and repairing the organization's hardware.
+                        and repairing the organization's hardware.
                       </td>
                       <td className="px-6 py-4">123</td>
                       <td className="px-6 py-4">02/28/24</td>
@@ -157,7 +181,19 @@ function AdminJobCategory() {
                         </a>
                       </td>
                     </tr>
-                    <tr className="capitalize bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    {/* {jobs.map((job) => (
+                      <>
+                        <tbody>
+                          <tr>
+                              <td>{job.jobTypeName}</td>
+                              <td>{job.user}</td>
+                              <td>{job.createdAt}</td>
+                          </tr>
+                        </tbody>
+                      
+                      </>
+                    ))} */}
+                    {/* <tr className="capitalize bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -199,7 +235,7 @@ function AdminJobCategory() {
                           />
                         </a>
                       </td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </table>
                 <nav
