@@ -15,7 +15,7 @@ const Login = () => {
     <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen  bg-white font-montserrat">
       <>
         <Navar />
-        <section className="ml-[150px] mr-[150px]">
+        <section className="mx-20">
           <div className="flex flex-row">
             <div className="flex flex-col">
               <div className="w-full h-[70%]">
