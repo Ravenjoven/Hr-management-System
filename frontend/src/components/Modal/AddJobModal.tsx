@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import ReviewAddJobsModal from "./ReviewAddJobsModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 interface ModalProps {
   isOpen: boolean;
@@ -38,6 +40,9 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobCategory: "Fullstack Developer",
     },
   ]);
+  const [buttonJobTypeMessage, setButtonJobTypeMessage] = useState("");
+  const [buttonJobCategoryMessage, setButtonJobCategoryMessage] = useState("");
+  const [buttonSetUpMessage, setButtonSetUpMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isExperienceRequired, setIsExperienceRequired] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -73,7 +78,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     });
   };
   const handleCategoryClick = (category: any) => {
-    console.log("Category clicked:", category);
+    setButtonJobCategoryMessage(category);
     setFormData({
       ...formData,
       jobCategory: category,
@@ -83,14 +88,14 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     onClose && onClose();
   };
   const handleTypeButtonClick = (type: string) => {
-    console.log("Type clicked:", type);
+    setButtonJobTypeMessage(type);
     setFormData({
       ...formData,
       jobType: type,
     });
   };
   const handleSetupButtonClick = (val: any) => {
-    console.log("Setup clicked:", val);
+    setButtonSetUpMessage(val);
     setFormData({
       ...formData,
       jobSetUp: val,
@@ -99,19 +104,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
   const handleSaveData = () => {
     console.log("Form Data:", formData);
     setIsReviewModalOpen(true);
-    // console.log("Form Data:", formData);
-    // setFormData({
-    //   jobName: "",
-    //   jobDescription: "",
-    //   jobType: "",
-    //   jobRoles: "",
-    //   jobCategory: "",
-    //   jobSkills: [],
-    //   jobSetUp: "",
-    //   jobExperience: "",
-    //   jobSalary: "",
-    // });
-    // setIsReviewModalOpen(true);
   };
   const handleCloseReviewModal = () => {
     setIsReviewModalOpen(!isReviewModalOpen);
@@ -125,7 +117,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
             <div
               className="fixed inset-0 transition-opacity"
               aria-hidden="true"
-              onClick={handleClose}
             >
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
@@ -149,12 +140,23 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                 }
               >
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                  <h3
-                    className="text-lg font-medium leading-6 text-gray-900 mb-4"
-                    id="modal-headline"
-                  >
-                    {title}
-                  </h3>
+                  <div className="flex justify-between items-center mb-4">
+                    <h3
+                      className="text-lg font-medium leading-6 text-gray-900"
+                      id="modal-headline"
+                    >
+                      {title}
+                    </h3>
+                    <button
+                      onClick={handleClose}
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      <FontAwesomeIcon
+                        icon={faClose}
+                        className="hover:text-green-500"
+                      />
+                    </button>
+                  </div>
                   <span className="font-semibold text-lg">
                     Let's set up your new job
                   </span>
@@ -172,6 +174,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         onChange={(e) =>
                           setFormData({ ...formData, jobName: e.target.value })
                         }
+                        required
                         className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
@@ -189,6 +192,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                             jobDescription: e.target.value,
                           })
                         }
+                        required
                         className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
@@ -217,6 +221,14 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                           Intern
                         </button>
                       </div>
+                      {buttonJobTypeMessage && (
+                        <div className="text-custom-text-black">
+                          <span className="pr-2 text-green-600">
+                            {buttonJobTypeMessage}
+                          </span>
+                          selected.
+                        </div>
+                      )}
                     </div>
                     <div className="mt-4">
                       <h6>
@@ -230,6 +242,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         onChange={(e) =>
                           setFormData({ ...formData, jobRoles: e.target.value })
                         }
+                        required
                         className="bg-gray-50 border w-52 capitalize text-center mt-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
@@ -252,7 +265,24 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                     : "hidden"
                 }
               >
-                <div className="mt-4  flex flex-col">
+                <div className="flex flex-col">
+                  <div className="flex justify-between items-center">
+                    <h3
+                      className="text-lg font-medium leading-6 text-gray-900"
+                      id="modal-headline"
+                    >
+                      {title}
+                    </h3>
+                    <button
+                      onClick={handleClose}
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      <FontAwesomeIcon
+                        icon={faClose}
+                        className="hover:text-green-500"
+                      />
+                    </button>
+                  </div>
                   <div className="mt-4 flex flex-col">
                     <h6 className="text-[15px]">
                       <span className="text-red-600 pr-1">*</span>Choose a
@@ -271,6 +301,14 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         </button>
                       ))}
                     </div>
+                    {buttonJobCategoryMessage && (
+                      <div className="text-custom-text-black">
+                        <span className="pr-2 text-green-600">
+                          {buttonJobCategoryMessage}
+                        </span>
+                        selected.
+                      </div>
+                    )}
                   </div>
                   <div className="mt-2">
                     <h6 className="text-[15px]">
@@ -304,6 +342,14 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         Work From Home
                       </button>
                     </div>
+                    {buttonSetUpMessage && (
+                      <div className="text-custom-text-black">
+                        <span className="pr-2 text-green-600">
+                          {buttonSetUpMessage}
+                        </span>
+                        selected.
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center mt-4">
                     <input
@@ -402,7 +448,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                     <button
                       type="button"
                       onClick={handleClose}
-                      className="w-full md:inline-flex inlune-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Close
                     </button>
