@@ -131,19 +131,18 @@
 // }
 // export default Notifications;
 
-
 // Notification.js
-interface notiprops{
-  show:boolean;
+interface notiprops {
+  show: boolean;
 }
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-const Notification:React.FC<notiprops> = ({ show }) => {
+const Notification: React.FC<notiprops> = ({ show }) => {
   const notificationClasses = classNames(
-    ' relative flex  w-[50%] px-4 py-4 text-base text-white bg-red-500 rounded-lg font-regular',
+    " relative flex  w-[50%] px-4 py-4 text-base text-white bg-red-500 rounded-lg font-regular",
     {
-      'hidden': show, // Hide the notification if show is false
+      hidden: show, // Hide the notification if show is false
     }
   );
 
@@ -152,7 +151,7 @@ const Notification:React.FC<notiprops> = ({ show }) => {
       <div className="mr-12">You have a new notification!</div>
       <span
         className="absolute top-3 right-3 h-8 w-8 select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-white transition-all hover:bg-white/10 active:bg-white/30 cursor-pointer"
-        onClick={() => console.log('Notification dismissed')}
+        onClick={() => console.log("Notification dismissed")}
       >
         {/* Red dot */}
         <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-2 w-2 bg-red-700 rounded-full"></span>

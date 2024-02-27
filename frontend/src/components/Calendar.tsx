@@ -40,25 +40,19 @@ const Calendar: React.FC = () => {
     setIsModalOpen(true);
   };
 
-
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedDate(null);
   };
 
   return (
-    <div>
+    <div className="z-50   text-black ">
       {isAddModalOpen && selectedDate !== null && (
         <AddModal selectedDate={selectedDate} onClose={closeModal} />
       )}
-      
+
       {isModalOpen && (
-        <ModalComponent
-          
-          event={selectedEvent}
-          onClose={closeModal}
-          
-        />
+        <ModalComponent event={selectedEvent} onClose={closeModal} />
       )}
 
       <FullCalendar

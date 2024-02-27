@@ -36,8 +36,8 @@ function Dashboard() {
           </svg>
         </button>
       </div>
-      <div className="relative w-full mt-8">
-        <Sidebar expanded={expanded}/>
+      <div className=" w-full mt-8">
+        <Sidebar expanded={expanded} />
         <div
           className={`content h-full max-w-full z-1  ${
             expanded ? "ml-0" : "ml-[280px]"
@@ -46,34 +46,28 @@ function Dashboard() {
           <div className="upper-div rounded-tr-[30px] md:min-w-full h-12 font-bold bg-custom-text-orange rounded flex text-white">
             <span className="my-auto pl-4">DASHBOARD</span>
           </div>
-          <div className="flex flex-col lower-div w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4">
-            <div className="flex flex-row justify-center">
-              <div className=" w-[60%] rounded-tr-[20px] m-2 rounded-tl-[20px] h-10 font-bold bg-custom-text-orange rounded text-white xs:w-full">
+
+          <div className="relative flex flex-col lower-div w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4">
+            <div className="flex h-[500px] ">
+              <div className=" lg:w-full rounded-tr-[20px] m-2 rounded-tl-[20px] h-10 font-bold bg-custom-text-orange rounded text-white xs:w-full">
                 <div className="flex mt-2 justify-center items-center text-black">
                   CALENDAR
                 </div>
-                <div className="flexmt-4 border-custom-text-orange text-black">
+                <div className=" mt-4  border-custom-text-orange w-full text-black">
                   <Calendar />
                 </div>
               </div>
-              
+
               <div className="flex flex-col w-[20%] m-8 border-custom-text-orange">
-                {/* <div className="h-[110px] m-2 p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  TOTAL EMPLOYEE
-                </div>
-                <div className="h-[110px] m-2 p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  MALE
-                </div>
-                <div className="h-[110px] m-2 p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                  FEMALE
-                </div> */}
                 <img
                   src="../images/dashboard-img.png"
                   className="h-[400px]  w-full sm:block hidden"
                 ></img>
               </div>
             </div>
-            <div className="mt-[10%] m-8 text-black grid md:grid-cols-3 gap-4 xs:grid-cols-1 gap-4 font-extrabold">
+          </div>
+          <div className="w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4 ">
+            <div className=" m-8 text-black grid md:grid-cols-3 xs:grid-cols-1 gap-4 font-extrabold">
               <a href="/EmployeeList">
                 <div className="h-[110px] p-8 border-[3px] border-custom-text-orange rounded-[10px] bg-gray-300 text-center dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                   <li className="cursor-pointer flex items-center justify-center p-2 text-gray-900 rounded-lg ">
