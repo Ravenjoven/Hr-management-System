@@ -41,6 +41,12 @@ app.use('/api', userRoutes);
 app.use('/api', jobTypeRoutes);
 app.use('/api', jobRoute);
 
+//get(arneltest)
+// app.get('/getJob', (req, res) =>{
+    
+// })
+
+
 //error middleware
 app.use(errorHandler);
 

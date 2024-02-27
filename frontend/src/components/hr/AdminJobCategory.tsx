@@ -132,7 +132,7 @@ function AdminJobCategory() {
                       <td className="px-6 py-4">
                         maintaining computer systems, troubleshooting errors,{" "}
                         <br />
-                        and repairing the organization's hardware.
+                        and repairing the organization's hardware.
                       </td>
                       <td className="px-6 py-4">123</td>
                       <td className="px-6 py-4">02/28/24</td>
