@@ -18,9 +18,9 @@ const Login = () => {
         <section className="mx-20">
           <div className="flex flex-row">
             <div className="flex flex-col">
-              <div className="w-full h-[70%]">
+              <div className="lg:w-full lg:h-[70%] xs:w-full xs:h-[50%]">
                 <svg
-                  className="lg:w-[90%] lg:h-full xs:block-hidden "
+                  className="lg:w-[90%] lg:h-full xs:w-[50%] xs:h-full"
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   preserveAspectRatio="none"
@@ -52,21 +52,21 @@ const Login = () => {
               </div>
             </div>
             <div className="">
-              <form className="m-8 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-darkorange-300 shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start pt-[139px] pb-[115px] pr-[60px] pl-[61px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
+              <form className="m-8 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-darkorange-300 shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-[100px] px-[55px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
                 <div className="w-[341px] h-[455px] relative rounded-tl-none rounded-tr-31xl rounded-br-none rounded-bl-31xl bg-darkorange-300 shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] hidden max-w-full" />
-                <div className="self-stretch rounded-mini bg-whitesmoke flex flex-row items-center justify-start py-[11px] px-2.5 z-[1] border-[1px] border-solid border-gainsboro-200">
+                <div className="self-stretch rounded-mini bg-whitesmoke rounded-[15px] flex flex-row items-center justify-start py-[11px] px-2.5 z-[1] border-[1px] border-solid border-gainsboro-200">
                   <div className="h-[38px] w-[220px] relative rounded-mini bg-whitesmoke box-border hidden border-[1px] border-solid border-gainsboro-200" />
                   <input
-                    className="w-[105px] [border:none] [outline:none] font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block whitespace-nowrap z-[2]"
+                    className="w-[200px] [border:none] [outline:none]  font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block whitespace-nowrap z-[2]"
                     placeholder="Email@gmail.com"
                     type="text"
                   />
                 </div>
                 <div className="self-stretch flex flex-col items-center justify-center gap-[14px_0px]">
-                  <div className="self-stretch rounded-mini bg-whitesmoke flex flex-row items-center justify-start py-[11px] px-[15px] z-[1] border-[1px] border-solid border-gainsboro-200">
+                  <div className="self-stretch rounded-mini bg-whitesmoke rounded-[15px] flex flex-row items-center justify-start py-[11px] px-[15px] z-[1] border-[1px] border-solid border-gainsboro-200">
                     <div className="h-[38px] w-[220px] relative rounded-mini bg-whitesmoke box-border hidden border-[1px] border-solid border-gainsboro-200" />
                     <input
-                      className="w-[52px] [border:none] [outline:none] font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block z-[2]"
+                      className="w-[200px] [border:none] [outline:none] font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block z-[2]"
                       placeholder="Password"
                       type="password"
                     />
