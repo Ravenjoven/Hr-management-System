@@ -1,7 +1,7 @@
 function Navar() {
   return (
     <nav className="bg-custom-bg-gray top-0 sticky z-50">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-full ">
+      <div className="sm:max-w-screen md:max-w-screen flex mx-20 flex-wrap items-center justify-between p-4 h-full ">
         <div className="flex items-center justify-start ">
           <img src="../images/img2.png" className="h-10"></img>
           <img src="../images/img3.png" className="h-10 pt-2" />

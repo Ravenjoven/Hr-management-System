@@ -45,7 +45,7 @@ const Login = () => {
                 </svg>
               </div>
               <div className="flex relative justify-center items-center">
-                <h1 className=" font-bold text-custom-text-gray text-[300%]">
+                <h1 className=" font-bold text-custom-text-gray lg:text-[300%] xs:text-[200%]">
                   We're passionate about helping entrepreneurs change the world
                   and build a better tomorrow.
                 </h1>
@@ -74,7 +74,7 @@ const Login = () => {
                   <button className="cursor-pointer pt-2 pb-[9px] pr-3.5 pl-[15px] bg-darkorange-200 w-[89px] rounded-[6px] box-border flex flex-row items-center justify-center whitespace-nowrap z-[1] border-[1px] border-solid border-white hover:bg-chocolate hover:box-border hover:border-[1px] hover:border-solid hover:border-gainsboro-100">
                     <div className="h-9 w-[89px] relative rounded-3xs bg-darkorange-200 box-border hidden border-[1px] border-solid border-white" />
                     <b className="relative text-base font-inter text-whitesmoke text-left z-[2]">
-                      SIgn in
+                      Sign in
                     </b>
                   </button>
                   <div className="w-[204px] flex items-center justify-center py-0 px-2 box-border">
