@@ -34,7 +34,7 @@ function AdminNavar() {
                   >
                     <FontAwesomeIcon icon={faBell} className="w-6 h-6" />
                     {showNotification && (
-                      <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-2 w-2 bg-red-500 rounded-full md:ml-[42%] lg:ml-[45%] " />
+                      <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-2 w-2 bg-red-500 rounded-full sm:ml-[42%] lg:ml-[45%] " />
                     )}
 
                     {/* <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-2 w-2 bg-red-500 rounded-full ml-[42%]"></span> */}
