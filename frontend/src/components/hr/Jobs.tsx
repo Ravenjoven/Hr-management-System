@@ -47,7 +47,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 10,
-      date_createad: "02/14/24",
+      date_createad: "February 00, 2024",
     },
     {
       id: 1,
@@ -55,7 +55,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 01, 2024",
     },
     {
       id: 2,
@@ -63,7 +63,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 02, 2024",
     },
     {
       id: 3,
@@ -71,7 +71,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 003, 2024",
     },
     {
       id: 4,
@@ -79,7 +79,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 04, 2024",
     },
     {
       id: 5,
@@ -87,7 +87,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 05, 2024",
     },
     {
       id: 6,
@@ -95,7 +95,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 06, 2024",
     },
     {
       id: 7,
@@ -103,7 +103,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 07, 2024",
     },
   ]);
   const [applicants, setApplicants] = useState([

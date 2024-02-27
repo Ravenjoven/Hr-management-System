@@ -9,7 +9,7 @@ const data = [
   {
     id: 2,
     label: "Users",
-    to: "/Employee",
+    to: "/EmployeeList",
   },
   {
     id: 3,

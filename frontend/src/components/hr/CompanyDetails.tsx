@@ -78,7 +78,7 @@ function CompDetails() {
               <div className=" font-semibold justify-bottom items-bottom">
                 <span>Company Description</span>
               </div>
-              <div className="ml-52 text-sm  w-[750px] text-sm text-custom-text-black">
+              <div className="ml-52 text-sm  w-[750px] text-custom-text-black">
                 <span>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -100,7 +100,7 @@ function CompDetails() {
                 <span>Website</span>
               </div>
             </div>
-            <div className=" flex text-sm text-custom-text-black flex justify-between">
+            <div className=" flex text-sm text-custom-text-black justify-between">
             <div className="  w-[250px] ml-20">
               <ul>
                 <li>

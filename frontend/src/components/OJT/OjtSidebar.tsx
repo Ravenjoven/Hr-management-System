@@ -4,7 +4,7 @@ const data = [
   {
     id: 1,
     label: "Jobs",
-    to: "/OjtJobsList",
+    to: "/OjtJobList",
   },
   {
     id: 2,

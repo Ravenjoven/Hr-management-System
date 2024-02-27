@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const data = [
   {
     id: 0,
-    label: "Jobs",
-    to: "/JobList",
+    label: "Job",
+    to: "/OjtJobList",
   },
   {
     id: 1,

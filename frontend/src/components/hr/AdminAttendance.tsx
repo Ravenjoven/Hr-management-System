@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -53,6 +53,8 @@ function AdminAttendance() {
     employee.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  
+ 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -133,7 +135,8 @@ function AdminAttendance() {
                 {filteredEmployees.map((employee) => (
                   <div
                     key={employee.id}
-                    className="bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
+                    className=" bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
+                    
                   >
                     <div className="flex items-center">
                       <img
@@ -167,6 +170,8 @@ function AdminAttendance() {
                 ))}
               </div>
             </div>
+             
+            
           </div>
         </div>
       </>
