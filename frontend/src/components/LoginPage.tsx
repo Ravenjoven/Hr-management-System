@@ -20,7 +20,7 @@ const Login = () => {
             <div className="flex flex-col">
               <div className="w-full h-[70%]">
                 <svg
-                  className="w-[90%] h-full"
+                  className="lg:w-[90%] lg:h-full xs:block-hidden "
                   xmlns="http://www.w3.org/2000/svg"
                   version="1.1"
                   preserveAspectRatio="none"
@@ -45,7 +45,7 @@ const Login = () => {
                 </svg>
               </div>
               <div className="flex relative justify-center items-center">
-                <h1 className=" font-bold text-custom-text-gray lg:text-[300%] xs:text-[200%]">
+                <h1 className=" font-bold text-custom-text-gray lg:text-[300%] xs:text-[100%]">
                   We're passionate about helping entrepreneurs change the world
                   and build a better tomorrow.
                 </h1>
