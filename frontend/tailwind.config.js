@@ -27,9 +27,27 @@ module.exports = {
         'custom-bg-smooth': '#EAECF1',
         'custom-text-blue': '#3727F2',
         'custom-text-red' : '#F61010',
-        'custom-text-green' : '#4ECB71'
-        
+        'custom-text-green' : '#4ECB71',
+        //
+        'white': "#fff",
+        'darkgray': "#9b9b9b",
+        'darkorange': {
+          "100": "#f79a38",
+          "200": "#f89939",
+          "300": "#f79939",
+        },
+        'chocolate': "#c46605",
+        'gainsboro': {
+          "100": "#e6e6e6",
+          "200": "#d9d9d9",
+        },
+        whitesmoke: "#f5f5f5",
+        mediumslateblue: "#6e5be7",
+        black: "#000",
+        gray: "#7b7777",
       },
+      
+      
     },
   },
   plugins: [require("tw-elements-react/dist/plugin.cjs")]
