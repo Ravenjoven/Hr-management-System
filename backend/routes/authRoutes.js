@@ -24,7 +24,7 @@ async function getUserData(access_token){
     console.log('data', data);
 }
 
-router.get('/google',async function(req, res, next){
+router.get('/',async function(req, res, next){
     const code=req.query.code;
     try{
         const redirectURL= 'http://localhost:9000/auth';

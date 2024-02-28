@@ -57,7 +57,7 @@ app.options('*', function(req,res,next){
 })
 
 // app.use('/auth', oauth);
-// app.use('/request', request);
+app.use('/request', request);
 
 
 //error middleware
