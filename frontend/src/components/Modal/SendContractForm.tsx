@@ -88,7 +88,7 @@ export default function SendContractForm({
                   <div className="mt-4 text-black flex flex-col">
                     <form method="post" encType="multipart/form-data">
                       <div className="flex">
-                        <label htmlFor="Subject" className="pr-2">
+                        <label htmlFor="Subject" className="pr-2 font-bold">
                           Subject:
                         </label>
                         <input
