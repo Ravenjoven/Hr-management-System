@@ -13,6 +13,11 @@ const userRoutes = require("./routes/userRoutes");
 const jobTypeRoutes = require("./routes/jobTypeRoutes");
 const jobRoute = require("./routes/jobsRoutes");
 const jobTypeModels = require("./models/jobTypeModels");
+
+//test
+// const oauth =require("./routes/auth");
+// const request =require("./routes/request");
+
 //database connection
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -41,10 +46,18 @@ app.use('/api', userRoutes);
 app.use('/api', jobTypeRoutes);
 app.use('/api', jobRoute);
 
-//get(arneltest)
-// app.get('/getJob', (req, res) =>{
-    
-// })
+//arnelapitest
+app.options('*', function(req,res,next){
+    res.header("Access-Control-Allow-Origin", 'https://localhost:5173');
+    res.header("Access-Control-Allow-Credentials","true");
+    res.header("Access-Control-Allow-Headers",['X-Requested-Width','content-type', 'credentials']);
+    res.header('Access-Control-Allow-Methods','GET,POST');
+    res.status(200);
+    next()
+})
+
+// app.use('/auth', oauth);
+// app.use('/request', request);
 
 
 //error middleware
