@@ -6,12 +6,14 @@ interface ModalProps {
   isClick: boolean;
   isClose: () => void;
   title: string;
+  email: string;
 }
 
 export default function SendContractForm({
   isClick,
   isClose,
   title,
+  email,
 }: ModalProps) {
   const [file, setFile] = useState<File | null>(null);
   const [fileMessage, setFileMessage] = useState("");
@@ -85,11 +87,35 @@ export default function SendContractForm({
                   <hr />
                   <div className="mt-4 text-black flex flex-col">
                     <form method="post" encType="multipart/form-data">
-                      <input
-                        type="file"
-                        name="contract_file"
-                        onChange={handleFileChange}
-                      />
+                      <div className="flex">
+                        <label htmlFor="Subject" className="pr-2">
+                          Subject:
+                        </label>
+                        <input
+                          type="text"
+                          className="w-full  border border-black"
+                        />
+                      </div>
+                      <div className="flex">
+                        <label htmlFor="email" className="pr-2">
+                          To:
+                        </label>
+                        <input
+                          type="text"
+                          className="w-full"
+                          disabled
+                          value={email}
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="File">File</label>
+                        <input
+                          type="file"
+                          name="contract_file"
+                          className="cursor-pointer"
+                          onChange={handleFileChange}
+                        />
+                      </div>
                     </form>
                     <span
                       className={

@@ -192,9 +192,7 @@ function AdminUserList() {
             }`}
           >
             <div className="upper-div md:min-w-full h-16  bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
-              <span className="pl-4 uppercase font-bold">
-                company Employees
-              </span>
+              <span className="pl-4 uppercase font-bold">User List</span>
               <div className="flex items-end justify-end flex-grow pl-4">
                 <div className="relative">
                   <FontAwesomeIcon

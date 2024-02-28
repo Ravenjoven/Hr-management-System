@@ -161,11 +161,14 @@ export default function ViewApplicantDetails({
                 >
                   Accept
                 </button>
-                <SendContractForm
-                  isClick={isOpenForm}
-                  isClose={closeFormModal}
-                  title={"Send Contract"}
-                />
+                {user?.email !== undefined && (
+                  <SendContractForm
+                    isClick={isOpenForm}
+                    isClose={closeFormModal}
+                    title={"Send Contract"}
+                    email={user.email}
+                  />
+                )}
               </div>
             </div>
           </div>
