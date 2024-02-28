@@ -49,10 +49,10 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
   const [selectedSkills, setSelectedSkills] = useState([]);
 
   const skills = [
-    { name: "Hardworking", value: "Hardworking" },
-    { name: "Time Management", value: "Time Management" },
-    { name: "Critical Thinking", value: "Critical Thinking" },
-    { name: "Technincal", value: "Technincal" },
+    { id: 0, name: "Hardworking", value: "Hardworking" },
+    { id: 1, name: "Time Management", value: "Time Management" },
+    { id: 2, name: "Critical Thinking", value: "Critical Thinking" },
+    { id: 3, name: "Technincal", value: "Technincal" },
   ];
   const handleCheckboxChange = (event: any) => {
     setIsExperienceRequired(event.target.checked);
