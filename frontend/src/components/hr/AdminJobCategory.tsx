@@ -7,29 +7,24 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// interface Job {
-//   jobTypeName: string;
-//   user: string;
-//   createdAt: string;
-//   // Other properties
-// }
+interface JobData {
+  _id: string;
+  jobTypeName: string;
+  user: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
 function AdminJobCategory() {
-  // const [jobs, setJobs] = useState<Job[]>([]);
-  // useEffect(() => {
-  //   const fetchJobs = async () => {
-  //     try {
-  //       const response = await axios.get<Job[]>(
-  //         "http://localhost:9000/api/type/jobs"
-  //       );
-  //       setJobs(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching jobs:", error);
-  //     }
-  //   };
-
-  //   fetchJobs();
-  // }, []);
+  const [backendData, setBackendData] = useState<JobData[]>([]);
+  useEffect(() => {
+    fetch("/api/type/jobs")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, []);
 
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
@@ -181,18 +176,23 @@ function AdminJobCategory() {
                         </a>
                       </td>
                     </tr>
-                    {/* {jobs.map((job) => (
-                      <>
-                        <tbody>
-                          <tr>
-                              <td>{job.jobTypeName}</td>
-                              <td>{job.user}</td>
-                              <td>{job.createdAt}</td>
-                          </tr>
-                        </tbody>
-                      
-                      </>
-                    ))} */}
+                    {/* <div>
+                      {typeof backendData === "undefined" ? (
+                        <p>Loading...</p>
+                      ) : (
+                        backendData.map((job, i) => (
+                          <div key={i}>
+                            <p>{job._id}</p>
+                            <p>{job.jobTypeName}</p>
+                            <p>{job.user}</p>
+                            <p>{job.createdAt}</p>
+                            <p>{job.updatedAt}</p>
+                            <p>{job.__v}</p>
+                            
+                          </div>
+                        ))
+                      )}
+                    </div> */}
                     <tr className="capitalize bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                       <th
                         scope="row"

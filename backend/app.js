@@ -61,11 +61,7 @@ app.options('*', function(req,res,next){
     next()
 });
 
-<<<<<<< HEAD
-app.use('/auth', auth);
-=======
 // app.use('/auth', oauth);
->>>>>>> 1e9c820a30c9ab0e877ec231db1d6363d5f04b23
 app.use('/request', request);
 
 app.use('/get', (req,res)=>
