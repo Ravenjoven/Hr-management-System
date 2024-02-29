@@ -7,6 +7,7 @@ interface ModalProps {
   isClose: () => void;
   title: string;
   email: string;
+  subject: string;
 }
 
 export default function SendContractForm({
@@ -14,6 +15,7 @@ export default function SendContractForm({
   isClose,
   title,
   email,
+  subject,
 }: ModalProps) {
   const [file, setFile] = useState<File | null>(null);
   const [fileMessage, setFileMessage] = useState("");
@@ -86,18 +88,24 @@ export default function SendContractForm({
                   </div>
                   <hr />
                   <div className="mt-4 text-black flex flex-col">
-                    <form method="post" encType="multipart/form-data">
+                    <form
+                      method="post"
+                      encType="multipart/form-data"
+                      className="space-y-2"
+                    >
                       <div className="flex">
                         <label htmlFor="Subject" className="pr-2 font-bold">
                           Subject:
                         </label>
                         <input
                           type="text"
-                          className="w-full  border border-black"
+                          value={subject}
+                          disabled
+                          className="w-full"
                         />
                       </div>
                       <div className="flex">
-                        <label htmlFor="email" className="pr-2">
+                        <label htmlFor="email" className="pr-2 font-bold">
                           To:
                         </label>
                         <input
@@ -107,8 +115,8 @@ export default function SendContractForm({
                           value={email}
                         />
                       </div>
-                      <div className="flex flex-col">
-                        <label htmlFor="File">File</label>
+                      <div className="flex">
+                        {/* <label htmlFor="File">Upload File</label> */}
                         <input
                           type="file"
                           name="contract_file"
