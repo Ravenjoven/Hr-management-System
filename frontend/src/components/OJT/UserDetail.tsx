@@ -61,7 +61,7 @@ function UserProfile() {
                 </span>
               </div>
               <div className="flex flex-col m-12">
-                <div className="p-2">
+                <div className="p-2 ">
                   <h4 className="text-custom-text-black font-bold">EMAIL ID</h4>
                   <span className="text-custom-text-gray font-semibold">
                     johndoe@gmail.com

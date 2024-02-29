@@ -16,6 +16,7 @@ import CompDetails from "../components/hr/CompanyDetails";
 import OjtLogin from "../components/OJT/OjtLogin";
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
+import FileLeaves from "../components/OJT/FileLeave";
 
 
 
@@ -28,6 +29,7 @@ function router() {
     <>
       <Router>
         <Routes>
+        <Route path="/FileLeave" element={<FileLeaves />} />
           <Route path="/Application" element={<Applications />} />
           <Route path="/OjtDetails" element={<UserDetail />} />
           <Route path="/OjtJoblist" element={<OjtJobList />} />

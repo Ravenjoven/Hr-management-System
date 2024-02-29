@@ -144,7 +144,25 @@ function AdminProfile() {
                       </span>
                     </div>
                     <div>
-                      Religion :{" "}
+                      TIN :{" "}
+                      <span className="text-custom-text-gray font-semibold p-2">
+                        ----
+                      </span>
+                    </div>
+                    <div>
+                      SSS :{" "}
+                      <span className="text-custom-text-gray font-semibold p-2">
+                        ----
+                      </span>
+                    </div>
+                    <div>
+                      PAG-IBIG :{" "}
+                      <span className="text-custom-text-gray font-semibold p-2">
+                        ----
+                      </span>
+                    </div>
+                    <div>
+                      PHILC :{" "}
                       <span className="text-custom-text-gray font-semibold p-2">
                         ----
                       </span>

@@ -9,6 +9,8 @@ import {
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import FileLeave from "./FileLeave";
+import { Link, Route } from "react-router-dom";
 
 function OjtAttendance() {
   const [expanded, setExpanded] = useState(false);
@@ -82,13 +84,13 @@ function OjtAttendance() {
                         Software Developer
                       </p>
                     </div>
-                    <div className="flex flex-row text-white">
+                    <div className="flex flex-row text-white text-sm">
                       <div>
                         <button
                           type="button"
                           className="bg-green-500 rounded-[4px] p-2 w-18 m-2"
                         >
-                          time in
+                          Time in
                         </button>
                       </div>
                       <div>
@@ -96,10 +98,15 @@ function OjtAttendance() {
                           type="button"
                           className="bg-red-500 rounded-[4px] p-2 w-18 m-2"
                         >
-                          time out
+                          Time out
                         </button>
                       </div>
+                    
                     </div>
+                    <div className="text-xs p-2 text-custom-text-blue">
+                        <span>Other options, <a className="border-b-2 no-wrap border-blue-600" href="/FileLeave" >
+                           learn more !</a></span>
+                      </div>
                   </div>
                 </div>
                 <div className="flex flex-col w-[70%]">
