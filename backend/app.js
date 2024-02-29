@@ -14,9 +14,14 @@ const jobTypeRoutes = require("./routes/jobTypeRoutes");
 const jobRoute = require("./routes/jobsRoutes");
 const jobTypeModels = require("./models/jobTypeModels");
 
+const dotenv = require('dotenv');
+dotenv.config();
+const {OAuth2Client} = require('google-auth-library');
+
+
 //test
-// const oauth =require("./routes/auth");
-// const request =require("./routes/request");
+const auth =require("./routes/auth");
+const request =require("./routes/request");
 
 //database connection
 mongoose.connect(process.env.DATABASE, {
@@ -54,11 +59,14 @@ app.options('*', function(req,res,next){
     res.header('Access-Control-Allow-Methods','GET,POST');
     res.status(200);
     next()
-})
+});
 
-// app.use('/auth', oauth);
-// app.use('/request', request);
+app.use('/auth', auth);
+app.use('/request', request);
 
+app.use('/get', (req,res)=>
+    res.json({"users": ["userone","usertwo","userthree"]})
+)
 
 //error middleware
 app.use(errorHandler);
