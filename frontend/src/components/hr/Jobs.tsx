@@ -14,15 +14,16 @@ import ViewEditJobsModal from "../Modal/ViewEditJobsModal";
 function Jobs() {
   const [expanded, setExpanded] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
   const [ApplicantPerPage] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
-  const [isViewJobs, setViewJobs] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllData, setShowAllData] = useState(true);
   const [showFirstRow, setShowFirstRow] = useState(false);
   const [isViewApplicantModal, setViewApplicantModal] = useState(false);
+  const [viewJobs, setViewJobs] = useState(false);
 
   const openViewApplicantModal = (user: any) => {
     setSelectedApplicant(user);
@@ -32,12 +33,19 @@ function Jobs() {
     setViewApplicantModal(false);
     setSelectedApplicant(null);
   };
+  const openViewJobsModal = (job: any) => {
+    setSelectedJob(job);
+    setViewJobs(true);
+  };
+  const closeViewJobsModal = () => {
+    setViewJobs(false);
+    setSelectedJob(null);
+  };
   const openModal = () => {
     setIsOpen(true);
   };
   const closeModal = () => {
     setIsOpen(false);
-    setViewJobs(false);
   };
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -48,6 +56,13 @@ function Jobs() {
       jobName: "Financial Associate",
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobType: "Intern",
+      jobSlots: 2,
+      jobCategory: "Fullstack Developer",
+      jobSkills: ["HardWorking", "Time Management"],
+      jobSetUp: "Onsite",
+      jobExperience: 2,
+      jobSalary: [0, 1],
       jobLimit: 10,
       date_createad: "February 00, 2024",
     },
@@ -433,7 +448,7 @@ function Jobs() {
                           <td className="px-6 py-4">
                             <div className="flex space-x-2">
                               <button
-                                onClick={() => handleViewClick(job.id)}
+                                onClick={() => openViewJobsModal(job)}
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                               >
                                 <FontAwesomeIcon
@@ -454,8 +469,10 @@ function Jobs() {
                           </td>
                           <div>
                             <ViewEditJobsModal
-                              isViewJobs={isViewJobs}
-                              isCloseJobs={closeModal}
+                              viewJobs={viewJobs}
+                              title={"Job Details"}
+                              isCloseJobs={closeViewJobsModal}
+                              job={selectedJob}
                             />
                           </div>
                         </tr>

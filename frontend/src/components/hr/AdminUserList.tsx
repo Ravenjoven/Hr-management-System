@@ -8,7 +8,6 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import AddEmployeeModal from "../Modal/AddEmployeeModal";
 import ViewEmployeeModal from "../Modal/ViewEmployeeModal";
 
 interface FormData {
@@ -113,12 +112,6 @@ function AdminUserList() {
       date_hire: "02/04/2024",
     },
   ]);
-  const [positions, setPositions] = useState([
-    "Backend Developer",
-    "Frontend Developer",
-    "Project Manager",
-  ]);
-  const [types, setTypes] = useState(["Full Time", "Part Time", "Intern"]);
   const [searchQuery, setSearchQuery] = useState("");
   const filteredUsers = users.filter((user) => {
     return (
@@ -199,10 +192,8 @@ function AdminUserList() {
             }`}
           >
             <div className="upper-div md:min-w-full h-16  bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
-              <span className="pl-4 uppercase font-bold">
-                company Employees
-              </span>
-              <div className="flex items-center justify-center flex-grow pl-4">
+              <span className="pl-4 uppercase font-bold">User List</span>
+              <div className="flex items-end justify-end flex-grow pl-4">
                 <div className="relative">
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
@@ -216,23 +207,6 @@ function AdminUserList() {
                     placeholder="Search"
                   />
                 </div>
-              </div>
-              <div>
-                <button
-                  onClick={openModal}
-                  className="border-[3px] hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded"
-                >
-                  Add Employees
-                </button>
-                {isOpen && (
-                  <AddEmployeeModal
-                    isOpen={isOpen}
-                    onClose={closeModal}
-                    title="Add Employee"
-                    positions={positions}
-                    types={types}
-                  ></AddEmployeeModal>
-                )}
               </div>
             </div>
             <div className="lower-div w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4">
