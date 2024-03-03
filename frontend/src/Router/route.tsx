@@ -17,6 +17,7 @@ import OjtLogin from "../components/OJT/OjtLogin";
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
 import FileLeaves from "../components/OJT/FileLeave";
+import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 
 
 
@@ -30,7 +31,8 @@ function router() {
       <Router>
         <Routes>
         <Route path="/FileLeave" element={<FileLeaves />} />
-          <Route path="/Application" element={<Applications />} />
+        <Route path="/ojt" element={<UnEmpJobList />} />
+          <Route path="/ojt/Application" element={<Applications />} />
           <Route path="/OjtDetails" element={<UserDetail />} />
           <Route path="/OjtJoblist" element={<OjtJobList />} />
           <Route index path="/" element={<HomePage />} />

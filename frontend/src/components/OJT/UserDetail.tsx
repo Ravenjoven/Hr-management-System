@@ -5,6 +5,8 @@ import UserSidebar from "../UserSidebar";
 import UserNavar from "../UserNavar";
 import { useState } from "react";
 import UnEmpSidebar from "./UnEmpSidebar";
+import OjtSidebar from "./OjtSidebar";
+import OjtNavar from "./OjtNavar";
 
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
@@ -15,34 +17,47 @@ function UserProfile() {
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
       <>
-        <UserNavar />
-        <div className="fixed">
+      <OjtNavar />
+        <div className="hamburger-menu items-center">
           <button
-            data-drawer-target="logo-sidebar"
-            data-drawer-toggle="logo-sidebar"
-            aria-controls="logo-sidebar"
-            type="button"
+            className="menu-toggle focus:outline-none"
             onClick={toggleExpanded}
-            className="cursor-pointer z-50 inline-flex items-center text-sm text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           >
-            <span className="sr-only">Open sidebar</span>
-            <svg
-              className="w-8 h-8 hover:bg-gray-100"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 21"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clip-rule="evenodd"
-                fill-rule="evenodd"
-                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-              ></path>
-            </svg>
+            {expanded ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            )}
           </button>
         </div>
         <div className="relative w-full mt-8">
-        <UnEmpSidebar expanded={expanded} />
+        <OjtSidebar expanded={expanded} />
           <div
             className={`content h-full max-w-full z-1  ${expanded ? "ml-0" : "ml-[280px]"
               }`}
@@ -138,7 +153,25 @@ function UserProfile() {
                     </span>
                   </div>
                   <div>
-                    Religion :{" "}
+                    TIN :{" "}
+                    <span className="text-custom-text-gray font-semibold p-2">
+                      ----
+                    </span>
+                  </div>
+                  <div>
+                    SSS :{" "}
+                    <span className="text-custom-text-gray font-semibold p-2">
+                      ----
+                    </span>
+                  </div>
+                  <div>
+                    PAG-IBIG :{" "}
+                    <span className="text-custom-text-gray font-semibold p-2">
+                      ----
+                    </span>
+                  </div>
+                  <div>
+                    PHILC :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
                       ----
                     </span>
