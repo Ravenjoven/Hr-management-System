@@ -39,7 +39,7 @@ function AdminEmployeeManagement() {
       letter:
         "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
       img: "./images/cv1.png",
-      email: "jezraelsuliano@gmail.com",
+      email: "jezraelsuliano507@gmail.com",
       contact_number: "099191912013",
       linkedIn:
         "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",

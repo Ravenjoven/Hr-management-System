@@ -1,47 +1,58 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 interface ModalProps {
   isClick: boolean;
   isClose: () => void;
   title: string;
-  email: string;
-  subject: string;
+  to: string;
+  subjects: string;
 }
 
 export default function SendContractForm({
   isClick,
   isClose,
   title,
-  email,
-  subject,
+  to,
+  subjects,
 }: ModalProps) {
-  const [file, setFile] = useState<File | null>(null);
   const [fileMessage, setFileMessage] = useState("");
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = event.target.files;
-    if (fileList && fileList.length > 0) {
-      setFile(fileList[0]);
+  const [files, setFiles] = useState("");
+
+  const sendMail = () => {
+    const formData = new FormData();
+    formData.append("email", to);
+    formData.append("subject", subjects);
+    if (files && files.length > 0) {
+      formData.append("file", files[0]);
     }
+
+    for (const entry of formData.entries()) {
+      console.log(entry);
+    }
+    axios
+      .post("http://localhost:9000/sendemail", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((data) => {
+        console.log("success");
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
   };
+
+  const handleFileChange = (e: any) => {
+    setFiles(e.target.files);
+  };
+
   const handleClose = () => {
     isClose && isClose();
-  };
-  const [formData, setFormData] = useState({
-    file: "",
-  });
-
-  const handleSaveData = () => {
-    if (file) {
-      const formData = new FormData();
-      formData.append("contract_file", file);
-      // Now you can send formData to your backend API using fetch or any other method
-      console.log("Form Data:", formData);
-      setFileMessage("Send Successfully");
-    } else {
-      setFileMessage("No File Uploaded");
-    }
   };
 
   return (
@@ -99,8 +110,7 @@ export default function SendContractForm({
                         </label>
                         <input
                           type="text"
-                          value={subject}
-                          disabled
+                          value={subjects}
                           className="w-full"
                         />
                       </div>
@@ -108,21 +118,10 @@ export default function SendContractForm({
                         <label htmlFor="email" className="pr-2 font-bold">
                           To:
                         </label>
-                        <input
-                          type="text"
-                          className="w-full"
-                          disabled
-                          value={email}
-                        />
+                        <input type="text" className="w-full" value={to} />
                       </div>
                       <div className="flex">
-                        {/* <label htmlFor="File">Upload File</label> */}
-                        <input
-                          type="file"
-                          name="contract_file"
-                          className="cursor-pointer"
-                          onChange={handleFileChange}
-                        />
+                        <input type="file" onChange={handleFileChange} />
                       </div>
                     </form>
                     <span
@@ -140,7 +139,7 @@ export default function SendContractForm({
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
                 <button
                   type="button"
-                  onClick={handleSaveData}
+                  onClick={sendMail}
                   className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Proceed
