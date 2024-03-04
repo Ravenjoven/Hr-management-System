@@ -9,9 +9,21 @@ import OjtNavar from "./OjtNavar";
 import Modal from "./Modal";
 import UnEmpSidebar from "./UnEmpSidebar";
 import OjtSidebar from "./OjtSidebar";
+import { data } from "autoprefixer";
 
 
 function OjtJobList() {
+
+  const [backendData, setBackendData] = useState([{}])
+  useEffect(() =>{
+    fetch("/api").then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data)
+      }
+    )
+  },[]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedJob, setSelectedJob] = useState(null as any);
@@ -26,6 +38,7 @@ function OjtJobList() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  
   const [jobs, setJobs] = useState([
     {
       id: 0,
@@ -100,6 +113,7 @@ function OjtJobList() {
 
     },
   ]);
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [jobCount, setJobCount] = useState(jobs.length);
   const filteredJobs = jobs.filter((job) => {
@@ -142,6 +156,7 @@ function OjtJobList() {
     pageNumbers.push(i);
   }
 
+  
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
       <>
