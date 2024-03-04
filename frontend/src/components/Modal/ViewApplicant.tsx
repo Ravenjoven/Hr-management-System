@@ -166,8 +166,8 @@ export default function ViewApplicantDetails({
                     isClick={isOpenForm}
                     isClose={closeFormModal}
                     title={"Send Contract"}
-                    email={user.email}
-                    subject={"Form of Contract"}
+                    to={user.email}
+                    subjects={"Form of Contract"}
                   />
                 )}
               </div>
