@@ -1,5 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
+import ReviewAddJobsModal from "./ReviewAddJobsModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,6 +11,17 @@ interface ModalProps {
 }
 
 function Modal({ isOpen, onClose, title }: ModalProps) {
+  const [formData, setFormData] = useState({
+    jobName: "",
+    jobDescription: "",
+    jobType: "",
+    jobRoles: "",
+    jobCategory: "",
+    jobSkills: [],
+    jobSetUp: "",
+    jobExperience: "",
+    jobSalary: [0, 1],
+  });
   const [categories, setCategories] = useState([
     {
       id: 0,
@@ -26,31 +40,29 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobCategory: "Fullstack Developer",
     },
   ]);
-  const skills = [
-    { name: "Hardworking", value: "Hardworking" },
-    { name: "Time Management", value: "Time Management" },
-    { name: "Critical Thinking", value: "Critical Thinking" },
-    { name: "Technincal", value: "Technincal" },
-  ];
-
+  const [buttonJobTypeMessage, setButtonJobTypeMessage] = useState("");
+  const [buttonJobCategoryMessage, setButtonJobCategoryMessage] = useState("");
+  const [buttonSetUpMessage, setButtonSetUpMessage] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [isExperienceRequired, setIsExperienceRequired] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
+  const skills = [
+    { id: 0, name: "Hardworking", value: "Hardworking" },
+    { id: 1, name: "Time Management", value: "Time Management" },
+    { id: 2, name: "Critical Thinking", value: "Critical Thinking" },
+    { id: 3, name: "Technincal", value: "Technincal" },
+  ];
   const handleCheckboxChange = (event: any) => {
     setIsExperienceRequired(event.target.checked);
   };
-
-  const [currentPage, setCurrentPage] = useState(1);
-
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
   };
-
   const previousPage = () => {
     setCurrentPage(currentPage - 1);
   };
-
-  const [selectedSkills, setSelectedSkills] = useState([]);
-
   const handleSelectSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
     setFormData({
@@ -58,7 +70,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobSkills: selectedList,
     });
   };
-
   const handleRemoveSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
     setFormData({
@@ -66,9 +77,8 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
       jobSkills: selectedList,
     });
   };
-
   const handleCategoryClick = (category: any) => {
-    console.log("Category clicked:", category);
+    setButtonJobCategoryMessage(category);
     setFormData({
       ...formData,
       jobCategory: category,
@@ -77,47 +87,26 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
   const handleClose = () => {
     onClose && onClose();
   };
-  const [formData, setFormData] = useState({
-    jobName: "",
-    jobDescription: "",
-    jobType: "",
-    jobRoles: "",
-    jobCategory: "",
-    jobSkills: [],
-    jobSetUp: "",
-    jobExperience: "",
-    jobSalary: "",
-  });
-
-  const handleTypeButtonClick = (type: any) => {
-    console.log("Type clicked:", type);
+  const handleTypeButtonClick = (type: string) => {
+    setButtonJobTypeMessage(type);
     setFormData({
       ...formData,
       jobType: type,
     });
   };
-
   const handleSetupButtonClick = (val: any) => {
-    console.log("Setup clicked:", val);
+    setButtonSetUpMessage(val);
     setFormData({
       ...formData,
       jobSetUp: val,
     });
   };
-
   const handleSaveData = () => {
     console.log("Form Data:", formData);
-    setFormData({
-      jobName: "",
-      jobDescription: "",
-      jobType: "",
-      jobRoles: "",
-      jobCategory: "",
-      jobSkills: [],
-      jobSetUp: "",
-      jobExperience: "",
-      jobSalary: "",
-    });
+    setIsReviewModalOpen(true);
+  };
+  const handleCloseReviewModal = () => {
+    setIsReviewModalOpen(!isReviewModalOpen);
   };
 
   return (
@@ -128,7 +117,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
             <div
               className="fixed inset-0 transition-opacity"
               aria-hidden="true"
-              onClick={handleClose}
             >
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
@@ -152,12 +140,23 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                 }
               >
                 <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                  <h3
-                    className="text-lg font-medium leading-6 text-gray-900 mb-4"
-                    id="modal-headline"
-                  >
-                    {title}
-                  </h3>
+                  <div className="flex justify-between items-center mb-4">
+                    <h3
+                      className="text-lg font-medium leading-6 text-gray-900"
+                      id="modal-headline"
+                    >
+                      {title}
+                    </h3>
+                    <button
+                      onClick={handleClose}
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      <FontAwesomeIcon
+                        icon={faClose}
+                        className="hover:text-green-500"
+                      />
+                    </button>
+                  </div>
                   <span className="font-semibold text-lg">
                     Let's set up your new job
                   </span>
@@ -175,6 +174,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         onChange={(e) =>
                           setFormData({ ...formData, jobName: e.target.value })
                         }
+                        required
                         className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
@@ -192,7 +192,8 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                             jobDescription: e.target.value,
                           })
                         }
-                        className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        required
+                        className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
                     <div className="mt-4">
@@ -220,11 +221,19 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                           Intern
                         </button>
                       </div>
+                      {buttonJobTypeMessage && (
+                        <div className="text-custom-text-black">
+                          <span className="pr-2 text-green-600">
+                            {buttonJobTypeMessage}
+                          </span>
+                          selected.
+                        </div>
+                      )}
                     </div>
                     <div className="mt-4">
                       <h6>
                         <span className="text-red-600 pr-1">*</span>How many
-                        open roles?
+                        open slots?
                       </h6>
                       <input
                         type="number"
@@ -233,6 +242,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         onChange={(e) =>
                           setFormData({ ...formData, jobRoles: e.target.value })
                         }
+                        required
                         className="bg-gray-50 border w-52 capitalize text-center mt-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
@@ -255,7 +265,24 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                     : "hidden"
                 }
               >
-                <div className="mt-4  flex flex-col">
+                <div className="flex flex-col">
+                  <div className="flex justify-between items-center">
+                    <h3
+                      className="text-lg font-medium leading-6 text-gray-900"
+                      id="modal-headline"
+                    >
+                      {title}
+                    </h3>
+                    <button
+                      onClick={handleClose}
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      <FontAwesomeIcon
+                        icon={faClose}
+                        className="hover:text-green-500"
+                      />
+                    </button>
+                  </div>
                   <div className="mt-4 flex flex-col">
                     <h6 className="text-[15px]">
                       <span className="text-red-600 pr-1">*</span>Choose a
@@ -265,13 +292,23 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                       {categories.map((category) => (
                         <button
                           key={category.id}
-                          onClick={() => handleCategoryClick(category)}
+                          onClick={() =>
+                            handleCategoryClick(category.jobCategory)
+                          }
                           className="text-blue-700 h-10 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                         >
                           {category.jobCategory}
                         </button>
                       ))}
                     </div>
+                    {buttonJobCategoryMessage && (
+                      <div className="text-custom-text-black">
+                        <span className="pr-2 text-green-600">
+                          {buttonJobCategoryMessage}
+                        </span>
+                        selected.
+                      </div>
+                    )}
                   </div>
                   <div className="mt-2">
                     <h6 className="text-[15px]">
@@ -305,6 +342,14 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         Work From Home
                       </button>
                     </div>
+                    {buttonSetUpMessage && (
+                      <div className="text-custom-text-black">
+                        <span className="pr-2 text-green-600">
+                          {buttonSetUpMessage}
+                        </span>
+                        selected.
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center mt-4">
                     <input
@@ -342,6 +387,16 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">From</h6>
                         <input
                           type="number"
+                          value={formData.jobSalary[0]}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              jobSalary: [
+                                parseInt(e.target.value), // Convert to number
+                                formData.jobSalary[0],
+                              ],
+                            })
+                          }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                       </div>
@@ -349,6 +404,16 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">To</h6>
                         <input
                           type="number"
+                          value={formData.jobSalary[1]}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              jobSalary: [
+                                parseInt(e.target.value), // Convert to number
+                                formData.jobSalary[1],
+                              ],
+                            })
+                          }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                       </div>
@@ -356,13 +421,22 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
-                  <button
-                    type="button"
-                    onClick={handleSaveData}
-                    className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-                  >
-                    Save
-                  </button>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={handleSaveData}
+                      className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-800 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
+                      Review
+                    </button>
+                    {isReviewModalOpen && (
+                      <ReviewAddJobsModal
+                        isOpen={isReviewModalOpen}
+                        isClose={handleCloseReviewModal}
+                        formData={formData}
+                      />
+                    )}
+                  </div>
                   <div className="last-page-btn">
                     <button
                       type="button"
@@ -374,7 +448,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                     <button
                       type="button"
                       onClick={handleClose}
-                      className="w-full md:inline-flex inlune-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Close
                     </button>

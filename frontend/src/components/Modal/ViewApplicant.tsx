@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { pdfjs } from "react-pdf";
 import PdfViewer from "../pdf/PdfViewer";
+import SendContractForm from "./SendContractForm";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -10,8 +11,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 interface ModalProps {
-  isOpen: boolean;
-  isClose: () => void;
+  viewApplicant: boolean;
+  closeApplicant: () => void;
   user: {
     id: number;
     applicantName: string;
@@ -30,25 +31,31 @@ interface ModalProps {
 }
 
 export default function ViewApplicantDetails({
-  isOpen,
-  isClose,
+  viewApplicant,
+  closeApplicant,
   user,
 }: ModalProps) {
+  const [isOpenForm, setIsOpenForm] = useState(false);
   const [isFilesClicked, setIsFilesClicked] = useState(false);
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation(); // Prevent event bubbling
-    isClose && isClose();
+    closeApplicant && closeApplicant();
   };
   const handleImageClick = () => {
     setIsFilesClicked(true);
   };
-
+  const openFormModal = () => {
+    setIsOpenForm(true);
+  };
+  const closeFormModal = () => {
+    setIsOpenForm(false);
+  };
   const handleCloseImage = () => {
     setIsFilesClicked(false);
   };
   return (
     <>
-      {isOpen && (
+      {viewApplicant && (
         <div className="fixed z-50 inset-0 overflow-y-auto font-montserrat flex items-center justify-center">
           <div className="absolute inset-0 bg-gray-500 opacity-20"></div>
           <div
@@ -145,14 +152,24 @@ export default function ViewApplicantDetails({
                   onClick={handleClose}
                   className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  Rejected
+                  Reject
                 </button>
                 <button
                   type="button"
+                  onClick={openFormModal}
                   className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  Move to pending
+                  Accept
                 </button>
+                {user?.email !== undefined && (
+                  <SendContractForm
+                    isClick={isOpenForm}
+                    isClose={closeFormModal}
+                    title={"Send Contract"}
+                    to={user.email}
+                    subjects={"Form of Contract"}
+                  />
+                )}
               </div>
             </div>
           </div>

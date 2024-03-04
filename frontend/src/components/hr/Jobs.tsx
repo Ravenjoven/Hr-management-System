@@ -4,23 +4,26 @@ import Sidebar from "../Sidebar";
 import AddJobModal from "../Modal/AddJobModal";
 import {
   faMagnifyingGlass,
-  faPen,
   faTrash,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import ViewApplicantDetails from "../Modal/ViewApplicantDetails";
+import ViewEditJobsModal from "../Modal/ViewEditJobsModal";
 
 function Jobs() {
   const [expanded, setExpanded] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
+  const [ApplicantPerPage] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showAllData, setShowAllData] = useState(true);
   const [showFirstRow, setShowFirstRow] = useState(false);
   const [isViewApplicantModal, setViewApplicantModal] = useState(false);
+  const [viewJobs, setViewJobs] = useState(false);
 
   const openViewApplicantModal = (user: any) => {
     setSelectedApplicant(user);
@@ -29,6 +32,14 @@ function Jobs() {
   const closeViewModal = () => {
     setViewApplicantModal(false);
     setSelectedApplicant(null);
+  };
+  const openViewJobsModal = (job: any) => {
+    setSelectedJob(job);
+    setViewJobs(true);
+  };
+  const closeViewJobsModal = () => {
+    setViewJobs(false);
+    setSelectedJob(null);
   };
   const openModal = () => {
     setIsOpen(true);
@@ -45,8 +56,15 @@ function Jobs() {
       jobName: "Financial Associate",
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobType: "Intern",
+      jobSlots: 2,
+      jobCategory: "Fullstack Developer",
+      jobSkills: ["HardWorking", "Time Management"],
+      jobSetUp: "Onsite",
+      jobExperience: 2,
+      jobSalary: [0, 1],
       jobLimit: 10,
-      date_createad: "02/14/24",
+      date_createad: "February 00, 2024",
     },
     {
       id: 1,
@@ -54,7 +72,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 01, 2024",
     },
     {
       id: 2,
@@ -62,7 +80,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 02, 2024",
     },
     {
       id: 3,
@@ -70,7 +88,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 003, 2024",
     },
     {
       id: 4,
@@ -78,7 +96,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 04, 2024",
     },
     {
       id: 5,
@@ -86,7 +104,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 05, 2024",
     },
     {
       id: 6,
@@ -94,7 +112,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 06, 2024",
     },
     {
       id: 7,
@@ -102,7 +120,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 07, 2024",
     },
   ]);
   const [applicants, setApplicants] = useState([
@@ -111,36 +129,85 @@ function Jobs() {
       applicantName: "Jezrael Suliano",
       position: "Fullstack Developer",
       year_experience: "1",
+      status: 0,
       date_applied: "03/15/24",
+      files: "./files/formal.pdf",
+      letter:
+        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
       img: "./images/cv1.png",
+      email: "jezraelsuliano@gmail.com",
+      contact_number: "099191912013",
+      linkedIn:
+        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+      skills: ["hardworking", "technical", "time management"],
     },
     {
       id: 1,
       applicantName: "Ranel Soliano",
       position: "Fullstack Developer",
       year_experience: "1",
+      status: 0,
       date_applied: "03/15/24",
+      files: "./files/formal.pdf",
+      letter:
+        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+      img: "./images/cv1.png",
+      email: "jezraelsuliano@gmail.com",
+      contact_number: "099191912013",
+      linkedIn:
+        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+      skills: ["hardworking", "technical", "time management"],
     },
     {
       id: 2,
       applicantName: "Arnel Carcella",
       position: "Fullstack Developer",
       year_experience: "1",
+      status: 0,
       date_applied: "03/15/24",
+      files: "./files/formal.pdf",
+      letter:
+        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+      img: "./images/cv1.png",
+      email: "jezraelsuliano@gmail.com",
+      contact_number: "099191912013",
+      linkedIn:
+        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+      skills: ["hardworking", "technical", "time management"],
     },
     {
       id: 3,
       applicantName: "Raven Joven",
       position: "Fullstack Developer",
       year_experience: "1",
+      status: 0,
       date_applied: "03/15/24",
+      files: "./files/formal.pdf",
+      letter:
+        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+      img: "./images/cv1.png",
+      email: "jezraelsuliano@gmail.com",
+      contact_number: "099191912013",
+      linkedIn:
+        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+      skills: ["hardworking", "technical", "time management"],
     },
     {
       id: 4,
       applicantName: "Aijem Aijem",
       position: "Fullstack Developer",
       year_experience: "1",
+      status: 0,
       date_applied: "03/15/24",
+      files: "./files/formal.pdf",
+      letter:
+        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+      img: "./images/cv1.png",
+      email: "jezraelsuliano@gmail.com",
+      contact_number: "099191912013",
+      linkedIn:
+        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+      skills: ["hardworking", "technical", "time management"],
     },
   ]);
   const filteredJobs = jobs.filter((job) => {
@@ -170,7 +237,7 @@ function Jobs() {
   const handlePageClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-  // Get current users
+  // fetch all the data
   const indexOfLastJobs = currentPage * JobsPerPage;
   const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
@@ -181,17 +248,31 @@ function Jobs() {
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const handleClick =
-    (jobId: number) => (event: React.MouseEvent<HTMLTableDataCellElement>) => {
-      console.log(`Clicked job with ID ${jobId}`);
-      setShowAllData(!showAllData);
-      setShowFirstRow(!showFirstRow);
-    };
+  // fetch individual data
+  const indexOfLastApplicants = currentPage * ApplicantPerPage;
+  const indexOfFirstApplicants = indexOfLastApplicants - ApplicantPerPage;
+  const currentApplicants = filteredApplicants.slice(
+    indexOfFirstApplicants,
+    indexOfLastApplicants
+  );
+  const pageApplicantNumbers = [];
+  for (let i = 1; i <= Math.ceil(applicants.length / ApplicantPerPage); i++) {
+    pageApplicantNumbers.push(i);
+  }
 
-  const handleShowAllData =
-    (applicantId: number) => (event: React.MouseEvent<HTMLButtonElement>) => {
-      alert(applicantId);
-    };
+  const handleClick = (jobId: number) => {
+    console.log(`Clicked job with ID ${jobId}`);
+    setShowAllData(!showAllData);
+    setShowFirstRow(!showFirstRow);
+  };
+  const handleViewClick = (jobId: number) => {
+    console.log(`Clicked job with ID ${jobId}`);
+    setViewJobs(true);
+  };
+
+  const handleShowAllData = (applicantId: number) => {
+    alert(applicantId);
+  };
 
   const handleResetTable = () => {
     setShowAllData(!showAllData);
@@ -221,8 +302,8 @@ function Jobs() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                clip-rule="evenodd"
-                fill-rule="evenodd"
+                clipRule="evenodd"
+                fillRule="evenodd"
                 d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
               ></path>
             </svg>
@@ -334,7 +415,7 @@ function Jobs() {
                       <th scope="col" className="px-6 py-3">
                         Date Applied
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-6 py-3 text-center">
                         Action
                       </th>
                     </tr>
@@ -345,7 +426,7 @@ function Jobs() {
                       currentJobs.map((job, index) => (
                         <tr
                           key={job.id}
-                          className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          className="bg-white capitalize border-b text-black dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
                           <th
                             scope="row"
@@ -356,37 +437,49 @@ function Jobs() {
                           <td className="px-6 py-4">{job.jobName}</td>
                           <td className="px-6 py-4">{job.jobDescription}</td>
                           <td
-                            onClick={handleClick(job.id)}
-                            className="px-6 py-4 cursor-pointer text-green-600 font-semibold"
+                            onClick={() => handleClick(job.id)}
+                            className="px-6 py-4 cursor-pointer text-blue-600 font-semibold"
                           >
-                            {job.jobLimit}
+                            <div className="rounded-full w-10 text-center flex justify-center items-center mx-auto  hover:text-green-600">
+                              {job.jobLimit}
+                            </div>
                           </td>
                           <td className="px-6 py-4">{job.date_createad}</td>
-                          <td className="px-6 py-4 space-x-2">
-                            <a
-                              href="#"
-                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            >
-                              <FontAwesomeIcon
-                                icon={faPen}
-                                className="hover:text-green-500"
-                              />
-                            </a>
-                            <a
-                              href="#"
-                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            >
-                              <FontAwesomeIcon
-                                icon={faTrash}
-                                className="hover:text-red-500"
-                              />
-                            </a>
+                          <td className="px-6 py-4">
+                            <div className="flex space-x-2">
+                              <button
+                                onClick={() => openViewJobsModal(job)}
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEye}
+                                  className="hover:text-green-500"
+                                />
+                              </button>
+                              <a
+                                href="#"
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  className="hover:text-red-500"
+                                />
+                              </a>
+                            </div>
                           </td>
+                          <div>
+                            <ViewEditJobsModal
+                              viewJobs={viewJobs}
+                              title={"Job Details"}
+                              isCloseJobs={closeViewJobsModal}
+                              job={selectedJob}
+                            />
+                          </div>
                         </tr>
                       ))}
                     {/*individual data*/}
                     {!showAllData &&
-                      filteredApplicants.map((jobApplicant, index) => (
+                      currentApplicants.map((jobApplicant, index) => (
                         <tr
                           key={jobApplicant.id}
                           className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -407,7 +500,7 @@ function Jobs() {
                           <td className="px-6 py-4">
                             {jobApplicant.date_applied}
                           </td>
-                          <td className="px-6 py-4 space-x-2">
+                          <td className="px-6 py-4 text-center">
                             <button
                               onClick={() =>
                                 openViewApplicantModal(jobApplicant)
@@ -430,7 +523,9 @@ function Jobs() {
                   </tbody>
                 </table>
                 <nav
-                  className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-8"
+                  className={`flex items-center flex-column flex-wrap md:flex-row justify-between pt-8 ${
+                    showFirstRow ? "hidden" : "visible"
+                  }`}
                   aria-label="Table navigation"
                 >
                   <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
@@ -463,6 +558,73 @@ function Jobs() {
 
                     {/* Render pagination buttons */}
                     {pageNumbers.map((number) => (
+                      <li
+                        key={number}
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      >
+                        <button
+                          onClick={() => handlePageClick(number)}
+                          className={`${
+                            number === currentPage
+                              ? "bg-custom-text-orange text-white w-10 rounded-full"
+                              : "text-gray-500 bg-white"
+                          }`}
+                        >
+                          {number}
+                        </button>
+                      </li>
+                    ))}
+
+                    {/* Render Next button */}
+                    <li>
+                      <button
+                        onClick={() => handlePageClick(currentPage + 1)}
+                        disabled={
+                          currentPage === Math.ceil(jobs.length / JobsPerPage)
+                        }
+                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      >
+                        Next
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+                <nav
+                  className={`flex items-center flex-column flex-wrap md:flex-row justify-between pt-8 ${
+                    showFirstRow ? "visible" : "hidden"
+                  }`}
+                  aria-label="Table navigation"
+                >
+                  <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+                    Showing{" "}
+                    <span className="font-semibold text-gray-900 dark:text-white">
+                      {indexOfFirstApplicants + 1}-
+                      {indexOfLastApplicants > filteredApplicants.length
+                        ? filteredApplicants.length
+                        : indexOfLastApplicants}
+                    </span>{" "}
+                    of{" "}
+                    <span className="font-semibold text-gray-900 dark:text-white">
+                      {filteredApplicants.length}
+                    </span>
+                  </span>
+                  <ul
+                    className="flex items-center flex-column flex-wrap md:flex-row justify-between"
+                    aria-label="Table navigation"
+                  >
+                    {/* Render Previous button */}
+                    <li>
+                      <button
+                        onClick={() => handlePageClick(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      >
+                        Previous
+                      </button>
+                    </li>
+
+                    {/* Render pagination buttons */}
+                    {pageApplicantNumbers.map((number) => (
                       <li
                         key={number}
                         className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
