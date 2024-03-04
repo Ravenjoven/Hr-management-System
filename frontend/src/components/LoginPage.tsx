@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from "react";
 import Navar from "./Navar";
+import {jwtDecode} from "jwt-decode";
 
 const data = [
   {
@@ -59,14 +60,24 @@ const Login = () => {
   // );
 // },[]);
 
+interface userI{
+  name: string | null;
+  iat?: number;
+  iss?: string;
+  picture?: string;
+  
+}
+const [user, setUser] = useState<userI>({ name:null });
   //@ts-ignore 
 const google=window.google;
 /* global google  */ 
-function handleCallbackResponse(response: { credential: string; }){
+function handleCallbackResponse(response: { credential: any; }){
   console.log("Encoded JWT ID Token: "+ response.credential);
 
-  // const userObj= response.credential;
-  console.log(response);
+  const userObject= jwtDecode(response.credential);
+  console.log(userObject);
+  // setUser(userObject as userI);
+  // document.getElementById("SignInDiv")!.hidden =true;
   
 }
 useEffect(()=>{
