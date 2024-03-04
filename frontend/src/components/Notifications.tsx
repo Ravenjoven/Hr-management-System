@@ -140,7 +140,7 @@ import classNames from "classnames";
 
 const Notification: React.FC<notiprops> = ({ show }) => {
   const notificationClasses = classNames(
-    " relative flex  w-[50%] px-4 py-4 text-base text-white bg-red-500 rounded-lg font-regular",
+    " relative flex  w-[100%] px-4 py-4 text-base text-white bg-red-500 rounded-lg font-regular",
     {
       hidden: show, // Hide the notification if show is false
     }

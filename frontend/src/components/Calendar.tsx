@@ -13,17 +13,27 @@ const Calendar: React.FC = () => {
     {
       id: 1,
       title: "event",
-      date: "2024-02-16",
+      date: "2024-03-02",
     },
     {
       id: 2,
       title: "new event",
-      date: "2024-02-17",
+      date: "2024-03-03",
     },
     {
-      id: 2,
-      title: "sadsahdjsajd",
-      date: "2024-02-18T09:00:00",
+      id: 3,
+      title: "another event",
+      date: "2024-03-04T09:00:00",
+    },
+    {
+      id: 4,
+      title: "Meeting",
+      date: "2024-03-01T11:00:00",
+    },
+    {
+      id: 5,
+      title: "Meeting",
+      date: "2024-03-05",
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);

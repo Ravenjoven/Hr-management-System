@@ -2,8 +2,7 @@ import React, {useState} from "react";
 
 interface ModalProps {
   onClose: () => void;
-
-  selectedDate: Date | null; // Assuming date is a string
+  selectedDate: Date; // Assuming date is a string
   
 }
 
@@ -45,7 +44,11 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                   <div className="flex flex-col p-4">
                   <div>
                       <label htmlFor="date-of-Event">Date</label>
-                      {selectedDate && <p>Add event for: {selectedDate.toLocaleDateString()}</p>}
+                      <input type="text"
+                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                      value={selectedDate.toLocaleDateString()}/>
+                     {/* {selectedDate && <p>Add event for: {selectedDate.toLocaleDateString()}</p>}
+                     */}
                     </div>
                     <div>
                       <label htmlFor="firstname">Event</label>

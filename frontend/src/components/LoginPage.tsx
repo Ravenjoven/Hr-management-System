@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useEffect, useState} from "react";
 import Navar from "./Navar";
+
 const data = [
   {
     id: 1,
@@ -10,7 +10,76 @@ const data = [
 ];
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
+
+
 const Login = () => {
+// interface userI{
+//   name: string | null;
+//   iat?: number;
+//   iss?: string;
+  
+// }
+
+// const [user, setUser] = useState<userI>({ name:null });
+
+// function handleCallbackResponse(response: { credential: any; }){
+//   console.log("Encoded JWT ID Token: "+ response.credential);
+
+  // const userObject =response.credential;
+
+  // setUser(userObject as userI);
+  // document.getElementById("SignInDiv")!.hidden =true;
+// }
+// function handleSignOut(){
+//   setUser({name:null});
+//   document.getElementById("SigninDiv")!.hidden=true;
+// }
+
+  //@ts-ignore 
+//   const google=window.google;
+
+// useEffect(()=>{
+  /* global google  */ 
+//   google.accounts!.id.initialize({
+//     client_id: "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
+//     callback: handleCallbackResponse
+//   });
+
+// const SignIn = document.getElementById("SignInDiv")!;
+// google.accounts.id.renderButton(SignIn,{
+//   theme:"outline",
+//   size:"large",
+//   type: "standard"
+// });
+// google.accounts.id.prompt();
+  // google.accounts.id.renderButton(
+  //   document.getElementById("SignInDiv"),
+  //   { theme: "outline", size:"large"}
+    
+  // );
+// },[]);
+
+  //@ts-ignore 
+const google=window.google;
+/* global google  */ 
+function handleCallbackResponse(response: { credential: string; }){
+  console.log("Encoded JWT ID Token: "+ response.credential);
+
+  // const userObj= response.credential;
+  console.log(response);
+  
+}
+useEffect(()=>{
+google.accounts.id.initialize({
+  client_id: "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
+  callback: handleCallbackResponse
+});
+
+google.accounts.id.renderButton(
+  document.getElementById("SignInDiv"),
+  { theme: "outline", size:"large"}
+);
+},[]);
   return (
     <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen  bg-white font-montserrat">
       <>
@@ -83,7 +152,7 @@ const Login = () => {
                     </b>
                   </div>
                 </div>
-                <button
+                {/* <button
                   type="button"
                   className="flex justify-center items-center bg-white rounded-xl p-2.5 w-full m-[2px]"
                 >
@@ -93,7 +162,10 @@ const Login = () => {
                     className="w-[20px] mr-[20px] inline "
                   />
                   <span className="text-xs">Log in with Google</span>
-                </button>
+                </button> */}
+                <div  id="SignInDiv">
+                 
+                </div>
                 <div className="w-[204px] flex flex-row items-start justify-start py-0 px-2 box-border">
                   <b className="flex-1 relative text-3xs font-inter text-left z-[1]">
                     <span className="text-white">Don’t have account?</span>
