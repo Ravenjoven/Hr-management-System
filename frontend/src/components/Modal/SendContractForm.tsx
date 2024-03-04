@@ -19,19 +19,13 @@ export default function SendContractForm({
   subjects,
 }: ModalProps) {
   const [fileMessage, setFileMessage] = useState("");
-  const [files, setFiles] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
 
   const sendMail = () => {
     const formData = new FormData();
     formData.append("email", to);
     formData.append("subject", subjects);
-    if (files && files.length > 0) {
-      formData.append("file", files[0]);
-    }
-
-    for (const entry of formData.entries()) {
-      console.log(entry);
-    }
+    files.forEach((file) => formData.append("file", file));
     axios
       .post("http://localhost:9000/sendemail", formData, {
         headers: {
@@ -39,8 +33,11 @@ export default function SendContractForm({
           "Access-Control-Allow-Origin": "*",
         },
       })
-      .then((data) => {
-        console.log("success");
+      .then(() => {
+        setFileMessage("Send Successfully");
+        setTimeout(() => {
+          isClose(); // Close modal after 3 seconds
+        }, 3000);
       })
       .catch((e) => {
         console.log("error", e);
@@ -48,7 +45,9 @@ export default function SendContractForm({
   };
 
   const handleFileChange = (e: any) => {
-    setFiles(e.target.files);
+    if (e.target.files) {
+      setFiles(Array.from(e.target.files));
+    }
   };
 
   const handleClose = () => {
@@ -59,7 +58,7 @@ export default function SendContractForm({
     <>
       {isClick && (
         <div className="fixed z-50 inset-0 overflow-y-auto font-montserrat">
-          <div className="flex items-center justify-center min-w-screen min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+          <div className="flex items-center justify-center min-w-screen px-4 pt-4 pb-20 text-center sm:p-0">
             <div
               className="fixed inset-0 transition-opacity"
               aria-hidden="true"
@@ -67,7 +66,7 @@ export default function SendContractForm({
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
             <span
-              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+              className="hidden"
               aria-hidden="true"
             >
               &#8203;
@@ -105,7 +104,7 @@ export default function SendContractForm({
                       className="space-y-2"
                     >
                       <div className="flex">
-                        <label htmlFor="Subject" className="pr-2 font-bold">
+                        <label htmlFor="Subject" className="pr-2 font-semibold">
                           Subject:
                         </label>
                         <input
@@ -115,19 +114,20 @@ export default function SendContractForm({
                         />
                       </div>
                       <div className="flex">
-                        <label htmlFor="email" className="pr-2 font-bold">
+                        <label htmlFor="email" className="pr-2 font-semibold">
                           To:
                         </label>
                         <input type="text" className="w-full" value={to} />
                       </div>
                       <div className="flex">
-                        <input type="file" onChange={handleFileChange} />
+                        <label htmlFor="upload" className="pr-2 font-semibold">Upload File:</label>
+                        <input type="file" name="file" onChange={handleFileChange} className="cursor-pointer"/>
                       </div>
                     </form>
                     <span
                       className={
                         fileMessage === "Send Successfully"
-                          ? "text-green-600"
+                          ? "text-green-600 pt-4"
                           : "text-red-600 pt-2"
                       }
                     >

@@ -11,14 +11,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AttendanceHistoryModal from "../Modal/AttendanceHistory";
 
-
-
 function AdminAttendance() {
   const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [employees, setEmployees] = useState([
-    
     {
       id: 0,
       img: "../images/profile-image.png",
@@ -67,103 +64,6 @@ function AdminAttendance() {
       name: "Aijem Aijem",
       attendance: "A",
     },
-    {
-      id: 0,
-      img: "../images/profile-image.png",
-      name: "Ranel Soliano",
-      attendance: "P",
-    },
-    {
-      id: 1,
-      img: "../images/profile-image.png",
-      name: "Arnel Carcella",
-      attendance: "ML",
-    },
-    {
-      id: 2,
-      img: "../images/profile-image.png",
-      name: "Jezrael Suliano",
-      attendance: "SL",
-    },
-    {
-      id: 3,
-      img: "../images/profile-image.png",
-      name: "Raven Joven",
-      attendance: "VL",
-    },
-    {
-      id: 4,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "U",
-    },
-    {
-      id: 5,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "PL",
-    },
-    {
-      id: 6,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "BL",
-    },
-    {
-      id: 5,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "A",
-    },
-    {
-      id: 0,
-      img: "../images/profile-image.png",
-      name: "Ranel Soliano",
-      attendance: "P",
-    },
-    {
-      id: 1,
-      img: "../images/profile-image.png",
-      name: "Arnel Carcella",
-      attendance: "ML",
-    },
-    {
-      id: 2,
-      img: "../images/profile-image.png",
-      name: "Jezrael Suliano",
-      attendance: "SL",
-    },
-    {
-      id: 3,
-      img: "../images/profile-image.png",
-      name: "Raven Joven",
-      attendance: "VL",
-    },
-    {
-      id: 4,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "U",
-    },
-    {
-      id: 5,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "PL",
-    },
-    {
-      id: 6,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "BL",
-    },
-    {
-      id: 5,
-      img: "../images/profile-image.png",
-      name: "Aijem Aijem",
-      attendance: "A",
-    }
-
   ]);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -171,19 +71,23 @@ function AdminAttendance() {
   const filteredEmployees = employees.filter((employee) =>
     employee.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
- 
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openViewModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeViewModal = () => {
+    setIsModalOpen(false);
+  };
 
   // Sample attendance data
   const attendanceData = [
-    { month: 'January', day: '01', year: '2024', status: 'Present' },
-    { month: '', day: '02', year: '2024', status: 'Absent' },
-    { month: '', day: '03', year: '2024', status: 'UTO' }
-
+    { month: "January", day: "01", year: "2024", status: "Present" },
+    { month: "", day: "02", year: "2024", status: "Absent" },
+    { month: "", day: "03", year: "2024", status: "UTO" },
   ];
 
-
- 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -261,67 +165,72 @@ function AdminAttendance() {
             </div>
             <div className="lower-di flex flex-col m-10">
               <div>
-              <span className="font-bold text-xl">Legends:</span>
+                <span className="font-bold text-xl">Legends:</span>
               </div>
-            <div className="flex flex-row ">
-                  <div className=" flex flex-col m-2">
-                <div className="  w-4 h-4 mb-2 rounded-3xl p-[5px] bg-custom-text-green"/> 
-                
-                <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-red"/>
-                
-                <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-pink"/>
-                
-                <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-yellowpale"/>
+              <div className="flex flex-row ">
+                <div className=" flex flex-col m-2">
+                  <div className="w-4 h-4 mb-2 rounded-3xl p-[5px] bg-custom-text-green" />
+
+                  <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-red" />
+
+                  <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-pink" />
+
+                  <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-yellowpale" />
                 </div>
                 <div className="flex flex-col mt-[4px] ">
-                <span>Present</span>
-                <span>Absent</span>
-                <span>Maternity Leave</span>
-                <span>Sick Leave</span>
+                  <span>Present</span>
+                  <span>Absent</span>
+                  <span>Maternity Leave</span>
+                  <span>Sick Leave</span>
                 </div>
                 <div className="flex flex-col m-2">
-                <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-orange"/>
-                
-                <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-blue"/>
-                
-                <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-violet"/>
-                
-                <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-cyan"/>
+                  <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-orange" />
+
+                  <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-blue" />
+
+                  <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-violet" />
+
+                  <div className="w-4 h-4 mb-2 w-2 rounded-3xl p-[5px] bg-custom-text-cyan" />
                 </div>
                 <div className="flex flex-col mt-[4px] ">
-                <span>Vacation Leave</span>
-                <span>Unpaid time off</span>
-                <span>Paternity Leave</span>
-                <span>Bereavement Leave</span>
+                  <span>Vacation Leave</span>
+                  <span>Unpaid time off</span>
+                  <span>Paternity Leave</span>
+                  <span>Bereavement Leave</span>
                 </div>
-                </div>
-                <div className=" overflow-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-              <div className="grid gap-5 md:grid-cols-6 grid-cols-1 h-screen">
-                {filteredEmployees.map((employee) => (
-                  <div
-                  onClick={() => setIsModalOpen(true)}
-                    key={employee.id}
-                    className=" bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
-                    
-                  >
-                    <div className="flex items-center">
-                    <AttendanceHistoryModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        attendanceData={attendanceData}
-      />
-                      <img
-                        src={employee.img}
-                        alt=""
-                        className="w-24 h-24 text-custom-text-black my-2"
-                      />
-                    </div>
-                    <div className="text-center text-custom-text-black capitalize">
-                      {employee.name}
-                    </div>
-                    <div className="flex space-x-4 m-4">
-                      <div
-                        className={`border-[3px] rounded-full w-10 h-10 flex justify-center items-center
+              </div>
+              <div className="overflow-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                <div className="grid gap-5 md:grid-cols-6 grid-cols-1 h-full">
+                  {filteredEmployees.map((employee) => (
+                    <div
+                      onClick={openViewModal}
+                      key={employee.id}
+                      className=" bg-gray-300 w-full rounded h-full flex justify-center items-center flex-col"
+                    >
+                      <div className="flex items-center">
+                        <AttendanceHistoryModal
+                          isOpen={isModalOpen}
+                          onClose={closeViewModal}
+                          attendanceData={attendanceData}
+                          leaveData={{
+                            leaveType: "",
+                            fromDate: "",
+                            toDate: "",
+                            reason: "",
+                          }}
+                        />
+                        <img
+                          src={employee.img}
+                          alt=""
+                          className="w-24 h-24 text-custom-text-black my-2"
+                        />
+                      </div>
+                      <div className="text-center text-custom-text-black capitalize">
+                        {employee.name}
+                      </div>
+                      <div className="flex space-x-4 m-4">
+                        <div
+                          className={`border-[3px] rounded-full w-10 h-10 flex justify-center items-center
                         ${
                           employee.attendance === "P"
                             ? "bg-green-600 border-green-400"
@@ -341,20 +250,17 @@ function AdminAttendance() {
                             ? "bg-cyan-300 border-cyan-400"
                             : ""
                         }`}
-                      >
-                        <span className="text-[20px] text-white">
-                          {employee.attendance}
-                        </span>
+                        >
+                          <span className="text-[20px] text-white">
+                            {employee.attendance}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-                
-              </div>
+                  ))}
+                </div>
               </div>
             </div>
-             
-            
           </div>
         </div>
       </>

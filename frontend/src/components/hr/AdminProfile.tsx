@@ -4,11 +4,38 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../Sidebar";
 import AdminNavar from "../AdminNavar";
 import { useState } from "react";
+import axios from "axios";
 
 function AdminProfile() {
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
+  };
+  const [image, setImage] = useState<string | null>(null);
+
+  const handleImageChange = async (event: any) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:9000/uploadpicture",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+
+      if (response.data.imageUrl) {
+        setImage(response.data.imageUrl);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
   };
 
   return (
@@ -53,11 +80,43 @@ function AdminProfile() {
             <div className="flex">
               <div className="left-div mt-4 w-[400px] min-h-screen border-[3px] rounded-2xl border-custom-text-orange">
                 <div className="border-b-[3px] border-custom-text-orange flex flex-col text-center justify-center items-center">
-                  <div className="flex justify-center items-center border-[3px] border-custom-text-orange rounded-l-full rounded-br-full mt-8 mb-2 rounded-tr-lg h-40 w-40">
-                    <img
-                      src="./images/img2.jpg"
-                      className="h-36 w-36 rounded-full"
+                  <div className="flex justify-center items-center border-[3px] border-custom-text-orange rounded-l-full rounded-br-full mt-8 mb-2 rounded-tr-lg h-40 w-40 relative overflow-hidden">
+                    <input
+                      type="file"
+                      id="fileInput"
+                      className="hidden"
+                      onChange={handleImageChange}
                     />
+                    <label
+                      htmlFor="fileInput"
+                      className="absolute inset-0 flex justify-center items-center cursor-pointer"
+                    >
+                      {image ? (
+                        <img
+                          src={image}
+                          alt="Uploaded"
+                          className="h-36 w-36 rounded-full"
+                        />
+                      ) : (
+                        <svg
+                          className="h-20 w-20 text-gray-600"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 5a2 2 0 100 4 2 2 0 000-4zM5 7a5 5 0 1110 0c0 1.713-.88 3.25-2.255 4.141l-.45.309A1 1 0 0111 12H9a1 1 0 01-.295-.045l-.45-.31C5.88 10.25 5 8.712 5 7zM10 3a1 1 0 100 2 1 1 0 000-2z"
+                            clipRule="evenodd"
+                          />
+                          <path
+                            fillRule="evenodd"
+                            d="M18 7c0 2.89-2.087 5.275-4.832 5.785l-.554.061A3 3 0 1110 12H9a3 3 0 01-2.614 2.963l-.554-.061C4.087 12.275 2 9.89 2 7a6 6 0 1112 0zm-2 0a4 4 0 11-8 0 4 4 0 018 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      )}
+                    </label>
                   </div>
                   <h4 className="text-custom-text-black font-bold">
                     TERAVAULT
