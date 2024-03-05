@@ -4,16 +4,17 @@ import Sidebar from "../Sidebar";
 import AddJobModal from "../Modal/AddJobModal";
 import {
   faMagnifyingGlass,
-  faPen,
   faTrash,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import ViewApplicantDetails from "../Modal/ViewApplicantDetails";
+import ViewEditJobsModal from "../Modal/ViewEditJobsModal";
 
 function Jobs() {
   const [expanded, setExpanded] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
   const [ApplicantPerPage] = useState(10);
@@ -22,6 +23,7 @@ function Jobs() {
   const [showAllData, setShowAllData] = useState(true);
   const [showFirstRow, setShowFirstRow] = useState(false);
   const [isViewApplicantModal, setViewApplicantModal] = useState(false);
+  const [viewJobs, setViewJobs] = useState(false);
 
   const openViewApplicantModal = (user: any) => {
     setSelectedApplicant(user);
@@ -30,6 +32,14 @@ function Jobs() {
   const closeViewModal = () => {
     setViewApplicantModal(false);
     setSelectedApplicant(null);
+  };
+  const openViewJobsModal = (job: any) => {
+    setSelectedJob(job);
+    setViewJobs(true);
+  };
+  const closeViewJobsModal = () => {
+    setViewJobs(false);
+    setSelectedJob(null);
   };
   const openModal = () => {
     setIsOpen(true);
@@ -46,8 +56,15 @@ function Jobs() {
       jobName: "Financial Associate",
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
+      jobType: "Intern",
+      jobSlots: 2,
+      jobCategory: "Fullstack Developer",
+      jobSkills: ["HardWorking", "Time Management"],
+      jobSetUp: "Onsite",
+      jobExperience: 2,
+      jobSalary: [0, 1],
       jobLimit: 10,
-      date_createad: "02/14/24",
+      date_createad: "February 00, 2024",
     },
     {
       id: 1,
@@ -55,7 +72,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 01, 2024",
     },
     {
       id: 2,
@@ -63,7 +80,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 02, 2024",
     },
     {
       id: 3,
@@ -71,7 +88,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 003, 2024",
     },
     {
       id: 4,
@@ -79,7 +96,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 04, 2024",
     },
     {
       id: 5,
@@ -87,7 +104,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 05, 2024",
     },
     {
       id: 6,
@@ -95,7 +112,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 06, 2024",
     },
     {
       id: 7,
@@ -103,7 +120,7 @@ function Jobs() {
       jobDescription:
         "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
       jobLimit: 5,
-      date_createad: "02/14/24",
+      date_createad: "February 07, 2024",
     },
   ]);
   const [applicants, setApplicants] = useState([
@@ -250,6 +267,7 @@ function Jobs() {
   };
   const handleViewClick = (jobId: number) => {
     console.log(`Clicked job with ID ${jobId}`);
+    setViewJobs(true);
   };
 
   const handleShowAllData = (applicantId: number) => {
@@ -430,7 +448,7 @@ function Jobs() {
                           <td className="px-6 py-4">
                             <div className="flex space-x-2">
                               <button
-                                onClick={() => handleViewClick(job.id)}
+                                onClick={() => openViewJobsModal(job)}
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                               >
                                 <FontAwesomeIcon
@@ -443,21 +461,20 @@ function Jobs() {
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                               >
                                 <FontAwesomeIcon
-                                  icon={faPen}
-                                  className="hover:text-green-500"
-                                />
-                              </a>
-                              <a
-                                href="#"
-                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                              >
-                                <FontAwesomeIcon
                                   icon={faTrash}
                                   className="hover:text-red-500"
                                 />
                               </a>
                             </div>
                           </td>
+                          <div>
+                            <ViewEditJobsModal
+                              viewJobs={viewJobs}
+                              title={"Job Details"}
+                              isCloseJobs={closeViewJobsModal}
+                              job={selectedJob}
+                            />
+                          </div>
                         </tr>
                       ))}
                     {/*individual data*/}

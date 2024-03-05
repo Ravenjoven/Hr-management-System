@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -74,12 +75,15 @@ const Calendar: React.FC = () => {
           end: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         dateClick={handleDateClick}
+        events={events}
         eventClick={handleEventClick}
         events={events}
         height={"400px"}
       />
     </div>
+    
   );
 };
+
 
 export default Calendar;

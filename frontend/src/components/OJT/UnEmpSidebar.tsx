@@ -1,10 +1,14 @@
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import "../OJT/Style.css";
+
+
 const data = [
   {
     id: 1,
-    label: "Jobs",
-    to: "/OjtJobsList",
+    label: "Job",
+    to: "/OjtJobList",
   },
   {
     id: 2,
@@ -14,23 +18,83 @@ const data = [
   {
     id: 3,
     label: "Applications" ,
-    number: 2,
-    to: "Applications",
+    to: "Application",
   },
 ];
+
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const secondRoute = data[1].to;
 const secondLabel = data[1].label;
 const ThirdRoute = data[2].to;
 const ThirdLabel = data[2].label; 
-const ThirdNumber = data[2].number;
 interface SidebarProps {
   expanded: boolean;
 }
 
 function UnEmpSidebar({ expanded }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [selectedJob, setSelectedJob] = useState(null as any);
+    const [JobsPerPage] = useState(10);
+    const [jobs, setJobs] = useState([
+      {
+        id: 1,
+        jobName: "Financial Associate",
+        
+        date_createad: new Date().toLocaleDateString(),
+  
+      },
+      {
+        id: 2,
+        jobName: "Financial Associate",
+        
+        date_createad: new Date().toLocaleDateString(),
+  
+      },
+      {
+        id: 3,
+        jobName: "Financial Associate",
+        
+        date_createad: new Date().toLocaleDateString(),
+  
+      },
+    ]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [jobCount, setJobCount] = useState(jobs.length);
+    const filteredJobs = jobs.filter((job) => {
+   
+    useEffect(() => {
+      setSelectedJob(jobs[0] || null);
+    }, [jobs]);
+    const handleClick = (job: any) => {
+      setSelectedJob(job)
+    }
+  }); 
+    const handleAddJob = () => {
+      // Add your logic to add a new job here
+      // For example:
+      const newJob = {
+        id: jobs.length, // You might want to use a more reliable way to generate IDs
+        jobName: "New Job", // Default values for the new job
+        jobDescription: "Description of the new job",
+        jobLimit: 1,
+        date_created: new Date().toLocaleDateString(), // Current date
+      };
+      setJobs([...jobs]); // Update the jobs array
+      setJobCount(jobCount + 1); // Increment job count
+    }
+    // Get current users
+    const indexOfLastJobs = currentPage * JobsPerPage;
+    const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
+    const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
+    const pageNumbers = [];
+  
+    for (let i = 1; i <= Math.ceil(jobs.length / JobsPerPage); i++) {
+      pageNumbers.push(i);
+    }
   return (
     <div>
       <aside
@@ -89,7 +153,7 @@ function UnEmpSidebar({ expanded }: SidebarProps) {
               <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
             </svg>
             <Link to={ThirdRoute} className="block w-full h-full">
-              {ThirdLabel} <span className="font-bold text-custom-text-red ml-10"> {ThirdNumber} </span>
+              {ThirdLabel} <span className="font-bold text-custom-text-red ml-10"> {jobCount} </span>
             </Link>
           </li>
         </ol>

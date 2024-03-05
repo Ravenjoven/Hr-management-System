@@ -40,8 +40,8 @@ function CompDetails() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                clip-rule="evenodd"
-                fill-rule="evenodd"
+                clipRule="evenodd"
+                fillRule="evenodd"
                 d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
               ></path>
             </svg>
@@ -73,62 +73,61 @@ function CompDetails() {
                     alt=""
                   />
                 </div>
+            </div>
+            <div className=" ml-20  text-custom-text-black flex flex-row">
+              <div className=" font-semibold justify-bottom items-bottom">
+                <span>Company Description</span>
               </div>
-              <div className=" ml-20  text-custom-text-black flex flex-row">
-                <div className=" font-semibold justify-bottom items-bottom">
-                  <span>Company Description</span>
-                </div>
-                <div className="ml-52 text-sm  w-[750px] text-custom-text-black">
-                  <span>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </span>
-                </div>
+              <div className="ml-52 text-sm  w-[750px] text-custom-text-black">
+                <span>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </span>
               </div>
-              <div className=" w-20 ml-20 font-semibold text-custom-text-black flex justify-between mt-8">
-                <span>Address</span>
-                <div className=" ml-80">
-                  <span>Contact</span>
-                </div>
-                <div className=" ml-[200px]">
-                  <span>Website</span>
-                </div>
+            </div>
+            <div className=" w-20 ml-20 font-semibold text-custom-text-black flex justify-between mt-8">
+              <span>Address</span>
+              <div className=" ml-80">
+                <span>Contact</span>
               </div>
-              <div className=" flex text-sm text-custom-text-black justify-between">
-                <div className="  w-[250px] ml-20">
-                  <ul>
-                    <li>
-                      <ol>Los Angeles</ol>
-                      <ol>Honolulu</ol>
-                      <ol>Sydney</ol>
-                      <ol>Ayala Cebu, Cebu Business Park</ol>
-                    </li>
-                  </ul>
-                </div>
-                <div className="absolute ml-[468px]">
-                  <ul>
-                    <li>
-                      <ol>+1 (818) 917-4799</ol>
-                      <ol>+1 (808) 979-5969</ol>
-                      <ol>+61 400 384 297</ol>
-                      <ol>+63 9151 318 486</ol>
-                    </li>
-                  </ul>
-                </div>
-                <div className="absolute ml-[735px] text-custom-text-blue">
-                  <span>
-                    <a href="https://teravault.co">https://teravault.co</a>
-                  </span>
-                </div>
+              <div className=" ml-[200px]">
+                <span>Website</span>
               </div>
-
-              <div className=" w-20 ml-20 mt-10 font-bold text-custom-text-black">
+            </div>
+            <div className=" flex text-sm text-custom-text-black justify-between">
+            <div className="  w-[250px] ml-20">
+              <ul>
+                <li>
+                  <ol>Los Angeles</ol>
+                  <ol>Honolulu</ol>
+                  <ol>Sydney</ol>
+                  <ol>Ayala Cebu, Cebu Business Park</ol>
+                </li>
+              </ul>
+              </div>
+              <div className="absolute ml-[468px]">
+              <ul>
+                <li>
+                  <ol>+1 (818) 917-4799</ol>
+                  <ol>+1 (808) 979-5969</ol>
+                  <ol>+61 400 384 297</ol>
+                  <ol>+63 9151 318 486</ol>
+                </li>
+              </ul>
+              </div>
+              <div className="absolute ml-[735px] text-custom-text-blue">
+                <span><a href="https://teravault.co">https://teravault.co</a></span>
+              </div>
+             
+            </div>
+           
+            <div className=" w-20 ml-20 mt-10 font-bold text-custom-text-black">
                 <span>Details</span>
               </div>
               <div className=" flex mt-4 justify-space-between">

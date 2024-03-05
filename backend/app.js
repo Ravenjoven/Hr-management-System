@@ -31,7 +31,7 @@ mongoose.connect(process.env.DATABASE, {
     useFindAndModify: false
 }).then(()=>console.log("Database is connected!"))
 .catch((err)=>console.log(err));
-
+ 
 //Middleware
 app.use(morgan('dev'));
 app.use(bodyParser.json({limit: "5mb"}));
@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(cors());
-
+ 
 //Routes middleware
 //app.get('/', (req, res)=>{
   //  res.send("Test React JS");
@@ -50,30 +50,13 @@ app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', jobTypeRoutes);
 app.use('/api', jobRoute);
-
-//arnelapitest
-app.options('*', function(req,res,next){
-    res.header("Access-Control-Allow-Origin", 'https://localhost:5173');
-    res.header("Access-Control-Allow-Credentials","true");
-    res.header("Access-Control-Allow-Headers",['X-Requested-Width','content-type', 'credentials']);
-    res.header('Access-Control-Allow-Methods','GET,POST');
-    res.status(200);
-    next()
-});
-
-// app.use('/auth', oauth);
-app.use('/request', request);
-
-app.use('/get', (req,res)=>
-    res.json({"users": ["userone","usertwo","userthree"]})
-)
-
+ 
 //error middleware
 app.use(errorHandler);
-
+ 
 //port
 const port = process.env.PORT || 9000;
-
+ 
 app.listen(port, ()=>{
     console.log(`Server is running on port ${port}`);
 });

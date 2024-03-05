@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+
 interface Skill {
   name: string;
   value: string;
@@ -32,12 +35,11 @@ const ReviewAddJobsModal: React.FC<ReviewAddJobsModalProps> = ({
   return (
     <>
       {isOpen && (
-        <div className="fixed z-50 inset-0 overflow-y-auto  font-montserrat">
-          <div className="flex items-center justify-center min-w-screen min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="fixed z-50 inset-0 font-montserrat">
+          <div className="flex items-center justify-center min-w-screen min-h-screen px-4 pt-4 pb-20 text-center">
             <div
               className="fixed inset-0 transition-opacity"
               aria-hidden="true"
-              onClick={handleClose}
             >
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
@@ -54,77 +56,96 @@ const ReviewAddJobsModal: React.FC<ReviewAddJobsModalProps> = ({
               aria-labelledby="modal-headline"
             >
               <div className="first-page text-custom-text-black">
-                <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">
-                  Review Job Posting
-                </h3>
-                <div className="mt-4">
-                  <h4 className="font-semibold">
-                    Job Name:
-                    <span className="font-normal capitalize pl-2">
-                      {formData.jobName}
-                    </span>
-                  </h4>
+                <div className="flex justify-between items-center">
+                  <h3
+                    className="text-lg font-medium leading-6 text-gray-900"
+                    id="modal-headline"
+                  >
+                    Review Job Posting
+                  </h3>
+                  <button
+                    onClick={handleClose}
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    <FontAwesomeIcon
+                      icon={faClose}
+                      className="hover:text-green-500"
+                    />
+                  </button>
                 </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold">
-                    Job Description:
-                    <span className="font-normal capitalize pl-2">
-                      {formData.jobDescription}
-                    </span>
-                  </h4>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold">
-                    Job Type:
-                    <span className="font-normal capitalize pl-2">
-                      {formData.jobType}
-                    </span>
-                  </h4>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold">
-                    Job Slot:
-                    <span className="font-normal capitalize pl-2">
-                      {formData.jobRoles}
-                    </span>
-                  </h4>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold">
-                    Job Category:
-                    <span className="font-normal capitalize pl-2">
-                      {formData.jobCategory}
-                    </span>
-                  </h4>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold">Selected Skills:</h4>
-                  <ul className="grid grid-cols-2 gap-4 font-normal capitalize pl-2">
-                    {formData.jobSkills.map((skill, index) => (
-                      <li
-                        key={index}
-                        className="w-full bg-blue-500 rounded text-white text-center h-8 py-1"
-                      >
-                        {skill.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold">
-                    Work set-up:
-                    <span className="font-normal capitalize pl-2">
-                      {formData.jobSetUp}
-                    </span>
-                  </h4>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold">
-                    Salary:
-                    <span className="font-normal capitalize pl-2">
-                      {formData.jobSalary[0]} - {formData.jobSalary[1]}
-                    </span>
-                  </h4>
+                <hr />
+                <div className="flex flex-col">
+                  <div className="grid grid-cols-2">
+                    <div className="mt-4">
+                      <h4 className="font-semibold">
+                        Job Name:
+                        <span className="font-normal capitalize pl-2">
+                          {formData.jobName}
+                        </span>
+                      </h4>
+                    </div>
+                    <div className="mt-4">
+                      <h4 className="font-semibold">
+                        Job Type:
+                        <span className="font-normal capitalize pl-2">
+                          {formData.jobType}
+                        </span>
+                      </h4>
+                    </div>
+                    <div className="mt-4">
+                      <h4 className="font-semibold">
+                        Job Slot:
+                        <span className="font-normal capitalize pl-2">
+                          {formData.jobRoles}
+                        </span>
+                      </h4>
+                    </div>
+                    <div className="mt-4">
+                      <h4 className="font-semibold">
+                        Job Category:
+                        <span className="font-normal capitalize pl-2 text-[13px]">
+                          {formData.jobCategory}
+                        </span>
+                      </h4>
+                    </div>
+                    <div className="mt-4">
+                      <h4 className="font-semibold">
+                        Work set-up:
+                        <span className="font-normal capitalize pl-2">
+                          {formData.jobSetUp}
+                        </span>
+                      </h4>
+                    </div>
+                    <div className="mt-4">
+                      <h4 className="font-semibold">
+                        Salary:
+                        <span className="font-normal capitalize pl-2">
+                          {formData.jobSalary[0]} - {formData.jobSalary[1]}
+                        </span>
+                      </h4>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <h4 className="font-semibold">
+                      Job Description:
+                      <span className="font-normal capitalize pl-2">
+                        {formData.jobDescription}
+                      </span>
+                    </h4>
+                  </div>
+                  <div className="mt-4">
+                    <h4 className="font-semibold">Selected Skills:</h4>
+                    <ul className="grid grid-cols-2 gap-4 font-normal capitalize pl-2">
+                      {formData.jobSkills.map((skill, index) => (
+                        <li
+                          key={index}
+                          className="w-full bg-blue-500 rounded text-white text-center h-8 py-1"
+                        >
+                          {skill.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
                 {/* Display other formData properties similarly */}
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">

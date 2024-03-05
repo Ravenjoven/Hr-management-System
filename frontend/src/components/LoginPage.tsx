@@ -1,6 +1,6 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Navar from "./Navar";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const data = [
   {
@@ -12,88 +12,86 @@ const data = [
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 
-
 const Login = () => {
-// interface userI{
-//   name: string | null;
-//   iat?: number;
-//   iss?: string;
-  
-// }
+  // interface userI{
+  //   name: string | null;
+  //   iat?: number;
+  //   iss?: string;
 
-// const [user, setUser] = useState<userI>({ name:null });
+  // }
 
-// function handleCallbackResponse(response: { credential: any; }){
-//   console.log("Encoded JWT ID Token: "+ response.credential);
+  // const [user, setUser] = useState<userI>({ name:null });
+
+  // function handleCallbackResponse(response: { credential: any; }){
+  //   console.log("Encoded JWT ID Token: "+ response.credential);
 
   // const userObject =response.credential;
 
   // setUser(userObject as userI);
   // document.getElementById("SignInDiv")!.hidden =true;
-// }
-// function handleSignOut(){
-//   setUser({name:null});
-//   document.getElementById("SigninDiv")!.hidden=true;
-// }
+  // }
+  // function handleSignOut(){
+  //   setUser({name:null});
+  //   document.getElementById("SigninDiv")!.hidden=true;
+  // }
 
-  //@ts-ignore 
-//   const google=window.google;
+  //@ts-ignore
+  //   const google=window.google;
 
-// useEffect(()=>{
-  /* global google  */ 
-//   google.accounts!.id.initialize({
-//     client_id: "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
-//     callback: handleCallbackResponse
-//   });
+  // useEffect(()=>{
+  /* global google  */
+  //   google.accounts!.id.initialize({
+  //     client_id: "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
+  //     callback: handleCallbackResponse
+  //   });
 
-// const SignIn = document.getElementById("SignInDiv")!;
-// google.accounts.id.renderButton(SignIn,{
-//   theme:"outline",
-//   size:"large",
-//   type: "standard"
-// });
-// google.accounts.id.prompt();
+  // const SignIn = document.getElementById("SignInDiv")!;
+  // google.accounts.id.renderButton(SignIn,{
+  //   theme:"outline",
+  //   size:"large",
+  //   type: "standard"
+  // });
+  // google.accounts.id.prompt();
   // google.accounts.id.renderButton(
   //   document.getElementById("SignInDiv"),
   //   { theme: "outline", size:"large"}
-    
+
   // );
-// },[]);
+  // },[]);
 
-interface userI{
-  name: string | null;
-  iat?: number;
-  iss?: string;
-  picture?: string;
-  
-}
-const [user, setUser] = useState<userI>({ name:null });
-  //@ts-ignore 
-const google=window.google;
-/* global google  */ 
-function handleCallbackResponse(response: { credential: any; }){
-  console.log("Encoded JWT ID Token: "+ response.credential);
+  interface userI {
+    name: string | null;
+    iat?: number;
+    iss?: string;
+    picture?: string;
+  };
+  const [user, setUser] = useState<userI>({ name: null });
+  //@ts-ignore
+  const google = window.google;
+  /* global google  */
+  function handleCallbackResponse(response: { credential: any }) {
+    console.log("Encoded JWT ID Token: " + response.credential);
 
-  const userObject= jwtDecode(response.credential);
-  console.log(userObject);
-  // setUser(userObject as userI);
-  // document.getElementById("SignInDiv")!.hidden =true;
-  
-}
-useEffect(()=>{
-google.accounts.id.initialize({
-  client_id: "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
-  callback: handleCallbackResponse
-});
+    const userObject = jwtDecode(response.credential);
+    console.log(userObject);
+    // setUser(userObject as userI);
+    // document.getElementById("SignInDiv")!.hidden =true;
+  }
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id:
+        "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
 
-google.accounts.id.renderButton(
-  document.getElementById("SignInDiv"),
-  { theme: "outline", size:"large"}
-);
-},[]);
+    google.accounts.id.renderButton(document.getElementById("SignInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
   return (
-    <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen  bg-white font-montserrat">
-      <>
+    <>
+      <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen  bg-white font-montserrat">
         <Navar />
         <section className="mx-20">
           <div className="flex flex-row">
@@ -132,7 +130,7 @@ google.accounts.id.renderButton(
               </div>
             </div>
             <div className="">
-              <form className="m-8 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-darkorange-300 shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-[100px] px-[55px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
+              <form className="m-8 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-custom-bg-orange shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-[100px] px-[55px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
                 <div className="w-[341px] h-[455px] relative rounded-tl-none rounded-tr-31xl rounded-br-none rounded-bl-31xl bg-darkorange-300 shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] hidden max-w-full" />
                 <div className="self-stretch rounded-mini bg-whitesmoke rounded-[15px] flex flex-row items-center justify-start py-[11px] px-2.5 z-[1] border-[1px] border-solid border-gainsboro-200">
                   <div className="h-[38px] w-[220px] relative rounded-mini bg-whitesmoke box-border hidden border-[1px] border-solid border-gainsboro-200" />
@@ -174,9 +172,7 @@ google.accounts.id.renderButton(
                   />
                   <span className="text-xs">Log in with Google</span>
                 </button> */}
-                <div  id="SignInDiv">
-                 
-                </div>
+                <div id="SignInDiv"></div>
                 <div className="w-[204px] flex flex-row items-start justify-start py-0 px-2 box-border">
                   <b className="flex-1 relative text-3xs font-inter text-left z-[1]">
                     <span className="text-white">Don’t have account?</span>
@@ -187,6 +183,7 @@ google.accounts.id.renderButton(
             </div>
           </div>
         </section>
+        {/* <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs"> */}
         <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs">
           <div className="grid content-end">
             <div className="flex justify-center ">
@@ -197,8 +194,8 @@ google.accounts.id.renderButton(
             rights reserved
           </div>
         </footer>
-      </>
-    </div>
+      </div>
+    </>
   );
 };
 export default Login;

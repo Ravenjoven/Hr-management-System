@@ -1,8 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faUser } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import React, { useState } from "react";
 import Notif from "./Notifications";
+
 function AdminNavar() {
+
+  const [showNotification, setShowNotification] = useState(true);
+
   const [isOpen, setIsOpen] = useState(false);
   const openNotif = () => {
     setIsOpen(true);
@@ -10,9 +14,6 @@ function AdminNavar() {
   const closeModal = () => {
     setIsOpen(false);
   };
-
-  const [showNotification, setShowNotification] = useState(true);
-
   return (
     <>
       <nav className="border-b-4 border-gray-400 bg-white top-0 sticky z-50">
