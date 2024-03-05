@@ -27,7 +27,7 @@ export default function SendContractForm({
     formData.append("subject", subjects);
     files.forEach((file) => formData.append("file", file));
     axios
-      .post("http://localhost:9000/sendemail", formData, {
+      .post("http://localhost:9000/api/sendmail", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Access-Control-Allow-Origin": "*",
@@ -65,10 +65,7 @@ export default function SendContractForm({
             >
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <span
-              className="hidden"
-              aria-hidden="true"
-            >
+            <span className="hidden" aria-hidden="true">
               &#8203;
             </span>
             <div
@@ -120,8 +117,15 @@ export default function SendContractForm({
                         <input type="text" className="w-full" value={to} />
                       </div>
                       <div className="flex">
-                        <label htmlFor="upload" className="pr-2 font-semibold">Upload File:</label>
-                        <input type="file" name="file" onChange={handleFileChange} className="cursor-pointer"/>
+                        <label htmlFor="upload" className="pr-2 font-semibold">
+                          Upload File:
+                        </label>
+                        <input
+                          type="file"
+                          name="file"
+                          onChange={handleFileChange}
+                          className="cursor-pointer"
+                        />
                       </div>
                     </form>
                     <span
