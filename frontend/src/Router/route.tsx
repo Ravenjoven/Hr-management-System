@@ -11,6 +11,13 @@ import AdminAttendance from "../components/hr/AdminAttendance";
 import AdminEmployeeManagement from "../components/hr/AdminEmployeeManagement";
 import Jobs from "../components/hr/Jobs";
 import OjtJobList from "../components/OJT/OjtJobs";
+import Applications from "../components/OJT/Applications";
+import CompDetails from "../components/hr/CompanyDetails";
+import OjtLogin from "../components/OJT/OjtLogin";
+import UserDetail from "../components/OJT/UserDetail";
+import OjtAttendance from "../components/OJT/OjtAttendance";
+import FileLeaves from "../components/OJT/FileLeave";
+import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 
 
 
@@ -23,19 +30,26 @@ function router() {
     <>
       <Router>
         <Routes>
-          <Route path="/Ojt" element={<OjtJobList/>} />
+        <Route path="/FileLeave" element={<FileLeaves />} />
+        <Route path="/ojt" element={<UnEmpJobList />} />
+          <Route path="/ojt/Application" element={<Applications />} />
+          <Route path="/OjtDetails" element={<UserDetail />} />
+          <Route path="/OjtJoblist" element={<OjtJobList />} />
           <Route index path="/" element={<HomePage />} />
           <Route path="/Jobs" element={<Jobs />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/Employee" element={<AdminUserList />} />
+          <Route path="/EmployeeList" element={<AdminUserList />} />
           <Route path="/Category" element={<AdminJobCategory />} />
           <Route path="/Attendance" element={<AdminAttendance />} />
+          <Route path="/Company" element={<CompDetails />} />
           <Route
             path="/EmployeeManagement"
             element={<AdminEmployeeManagement />}
           />
           <Route path="/Profile" element={<Profile />} />
+          <Route path="/UserProfile" element={<UserDetail />} />
+          <Route path="/OjtAttendance" element={<OjtAttendance />} />
         </Routes>
       </Router>
     </>
