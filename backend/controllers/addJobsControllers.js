@@ -2,7 +2,6 @@ const addJobsModels = require("../models/addJobsModels");
 const { validationResult } = require("express-validator");
 
 exports.createJobs = async (req, res, next) => {
-  //   console.log(req);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(500).send("Missing parameters");
@@ -25,6 +24,20 @@ exports.createJobs = async (req, res, next) => {
       success: true,
       job,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getJobs = async (req, res, next) => {
+  try {
+    const jobs = await addJobsModels.find();
+
+    if (!jobs || jobs.length === 0) {
+      return res.status(404).json({ success: false, message: "No jobs found" });
+    }
+
+    res.status(200).json({ success: true, jobs });
   } catch (error) {
     next(error);
   }
