@@ -31,11 +31,6 @@ module.exports = {
         //
         'white': "#fff",
         'darkgray': "#9b9b9b",
-        'darkorange': {
-          "100": "#f79a38",
-          "200": "#f89939",
-          "300": "#f79939",
-        },
         'chocolate': "#c46605",
         'gainsboro': {
           "100": "#e6e6e6",
