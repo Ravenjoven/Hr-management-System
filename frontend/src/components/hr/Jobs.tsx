@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
@@ -7,11 +9,25 @@ import {
   faTrash,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import ViewApplicantDetails from "../Modal/ViewApplicantDetails";
 import ViewEditJobsModal from "../Modal/ViewEditJobsModal";
 
+interface Job {
+  _id: string;
+  jobName: string;
+  jobDescription: string;
+  jobType: string;
+  jobSlots: number;
+  jobCategory: string;
+  jobSkills: Object[];
+  jobSetup: string;
+  jobExperience: number;
+  jobFromSalary: number;
+  jobToSalary: number;
+  createdAt: Date;
+}
 function Jobs() {
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -50,79 +66,30 @@ function Jobs() {
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
-  const [jobs, setJobs] = useState([
-    {
-      id: 0,
-      jobName: "Financial Associate",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobType: "Intern",
-      jobSlots: 2,
-      jobCategory: "Fullstack Developer",
-      jobSkills: ["HardWorking", "Time Management"],
-      jobSetUp: "Onsite",
-      jobExperience: 2,
-      jobSalary: [0, 1],
-      jobLimit: 10,
-      date_createad: "February 00, 2024",
-    },
-    {
-      id: 1,
-      jobName: "Computer Hardware",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobLimit: 5,
-      date_createad: "February 01, 2024",
-    },
-    {
-      id: 2,
-      jobName: "Advertising Media",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobLimit: 5,
-      date_createad: "February 02, 2024",
-    },
-    {
-      id: 3,
-      jobName: "UI/UX Designer",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobLimit: 5,
-      date_createad: "February 003, 2024",
-    },
-    {
-      id: 4,
-      jobName: "IT Analyst",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobLimit: 5,
-      date_createad: "February 04, 2024",
-    },
-    {
-      id: 5,
-      jobName: "IT Consultant",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobLimit: 5,
-      date_createad: "February 05, 2024",
-    },
-    {
-      id: 6,
-      jobName: "Fullstack Developer",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobLimit: 5,
-      date_createad: "February 06, 2024",
-    },
-    {
-      id: 7,
-      jobName: "Computer Engineering",
-      jobDescription:
-        "Lorem Ipsum Dolor Sit Amet. Ab Odio Atque Et Molestiae Illo A Nihil Provident Ut Velit Esse Non Beatae Voluptatem Nam Omnis Voluptas Sit Natus Quia.",
-      jobLimit: 5,
-      date_createad: "February 07, 2024",
-    },
-  ]);
+  useEffect(() => {
+    // Function to fetch jobs when component mounts
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:9000/api/jobs/get");
+        setJobs(response.data.jobs);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    fetchJobs();
+  }, []);
+  const formattedJobs = jobs.map((job) => {
+    const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
+
+    return {
+      ...job,
+      createdAt: formattedDate,
+    };
+  });
   const [applicants, setApplicants] = useState([
     {
       id: 0,
@@ -211,14 +178,12 @@ function Jobs() {
     },
   ]);
   const filteredJobs = jobs.filter((job) => {
+    const searchQueryLower = searchQuery.toLowerCase();
     return (
-      job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.jobDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.jobLimit
-        .toString()
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      job.date_createad.toLowerCase().includes(searchQuery.toLowerCase())
+      job.jobName.toLowerCase().includes(searchQueryLower) ||
+      job.jobDescription.toLowerCase().includes(searchQueryLower) ||
+      job.jobSlots.toString().includes(searchQueryLower) || // Assuming jobLimit refers to jobSlots
+      job.createdAt.toString().toLowerCase().includes(searchQueryLower)
     );
   });
   const filteredApplicants = applicants.filter((applicant) => {
@@ -260,7 +225,7 @@ function Jobs() {
     pageApplicantNumbers.push(i);
   }
 
-  const handleClick = (jobId: number) => {
+  const handleClick = (jobId: string) => {
     console.log(`Clicked job with ID ${jobId}`);
     setShowAllData(!showAllData);
     setShowFirstRow(!showFirstRow);
@@ -425,7 +390,7 @@ function Jobs() {
                     {showAllData &&
                       currentJobs.map((job, index) => (
                         <tr
-                          key={job.id}
+                          key={job._id}
                           className="bg-white capitalize border-b text-black dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
                           <th
@@ -437,14 +402,17 @@ function Jobs() {
                           <td className="px-6 py-4">{job.jobName}</td>
                           <td className="px-6 py-4">{job.jobDescription}</td>
                           <td
-                            onClick={() => handleClick(job.id)}
+                            onClick={() => handleClick(job._id)}
                             className="px-6 py-4 cursor-pointer text-blue-600 font-semibold"
                           >
-                            <div className="rounded-full w-10 text-center flex justify-center items-center mx-auto  hover:text-green-600">
-                              {job.jobLimit}
+                            <div className="rounded-full w-10 text-center hover:text-green-600">
+                              {job.jobSlots}
                             </div>
                           </td>
-                          <td className="px-6 py-4">{job.date_createad}</td>
+                          <td className="px-6 py-4">
+                            {formattedJobs[index] &&
+                              formattedJobs[index].createdAt}
+                          </td>
                           <td className="px-6 py-4">
                             <div className="flex space-x-2">
                               <button

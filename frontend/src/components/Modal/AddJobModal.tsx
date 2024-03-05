@@ -15,12 +15,13 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     jobName: "",
     jobDescription: "",
     jobType: "",
-    jobRoles: "",
+    jobSlots: 0,
     jobCategory: "",
     jobSkills: [],
     jobSetUp: "",
-    jobExperience: "",
-    jobSalary: [0, 1],
+    jobExperience: 0,
+    jobFromSalary: 0,
+    jobToSalary: 0,
   });
   const [categories, setCategories] = useState([
     {
@@ -238,9 +239,12 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                       <input
                         type="number"
                         name="jobRoles"
-                        value={formData.jobRoles}
+                        value={formData.jobSlots}
                         onChange={(e) =>
-                          setFormData({ ...formData, jobRoles: e.target.value })
+                          setFormData({
+                            ...formData,
+                            jobSlots: parseInt(e.target.value),
+                          })
                         }
                         required
                         className="bg-gray-50 border w-52 capitalize text-center mt-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -370,7 +374,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              jobExperience: e.target.value,
+                              jobExperience: parseInt(e.target.value),
                             })
                           }
                           className="bg-gray-50 h-10 border w-52 capitalize text-center  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -387,14 +391,11 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">From</h6>
                         <input
                           type="number"
-                          value={formData.jobSalary[0]}
+                          value={formData.jobFromSalary}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[0],
-                              ],
+                              jobFromSalary: parseInt(e.target.value),
                             })
                           }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -404,14 +405,11 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">To</h6>
                         <input
                           type="number"
-                          value={formData.jobSalary[1]}
+                          value={formData.jobToSalary}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[1],
-                              ],
+                              jobToSalary: parseInt(e.target.value),
                             })
                           }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

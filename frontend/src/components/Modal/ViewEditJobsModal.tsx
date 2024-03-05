@@ -16,7 +16,8 @@ interface ViewJobModal {
     jobSkills: string[];
     jobSetUp: string;
     jobExperience: number;
-    jobSalary: [number, number];
+    jobFromSalary: number;
+    jobToSalary: number;
     date_created: string;
   } | null;
   title: string;
@@ -424,7 +425,7 @@ export default function ViewEditJobsModal({
                     {isEditing ? (
                       <MultiSelect
                         options={skills}
-                        selectedValues={selectedSkills} // Pass the initial selected skills here
+                        selectedValues={selectedSkills}
                         onSelect={handleSelectSkills}
                         onRemove={handleRemoveSkills}
                         displayValue="name"
@@ -433,14 +434,19 @@ export default function ViewEditJobsModal({
                       />
                     ) : (
                       <div className="flex flex-wrap pt-2">
-                        {job?.jobSkills.map((skill, index) => (
-                          <div
-                            key={index}
-                            className="bg-blue-600 cursor-not-allowed text-white px-3 py-1 rounded-full text-sm mr-2 mb-2"
-                          >
-                            {skill}
-                          </div>
-                        ))}
+                        {(job?.jobSkills || []).map(
+                          (skill: string | { name: string }, index: number) => (
+                            <div
+                              key={index}
+                              className="bg-blue-600 cursor-not-allowed text-white px-3 py-1 rounded-full text-sm mr-2 mb-2"
+                            >
+                              {/* Check if skill is an object */}
+                              {typeof skill === "object"
+                                ? (skill as { name: string }).name
+                                : skill}
+                            </div>
+                          )
+                        )}
                       </div>
                     )}
                   </div>
@@ -545,37 +551,15 @@ export default function ViewEditJobsModal({
                     <div className="flex space-x-4">
                       <div className="flex flex-col">
                         <h6 className="text-[15px]">From</h6>
-                        {/* <input
-                          type="number"
-                          value={formData.jobSalary[0]}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[0],
-                              ],
-                            })
-                          }
-                          className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        /> */}
+                        <span className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          {job?.jobFromSalary}
+                        </span>
                       </div>
                       <div className="flex flex-col">
                         <h6 className="text-[15px]">To</h6>
-                        {/* <input
-                          type="number"
-                          value={formData.jobSalary[1]}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[1],
-                              ],
-                            })
-                          }
-                          className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        /> */}
+                        <span className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          {job?.jobToSalary}
+                        </span>
                       </div>
                     </div>
                   </div>
