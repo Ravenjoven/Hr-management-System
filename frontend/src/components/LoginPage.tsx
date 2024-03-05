@@ -64,18 +64,23 @@ const Login = () => {
     iat?: number;
     iss?: string;
     picture?: string;
+    family_name?: string;
+    given_name?:string;
+    email?:string;
   };
   const [user, setUser] = useState<userI>({ name: null });
   //@ts-ignore
   const google = window.google;
   /* global google  */
   function handleCallbackResponse(response: { credential: any }) {
-    console.log("Encoded JWT ID Token: " + response.credential);
+    // console.log("Encoded JWT ID Token: " + response.credential);
 
     const userObject = jwtDecode(response.credential);
-    console.log(userObject);
-    // setUser(userObject as userI);
+    // console.log(userObject);
+    setUser(userObject as userI);
+    console.log(user.email);
     // document.getElementById("SignInDiv")!.hidden =true;
+
   }
   useEffect(() => {
     google.accounts.id.initialize({
@@ -89,6 +94,13 @@ const Login = () => {
       size: "large",
     });
   }, []);
+
+
+  const [values, setValues] = useState({
+    // email:'',
+    // password:''
+
+  })
   return (
     <>
       <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen  bg-white font-montserrat">
@@ -137,6 +149,8 @@ const Login = () => {
                   <input
                     className="w-[200px] [border:none] [outline:none]  font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block whitespace-nowrap z-[2]"
                     placeholder="Email@gmail.com"
+                    name="email"
+                    // onChange={handleInput}
                     type="text"
                   />
                 </div>
@@ -146,6 +160,8 @@ const Login = () => {
                     <input
                       className="w-[200px] [border:none] [outline:none] font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block z-[2]"
                       placeholder="Password"
+                      name="password"
+                      // onChange={handleInput}
                       type="password"
                     />
                   </div>
