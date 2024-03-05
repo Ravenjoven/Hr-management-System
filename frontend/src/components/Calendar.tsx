@@ -77,7 +77,6 @@ const Calendar: React.FC = () => {
         dateClick={handleDateClick}
         events={events}
         eventClick={handleEventClick}
-        events={events}
         height={"400px"}
       />
     </div>

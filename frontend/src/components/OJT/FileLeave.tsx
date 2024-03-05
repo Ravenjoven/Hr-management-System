@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
 import UnEmpSidebar from "./UnEmpSidebar";

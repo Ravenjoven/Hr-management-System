@@ -6,8 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { useState } from "react";
-import DatePicker from "react-datepicker";
+import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
 function CompDetails() {

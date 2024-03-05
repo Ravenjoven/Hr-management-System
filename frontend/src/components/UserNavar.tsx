@@ -1,3 +1,5 @@
+import React from "react";
+
 function UserNavar() {
   return (
     <nav className="border-b-4 border-gray-400 bg-white top-0 sticky z-50">

@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../OJT/Style.css";
-
+import React from "react";
 
 const data = [
   {

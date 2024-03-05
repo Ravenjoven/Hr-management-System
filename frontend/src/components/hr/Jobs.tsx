@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
 import AddJobModal from "../Modal/AddJobModal";
+import React from "react";
 import {
   faMagnifyingGlass,
   faTrash,

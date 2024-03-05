@@ -2,6 +2,7 @@ import { useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import { faClose, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 
 interface ViewJobModal {
   viewJobs: boolean;

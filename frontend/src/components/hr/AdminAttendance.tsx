@@ -10,6 +10,7 @@ import { SetStateAction, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AttendanceHistoryModal from "../Modal/AttendanceHistory";
+import React from "react";
 
 function AdminAttendance() {
   const [searchQuery, setSearchQuery] = useState("");

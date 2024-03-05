@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";

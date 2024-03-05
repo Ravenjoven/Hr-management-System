@@ -6,6 +6,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import React from "react";
 
 interface JobData {
   _id: string;
