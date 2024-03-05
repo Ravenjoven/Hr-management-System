@@ -13,8 +13,8 @@ const userRoutes = require("./routes/userRoutes");
 const jobTypeRoutes = require("./routes/jobTypeRoutes");
 const jobRoute = require("./routes/jobsRoutes");
 const sendContractRoutes = require("./routes/sendContractRoutes");
+const addJobsRoutes = require("./routes/addJobsRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
-const transporter = require("./controllers/sendContractControllers");
 //database connection
 mongoose
   .connect(process.env.DATABASE, {
@@ -47,6 +47,7 @@ app.use("/api", userRoutes);
 app.use("/api", jobTypeRoutes);
 app.use("/api", jobRoute);
 app.use("/api", sendContractRoutes);
+app.use("/api", addJobsRoutes);
 
 //error middleware
 app.use(errorHandler);
