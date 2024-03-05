@@ -6,7 +6,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'; // Added import
 import { Link } from 'react-router-dom'; // Added import
 import { useDispatch, useSelector } from 'react-redux';
 import { jobLoadAction } from '../redux/actions/jobActions';
-import { jobTypeAction, jobTypeLoadAction } from '../redux/actions/jobTypeActions';
+import { jobTypeLoadAction } from '../redux/actions/jobTypeActions';
 import { useParams } from 'react-router-dom';
 import CardElement from '../component/CardElement';
 import Pagination from '@mui/material/Pagination';

@@ -9,6 +9,7 @@
   "author": "Ravenjoven",
   "license": "ISC",
   "dependencies": {
+    "@mui/x-data-grid": "^6.19.6",
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
