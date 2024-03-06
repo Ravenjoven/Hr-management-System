@@ -38,7 +38,7 @@ function AdminJobCategory() {
       }
     };
     fetCategory();
-  }, [category]);
+  }, []);
 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
@@ -115,14 +115,11 @@ function AdminJobCategory() {
                 {category.map((categories, index) => (
                   <div
                     key={index}
-                    className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black"
+                    className="h-28 bg-custom-bg-gray rounded-xl text-center flex items-center justify-center cursor-pointer hover:bg-transparent hover:border-2 border-black"
                   >
                     <h5 className="font-bold text-custom-text-black capitalize">
                       {categories.jobCategory}
                     </h5>
-                    <span className="text-custom-text-black">
-                      1 job available
-                    </span>
                   </div>
                 ))}
               </div>
