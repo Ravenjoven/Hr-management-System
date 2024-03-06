@@ -19,17 +19,17 @@ const jobSchema = new mongoose.Schema(
       required: [true, "Type is required"],
     },
     jobSlots: {
-      type: Number, // Changed to Number for integer values
+      type: Number,
       trim: true,
       required: [true, "Slot is required"],
     },
     jobCategory: {
       type: String,
       trim: true,
-      required: [true, "Category is required"], // Corrected spelling of Category
+      required: [true, "Category is required"],
     },
     jobSkills: {
-      type: Object, // Changed to String array
+      type: Object,
       required: [true, "Skills is required"],
     },
     jobSetUp: {
@@ -38,18 +38,19 @@ const jobSchema = new mongoose.Schema(
       required: [true, "Setup is required"],
     },
     jobExperience: {
-      type: Number, // Changed to Number for integer values
+      type: Number,
       trim: true,
       required: [true, "Experience is required"],
     },
     jobFromSalary: {
-      type: Number, // Changed to Number for integer values
+      type: Number,
       trim: true,
     },
     jobToSalary: {
-      type: Number, // Changed to Number for integer values
+      type: Number,
       trim: true,
     },
+    category: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
   },
   { timestamps: true }
 );

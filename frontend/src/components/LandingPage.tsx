@@ -22,6 +22,7 @@ const SecondLabel = data[1].label;
 
 interface Category {
   _id: string;
+  jobs: string[];
   jobCategory: string;
 }
 
@@ -196,7 +197,8 @@ function HomePage() {
                       {categories.jobCategory}
                     </h5>
                     <span className="text-custom-text-black">
-                      1 job available
+                      {categories.jobs ? categories.jobs.length : 0} job
+                      available
                     </span>
                   </div>
                 ))}

@@ -1,5 +1,6 @@
 //this is add category created by ranel
 const addJobsModels = require("../models/addJobsModels");
+const addCategoryModels = require("../models/addCategoryModels");
 const { validationResult } = require("express-validator");
 
 exports.createJobs = async (req, res, next) => {
@@ -9,7 +10,20 @@ exports.createJobs = async (req, res, next) => {
   }
 
   try {
+    // Check if the provided category exists in the database
+    let category = await addCategoryModels.findOne({
+      jobCategory: req.body.jobCategory,
+    });
+    if (!category) {
+      // If the category doesn't exist, create it
+      category = await addCategoryModels.create({
+        jobCategory: req.body.jobCategory,
+      });
+    }
+
+    // Create the job
     const job = await addJobsModels.create({
+      category: category._id,
       jobName: req.body.jobName,
       jobDescription: req.body.jobDescription,
       jobType: req.body.jobType,
@@ -21,6 +35,11 @@ exports.createJobs = async (req, res, next) => {
       jobFromSalary: req.body.jobFromSalary,
       jobToSalary: req.body.jobToSalary,
     });
+
+    // Associate the job with the category
+    category.jobs.push(job._id);
+    await category.save();
+
     res.status(201).json({
       success: true,
       job,

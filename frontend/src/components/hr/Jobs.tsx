@@ -77,7 +77,7 @@ function Jobs() {
       }
     };
     fetchJobs();
-  }, [jobs]);
+  }, []);
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
