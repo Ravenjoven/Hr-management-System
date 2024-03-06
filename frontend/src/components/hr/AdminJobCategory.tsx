@@ -6,6 +6,7 @@ import axios from "axios";
 
 interface Category {
   _id: string;
+  jobs: string[];
   jobCategory: string;
 }
 
@@ -121,7 +122,11 @@ function AdminJobCategory() {
                       {categories.jobCategory}
                     </h5>
                     <span className="text-custom-text-black">
-                      1 job available
+                      {categories.jobs && categories.jobs.length > 0
+                        ? categories.jobs.length === 1
+                          ? "1 job available"
+                          : `${categories.jobs.length} job's available`
+                        : "No job's available"}
                     </span>
                   </div>
                 ))}
