@@ -14,6 +14,7 @@ const jobTypeRoutes = require("./routes/jobTypeRoutes");
 const jobRoute = require("./routes/jobsRoutes");
 const sendContractRoutes = require("./routes/sendContractRoutes");
 const addJobsRoutes = require("./routes/addJobsRoutes");
+const addCategoryRoutes = require("./routes/addCategoryRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
 //database connection
 mongoose
@@ -48,6 +49,7 @@ app.use("/api", jobTypeRoutes);
 app.use("/api", jobRoute);
 app.use("/api", sendContractRoutes);
 app.use("/api", addJobsRoutes);
+app.use("/api", addCategoryRoutes);
 
 //error middleware
 app.use(errorHandler);

@@ -26,6 +26,7 @@ interface Job {
   jobToSalary: number;
   createdAt: Date;
 }
+
 function Jobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [expanded, setExpanded] = useState(false);
@@ -67,7 +68,6 @@ function Jobs() {
     setExpanded((prevState) => !prevState);
   };
   useEffect(() => {
-    // Function to fetch jobs when component mounts
     const fetchJobs = async () => {
       try {
         const response = await axios.get("http://localhost:9000/api/jobs/get");
@@ -77,7 +77,7 @@ function Jobs() {
       }
     };
     fetchJobs();
-  }, []);
+  }, [jobs]);
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
@@ -90,6 +90,7 @@ function Jobs() {
       createdAt: formattedDate,
     };
   });
+
   const [applicants, setApplicants] = useState([
     {
       id: 0,

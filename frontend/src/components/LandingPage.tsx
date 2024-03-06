@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import Navar from "./Navar";
 
 import { Link } from "react-router-dom";
+import axios from "axios";
 const data = [
   {
     id: 1,
@@ -17,7 +19,28 @@ const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const SecondRoute = data[1].to;
 const SecondLabel = data[1].label;
+
+interface Category {
+  _id: string;
+  jobCategory: string;
+}
+
 function HomePage() {
+  const [category, setCategory] = useState<Category[]>([]);
+  useEffect(() => {
+    // Function to fetch jobs when component mounts
+    const fetCategory = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/jobs/getCategory"
+        );
+        setCategory(response.data.category);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    fetCategory();
+  }, [category]);
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -164,70 +187,19 @@ function HomePage() {
             </section>
             <section className="flex flex-col mt-24 h-full max-w-screen-xl mx-auto">
               <div className="grid grid-cols-4 gap-4">
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    IT/Computer
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    Financial Associate
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    Advertising / Media
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    Fullstack Developer
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    UI UX Designer
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    IT Consultant
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    Computer Engineering
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
-                <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
-                  <h5 className="font-bold text-custom-text-black">
-                    IT Analyst
-                  </h5>
-                  <span className="text-custom-text-black">
-                    1 job available
-                  </span>
-                </div>
+                {category.map((categories, index) => (
+                  <div
+                    key={index}
+                    className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black"
+                  >
+                    <h5 className="font-bold text-custom-text-black capitalize">
+                      {categories.jobCategory}
+                    </h5>
+                    <span className="text-custom-text-black">
+                      1 job available
+                    </span>
+                  </div>
+                ))}
               </div>
             </section>
           </div>
