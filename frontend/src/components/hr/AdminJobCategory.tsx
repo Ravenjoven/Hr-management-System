@@ -1,21 +1,50 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AddCategory from "../Modal/AddCategoryModal";
+import axios from "axios";
+
+interface Category {
+  _id: string;
+  jobCategory: string;
+}
 
 function AdminJobCategory() {
+  const [category, setCategory] = useState<Category[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+  const handClose = () => {
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    // Function to fetch jobs when component mounts
+    const fetCategory = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/jobs/getCategory"
+        );
+        setCategory(response.data.category);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    fetCategory();
+  }, [category]);
+
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <AdminNavar />
-        <div className="fixed">
+        <div className="fixed  z-50">
           <button
             data-drawer-target="logo-sidebar"
             data-drawer-toggle="logo-sidebar"
@@ -47,10 +76,26 @@ function AdminJobCategory() {
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:min-w-full h-12 font-bold bg-custom-text-orange rounded flex text-white">
-              <span className="my-auto pl-4 uppercase">job categories</span>
+            <div className="upper-div md:min-w-full h-16 bg-custom-text-orange rounded flex text-white items-center rounded-tr-[25px]">
+              <div className="pl-4 uppercase font-bold">Category List</div>
+              <div className="flex-grow"></div>
+              <div>
+                <button
+                  onClick={handleOpen}
+                  className="border-[3px] flex justify-end items-end hover:bg-blue-400 border-custom-text-white m-4 bg-green-400 text-white py-2 px-4 rounded"
+                >
+                  Add Category
+                </button>
+                {isOpen && (
+                  <AddCategory
+                    isOpen={isOpen}
+                    onClose={handClose}
+                    title="Add Category"
+                  ></AddCategory>
+                )}
+              </div>
             </div>
-            <div className="lower-div w-full h-full border-[3px] border-custom-text-orange rounded-md mt-4">
+            <div className="lower-div w-full flex flex-col h-full border-[3px] border-custom-text-orange rounded-md mt-4">
               <section className="flex">
                 <div className="w-full h-full my-auto px-auto text-left">
                   <h1 className="font-bold pl-4 w-full text-custom-text-gray text-3xl">
@@ -66,216 +111,20 @@ function AdminJobCategory() {
                   />
                 </div>
               </section>
-              <div className="h-10 w-full flex mt-2">
-                <div className="w-full pl-4">
-                  <div className="relative">
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                      className="absolute top-1/2 transform -translate-y-1/2 left-4 w-4 h-4 text-custom-text-orange"
-                    />
-                    <input
-                      type="text"
-                      className="rounded-full border-[3px] border-custom-text-orange text-black pl-10 pr-4 py-2 w-80 h-10"
-                      placeholder="Search"
-                    />
-                  </div>
-                </div>
-                <div className="w-full flex justify-center items-center">
-                  <select
-                    name="categories"
-                    className="rounded-xl cursor-pointer mx-auto text-center font-bold text-white bg-custom-text-orange w-80 h-10"
+              <div className="grid md:grid-cols-5 grid-cols-1 w-full h-full gap-8 my-2">
+                {category.map((categories, index) => (
+                  <div
+                    key={index}
+                    className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black"
                   >
-                    <option
-                      value="IT/Computer"
-                      className="uppercase text-[20px]"
-                    >
-                      IT/Computer
-                    </option>
-                    <option
-                      value="IT/Computer"
-                      className="uppercase text-[20px]"
-                    >
-                      Fullstack Developer
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div className="relative overflow-x-auto shadow-md  mt-10">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-white uppercase bg-custom-text-orange">
-                    <tr className="capitalize">
-                      <th scope="col" className="px-6 py-3">
-                        job name
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        job descripion
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        job applicants
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        date end
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        IT/Computer
-                      </th>
-                      <td className="px-6 py-4">
-                        maintaining computer systems, troubleshooting errors,{" "}
-                        <br />
-                        and repairing the organization's hardware.
-                      </td>
-                      <td className="px-6 py-4">123</td>
-                      <td className="px-6 py-4">02/28/24</td>
-                      <td className="px-6 py-4 space-x-2">
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="hover:text-green-500"
-                          />
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="hover:text-red-500"
-                          />
-                        </a>
-                      </td>
-                    </tr>
-                    <tr className="capitalize bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Fullstack Developer
-                      </th>
-                      <td
-                        className="px-6 py-4"
-                        style={{
-                          wordWrap: "break-word",
-                          overflowWrap: "break-word",
-                          whiteSpace: "pre-wrap",
-                        }}
-                      >
-                        {" "}
-                        full-stack developer is a developer or engineer who can{" "}
-                        <br />
-                        build both the front end and the back end of a website.{" "}
-                      </td>
-                      <td className="px-6 py-4">50</td>
-                      <td className="px-6 py-4">02/28/24</td>
-                      <td className="px-6 py-4 space-x-2">
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faPen}
-                            className="hover:text-green-500"
-                          />
-                        </a>
-                        <a
-                          href="#"
-                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        >
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            className="hover:text-red-500"
-                          />
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <nav
-                  className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-8"
-                  aria-label="Table navigation"
-                >
-                  <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-                    Showing{" "}
-                    <span className="font-semibold text-gray-900 dark:text-white">
-                      1-10
-                    </span>{" "}
-                    of{" "}
-                    <span className="font-semibold text-gray-900 dark:text-white">
-                      1000
+                    <h5 className="font-bold text-custom-text-black capitalize">
+                      {categories.jobCategory}
+                    </h5>
+                    <span className="text-custom-text-black">
+                      1 job available
                     </span>
-                  </span>
-                  <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        Previous
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        1
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        2
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        aria-current="page"
-                        className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                      >
-                        3
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        4
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        5
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                      >
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

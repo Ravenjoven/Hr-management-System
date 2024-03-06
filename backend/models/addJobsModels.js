@@ -1,5 +1,5 @@
+//this is add category created by ranel
 const mongoose = require("mongoose");
-
 const jobSchema = new mongoose.Schema(
   {
     jobName: {
