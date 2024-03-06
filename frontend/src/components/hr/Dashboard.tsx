@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
 import Calendar from "../Calendar";
+import { ReactSession } from 'react-client-session';
 
 function Dashboard() {
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+
+  // const credentials = ReactSession.get("mail");
+
+
   return (
     <div className="min-h-screen max-w-full bg-white font-montserrat">
       <AdminNavar />
