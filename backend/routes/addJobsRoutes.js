@@ -1,3 +1,4 @@
+//this is add jobs routes created by ranel
 const express = require("express");
 const { createJobs, getJobs } = require("../controllers/addJobsControllers");
 const router = express.Router();
