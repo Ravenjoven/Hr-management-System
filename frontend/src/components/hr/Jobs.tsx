@@ -27,8 +27,15 @@ interface Job {
   createdAt: Date;
 }
 
+interface Category {
+  _id: string;
+  jobs: string[];
+  jobCategory: string;
+}
+
 function Jobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [category, setCategory] = useState<Category[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -77,7 +84,21 @@ function Jobs() {
       }
     };
     fetchJobs();
-  }, []);
+  }, [jobs]);
+  useEffect(() => {
+    // Function to fetch jobs when component mounts
+    const fetCategory = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/jobs/getCategory"
+        );
+        setCategory(response.data.category);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    fetCategory();
+  }, [category]);
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
@@ -231,13 +252,19 @@ function Jobs() {
     setShowAllData(!showAllData);
     setShowFirstRow(!showFirstRow);
   };
-  const handleViewClick = (jobId: number) => {
-    console.log(`Clicked job with ID ${jobId}`);
-    setViewJobs(true);
-  };
 
-  const handleShowAllData = (applicantId: number) => {
-    alert(applicantId);
+  const deleteJobs = async (jobId: string) => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:9000/api/jobs/delete",
+        {
+          data: { jobId },
+        }
+      );
+      console.log("Job deleted successfully:", response.data);
+    } catch (error) {
+      console.error("Error deleting job:", error);
+    }
   };
 
   const handleResetTable = () => {
@@ -425,15 +452,15 @@ function Jobs() {
                                   className="hover:text-green-500"
                                 />
                               </button>
-                              <a
-                                href="#"
+                              <button
+                                onClick={() => deleteJobs(job._id)}
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                               >
                                 <FontAwesomeIcon
                                   icon={faTrash}
                                   className="hover:text-red-500"
                                 />
-                              </a>
+                              </button>
                             </div>
                           </td>
                           <div>
@@ -441,6 +468,7 @@ function Jobs() {
                               viewJobs={viewJobs}
                               title={"Job Details"}
                               isCloseJobs={closeViewJobsModal}
+                              categories={category}
                               job={selectedJob}
                             />
                           </div>

@@ -197,8 +197,11 @@ function HomePage() {
                       {categories.jobCategory}
                     </h5>
                     <span className="text-custom-text-black">
-                      {categories.jobs ? categories.jobs.length : 0} job
-                      available
+                      {categories.jobs
+                        ? categories.jobs.length === 1
+                          ? "1 job available"
+                          : `${categories.jobs.length} job's available`
+                        : "No job's available"}
                     </span>
                   </div>
                 ))}
