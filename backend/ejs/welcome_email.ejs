@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Teravault</title>
+    <!-- Link to Tailwind CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100">
+    <div class="container flex flex-col items-center justify-center h-screen">
+      <div class="header mb-8 border-2 border-custom-text-orange rounded-full">
+        <!-- Centered logo -->
+        <img src="img2.png" alt="Company Logo" class="mx-auto" />
+      </div>
+      <div class="content text-center flex flex-col justify-center items-center">
+        <h1 class="text-3xl font-bold mb-4">Welcome to Teravault</h1>
+        <p class="mb-4">
+          You've been invited by <span class="font-bold"><%= name %></span> to join <span class="font-bold">Teravault</span>
+          <div class="w-[150px] h-[50px]">
+            <button
+              class="w-[140px] h-[40px] shadow-2xl bg-sky-600 outline outline-offset-2 outline-1 outline-sky-600 hover:scale-[1.03] hover:outline-none duration-300 active:scale-[0.99]"
+            >
+            <a href="http://localhost:5173/login">
+                Accept Invitation
+              </a>     
+            </button>
+          </div>  
+        </p>
+        <!-- Insert the email dynamically -->
+        <p class="mb-2">Email: <%= email %></p>
+        <p>Password: 1234</p>
+      </div>
+      <div class="footer mt-8 text-center">
+        <p>
+          If you have any questions, please contact us at support@example.com.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

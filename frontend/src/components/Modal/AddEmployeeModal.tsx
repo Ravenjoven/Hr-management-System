@@ -3,6 +3,7 @@ import MultiSelect from "multiselect-react-dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 interface ModalProps {
   isOpen: boolean;
@@ -68,6 +69,17 @@ function AddEmployeeModal({
 
   const handleSaveData = async () => {
     try {
+      // Show loading indicator
+      const loadingAlert = Swal.fire({
+        title: "Processing",
+        text: "Please wait...",
+        allowOutsideClick: false,
+        showConfirmButton: false, // Hide the "OK" button
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       const response = await axios.post(
         "http://localhost:9000/api/employee/add",
         formData,
@@ -77,8 +89,16 @@ function AddEmployeeModal({
           },
         }
       );
+
       if (response.status === 200 || response.status === 201) {
-        alert("Added Successfully");
+        // Show success message
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Added Successfully",
+        });
+
+        // Reset form data
         setFormData({
           fullname: "",
           dateOfBirth: "",
@@ -90,12 +110,21 @@ function AddEmployeeModal({
           type: "",
         });
         setSelectedSkills([]);
+        onClose();
       } else {
-        alert("Failed to add. Please try again later.");
+        // Show error message
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to add. Please try again later.",
+        });
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred while adding. Please fill all the fields.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while adding. Please fill all the fields.",
+      });
     }
   };
 

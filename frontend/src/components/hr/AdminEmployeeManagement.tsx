@@ -7,6 +7,7 @@ import {
   faEye,
   faPen,
   faMagnifyingGlass,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import ViewApplicant from "../Modal/ViewApplicant";
 import axios from "axios";
@@ -148,6 +149,10 @@ function AdminEmployeeManagement() {
     indexOfFirstApplicants,
     indexOfLastApplicants
   );
+  const spinnerStyle = {
+    fontSize: "24px",
+    animation: "spin 1s linear infinite",
+  };
   const openViewApplicantModal = (user: any) => {
     setSelectedApplicant(user);
     setViewApplicantModal(true);
@@ -358,49 +363,67 @@ function AdminEmployeeManagement() {
                       </tr>
                     </thead>
                     <tbody className="border-[3px] border-custom-text-orange">
-                      {employees.map((employee, index) => (
-                        <tr
-                          key={employee._id}
-                          className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
-                            {index + 1}
-                          </th>
-                          <td className="px-6 py-4 capitalize">
-                            {employee.fullname}
-                          </td>
-                          <td className="px-6 py-4">{employee.email}</td>
-                          <td className="px-6 py-4 capitalize">
-                            {employee.position}
-                          </td>
-                          <td className="px-6 py-4 capitalize">
-                            {employee.type}
-                          </td>
-                          <td className="px-6 py-4 space-x-4 flex">
-                            <a
-                              href="#"
-                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            >
-                              <FontAwesomeIcon
-                                icon={faEye}
-                                className="hover:text-green-500 flex"
-                              />
-                            </a>
-                            <a
-                              href="#"
-                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            >
-                              <FontAwesomeIcon
-                                icon={faPen}
-                                className="hover:text-green-500 flex"
-                              />
-                            </a>
+                      {employees.length === 0 ? (
+                        <tr>
+                          <td colSpan={6}>
+                            <section className="flex flex-col items-center justify-center">
+                              <div className="flex items-center justify-center mt-4">
+                                <FontAwesomeIcon
+                                  icon={faSpinner}
+                                  style={spinnerStyle}
+                                />
+                              </div>
+                              <h1 className="text-center font-bold text-[20px] text-custom-text-black my-4">
+                                No Data Found
+                              </h1>
+                            </section>
                           </td>
                         </tr>
-                      ))}
+                      ) : (
+                        employees.map((employee, index) => (
+                          <tr
+                            key={employee._id}
+                            className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          >
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {index + 1}
+                            </th>
+                            <td className="px-6 py-4 capitalize">
+                              {employee.fullname}
+                            </td>
+                            <td className="px-6 py-4">{employee.email}</td>
+                            <td className="px-6 py-4 capitalize">
+                              {employee.position}
+                            </td>
+                            <td className="px-6 py-4 capitalize">
+                              {employee.type}
+                            </td>
+                            <td className="px-6 py-4 space-x-4 flex">
+                              <a
+                                href="#"
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEye}
+                                  className="hover:text-green-500 flex"
+                                />
+                              </a>
+                              <a
+                                href="#"
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faPen}
+                                  className="hover:text-green-500 flex"
+                                />
+                              </a>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

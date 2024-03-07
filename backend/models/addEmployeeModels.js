@@ -27,7 +27,7 @@ const employeeSchema = new mongoose.Schema(
       required: [true, "phone number is required"],
     },
     jobSkills: {
-      type: Array,
+      type: Object,
       required: [true, "skills is required"],
     },
     position: {

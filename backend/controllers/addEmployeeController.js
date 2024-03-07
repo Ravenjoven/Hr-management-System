@@ -4,6 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
+const fs = require("fs");
+const ejs = require("ejs");
 const app = express();
 
 app.use(bodyParser.json({ limit: "5mb" }));
@@ -16,10 +18,12 @@ app.use(
 app.use(cors());
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ limit: "25mb" }));
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
+
 const addEmployeeModels = require("../models/addEmployeeModels");
 const { validationResult } = require("express-validator");
 
@@ -33,7 +37,6 @@ const transporter = nodemailer.createTransport({
 
 exports.createEmployee = async (req, res, next) => {
   console.log(req.body);
-  const subject = "Welcome To Teravault";
   const link = "http://localhost:5173/login";
   const errors = validationResult(req);
 
@@ -47,21 +50,28 @@ exports.createEmployee = async (req, res, next) => {
       fullname: req.body.fullname,
       dateOfBirth: req.body.dateOfBirth,
       email: req.body.email,
-      password: "7110eda4d09e062aa5e4a390b0a572ac0d2c0220f5f89400", // Example hashed password
+      password: "7110eda4d09e062aa5e4a390b0a572ac0d2c0220f5f89400", // 1234 hashed password
       phoneNumber: req.body.phoneNumber,
-      skills: req.body.jobSkills,
+      jobSkills: req.body.jobSkills,
       position: req.body.position,
       type: req.body.type,
       address: req.body.address,
       status: 0,
     });
 
+    // Render the email template
+    const template = fs.readFileSync("./ejs/welcome_email.ejs", "utf-8");
+    const htmlContent = ejs.render(template, {
+      email: req.body.email,
+      name: authUser,
+    });
+
     // Send welcome email
     const info = await transporter.sendMail({
       from: authUser,
       to: req.body.email,
-      subject: subject,
-      text: `Welcome to Teravault! Please click the following link to log in: ${link} email: ${req.body.email} password: 1234`,
+      subject: "Welcome To Teravault",
+      html: htmlContent,
     });
 
     console.log("Message sent: %s", info.messageId);
