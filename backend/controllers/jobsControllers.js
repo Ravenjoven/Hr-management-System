@@ -46,6 +46,7 @@ exports.updateJob = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+    
 }
 //update job by id.
 exports.showJobs = async (req, res, next) => {
@@ -79,7 +80,7 @@ let locationFilter = location !== '' ? location : setUniqueLocation;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Job.find({...keyword,jobType: categ, location: locationFilter}).countDocuments();
     try {
-        const jobs = await Job.find({...keyword,jobType: categ, location: locationFilter}).sort({ createdAt: -1 }).skip(pageSize * (page -1)).limit()
+        const jobs = await Job.find({ ...keyword, jobType: categ, location: locationFilter }).sort({ createdAt: -1 }).populate('jobType', 'jobTypeName').populate('user', 'firstName').skip(pageSize * (page - 1)).limit(pageSize)
         res.status(200).json({
             success: true,
             jobs,
