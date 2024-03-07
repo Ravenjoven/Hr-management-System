@@ -16,6 +16,11 @@ const employeeSchema = new mongoose.Schema(
       trim: true,
       required: [true, "email is required"],
     },
+    password: {
+      type: String,
+      trim: true,
+      required: [true, "password needed"],
+    },
     phoneNumber: {
       type: String,
       trim: true,
