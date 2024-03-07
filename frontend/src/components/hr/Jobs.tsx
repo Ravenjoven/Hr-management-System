@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
 import AddJobModal from "../Modal/AddJobModal";
-import React from "react";
+
 import {
   faMagnifyingGlass,
   faTrash,
@@ -85,7 +85,7 @@ function Jobs() {
       }
     };
     fetchJobs();
-  }, [jobs]);
+  }, []);
   useEffect(() => {
     // Function to fetch jobs when component mounts
     const fetCategory = async () => {
@@ -453,17 +453,8 @@ function Jobs() {
                                   className="hover:text-green-500"
                                 />
                               </button>
-                              <a
-                                href="#"
-                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faPen}
-                                  className="hover:text-green-500"
-                                />
-                              </a>
-                              <a
-                                href="#"
+                              <button
+                                onClick={() => deleteJobs(job._id)}
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                               >
                                 <FontAwesomeIcon

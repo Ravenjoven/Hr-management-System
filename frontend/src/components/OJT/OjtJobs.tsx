@@ -22,9 +22,6 @@ function OjtJobList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedJob, setSelectedJob] = useState(null as any);
   const [JobsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedJob, setSelectedJob] = useState(null as any);
-  const [JobsPerPage] = useState(10);
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);

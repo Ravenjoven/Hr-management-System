@@ -35,68 +35,6 @@ interface SidebarProps {
 
 function UnEmpSidebar({ expanded }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [selectedJob, setSelectedJob] = useState(null as any);
-    const [JobsPerPage] = useState(10);
-    const [jobs, setJobs] = useState([
-      {
-        id: 1,
-        jobName: "Financial Associate",
-        
-        date_createad: new Date().toLocaleDateString(),
-  
-      },
-      {
-        id: 2,
-        jobName: "Financial Associate",
-        
-        date_createad: new Date().toLocaleDateString(),
-  
-      },
-      {
-        id: 3,
-        jobName: "Financial Associate",
-        
-        date_createad: new Date().toLocaleDateString(),
-  
-      },
-    ]);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [jobCount, setJobCount] = useState(jobs.length);
-    const filteredJobs = jobs.filter((job) => {
-   
-    useEffect(() => {
-      setSelectedJob(jobs[0] || null);
-    }, [jobs]);
-    const handleClick = (job: any) => {
-      setSelectedJob(job)
-    }
-  }); 
-    const handleAddJob = () => {
-      // Add your logic to add a new job here
-      // For example:
-      const newJob = {
-        id: jobs.length, // You might want to use a more reliable way to generate IDs
-        jobName: "New Job", // Default values for the new job
-        jobDescription: "Description of the new job",
-        jobLimit: 1,
-        date_created: new Date().toLocaleDateString(), // Current date
-      };
-      setJobs([...jobs]); // Update the jobs array
-      setJobCount(jobCount + 1); // Increment job count
-    }
-    // Get current users
-    const indexOfLastJobs = currentPage * JobsPerPage;
-    const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
-    const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
-    const pageNumbers = [];
-  
-    for (let i = 1; i <= Math.ceil(jobs.length / JobsPerPage); i++) {
-      pageNumbers.push(i);
-    }
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedJob, setSelectedJob] = useState(null as any);

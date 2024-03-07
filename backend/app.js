@@ -16,6 +16,7 @@ const sendContractRoutes = require("./routes/sendContractRoutes");
 const addJobsRoutes = require("./routes/addJobsRoutes");
 const addCategoryRoutes = require("./routes/addCategoryRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
+const addUser=require("./routes/addUser");
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -60,6 +61,10 @@ app.use("/api", jobRoute);
 app.use("/api", sendContractRoutes);
 app.use("/api", addJobsRoutes);
 app.use("/api", addCategoryRoutes);
+
+app.use("/api", addUser);
+
+
 
 //error middleware
 app.use(errorHandler);

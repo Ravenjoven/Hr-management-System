@@ -41,7 +41,7 @@ function HomePage() {
       }
     };
     fetCategory();
-  }, [category]);
+  }, []);
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>

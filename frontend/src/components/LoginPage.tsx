@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navar from "./Navar";
 import { jwtDecode } from "jwt-decode";
 import { ReactSession } from "react-client-session";
+import axios from "axios";
 // import { Redirect } from 'react-router-dom';
 
 const data = [
@@ -17,18 +18,20 @@ const firstLabel = data[0].label;
 const Login = () => {
  
   interface User {
-    name: string | null;
+    name?: string | null;
     iat?: number;
     iss?: string;
     picture?: string;
     family_name?: string;
     given_name?: string;
-    email?: string;
+    email?: string | null;
+    jti?:string;
 }
 
 
-const [user, setUser] = useState<User>({ name: null });
+const [user, setUser] = useState<User>({ email: null });
 const [logIn, setLogIn] = useState(false);
+
    //@ts-ignore
 const google = window.google;
 useEffect(() => {
@@ -42,24 +45,51 @@ useEffect(() => {
     google.accounts.id.renderButton(document.getElementById("SignInDiv"), {
         theme: "outline",
         size: "large",
-
     });
 }, []);
 
-useEffect(() => {
-    console.log(user.email);
-    console.log(user.name);
-    ReactSession.setStoreType("localStorage");
-    ReactSession.set("mail", user.email);
-    setLogIn(true);
-}, [user]);
+
+
 
 useEffect(() => {
-    if (ReactSession.get("mail")) {
-      console.log(ReactSession.get("mail"));
-        setLogIn(true);
-    }
-}, []);
+  if (user) { // Check if user is defined
+    axios
+      .post("http://localhost:9000/api/user/addUser", user, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((response) => {
+        alert("User added successfully");
+        
+        console.log("Response:", response.data);
+      })
+      .catch((error) => {
+        // alert("An error occurred while adding the user");
+        console.log(user);
+        console.error("Error:", error);
+      });
+  }
+}, [user]);
+
+
+// useEffect(() => {
+//     console.log(user.email);
+//     console.log(user.name);
+//     ReactSession.setStoreType("localStorage");
+//     ReactSession.set("mail", user.email);
+//     setLogIn(true);
+// }, [user]);
+
+// useEffect(() => {
+//     if (ReactSession.get("mail")) {
+//       console.log(ReactSession.get("mail"));
+//         setLogIn(true);
+//     }
+// }, []);
+
+
 
 // const handleLogIn = () => {
 //   ReactSession.setStoreType("localStorage");
@@ -67,14 +97,19 @@ useEffect(() => {
 //     setLogIn(true);
 // }
 
-if (logIn) {
-  // window.location.href = "/Dashboard";
-}
+// if (logIn) {
+//   // window.location.href = "/Dashboard";
+// }
 
 function handleCallbackResponse(response: { credential: any }) {
     const userObject = jwtDecode(response.credential);
     setUser(userObject as User);
+
+    console.log(user.name);
+   
 }
+
+
 
   return (
     <>
