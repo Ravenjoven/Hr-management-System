@@ -68,7 +68,7 @@ useEffect(() => {
       .catch((error) => {
         // alert("An error occurred while adding the user");
         console.log(user);
-        console.error("Error:", error);
+        console.error("An error occurred while adding the user:", error);
       });
   }
 }, [user]);

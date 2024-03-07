@@ -16,12 +16,12 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: [true, "ISS is required"],
   },
-  familyName: {
+  family_name: {
     type: String,
     trim: true,
     required: [true, "Family Name is required"],
   },
-  givenName: {
+  given_name: {
     type: String,
     trim: true,
     required: [true, "Given Name is required"],

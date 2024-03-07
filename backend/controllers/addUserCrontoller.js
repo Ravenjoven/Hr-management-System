@@ -18,3 +18,15 @@ exports.addUser = async (req, res) => {
     });
   }
 };
+
+exports.getUser = async(req,res, next)=>{
+  try {
+    const getuser = User.find();
+    res.status(200).json({
+      success:true,
+      getuser
+    })
+  } catch (error) {
+    next(error);
+  }
+};

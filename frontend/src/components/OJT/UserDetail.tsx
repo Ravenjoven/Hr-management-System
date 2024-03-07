@@ -4,10 +4,11 @@ import { faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import UserSidebar from "../UserSidebar";
 import UserNavar from "../UserNavar";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import UnEmpSidebar from "./UnEmpSidebar";
 import OjtSidebar from "./OjtSidebar";
 import OjtNavar from "./OjtNavar";
+import axios from "axios";
 
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
@@ -15,6 +16,22 @@ function UserProfile() {
     setExpanded((prevState) => !prevState);
   };
 
+
+  const [user, setUser] = useState<[]>([]);
+  useEffect(() => {
+
+    const getUser = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/user/getUser"
+        );
+        setUser(response.data.getyUser);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    getUser();
+  }, []);
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
       <>
