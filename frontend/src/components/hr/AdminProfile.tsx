@@ -37,6 +37,32 @@ function AdminProfile() {
       console.error("Error uploading image:", error);
     }
   };
+  const [image, setImage] = useState<string | null>(null);
+
+  const handleImageChange = async (event: any) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:9000/uploadpicture",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+
+      if (response.data.imageUrl) {
+        setImage(response.data.imageUrl);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">

@@ -22,6 +22,9 @@ function OjtJobList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedJob, setSelectedJob] = useState(null as any);
   const [JobsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedJob, setSelectedJob] = useState(null as any);
+  const [JobsPerPage] = useState(10);
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -186,10 +189,10 @@ function OjtJobList() {
         </div>
         <div className="relative w-full mt-2 bg-custom-bg-smooth">
           <OjtSidebar expanded={expanded} />
+          <OjtSidebar expanded={expanded} />
           <div
-            className={`content h-full max-w-full z-1  ${
-              expanded ? "ml-0" : "ml-[280px]"
-            }`}
+            className={`content h-full max-w-full z-1  ${expanded ? "ml-0" : "ml-[280px]"
+              }`}
           >
             <div className="flex ml-2 ">
               <div className="flex ml-2 ">

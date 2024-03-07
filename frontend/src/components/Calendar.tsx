@@ -6,6 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import ModalComponent from "./Modal/EventModal";
+import ModalComponent from "./Modal/EventModal";
 import "../App.css";
 import AddModal from "./Modal/AddModal";
 
@@ -69,7 +70,9 @@ const Calendar: React.FC = () => {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
         initialView="dayGridMonth"
+        initialView="dayGridMonth"
         headerToolbar={{
+          start: "prev,next",
           start: "prev,next",
           center: "title",
           end: "dayGridMonth,timeGridWeek,timeGridDay",
