@@ -21,12 +21,13 @@ exports.addUser = async (req, res) => {
 
 exports.getUser = async(req,res, next)=>{
   try {
-    const getuser = User.find();
+    const getUser = User.find();
     res.status(200).json({
       success:true,
-      getuser
+      getUser
     })
   } catch (error) {
     next(error);
+    console.error(error)
   }
 };

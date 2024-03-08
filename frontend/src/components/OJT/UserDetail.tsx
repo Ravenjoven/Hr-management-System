@@ -12,6 +12,13 @@ import axios from "axios";
 import { ReactSession } from 'react-client-session';
 
 function UserProfile() {
+
+  interface User {
+    name: string;
+   email:string;
+  }
+
+
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -19,14 +26,11 @@ function UserProfile() {
   const mail = ReactSession.get("mail");
   const name = ReactSession.get("name");
 
-  const [user, setUser] = useState<[]>([]);
+  const [user, setUser] = useState<User[]>([]);
   useEffect(() => {
-
     const getUser = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:9000/api/user/getUser"
-        );
+        const response = await axios.get("http://localhost:9000/api/user/getUser");
         setUser(response.data.getUser);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -203,6 +207,19 @@ function UserProfile() {
                   <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3">
                     <div>
                         <h1 className=" text-xl">SKILLS</h1>
+
+                        {user.map((users, i)=>(
+                          <div
+                          key={i}
+                          >
+                            <h5>
+                              {users.name}
+                              {users.email}
+                            </h5>
+
+                          </div>
+
+                        ))}
                     </div>
                   </div>
                 </div>
