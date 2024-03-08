@@ -17,7 +17,7 @@ import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
 import FileLeaves from "../components/OJT/FileLeave";
 import UnEmpJobList from "../components/OJT/UnEmpJobPage";
-
+import { ReactSession } from 'react-client-session';
 
 
 
@@ -25,6 +25,8 @@ import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 
 
 function router() {
+  ReactSession.setStoreType("localStorage");
+  
   return (
     <>
       <Router>

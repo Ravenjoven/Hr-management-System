@@ -9,13 +9,15 @@ import UnEmpSidebar from "./UnEmpSidebar";
 import OjtSidebar from "./OjtSidebar";
 import OjtNavar from "./OjtNavar";
 import axios from "axios";
+import { ReactSession } from 'react-client-session';
 
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
-
+  const mail = ReactSession.get("mail");
+  const name = ReactSession.get("name");
 
   const [user, setUser] = useState<[]>([]);
   useEffect(() => {
@@ -88,7 +90,7 @@ function UserProfile() {
                 />
               </div>
               <div className=" flex flex-col text-center justify-center items-center  ">
-                <p className="text-custom-text-black font-bold text-2xl">JOHN DOE</p>
+                <p className="text-custom-text-black font-bold text-2xl">{name}</p>
                 <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
@@ -97,7 +99,7 @@ function UserProfile() {
                 <div className="p-2 ">
                   <h4 className="text-custom-text-black font-bold">EMAIL ID</h4>
                   <span className="text-custom-text-gray font-semibold">
-                    johndoe@gmail.com
+                  {mail}
                   </span>
                 </div>
                 <div className="p-2">

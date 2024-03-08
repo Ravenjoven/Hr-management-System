@@ -3,6 +3,7 @@ import Navar from "./Navar";
 import { jwtDecode } from "jwt-decode";
 import { ReactSession } from "react-client-session";
 import axios from "axios";
+import UserProfile from "./OJT/UserDetail";
 // import { Redirect } from 'react-router-dom';
 
 const data = [
@@ -45,6 +46,7 @@ useEffect(() => {
     google.accounts.id.renderButton(document.getElementById("SignInDiv"), {
         theme: "outline",
         size: "large",
+ 
     });
 }, []);
 
@@ -73,18 +75,30 @@ useEffect(() => {
   }
 }, [user]);
 
+useEffect(() => {
+  const checkLoggedIn = async () => {
+      await ReactSession.setStoreType("localStorage");
+      await ReactSession.set("mail", user.email);
+      await ReactSession.set("name", user.name);
+      
+      const mail = await ReactSession.get("mail");
+      if (mail) {
+          setLogIn(true);
+      } else {
+          setLogIn(false);
+      }
+      
+  };
 
-// useEffect(() => {
-//     console.log(user.email);
-//     console.log(user.name);
-//     ReactSession.setStoreType("localStorage");
-//     ReactSession.set("mail", user.email);
-//     setLogIn(true);
-// }, [user]);
+  checkLoggedIn();
+}, [user]);
+
+// Render user profile component once authentication is complete
+
+
 
 // useEffect(() => {
 //     if (ReactSession.get("mail")) {
-//       console.log(ReactSession.get("mail"));
 //         setLogIn(true);
 //     }
 // }, []);
@@ -96,10 +110,16 @@ useEffect(() => {
 //     ReactSession.set("mail", user.email);
 //     setLogIn(true);
 // }
+// useEffect(() => {
+//     if (ReactSession.get("mail")===user) {
+//         setLogIn(true);
+//     }
+// }, []);
 
-// if (logIn) {
-//   // window.location.href = "/Dashboard";
-// }
+
+if (logIn) {
+  window.location.href = "/UserProfile";
+}
 
 function handleCallbackResponse(response: { credential: any }) {
     const userObject = jwtDecode(response.credential);
@@ -188,7 +208,7 @@ function handleCallbackResponse(response: { credential: any }) {
                   </div>
                 </div>
             
-                <div id="SignInDiv" ></div>
+                <button id="SignInDiv" ></button>
                 <div className="w-[204px] flex flex-row items-start justify-start py-0 px-2 box-border">
                   <b className="flex-1 relative text-3xs font-inter text-left z-[1]">
                     <span className="text-white">Don’t have account?</span>
