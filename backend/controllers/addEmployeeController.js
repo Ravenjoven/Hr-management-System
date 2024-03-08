@@ -59,11 +59,33 @@ exports.createEmployee = async (req, res, next) => {
       status: 0,
     });
 
+    const fullName = req.body.fullname;
+    const spaceIndex = fullName.indexOf(" ");
+
+    let firstName;
+    if (spaceIndex !== -1) {
+      firstName = fullName.substring(0, spaceIndex);
+    } else {
+      // If there is no space, assume the entire string is the first name
+      firstName = fullName;
+    }
+
+    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+
+    const currentDate = new Date();
+    const formattedDate = currentDate
+      .toString()
+      .split(" ")
+      .slice(0, 4)
+      .join(" ");
+
     // Render the email template
     const template = fs.readFileSync("./ejs/welcome_email.ejs", "utf-8");
     const htmlContent = ejs.render(template, {
+      firstname: firstName,
       email: req.body.email,
       name: authUser,
+      date: formattedDate,
     });
 
     // Send welcome email
