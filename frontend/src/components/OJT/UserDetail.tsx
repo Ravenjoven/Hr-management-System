@@ -27,7 +27,7 @@ function UserProfile() {
         const response = await axios.get(
           "http://localhost:9000/api/user/getUser"
         );
-        setUser(response.data.getyUser);
+        setUser(response.data.getUser);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
