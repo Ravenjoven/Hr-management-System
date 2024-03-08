@@ -14,11 +14,17 @@ const data = [
     label: "Ojt",
     to: "/ojt",
   },
+  {
+    id: 3,
+    label: "category",
+    to: "/JobCategory",
+  },
 ];
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const SecondRoute = data[1].to;
 const SecondLabel = data[1].label;
+const thirdRoute = data[2].to;
 
 interface Category {
   _id: string;
@@ -189,21 +195,23 @@ function HomePage() {
             <section className="flex flex-col mt-24 h-full max-w-screen-xl mx-auto">
               <div className="grid grid-cols-4 gap-4">
                 {category.map((categories, index) => (
-                  <div
-                    key={index}
-                    className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black"
-                  >
-                    <h5 className="font-bold text-custom-text-black capitalize">
-                      {categories.jobCategory}
-                    </h5>
-                    <span className="text-custom-text-black">
-                      {categories.jobs
-                        ? categories.jobs.length === 1
-                          ? "1 job available"
-                          : `${categories.jobs.length} job's available`
-                        : "No job's available"}
-                    </span>
-                  </div>
+                  <Link to={thirdRoute}>
+                    <div
+                      key={index}
+                      className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black"
+                    >
+                      <h5 className="font-bold text-custom-text-black capitalize">
+                        {categories.jobCategory}
+                      </h5>
+                      <span className="text-custom-text-black">
+                        {categories.jobs
+                          ? categories.jobs.length === 1
+                            ? "1 job available"
+                            : `${categories.jobs.length} job's available`
+                          : "No job's available"}
+                      </span>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </section>
