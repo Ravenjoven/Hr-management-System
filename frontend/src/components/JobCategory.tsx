@@ -1,44 +1,178 @@
-import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Navar from "./Navar";
-
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+const data = [
+  {
+    to: "/",
+  },
+];
+const firstRoute = data[0].to;
 
-// interface Category {
-//   _id: string;
-//   jobs: string[];
-//   jobCategory: string;
-// }
+interface Skill {
+  id: number;
+  name: string;
+  value: string;
+}
+
+interface Jobs {
+  _id: string;
+  jobName: string;
+  jobDescription: string;
+  jobType: string;
+  jobSlot: number;
+  jobSkills: Array<{ id: number; name: string; value: string }>;
+  jobSetUp: string;
+  jobExperience: number;
+  jobCategory: string;
+  jobFromSalary: number;
+  jobToSalary: number;
+  createdAt: Date;
+}
 
 export default function JobCategory() {
-  //   const [category, setCategory] = useState<Category[]>([]);
-  //   useEffect(() => {
-  //     // Function to fetch jobs when component mounts
-  //     const fetCategory = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           "http://localhost:9000/api/jobs/getCategory"
-  //         );
-  //         setCategory(response.data.category);
-  //       } catch (error) {
-  //         console.error("Error fetching jobs:", error);
-  //       }
-  //     };
-  //     fetCategory();
-  //   }, [category]);
+  const { pathname } = useLocation();
+  const [jobs, setJobs] = useState<Jobs[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
+  const [filterJobSkills, setfilterJobSkills] = useState<Jobs[]>([]);
+  const [skills, setSkills] = useState<
+    Array<{ id: number; name: string; value: string }>
+  >([]);
+  const location = useLocation();
+  const categoryId = location.state;
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      if (!categoryId) return;
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/api/jobs/getJobs/${categoryId}`
+        );
+        setJobs(response.data.jobs);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    fetchJob();
+  }, []);
+
+  useEffect(() => {
+    // Extract skills and de-duplicate
+    const allSkills = jobs.flatMap((job) => job.jobSkills);
+    // Using a map to track unique skills by name
+    const skillsMap = new Map();
+    for (const skill of allSkills) {
+      if (!skillsMap.has(skill.name)) {
+        skillsMap.set(skill.name, skill);
+      }
+    }
+    // Converting Map values back to an array
+    const uniqueSkills = Array.from(skillsMap.values());
+    setSkills(uniqueSkills);
+  }, [jobs]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  const handleInputChange = (e: any) => {
+    setInputValue(e.target.value);
+  };
+
+  const addSkillIfValid = () => {
+    const skillToAdd = skills.find(
+      (skill) => skill.name.toLowerCase() === inputValue.toLowerCase()
+    );
+    if (
+      skillToAdd &&
+      selectedSkills.length < 3 &&
+      !selectedSkills.find((skill) => skill.id === skillToAdd.id)
+    ) {
+      setSelectedSkills((prev) => [...prev, skillToAdd]);
+    }
+    setInputValue("");
+  };
+
+  const removeSkill = (id: any) => {
+    setSelectedSkills(selectedSkills.filter((skill) => skill.id !== id));
+  };
+
+  console.log(skills);
+
+  const formattedJobs = jobs.map((job) => {
+    const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
+
+    return {
+      ...job,
+      createdAt: formattedDate,
+    };
+  });
+
+  const handleSearchChange = (event: any) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const truncateText = (text: string, maxLength: number) => {
+    // Check if the text length is greater than the specified max length
+    if (text.length > maxLength) {
+      // If so, truncate the text to the max length and append "..."
+      return text.substring(0, maxLength) + "...";
+    } else {
+      // If not, return the text as is
+      return text;
+    }
+  };
+
+  const filteredJobs = jobs.filter((job) =>
+    job.jobName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const refineSearchResults = () => {
+    const jobMatchesSelectedSkills = (job: any) => {
+      if (selectedSkills.length === 0) return true;
+      const selectedSkillIds = new Set(selectedSkills.map((skill) => skill.id));
+      return job.jobSkills.some((skill: { id: number }) =>
+        selectedSkillIds.has(skill.id)
+      );
+    };
+
+    const newFilteredJobs = jobs.filter(
+      (job) =>
+        job.jobName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        jobMatchesSelectedSkills(job)
+    );
+
+    setfilterJobSkills(newFilteredJobs);
+  };
+
   return (
     <div className="min-h-screen max-w-screen bg-stone-100 font-montserrat">
       <>
         <Navar />
+        <Link to={firstRoute}>
+          <h4 className="max-w-screen-xl mx-auto text-blue-600 pt-2">
+            <FontAwesomeIcon icon={faArrowLeft} /> Back to Homepage
+          </h4>
+        </Link>
         <header className="h-full bg-custom-bg-gray max-w-screen-xl mx-auto rounded-t border-b border-gray-400">
           <section className="flex rounded-2xl mt-10">
             <div className="input-header w-full flex justify-center items-center mx-10 relative my-8">
               <input
                 type="text"
                 className="w-full rounded-full h-10 px-4"
+                onChange={handleSearchChange}
                 placeholder="Search for a job title"
               />
-              <button className="bg-sky-950 rounded-full w-32 h-10 text-white absolute right-0 top-0">
+              <button className="bg-sky-950 rounded-full w-32 h-10 text-white absolute right-0 top-0 hover:bg-blue-600 transition">
                 Search
               </button>
             </div>
@@ -51,14 +185,39 @@ export default function JobCategory() {
               <span>SELECT UP TO 3 SKILLS</span>
               <input
                 type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                onMouseOver={() => addSkillIfValid()}
+                placeholder="Type and press enter to add..."
                 className="border h-12 rounded w-full bg-transparent border-gray-400"
+                name="skills"
+                list="skill-list"
               />
+              <datalist id="skill-list">
+                {skills.map((skill, index) => (
+                  <option key={index} value={skill.name} />
+                ))}
+              </datalist>
             </div>
-            <div className="mt-2 border-b border-gray-400 mx-4">
-              <span className="border rounded bg-blue-800 text-white w-full h-20">
-                This is a test skill
-              </span>
+            <div className="mt-2 border-b border-gray-400 mx-4 space-y-2 ">
+              <div className="grid grid-cols-2">
+                {selectedSkills.map((skill) => (
+                  <div
+                    key={skill.id}
+                    className="border rounded bg-blue-800 h-8 hover:bg-blue-600  text-white flex items-center justify-between p-2 overflow-hidden"
+                  >
+                    <span className="truncate text-[12px]">{skill.name}</span>
+                    <button
+                      onClick={() => removeSkill(skill.id)}
+                      className="text-white ml-2"
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
+
             <div className="mx-4 pt-2 space-y-2">
               <h1>EMPLOYMENT TYPE</h1>
               <div className="flex flex-col items-start space-y-2">
@@ -79,6 +238,7 @@ export default function JobCategory() {
             <div className="pt-2 flex justify-center items-center mt-4">
               <button
                 type="button"
+                onClick={refineSearchResults}
                 className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
               >
                 REFINE SEARCH RESULT
@@ -87,87 +247,50 @@ export default function JobCategory() {
           </div>
           <div className="right-box w-full h-full">
             <div className="mx-2 my-4 text-[12px]">
-              Displaying 30 out of 1,000+ jobs
+              {[...new Set(jobs.map((job) => job.jobCategory))].map(
+                (category, index) => (
+                  <div key={index} className="capitalize">
+                    {category}
+                  </div>
+                )
+              )}
+              Displaying {jobs.length} jobs
             </div>
             <div className="space-y-4 mb-20">
-              <div className="cards border rounded mx-2 bg-white">
-                <div className="m-8">
-                  <h1 className="capitalize font-semibold pb-2">
-                    Paid media expert (google ads and Meta Ads)
-                  </h1>
-                  <div className="flex text-[12px]">
-                    <span>Testing.</span>Posted on<span>Mar 07, 2024</span>
-                  </div>
-                  <div className="md:flex">
-                    <span>PHP 50,000</span> -
-                    <span className="pr-2">80,000 pm</span>(depending on
-                    experience)
-                  </div>
-                  <div className="description">
-                    We are an Australian digital marketing agency. We are
-                    seeking a Paid Media Expert (Google Ads and Meta Ads) to
-                    work Full-Time on Philippines-friendly times. You'll get: *
-                    Attractive marketing-based pay rate PLUS 18 days paid leave
-                    per year * Full-time position on Philippines-friendly times
-                    (Sydney time M-F
-                    <a href="" className="text-blue-600">
-                      See More.
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div className="cards border rounded mx-2 bg-white">
-                <div className="m-8">
-                  <h1 className="capitalize font-semibold pb-2">
-                    Paid media expert (google ads and Meta Ads)
-                  </h1>
-                  <div className="flex text-[12px]">
-                    <span>Testing.</span>Posted on <span>Mar 07, 2024</span>
-                  </div>
-                  <div className="md:flex">
-                    <span>PHP 50,000</span> -
-                    <span className="pr-2">80,000 pm</span>(depending on
-                    experience)
-                  </div>
-                  <div className="description">
-                    We are an Australian digital marketing agency. We are
-                    seeking a Paid Media Expert (Google Ads and Meta Ads) to
-                    work Full-Time on Philippines-friendly times. You'll get: *
-                    Attractive marketing-based pay rate PLUS 18 days paid leave
-                    per year * Full-time position on Philippines-friendly times
-                    (Sydney time M-F
-                    <a href="" className="text-blue-600">
-                      See More.
-                    </a>
+              {filteredJobs.map((job, index) => (
+                <div key={index} className="cards border rounded mx-2 bg-white">
+                  <div className="m-8">
+                    <h1 className="pb-2">
+                      <span className="capitalize font-semibold">
+                        {job.jobName}
+                      </span>
+                      <span className="text-normal ml-2 rounded bg-green-400 text-white">
+                        {job.jobType}
+                      </span>
+                    </h1>
+                    <div className="flex text-[12px]">
+                      Posted on
+                      <span className="pl-1">
+                        {formattedJobs[index] && formattedJobs[index].createdAt}
+                      </span>
+                    </div>
+                    {job.jobFromSalary > 0 && job.jobToSalary > 0 && (
+                      <div className="md:flex">
+                        <span>PHP {job.jobFromSalary.toLocaleString()}</span> -
+                        <span className="pr-2">
+                          {job.jobToSalary.toLocaleString()}
+                        </span>
+                      </div>
+                    )}
+                    <div className="description">
+                      {truncateText(job.jobDescription, 300)}
+                      <a href="#" className="text-blue-600">
+                        See More.
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="cards border rounded mx-2 bg-white">
-                <div className="m-8">
-                  <h1 className="capitalize font-semibold pb-2">
-                    Paid media expert (google ads and Meta Ads)
-                  </h1>
-                  <div className="flex text-[12px]">
-                    <span>Testing.</span>Posted on<span>Mar 07, 2024</span>
-                  </div>
-                  <div className="md:flex text-[14px]">
-                    <span>PHP 50,000</span> -
-                    <span className="pr-2">80,000 pm</span>(depending on
-                    experience)
-                  </div>
-                  <div className="description">
-                    We are an Australian digital marketing agency. We are
-                    seeking a Paid Media Expert (Google Ads and Meta Ads) to
-                    work Full-Time on Philippines-friendly times. You'll get: *
-                    Attractive marketing-based pay rate PLUS 18 days paid leave
-                    per year * Full-time position on Philippines-friendly times
-                    (Sydney time M-F
-                    <a href="" className="text-blue-600">
-                      See More.
-                    </a>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </body>

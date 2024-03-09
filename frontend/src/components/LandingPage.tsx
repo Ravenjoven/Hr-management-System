@@ -47,7 +47,7 @@ function HomePage() {
       }
     };
     fetCategory();
-  }, [category]);
+  }, []);
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
@@ -195,11 +195,8 @@ function HomePage() {
             <section className="flex flex-col mt-24 h-full max-w-screen-xl mx-auto">
               <div className="grid grid-cols-4 gap-4">
                 {category.map((categories, index) => (
-                  <Link to={thirdRoute}>
-                    <div
-                      key={index}
-                      className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black"
-                    >
+                  <Link to={thirdRoute} state={categories._id} key={index}>
+                    <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
                       <h5 className="font-bold text-custom-text-black capitalize">
                         {categories.jobCategory}
                       </h5>
