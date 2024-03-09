@@ -2,15 +2,15 @@ import { useLocation } from "react-router-dom";
 import Navar from "./Navar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-const data = [
-  {
-    to: "/",
-  },
-];
-const firstRoute = data[0].to;
+import { faArrowLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
+// const data = [
+//   {
+//     to: "/",
+//   },
+// ];
+// const firstRoute = data[0].to;
 
 interface Skill {
   id: number;
@@ -158,17 +158,21 @@ export default function JobCategory() {
     <div className="min-h-screen max-w-screen bg-stone-100 font-montserrat">
       <>
         <Navar />
-        <Link to={firstRoute}>
+        {/* <Link to={firstRoute}>
           <h4 className="max-w-screen-xl mx-auto text-blue-600 pt-2">
             <FontAwesomeIcon icon={faArrowLeft} /> Back to Homepage
           </h4>
-        </Link>
+        </Link> */}
         <header className="h-full bg-custom-bg-gray max-w-screen-xl mx-auto rounded-t border-b border-gray-400">
           <section className="flex rounded-2xl mt-10">
             <div className="input-header w-full flex justify-center items-center mx-10 relative my-8">
+              <FontAwesomeIcon
+                icon={faSearch}
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              />
               <input
                 type="text"
-                className="w-full rounded-full h-10 px-4"
+                className="w-full rounded-full h-10 pl-10 pr-20" // Adjusted padding
                 onChange={handleSearchChange}
                 placeholder="Search for a job title"
               />
@@ -224,13 +228,19 @@ export default function JobCategory() {
                 <div className="flex justify-center items-center">
                   <input type="checkbox" name="" id="" className="w-4 h-4" />
                   <span className="pl-2 font-semibold text-custom-text-gray">
-                    FULL TIME
+                    CONTRACTOR
                   </span>
                 </div>
                 <div className="flex justify-center items-center">
                   <input type="checkbox" name="" id="" className="w-4 h-4" />
                   <span className="pl-2 font-semibold text-custom-text-gray">
-                    PART TIME
+                    EMPLOYEE
+                  </span>
+                </div>
+                <div className="flex justify-center items-center">
+                  <input type="checkbox" name="" id="" className="w-4 h-4" />
+                  <span className="pl-2 font-semibold text-custom-text-gray">
+                    INTERN
                   </span>
                 </div>
               </div>

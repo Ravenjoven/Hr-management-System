@@ -52,7 +52,7 @@ function HomePage() {
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <Navar />
-        <header className="h-90 bg-custom-bg-gray">
+        <header className="h-90 bg-custom-bg-gray" id="home">
           <section className="max-w-screen-xl flex mx-auto">
             <div className="w-full pl-5 pt-2">
               <h1 className="font-bold text-custom-text-gray text-4xl">
@@ -173,7 +173,7 @@ function HomePage() {
           <div className="bg-orange-400 w-full h-80 absolute bottom-0 z-0"></div>
         </body>
         <>
-          <div className="my-24">
+          <div className="my-24" id="jobs">
             <section className="max-w-screen-xl mx-auto my-4 h-40 flex flex-col items-center justify-center text-center">
               <h4 className="text-xl font-medium text-custom-text-orange">
                 Popular Job Categories

@@ -1,3 +1,12 @@
+import { Link } from "react-router-dom";
+
+const data = [
+  {
+    to: "/",
+  },
+];
+const firstRoute = data[0].to;
+
 function Navar() {
   return (
     <nav className="bg-custom-bg-gray top-0 sticky z-50">
@@ -33,20 +42,20 @@ function Navar() {
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-20 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <a
-                href="#"
+              <Link
+                to={firstRoute}
                 className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-orange-400 md:p-0 dark:text-white md:dark:text-blue-500"
                 aria-current="page"
               >
-                Home
-              </a>
+                <a href="#home">Home</a>
+              </Link>
             </li>
             <li>
               <a
-                href="#"
+                href="#jobs"
                 className="block py-2 px-3 md:text-custom-text-gray rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-400 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                About us
+                Jobs
               </a>
             </li>
             <li>
