@@ -53,7 +53,7 @@ export default function ViewEmployeeModal({
                       className="text-lg font-medium leading-6 text-gray-900"
                       id="modal-headline"
                     >
-                      Employee Details
+                      User Details
                     </h3>
                     {/* <h3 className="text-lg font-medium leading-6 text-gray-900">
                       {user && ( // Check if user exists
@@ -85,20 +85,31 @@ export default function ViewEmployeeModal({
                         Name: <span>{user?.name}</span>
                       </div>
                       <div>
-                        Position: <span>{user?.position}</span>
+                        Email: <span>test123@gmail.com</span>
                       </div>
                       <div>
                         Contact: <span>{user?.contact}</span>
                       </div>
                       <div>
-                        Type: <span>{user?.type}</span>
+                        Date of Birth: <span>Feb, 02, 2024</span>
                       </div>
                       <div>
-                        Hire Date: <span>{user?.date_hire}</span>
+                        Age: <span>25</span>
                       </div>
                     </div>
                   </div>
                   <hr className="text-custom-text-black mt-2" />
+                  <div className="mt-2 flex">
+                    <div className="w-full h-full ">
+                      <label htmlFor="skills" className="font-bold">
+                        Skills
+                      </label>
+                      <div className="ml-2 flex flex-col">
+                        <span>.net</span>
+                        <span>mongodb</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

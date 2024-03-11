@@ -13,10 +13,42 @@ const data = [
     to: "/Dashboard",
   },
 ];
+
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSignIn = async (e) => {
+    e.preventDefault(); // Prevents the default form submit action
+
+    try {
+      const response = await axios.post('http://localhost:5174/login', {
+  email: email,
+  password: password,
+  });
+
+      // Handle success (e.g., storing the token, redirecting the user)
+      console.log(response.data);
+      // Assuming the token is returned in response.data.token
+      // Store it in localStorage or in a state management library
+      localStorage.setItem('token', response.data.token);
+
+      // Redirect or update UI
+    } catch (error) {
+      // Handle error (e.g., displaying an error message)
+      console.error(error);
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage('An error occurred, please try again.');
+      }
+    }
+  };
+
   interface User {
     name?: string | null;
     iat?: number;
@@ -158,27 +190,35 @@ const Login = () => {
               </div>
             </div>
             <div className="">
-              <form className="m-8 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-custom-bg-orange shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-[100px] px-[55px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
+              <form 
+              onSubmit={handleSignIn}
+              className="m-8 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-custom-bg-orange shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-[100px] px-[55px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
                 <div className="w-[341px] h-[455px] relative rounded-tl-none rounded-tr-31xl rounded-br-none rounded-bl-31xl bg-darkorange-300 shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] hidden max-w-full" />
                 <div className="self-stretch rounded-mini bg-whitesmoke rounded-[15px] flex flex-row items-center justify-start py-[11px] px-2.5 z-[1] border-[1px] border-solid border-gainsboro-200">
                   <div className="h-[38px] w-[220px] relative rounded-mini bg-whitesmoke box-border hidden border-[1px] border-solid border-gainsboro-200" />
                   <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                     className="w-[200px] [border:none] [outline:none]  font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block whitespace-nowrap z-[2]"
                     placeholder="Email@gmail.com"
                     name="email"
                     // onChange={handleInput}
                     type="text"
+                    required
                   />
                 </div>
                 <div className="self-stretch flex flex-col items-center justify-center gap-[14px_0px]">
                   <div className="self-stretch rounded-mini bg-whitesmoke rounded-[15px] flex flex-row items-center justify-start py-[11px] px-[15px] z-[1] border-[1px] border-solid border-gainsboro-200">
                     <div className="h-[38px] w-[220px] relative rounded-mini bg-whitesmoke box-border hidden border-[1px] border-solid border-gainsboro-200" />
                     <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                       className="w-[200px] [border:none] [outline:none] font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block z-[2]"
                       placeholder="Password"
                       name="password"
                       // onChange={handleInput}
                       type="password"
+                      required
                     />
                   </div>
                   <button className="cursor-pointer pt-2 pb-[9px] pr-3.5 pl-[15px] bg-darkorange-200 w-[89px] rounded-[6px] box-border flex flex-row items-center justify-center whitespace-nowrap z-[1] border-[1px] border-solid border-white hover:bg-chocolate hover:box-border hover:border-[1px] hover:border-solid hover:border-gainsboro-100">
@@ -220,4 +260,5 @@ const Login = () => {
     </>
   );
 };
+
 export default Login;

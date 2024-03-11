@@ -15,6 +15,7 @@ const jobRoute = require("./routes/jobsRoutes");
 const sendContractRoutes = require("./routes/sendContractRoutes");
 const addJobsRoutes = require("./routes/addJobsRoutes");
 const addCategoryRoutes = require("./routes/addCategoryRoutes");
+const addEmployeeRoutes = require("./routes/addEmployeeRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
 const addUser=require("./routes/addUser");
 
@@ -61,6 +62,7 @@ app.use("/api", jobRoute);
 app.use("/api", sendContractRoutes);
 app.use("/api", addJobsRoutes);
 app.use("/api", addCategoryRoutes);
+app.use("/api", addEmployeeRoutes);
 
 app.use("/api", addUser);
 

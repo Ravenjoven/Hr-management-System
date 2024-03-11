@@ -2,6 +2,8 @@ import React, { ChangeEvent, useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,7 +33,7 @@ function AddEmployeeModal({
     setSelectedSkills(selectedList);
     setFormData({
       ...formData,
-      jobSkils: selectedList,
+      jobSkills: selectedList,
     });
   };
 
@@ -39,7 +41,7 @@ function AddEmployeeModal({
     setSelectedSkills(selectedList);
     setFormData({
       ...formData,
-      jobSkils: selectedList,
+      jobSkills: selectedList,
     });
   };
 
@@ -51,7 +53,7 @@ function AddEmployeeModal({
     dateOfBirth: "",
     email: "",
     phoneNumber: "",
-    jobSkils: [],
+    jobSkills: [],
     address: "",
     position: "",
     type: "",
@@ -65,8 +67,65 @@ function AddEmployeeModal({
     });
   };
 
-  const handleSaveData = () => {
-    console.log("Form Data:", formData);
+  const handleSaveData = async () => {
+    try {
+      // Show loading indicator
+      const loadingAlert = Swal.fire({
+        title: "Processing",
+        text: "Please wait...",
+        allowOutsideClick: false,
+        showConfirmButton: false, // Hide the "OK" button
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      const response = await axios.post(
+        "http://localhost:9000/api/employee/add",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        // Show success message
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Added Successfully",
+        });
+
+        // Reset form data
+        setFormData({
+          fullname: "",
+          dateOfBirth: "",
+          email: "",
+          phoneNumber: "",
+          jobSkills: [],
+          address: "",
+          position: "",
+          type: "",
+        });
+        setSelectedSkills([]);
+        onClose();
+      } else {
+        // Show error message
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to add. Please try again later.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred while adding. Please fill all the fields.",
+      });
+    }
   };
 
   return (
@@ -100,7 +159,8 @@ function AddEmployeeModal({
                       className="text-lg font-medium leading-6 text-gray-900"
                       id="modal-headline"
                     >
-                      {title}
+                      {title}{" "}
+                      <span className="text-sm">(Current Employee)</span>
                     </h3>
                     <button
                       onClick={handleClose}

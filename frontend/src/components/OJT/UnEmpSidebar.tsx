@@ -1,5 +1,3 @@
-
-
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../OJT/Style.css";
@@ -18,7 +16,7 @@ const data = [
   },
   {
     id: 3,
-    label: "Applications" ,
+    label: "Applications",
     to: "Application",
   },
 ];
@@ -28,7 +26,7 @@ const firstLabel = data[0].label;
 const secondRoute = data[1].to;
 const secondLabel = data[1].label;
 const ThirdRoute = data[2].to;
-const ThirdLabel = data[2].label; 
+const ThirdLabel = data[2].label;
 interface SidebarProps {
   expanded: boolean;
 }
@@ -70,31 +68,31 @@ function UnEmpSidebar({ expanded }: SidebarProps) {
       setSelectedJob(jobs[0] || null);
     }, [jobs]);
     const handleClick = (job: any) => {
-      setSelectedJob(job)
-    }
-  }); 
-    const handleAddJob = () => {
-      // Add your logic to add a new job here
-      // For example:
-      const newJob = {
-        id: jobs.length, // You might want to use a more reliable way to generate IDs
-        jobName: "New Job", // Default values for the new job
-        jobDescription: "Description of the new job",
-        jobLimit: 1,
-        date_created: new Date().toLocaleDateString(), // Current date
-      };
-      setJobs([...jobs]); // Update the jobs array
-      setJobCount(jobCount + 1); // Increment job count
-    }
-    // Get current users
-    const indexOfLastJobs = currentPage * JobsPerPage;
-    const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
-    const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
-    const pageNumbers = [];
-  
-    for (let i = 1; i <= Math.ceil(jobs.length / JobsPerPage); i++) {
-      pageNumbers.push(i);
-    }
+      setSelectedJob(job);
+    };
+  });
+  const handleAddJob = () => {
+    // Add your logic to add a new job here
+    // For example:
+    const newJob = {
+      id: jobs.length, // You might want to use a more reliable way to generate IDs
+      jobName: "New Job", // Default values for the new job
+      jobDescription: "Description of the new job",
+      jobLimit: 1,
+      date_created: new Date().toLocaleDateString(), // Current date
+    };
+    setJobs([...jobs]); // Update the jobs array
+    setJobCount(jobCount + 1); // Increment job count
+  };
+  // Get current users
+  const indexOfLastJobs = currentPage * JobsPerPage;
+  const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(jobs.length / JobsPerPage); i++) {
+    pageNumbers.push(i);
+  }
   return (
     <div>
       <aside
@@ -110,7 +108,6 @@ function UnEmpSidebar({ expanded }: SidebarProps) {
           />
         </a>
         <ol className="space-y-2 font-semibold">
-        
           <li className="m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
             <svg
               className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -138,7 +135,7 @@ function UnEmpSidebar({ expanded }: SidebarProps) {
               <path d="M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z" />
             </svg>
             <Link to={secondRoute} className="block w-full h-full">
-              {secondLabel} 
+              {secondLabel}
             </Link>
           </li>
           <li className="m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
@@ -153,7 +150,11 @@ function UnEmpSidebar({ expanded }: SidebarProps) {
               <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
             </svg>
             <Link to={ThirdRoute} className="block w-full h-full">
-              {ThirdLabel} <span className="font-bold text-custom-text-red ml-10"> {jobCount} </span>
+              {ThirdLabel}{" "}
+              <span className="font-bold text-custom-text-red ml-10">
+                {" "}
+                {jobCount}{" "}
+              </span>
             </Link>
           </li>
         </ol>
@@ -167,9 +168,9 @@ function UnEmpSidebar({ expanded }: SidebarProps) {
           >
             <path
               stroke="White"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
             />
           </svg>

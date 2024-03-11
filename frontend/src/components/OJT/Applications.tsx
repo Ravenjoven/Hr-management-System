@@ -34,34 +34,30 @@ function Applications() {
   };
   const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
   const [jobs, setJobs] = useState([
     {
       id: 1,
       jobName: "Financial Associate",
-      
-      date_createad: new Date().toLocaleDateString(),
 
+      date_createad: new Date().toLocaleDateString(),
     },
     {
       id: 2,
       jobName: "Financial Associate",
-      
-      date_createad: new Date().toLocaleDateString(),
 
+      date_createad: new Date().toLocaleDateString(),
     },
     {
       id: 3,
       jobName: "Financial Associate",
-      
-      date_createad: new Date().toLocaleDateString(),
 
+      date_createad: new Date().toLocaleDateString(),
     },
-    
   ]);
   const [searchQuery, setSearchQuery] = useState("");
   const [jobCount, setJobCount] = useState(jobs.length);
-  
+
   const filteredJobs = jobs.filter((job) => {
     return (
       job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -80,7 +76,7 @@ function Applications() {
     };
     setJobs([...jobs]); // Update the jobs array
     setJobCount(jobCount + 1); // Increment job count
-  }
+  };
   const indexOfLastJobs = currentPage * JobsPerPage;
   const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
@@ -127,66 +123,70 @@ function Applications() {
           </button>
         </div>
         <UnEmpSidebar expanded={expanded} />
-          <div
-            className={`content h-full max-w-full z-1  ${expanded ? "ml-0" : "ml-[280px]"
-              }`}
-          >
-          <div 
-           className="lower-div w-full h-full border-[3px] rounded-md mt-4">
-         
-              <div className="relative overflow-x-auto shadow-md">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead className="text-xs text-black bg-white  uppercase">
-                    <tr className="capitalize">
-                      <th scope="col" className="px-6 py-3">
+        <div
+          className={`content h-full max-w-full z-1  ${
+            expanded ? "ml-0" : "ml-[280px]"
+          }`}
+        >
+          <div className="lower-div w-full h-full border-[3px] rounded-md mt-4">
+            <div className="relative overflow-x-auto shadow-md">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-black bg-white  uppercase">
+                  <tr className="capitalize">
+                    <th scope="col" className="px-6 py-3">
                       No.
-                      </th>
-                      <th scope="col" className="px-6 py-3">
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                       Job name
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Date applied
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        status
-                      </th>
-                      
-                      <th scope="col" className="px-6 py-3">
-                        ACTIONS
-                      </th>
-                    </tr>
-                  </thead>
-                
-                  <tbody>
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Date applied
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      status
+                    </th>
+
+                    <th scope="col" className="px-6 py-3">
+                      ACTIONS
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
                   {currentJobs.map((job, index) => (
-                      <tr
-                        key={index}
-                        className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    <tr
+                      key={index}
+                      className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white font-montserrat"
                       >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white font-montserrat"
-                        >
-                            <span>{job.id}</span>
-                        </th>
-                        <td className="px-6 py-4">{job.jobName}</td>
-                        <td className="px-6 py-4">{job.date_createad}</td>
-                        <td className="px-6 py-4">Pending</td>
-
-                        <td onClick={() => setIsModalOpen(true)} className="px-12 py-4 cursor-pointer">X </td> <CancelModal  isOpen={isModalOpen}
-        onCancel={handleCancel}
-        onConfirm={handleConfirm}  />
-                      </tr>
-                       ))}
-                  </tbody>
-                </table>
-               
-              </div>
-              </div>
+                        <span>{job.id}</span>
+                      </th>
+                      <td className="px-6 py-4">{job.jobName}</td>
+                      <td className="px-6 py-4">{job.date_createad}</td>
+                      <td className="px-6 py-4">Pending</td>
+                      <td
+                        onClick={() => setIsModalOpen(true)}
+                        className="px-12 py-4 cursor-pointer"
+                      >
+                        X{" "}
+                      </td>{" "}
+                      <CancelModal
+                        isOpen={isModalOpen}
+                        onCancel={handleCancel}
+                        onConfirm={handleConfirm}
+                      />
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-           </>
           </div>
-
+        </div>
+      </>
+    </div>
   );
-             }   
+}
 export default Applications;

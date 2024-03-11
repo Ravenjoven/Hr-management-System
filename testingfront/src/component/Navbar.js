@@ -13,10 +13,20 @@ import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
 import logoImage from '../images/teravault.png';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { Link, useNavigate } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogoutAction } from '../redux/actions/userActions';
 
-function Navbar() {
+
+const pages = ['Home', 'Log In'];
+
+
+const Navbar =  ()=> {
+  const { userInfo } = useSelector (state => state.signIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { palette } = useTheme();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -34,6 +44,18 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  //log out user
+  const logOutUser = () => {
+    dispatch(userLogoutAction())
+    window.location.reload(true);
+    setTimeout(() =>{
+      navigate('/');
+    }, 500)
+    
+
+  }
+
 
   return (
     <AppBar position="static" style={{ height: '100px' }}> {/* Adjust the height here */}
@@ -110,7 +132,7 @@ function Navbar() {
             textDecoration: 'none',
           }}
         >
-          LOGO
+          Job Posting 
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           {pages.map((page) => (
@@ -145,11 +167,28 @@ function Navbar() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
+                             <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/admin/dashboard">Admin Dashboard</Link></Typography>
+                              </MenuItem>
+                              <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/user/dashboard">User Dashboard</Link></Typography>
+                              </MenuItem>
+                              {
+                                !userInfo ?
+
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/login">Log In</Link></Typography>
+                                    </MenuItem> :
+
+                                    <MenuItem onClick={logOutUser}>
+                                        <Typography style={{ textDecoration: "none", color: palette.primary.main }} textAlign="center">Log Out</Typography>
+                                    </MenuItem>
+                            }
+
+
+              
+                               
+
           </Menu>
         </Box>
       </Toolbar>
@@ -157,4 +196,4 @@ function Navbar() {
   );
 }
 
-export default Navbar
+export default Navbar;

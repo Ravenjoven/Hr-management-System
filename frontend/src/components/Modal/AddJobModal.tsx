@@ -31,24 +31,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     jobToSalary: 0,
   });
   const [category, setCategory] = useState<Category[]>([]);
-  // const [categories, setCategories] = useState([
-  //   {
-  //     id: 0,
-  //     jobCategory: "IT/Computer",
-  //   },
-  //   {
-  //     id: 1,
-  //     jobCategory: "Financial Associate",
-  //   },
-  //   {
-  //     id: 2,
-  //     jobCategory: "Advetising/Media",
-  //   },
-  //   {
-  //     id: 3,
-  //     jobCategory: "Fullstack Developer",
-  //   },
-  // ]);
   const [buttonJobTypeMessage, setButtonJobTypeMessage] = useState("");
   const [buttonJobCategoryMessage, setButtonJobCategoryMessage] = useState("");
   const [buttonSetUpMessage, setButtonSetUpMessage] = useState("");
