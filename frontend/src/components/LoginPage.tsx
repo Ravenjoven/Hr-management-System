@@ -120,25 +120,6 @@ const Login = () => {
     checkLoggedIn();
   }, [user]);
 
-  // Render user profile component once authentication is complete
-
-  // useEffect(() => {
-  //     if (ReactSession.get("mail")) {
-  //         setLogIn(true);
-  //     }
-  // }, []);
-
-  // const handleLogIn = () => {
-  //   ReactSession.setStoreType("localStorage");
-  //     ReactSession.set("mail", user.email);
-  //     setLogIn(true);
-  // }
-  // useEffect(() => {
-  //     if (ReactSession.get("mail")===user) {
-  //         setLogIn(true);
-  //     }
-  // }, []);
-
   if (logIn) {
     window.location.href = "/UserProfile";
   }

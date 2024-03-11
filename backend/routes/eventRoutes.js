@@ -3,7 +3,7 @@ const express = require("express");
 const {
   addEvent,
   getEvent
-} = require("../controllers/eventCrontollers");
+} = require("../controllers/eventControllers");
 const router = express.Router();
 
 //add event routes

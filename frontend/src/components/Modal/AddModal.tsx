@@ -40,7 +40,7 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
         .catch((error) => {
           // alert("An error occurred while adding the user");
           console.log(formData);
-          console.error("An error occurred while adding the user:", error);
+          console.error("An error occurred while adding the event:", error);
         });
     }
   }, [formData]);
