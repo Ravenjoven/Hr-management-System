@@ -2,15 +2,15 @@ import { useLocation } from "react-router-dom";
 import Navar from "./Navar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
-// const data = [
-//   {
-//     to: "/",
-//   },
-// ];
-// const firstRoute = data[0].to;
+const data = [
+  {
+    to: "/SelectedJob",
+  },
+];
+const firstRoute = data[0].to;
 
 interface Skill {
   id: number;
@@ -102,8 +102,6 @@ export default function JobCategory() {
     setSelectedSkills(selectedSkills.filter((skill) => skill.id !== id));
   };
 
-  console.log(skills);
-
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
@@ -154,6 +152,11 @@ export default function JobCategory() {
     setfilterJobSkills(newFilteredJobs);
   };
 
+  const newTab = (url: any, jodId: string) => {
+    localStorage.setItem("id", jodId);
+    window.open(url);
+  };
+
   return (
     <div className="min-h-screen max-w-screen bg-stone-100 font-montserrat">
       <>
@@ -185,25 +188,33 @@ export default function JobCategory() {
         <body className="bg-custom-bg-gray max-w-screen-xl min-h-screen mx-auto rounded-b flex">
           <div className="left-box w-96 border-r border-gray-400 flex flex-col">
             <div className="mx-4 pt-2 space-y-2">
-              <h1>Filter by skills:</h1>
-              <span>SELECT UP TO 3 SKILLS</span>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-                onMouseOver={() => addSkillIfValid()}
-                placeholder="Type and press enter to add..."
-                className="border h-12 rounded w-full bg-transparent border-gray-400"
-                name="skills"
-                list="skill-list"
-              />
+              <h1 className="text-[20px] font-medium">Filter by skills:</h1>
+              <span className="text-[14px] font-medium">
+                SELECT UP TO 3 SKILLS
+              </span>
+              <div className="relative">
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onMouseOver={() => addSkillIfValid()}
+                  placeholder="Search for skills"
+                  className="pl-10 pr-4 py-2 border rounded w-full bg-transparent border-gray-400"
+                  name="skills"
+                  list="skill-list"
+                />
+              </div>
               <datalist id="skill-list">
                 {skills.map((skill, index) => (
                   <option key={index} value={skill.name} />
                 ))}
               </datalist>
             </div>
-            <div className="mt-2 border-b border-gray-400 mx-4 space-y-2 ">
+            <div className="mt-10 border-b border-gray-400 mx-4 space-y-2">
               <div className="grid grid-cols-2">
                 {selectedSkills.map((skill) => (
                   <div
@@ -222,8 +233,8 @@ export default function JobCategory() {
               </div>
             </div>
 
-            <div className="mx-4 pt-2 space-y-2">
-              <h1>EMPLOYMENT TYPE</h1>
+            <div className="mx-4 pt-5 space-y-2">
+              <h1 className="text-[14px] font-medium">EMPLOYMENT TYPE</h1>
               <div className="flex flex-col items-start space-y-2">
                 <div className="flex justify-center items-center">
                   <input type="checkbox" name="" id="" className="w-4 h-4" />
@@ -249,7 +260,7 @@ export default function JobCategory() {
               <button
                 type="button"
                 onClick={refineSearchResults}
-                className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                className="text-blue-700 font-semibold hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
               >
                 REFINE SEARCH RESULT
               </button>
@@ -292,9 +303,14 @@ export default function JobCategory() {
                         </span>
                       </div>
                     )}
+
                     <div className="description">
                       {truncateText(job.jobDescription, 300)}
-                      <a href="#" className="text-blue-600">
+                      <a
+                        href=""
+                        onClick={() => newTab(firstRoute, job._id)}
+                        className="text-blue-600"
+                      >
                         See More.
                       </a>
                     </div>

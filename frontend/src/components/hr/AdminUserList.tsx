@@ -221,16 +221,16 @@ function AdminUserList() {
                         NAME
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        POSITION
+                        EMAIL
                       </th>
                       <th scope="col" className="px-6 py-3">
                         CONTACTS
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Type
+                        GENDER
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        HIRE DATE
+                        DATE CREATED
                       </th>
                       <th scope="col" className="px-6 py-3">
                         ACTIONS

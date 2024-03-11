@@ -45,9 +45,10 @@ const ReviewAddJobsModal: React.FC<ReviewAddJobsModalProps> = ({
       })
       .then(() => {
         alert("Send Successfully");
+        localStorage.setItem("name", "success");
         setTimeout(() => {
           isClose(); // Close modal after 3 seconds
-        }, 3000);
+        }, 1000);
       })
       .catch((e) => {
         console.log("error", e);

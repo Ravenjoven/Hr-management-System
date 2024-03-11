@@ -80,3 +80,19 @@ exports.getJobs = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+exports.getJob = async (req, res, next) => {
+  const jobId = req.params.id;
+
+  try {
+    const job = await addJobsModels.findById(jobId);
+
+    if (!job || job.length === 0) {
+      return res.status(404).json({ success: false, message: "No job found" });
+    }
+
+    res.status(200).json({ success: true, job });
+  } catch (error) {
+    next(error);
+  }
+};

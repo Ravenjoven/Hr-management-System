@@ -103,7 +103,7 @@ function Jobs() {
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
-      month: "long",
+      month: "2-digit",
       day: "2-digit",
     });
 
