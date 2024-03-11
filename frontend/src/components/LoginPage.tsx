@@ -31,6 +31,7 @@ const Login = () => {
         // Redirect to UserProfile
         window.location.href = "/UserProfile";
       }
+      toast.success("Login successful");
     } catch (error) {
       // Handle login error
       toast.error("Invalid email or password");

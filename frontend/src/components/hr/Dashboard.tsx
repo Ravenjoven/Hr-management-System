@@ -2,20 +2,30 @@ import React, { useState } from "react";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
 import Calendar from "../Calendar";
-import { ReactSession } from 'react-client-session';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Dashboard() {
   const [expanded, setExpanded] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
 
-  // const credentials = ReactSession.get("mail");
+  const handleLogin = () => {
+    // Your login logic here
+    // Assuming login was successful
+    setLoggedIn(true);
 
+    // Display success message using toast
+    toast.success("Login successful!");
+  };
 
   return (
     <div className="min-h-screen max-w-full bg-white font-montserrat">
       <AdminNavar />
+      <ToastContainer /> {/* Add ToastContainer here */}
       <div className="fixed z-50">
         <button
           data-drawer-target="logo-sidebar"
