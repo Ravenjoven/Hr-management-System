@@ -1,0 +1,6 @@
+https://training.github.com/downloads/github-git-cheat-sheet.pdf
+git add
+git commit -m ""
+git push
+git add filesname
+git diff

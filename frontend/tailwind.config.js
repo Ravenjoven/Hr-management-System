@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/tw-elements-react/dist/js/**/*.js"
   ],
   theme: {
     extend: {
@@ -26,17 +27,23 @@ module.exports = {
         'custom-bg-smooth': '#EAECF1',
         'custom-text-blue': '#3727F2',
         'custom-text-red' : '#F61010',
-        'custom-text-pink' : '#FB569C',
-        'custom-text-yellowpale' : '#F2F493',
         'custom-text-green' : '#4ECB71',
-        'custom-text-violet' : '#C816AC',
-        'custom-text-cyan' : '#1CFFD6',
-        'custom-text-blue' : '#6E5BE7'
-        
-        
+        //
+        'white': "#fff",
+        'darkgray': "#9b9b9b",
+        'chocolate': "#c46605",
+        'gainsboro': {
+          "100": "#e6e6e6",
+          "200": "#d9d9d9",
+        },
+        whitesmoke: "#f5f5f5",
+        mediumslateblue: "#6e5be7",
+        black: "#000",
+        gray: "#7b7777",
       },
+      
+      
     },
   },
-  plugins: [
-  ]
+  plugins: [require("tw-elements-react/dist/plugin.cjs")]
 }

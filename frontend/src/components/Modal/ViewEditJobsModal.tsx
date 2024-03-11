@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import { faClose, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

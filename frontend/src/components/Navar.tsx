@@ -1,8 +1,8 @@
 function Navar() {
   return (
     <nav className="bg-custom-bg-gray top-0 sticky z-50">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-full">
-        <div className="flex items-center justify-start">
+      <div className="sm:max-w-screen md:max-w-screen flex mx-20 flex-wrap items-center justify-between p-4 h-full ">
+        <div className="flex items-center justify-start ">
           <img src="../images/img2.png" className="h-10"></img>
           <img src="../images/img3.png" className="h-10 pt-2" />
         </div>
@@ -30,7 +30,7 @@ function Navar() {
             />
           </svg>
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+        <div className="hidden w-full md:block md:w-auto " id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-20 rtl:space-x-reverse md:mt-0 md:border-0 transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a

@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ViewApplicant from "../Modal/ViewApplicant";
 import axios from "axios";
+import React from "react";
 
 interface Employee {
   _id: string;
