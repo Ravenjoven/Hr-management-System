@@ -17,7 +17,6 @@ const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 
 const Login = () => {
- 
   interface User {
     name?: string | null;
     iat?: number;
@@ -26,110 +25,97 @@ const Login = () => {
     family_name?: string;
     given_name?: string;
     email?: string | null;
-    jti?:string;
-}
-
-
-const [user, setUser] = useState<User>({ email: null });
-const [logIn, setLogIn] = useState(false);
-
-   //@ts-ignore
-const google = window.google;
-useEffect(() => {
- 
-    google.accounts.id.initialize({
-        client_id: "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
-        callback: handleCallbackResponse,
-    });
-   /* global google  */
-   
-    google.accounts.id.renderButton(document.getElementById("SignInDiv"), {
-        theme: "outline",
-        size: "large",
- 
-    });
-}, []);
-
-
-
-
-useEffect(() => {
-  if (user) { // Check if user is defined
-    axios
-      .post("http://localhost:9000/api/user/addUser", user, {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-      .then((response) => {
-        alert("User added successfully");
-        
-        console.log("Response:", response.data);
-      })
-      .catch((error) => {
-        // alert("An error occurred while adding the user");
-        console.log(user);
-        console.error("An error occurred while adding the user:", error);
-      });
+    jti?: string;
   }
-}, [user]);
 
-useEffect(() => {
-  const checkLoggedIn = async () => {
+  const [user, setUser] = useState<User>({ email: null });
+  const [logIn, setLogIn] = useState(false);
+
+  //@ts-ignore
+  const google = window.google;
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id:
+        "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+    /* global google  */
+
+    google.accounts.id.renderButton(document.getElementById("SignInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      // Check if user is defined
+      axios
+        .post("http://localhost:9000/api/user/addUser", user, {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((response) => {
+          alert("User added successfully");
+
+          console.log("Response:", response.data);
+        })
+        .catch((error) => {
+          // alert("An error occurred while adding the user");
+          console.log(user);
+          console.error("An error occurred while adding the user:", error);
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const checkLoggedIn = async () => {
       await ReactSession.setStoreType("localStorage");
       await ReactSession.set("mail", user.email);
       await ReactSession.set("name", user.name);
-      
+
       const mail = await ReactSession.get("mail");
       if (mail) {
-          setLogIn(true);
+        setLogIn(true);
       } else {
-          setLogIn(false);
+        setLogIn(false);
       }
-      
-  };
+    };
 
-  checkLoggedIn();
-}, [user]);
+    checkLoggedIn();
+  }, [user]);
 
-// Render user profile component once authentication is complete
+  // Render user profile component once authentication is complete
 
+  // useEffect(() => {
+  //     if (ReactSession.get("mail")) {
+  //         setLogIn(true);
+  //     }
+  // }, []);
 
+  // const handleLogIn = () => {
+  //   ReactSession.setStoreType("localStorage");
+  //     ReactSession.set("mail", user.email);
+  //     setLogIn(true);
+  // }
+  // useEffect(() => {
+  //     if (ReactSession.get("mail")===user) {
+  //         setLogIn(true);
+  //     }
+  // }, []);
 
-// useEffect(() => {
-//     if (ReactSession.get("mail")) {
-//         setLogIn(true);
-//     }
-// }, []);
+  if (logIn) {
+    window.location.href = "/UserProfile";
+  }
 
-
-
-// const handleLogIn = () => {
-//   ReactSession.setStoreType("localStorage");
-//     ReactSession.set("mail", user.email);
-//     setLogIn(true);
-// }
-// useEffect(() => {
-//     if (ReactSession.get("mail")===user) {
-//         setLogIn(true);
-//     }
-// }, []);
-
-
-if (logIn) {
-  window.location.href = "/UserProfile";
-}
-
-function handleCallbackResponse(response: { credential: any }) {
+  function handleCallbackResponse(response: { credential: any }) {
     const userObject = jwtDecode(response.credential);
     setUser(userObject as User);
 
     console.log(user.name);
-   
-}
-
-
+  }
 
   return (
     <>
@@ -207,8 +193,8 @@ function handleCallbackResponse(response: { credential: any }) {
                     </b>
                   </div>
                 </div>
-            
-                <button id="SignInDiv" ></button>
+
+                <button id="SignInDiv"></button>
                 <div className="w-[204px] flex flex-row items-start justify-start py-0 px-2 box-border">
                   <b className="flex-1 relative text-3xs font-inter text-left z-[1]">
                     <span className="text-white">Don’t have account?</span>
