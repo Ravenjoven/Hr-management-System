@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import Navar from "./Navar";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
