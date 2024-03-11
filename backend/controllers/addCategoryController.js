@@ -50,3 +50,49 @@ exports.getCategory = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getJobs = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+
+    const category = await addCategoryModels.findById(categoryId);
+
+    if (!category) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No category found" });
+    }
+
+    const jobsIds = category.jobs;
+
+    const jobs = await addJobsModels.find({
+      _id: { $in: jobsIds },
+    });
+
+    if (!jobs || jobs.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No jobs found for this category" });
+    }
+    res.status(200).json({ success: true, jobs });
+  } catch (error) {
+    console.error("Failed to get jobs:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.getJob = async (req, res, next) => {
+  const jobId = req.params.id;
+
+  try {
+    const job = await addJobsModels.findById(jobId);
+
+    if (!job || job.length === 0) {
+      return res.status(404).json({ success: false, message: "No job found" });
+    }
+
+    res.status(200).json({ success: true, job });
+  } catch (error) {
+    next(error);
+  }
+};

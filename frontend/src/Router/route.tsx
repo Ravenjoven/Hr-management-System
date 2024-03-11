@@ -18,15 +18,12 @@ import OjtAttendance from "../components/OJT/OjtAttendance";
 import FileLeaves from "../components/OJT/FileLeave";
 import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 import JobCategory from "../components/JobCategory";
-import { ReactSession } from 'react-client-session';
-
-
-
-
+import { ReactSession } from "react-client-session";
+import SelectedJobs from "../components/SelectedJob";
 
 function router() {
   ReactSession.setStoreType("localStorage");
-  
+
   return (
     <>
       <Router>
@@ -44,6 +41,7 @@ function router() {
           <Route path="/Category" element={<AdminJobCategory />} />
           <Route path="/Attendance" element={<AdminAttendance />} />
           <Route path="/Company" element={<CompDetails />} />
+          <Route path="/SelectedJob" element={<SelectedJobs />} />
           <Route
             path="/EmployeeManagement"
             element={<AdminEmployeeManagement />}
