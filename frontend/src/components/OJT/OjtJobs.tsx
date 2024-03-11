@@ -3,7 +3,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useEffect } from "react";
+
 import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
 import Modal from "./Modal";

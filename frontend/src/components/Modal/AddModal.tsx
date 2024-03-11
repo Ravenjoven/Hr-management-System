@@ -16,22 +16,9 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
     reminders: '',
     time: '',
   });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+
   const handleSave = () => {
-    // Construct FormData object
-    const formDataObject = new FormData();
-
-    formDataObject.append('date', selectedDate);
-    formDataObject.append('event', formData.reminders);
-    formDataObject.append('time', formData.time);
-
-    handleClose();
+    console.log("Form Data:", formData);
   };
 
   return (
@@ -69,8 +56,12 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                       <label htmlFor="date-of-Event">Date</label>
                       <input type="text"
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                      value={selectedDate}/>
-               
+                      value={selectedDate}
+                      // onChange={(e) =>
+                      //   setFormData({ ...formData, date: e.target.value })
+                      // }
+                      />
+                
                      {/* {selectedDate && <p>Add event for: {selectedDate.toLocaleDateString()}</p>}
                      */}
                     </div>
@@ -81,7 +72,9 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                         placeholder="Create Event"
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
                         value={formData.reminders}
-                        onChange={handleChange} 
+                        onChange={(e) =>
+                          setFormData({ ...formData, reminders: e.target.value })
+                        }
                       />
                     </div>
                    
@@ -92,7 +85,9 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                         placeholder="Time"
                         value={formData.time}
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setFormData({ ...formData, time: e.target.value })
+                        }
                       />
                     </div>
                   </div>
