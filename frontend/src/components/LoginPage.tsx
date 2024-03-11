@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault(); // Prevents the default form submit action
 
     try {
-      const response = await axios.post('https://example.com/api/login', {
+      const response = await axios.post('http://localhost:5174/login', {
   email: email,
   password: password,
   });
@@ -62,7 +62,7 @@ const Login = () => {
               viewBox="0 0 1440 560"
             >
               <g mask='url("#SvgjsMask1004")' fill="none">
-                {/* Your SVG paths */}
+
               </g>
             </svg>
             <h1 className="font-bold text-custom-text-gray text-2xl">
@@ -128,11 +128,11 @@ const Login = () => {
         <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs">
           <div className="grid content-end">
             <div className="flex justify-center ">
-              <img src="../images/img2.png" className="w-[40px] h-10 "></img> 
+              <img src="../images/img2.png" className="w-[40px] h-10 "></img>
             </div>
             <br />
-              Copyright &copy; 2024 TERAVAULT, INC. dba TeraVault Software. All
-              rights reserved
+            Copyright &copy; 2024 TERAVAULT, INC. dba TeraVault Software. All
+            rights reserved
           </div>
         </footer>
       </>

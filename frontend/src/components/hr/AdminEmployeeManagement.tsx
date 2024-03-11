@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminNavar from "../AdminNavar";
 import AddEmployeeModal from "../Modal/AddEmployeeModal";
 import Sidebar from "../Sidebar";
@@ -7,10 +7,26 @@ import {
   faEye,
   faPen,
   faMagnifyingGlass,
+  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import ViewApplicant from "../Modal/ViewApplicant";
+import axios from "axios";
+
+interface Employee {
+  _id: string;
+  fullname: string;
+  dateOfBirth: string;
+  email: string;
+  phoneNumber: number;
+  position: string;
+  type: string;
+  address: string;
+  jobSkills: Object[];
+  createdAt: Date;
+}
 
 function AdminEmployeeManagement() {
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
@@ -133,6 +149,10 @@ function AdminEmployeeManagement() {
     indexOfFirstApplicants,
     indexOfLastApplicants
   );
+  const spinnerStyle = {
+    fontSize: "24px",
+    animation: "spin 1s linear infinite",
+  };
   const openViewApplicantModal = (user: any) => {
     setSelectedApplicant(user);
     setViewApplicantModal(true);
@@ -147,6 +167,20 @@ function AdminEmployeeManagement() {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/employee/getEmployee"
+        );
+        setEmployees(response.data.employee);
+      } catch (error) {
+        console.error("Error fetching employee:", error);
+      }
+    };
+    fetchJobs();
+  }, [employees]);
 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
@@ -312,183 +346,84 @@ function AdminEmployeeManagement() {
                           No.
                         </th>
                         <th scope="col" className="px-6 py-3">
+                          Full Name
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                           Email
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          JOB CATEGORY
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                          POSITION
+                          Position
                         </th>
                         <th scope="col" className="px-6 py-3">
                           Type
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          ACTIONS
+                          Actions
                         </th>
                       </tr>
                     </thead>
                     <tbody className="border-[3px] border-custom-text-orange">
-                      <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          1
-                        </th>
-                        <td className="px-6 py-4">testing.tes@gmail.com</td>
-                        <td className="px-6 py-4">Software Developer</td>
-                        <td className="px-6 py-4">Fullstack Developer</td>
-                        <td className="px-6 py-4">Fulltime</td>
-                        <td className="px-6 py-4 space-x-4 flex">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      {employees.length === 0 ? (
+                        <tr>
+                          <td colSpan={6}>
+                            <section className="flex flex-col items-center justify-center">
+                              <div className="flex items-center justify-center mt-4">
+                                <FontAwesomeIcon
+                                  icon={faSpinner}
+                                  style={spinnerStyle}
+                                />
+                              </div>
+                              <h1 className="text-center font-bold text-[20px] text-custom-text-black my-4">
+                                No Data Found
+                              </h1>
+                            </section>
+                          </td>
+                        </tr>
+                      ) : (
+                        employees.map((employee, index) => (
+                          <tr
+                            key={employee._id}
+                            className="bg-white  border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                           >
-                            <FontAwesomeIcon
-                              icon={faEye}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faPen}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          1
-                        </th>
-                        <td className="px-6 py-4">testing.tes@gmail.com</td>
-                        <td className="px-6 py-4">Software Developer</td>
-                        <td className="px-6 py-4">Fullstack Developer</td>
-                        <td className="px-6 py-4">Fulltime</td>
-                        <td className="px-6 py-4 space-x-4 flex">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faEye}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faPen}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          1
-                        </th>
-                        <td className="px-6 py-4">testing.tes@gmail.com</td>
-                        <td className="px-6 py-4">Software Developer</td>
-                        <td className="px-6 py-4">Fullstack Developer</td>
-                        <td className="px-6 py-4">Fulltime</td>
-                        <td className="px-6 py-4 space-x-4 flex">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faEye}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faPen}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          1
-                        </th>
-                        <td className="px-6 py-4">testing.tes@gmail.com</td>
-                        <td className="px-6 py-4">Software Developer</td>
-                        <td className="px-6 py-4">Fullstack Developer</td>
-                        <td className="px-6 py-4">Fulltime</td>
-                        <td className="px-6 py-4 space-x-4 flex">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faEye}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faPen}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                      <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                          1
-                        </th>
-                        <td className="px-6 py-4">testing.tes@gmail.com</td>
-                        <td className="px-6 py-4">Software Developer</td>
-                        <td className="px-6 py-4">Fullstack Developer</td>
-                        <td className="px-6 py-4">Fulltime</td>
-                        <td className="px-6 py-4 space-x-4 flex">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faEye}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          >
-                            <FontAwesomeIcon
-                              icon={faPen}
-                              className="hover:text-green-500 flex"
-                            />
-                          </a>
-                        </td>
-                      </tr>
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {index + 1}
+                            </th>
+                            <td className="px-6 py-4 capitalize">
+                              {employee.fullname}
+                            </td>
+                            <td className="px-6 py-4">{employee.email}</td>
+                            <td className="px-6 py-4 capitalize">
+                              {employee.position}
+                            </td>
+                            <td className="px-6 py-4 capitalize">
+                              {employee.type}
+                            </td>
+                            <td className="px-6 py-4 space-x-4 flex">
+                              <a
+                                href="#"
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEye}
+                                  className="hover:text-green-500 flex"
+                                />
+                              </a>
+                              <a
+                                href="#"
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faPen}
+                                  className="hover:text-green-500 flex"
+                                />
+                              </a>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

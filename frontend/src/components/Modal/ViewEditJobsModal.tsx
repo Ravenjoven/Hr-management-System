@@ -49,24 +49,6 @@ export default function ViewEditJobsModal({
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  // const [categories, setCategories] = useState([
-  //   {
-  //     id: 0,
-  //     jobCategory: "IT/Computer",
-  //   },
-  //   {
-  //     id: 1,
-  //     jobCategory: "Financial Associate",
-  //   },
-  //   {
-  //     id: 2,
-  //     jobCategory: "Advetising/Media",
-  //   },
-  //   {
-  //     id: 3,
-  //     jobCategory: "Fullstack Developer",
-  //   },
-  // ]);
   const skills = [
     { id: 0, name: "Hardworking", value: "Hardworking" },
     { id: 1, name: "Time Management", value: "Time Management" },
@@ -121,6 +103,10 @@ export default function ViewEditJobsModal({
       setEditedJobName(job?.jobName || "");
       setEditedJobDescription(job?.jobDescription || "");
     }
+  };
+
+  const setEditedExperience = (experience: number) => {
+    console.log(experience);
   };
   const handleCategoryClick = (category: any) => {
     setButtonJobCategoryMessage(category);
@@ -398,7 +384,7 @@ export default function ViewEditJobsModal({
                               onClick={() =>
                                 handleCategoryClick(category.jobCategory)
                               }
-                              className="text-blue-700 h-10 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                              className="text-blue-700 capitalize h-10 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                             >
                               {category.jobCategory}
                             </button>
@@ -406,9 +392,9 @@ export default function ViewEditJobsModal({
                         : categories.map((category) => (
                             <button
                               key={category._id}
-                              className={`text-blue-700 h-10 cursor-not-allowed border border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:focus:ring-blue-800 ${
+                              className={`text-blue-700 capitalize h-10 cursor-not-allowed border border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:focus:ring-blue-800 ${
                                 job?.jobCategory === category.jobCategory
-                                  ? "text-white bg-blue-800"
+                                  ? "text-white bg-blue-800 "
                                   : ""
                               }`}
                             >
@@ -527,7 +513,9 @@ export default function ViewEditJobsModal({
                         <div className="pl-2">
                           <input
                             type="number"
-                            value={job?.jobExperience}
+                            onChange={(e) =>
+                              setEditedExperience(parseInt(e.target.value))
+                            }
                             className="bg-gray-50 h-10 border w-52 capitalize text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           />
                         </div>
