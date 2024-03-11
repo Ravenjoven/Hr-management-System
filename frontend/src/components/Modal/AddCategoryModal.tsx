@@ -2,66 +2,44 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import LoadingFileAnimation from "../LoadingFileAnimation";
 
 interface ModalProps {
-  isClick: boolean;
-  isClose: () => void;
+  isOpen: boolean;
+  onClose: () => void;
   title: string;
-  to: string;
-  subjects: string;
 }
 
-export default function SendContractForm({
-  isClick,
-  isClose,
-  title,
-  to,
-  subjects,
-}: ModalProps) {
-  const [fileMessage, setFileMessage] = useState("");
-  const [files, setFiles] = useState<File[]>([]);
-  const [loadingAnimation, setLoadingAnimation] = useState(false);
-  const sendMail = () => {
-    setLoadingAnimation(true);
-    const formData = new FormData();
-    formData.append("email", to);
-    formData.append("subject", subjects);
-    files.forEach((file) => formData.append("file", file));
+export default function AddCategory({ isOpen, onClose, title }: ModalProps) {
+  const [categoryMessage, setCategoryMessage] = useState("");
+  const [formData, setFormData] = useState({
+    jobCategory: "",
+  });
+
+  const addCategory = () => {
     axios
-      .post("http://localhost:9000/api/sendmail", formData, {
+      .post("http://localhost:9000/api/jobs/addcategory", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
       })
       .then(() => {
-        setFileMessage("Send Successfully");
-        setLoadingAnimation(false);
-        setTimeout(() => {
-          isClose(); // Close modal after 3 seconds
-        }, 3000);
+        alert("Add Successfully");
+        setCategoryMessage("Add Successfully");
       })
       .catch((e) => {
         console.log("error", e);
-        setLoadingAnimation(false);
       });
   };
 
-  const handleFileChange = (e: any) => {
-    if (e.target.files) {
-      setFiles(Array.from(e.target.files));
-    }
-  };
-
   const handleClose = () => {
-    isClose && isClose();
+    onClose && onClose();
   };
 
   return (
     <>
-      {isClick && (
-        <div className="fixed z-50 inset-0 overflow-y-auto font-montserrat">
+      {isOpen && (
+        <div className="fixed z-50 inset-0 overflow-y-auto font-montserrat top-40">
           <div className="flex items-center justify-center min-w-screen px-4 pt-4 pb-20 text-center sm:p-0">
             <div
               className="fixed inset-0 transition-opacity"
@@ -104,42 +82,38 @@ export default function SendContractForm({
                       encType="multipart/form-data"
                       className="space-y-2"
                     >
-                      <div className="flex">
-                        <label htmlFor="Subject" className="pr-2 font-semibold">
-                          Subject:
+                      <div>
+                        <label
+                          htmlFor="inputname"
+                          className="block text-gray-800 font-semibold text-sm"
+                        >
+                          Category Name
                         </label>
-                        <input
-                          type="text"
-                          value={subjects}
-                          className="w-full"
-                        />
-                      </div>
-                      <div className="flex">
-                        <label htmlFor="email" className="pr-2 font-semibold">
-                          To:
-                        </label>
-                        <input type="text" className="w-full" value={to} />
-                      </div>
-                      <div className="flex">
-                        <label htmlFor="upload" className="pr-2 font-semibold">
-                          Upload File:
-                        </label>
-                        <input
-                          type="file"
-                          name="file"
-                          onChange={handleFileChange}
-                          className="cursor-pointer"
-                        />
+                        <div className="mt-2">
+                          <input
+                            type="text"
+                            name="inputname"
+                            value={formData.jobCategory}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                jobCategory: e.target.value,
+                              })
+                            }
+                            required
+                            className="block w-full capitalize rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
+                          />
+                        </div>
                       </div>
                     </form>
                     <span
                       className={
-                        fileMessage === "Send Successfully"
+                        categoryMessage === "Add Successfully"
                           ? "text-green-600 pt-4"
                           : "text-red-600 pt-2"
                       }
                     >
-                      {fileMessage}
+                      {categoryMessage}
                     </span>
                   </div>
                 </div>
@@ -147,17 +121,16 @@ export default function SendContractForm({
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
                 <button
                   type="button"
-                  onClick={sendMail}
+                  onClick={addCategory}
                   className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  Proceed
+                  Add now
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
-      {loadingAnimation && <LoadingFileAnimation />}
     </>
   );
 }

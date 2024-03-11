@@ -1,8 +1,9 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import ReviewAddJobsModal from "./ReviewAddJobsModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,36 +11,43 @@ interface ModalProps {
   title: string;
 }
 
+interface Category {
+  _id: string;
+  jobCategory: string;
+}
+
 function Modal({ isOpen, onClose, title }: ModalProps) {
   const [formData, setFormData] = useState({
     jobName: "",
     jobDescription: "",
     jobType: "",
-    jobRoles: "",
+    jobSlots: 0,
     jobCategory: "",
     jobSkills: [],
     jobSetUp: "",
-    jobExperience: "",
-    jobSalary: [0, 1],
+    jobExperience: 0,
+    jobFromSalary: 0,
+    jobToSalary: 0,
   });
-  const [categories, setCategories] = useState([
-    {
-      id: 0,
-      jobCategory: "IT/Computer",
-    },
-    {
-      id: 1,
-      jobCategory: "Financial Associate",
-    },
-    {
-      id: 2,
-      jobCategory: "Advetising/Media",
-    },
-    {
-      id: 3,
-      jobCategory: "Fullstack Developer",
-    },
-  ]);
+  const [category, setCategory] = useState<Category[]>([]);
+  // const [categories, setCategories] = useState([
+  //   {
+  //     id: 0,
+  //     jobCategory: "IT/Computer",
+  //   },
+  //   {
+  //     id: 1,
+  //     jobCategory: "Financial Associate",
+  //   },
+  //   {
+  //     id: 2,
+  //     jobCategory: "Advetising/Media",
+  //   },
+  //   {
+  //     id: 3,
+  //     jobCategory: "Fullstack Developer",
+  //   },
+  // ]);
   const [buttonJobTypeMessage, setButtonJobTypeMessage] = useState("");
   const [buttonJobCategoryMessage, setButtonJobCategoryMessage] = useState("");
   const [buttonSetUpMessage, setButtonSetUpMessage] = useState("");
@@ -54,6 +62,21 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     { id: 2, name: "Critical Thinking", value: "Critical Thinking" },
     { id: 3, name: "Technincal", value: "Technincal" },
   ];
+
+  useEffect(() => {
+    const fetCategory = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/jobs/getCategory"
+        );
+        setCategory(response.data.category);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    fetCategory();
+  }, []);
+
   const handleCheckboxChange = (event: any) => {
     setIsExperienceRequired(event.target.checked);
   };
@@ -238,9 +261,12 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                       <input
                         type="number"
                         name="jobRoles"
-                        value={formData.jobRoles}
+                        value={formData.jobSlots}
                         onChange={(e) =>
-                          setFormData({ ...formData, jobRoles: e.target.value })
+                          setFormData({
+                            ...formData,
+                            jobSlots: parseInt(e.target.value),
+                          })
                         }
                         required
                         className="bg-gray-50 border w-52 capitalize text-center mt-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -289,21 +315,21 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                       category for this job
                     </h6>
                     <div className="grid grid-cols-3 mt-2 gap-2">
-                      {categories.map((category) => (
+                      {category.map((categories) => (
                         <button
-                          key={category.id}
+                          key={categories._id}
                           onClick={() =>
-                            handleCategoryClick(category.jobCategory)
+                            handleCategoryClick(categories.jobCategory)
                           }
-                          className="text-blue-700 h-10 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                          className="text-blue-700 capitalize h-10 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
                         >
-                          {category.jobCategory}
+                          {categories.jobCategory}
                         </button>
                       ))}
                     </div>
                     {buttonJobCategoryMessage && (
                       <div className="text-custom-text-black">
-                        <span className="pr-2 text-green-600">
+                        <span className="pr-2 text-green-600 capitalize">
                           {buttonJobCategoryMessage}
                         </span>
                         selected.
@@ -370,7 +396,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              jobExperience: e.target.value,
+                              jobExperience: parseInt(e.target.value),
                             })
                           }
                           className="bg-gray-50 h-10 border w-52 capitalize text-center  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -387,14 +413,11 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">From</h6>
                         <input
                           type="number"
-                          value={formData.jobSalary[0]}
+                          value={formData.jobFromSalary}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[0],
-                              ],
+                              jobFromSalary: parseInt(e.target.value),
                             })
                           }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -404,14 +427,11 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
                         <h6 className="text-[15px]">To</h6>
                         <input
                           type="number"
-                          value={formData.jobSalary[1]}
+                          value={formData.jobToSalary}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[1],
-                              ],
+                              jobToSalary: parseInt(e.target.value),
                             })
                           }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

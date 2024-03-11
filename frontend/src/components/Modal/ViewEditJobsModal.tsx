@@ -3,6 +3,12 @@ import MultiSelect from "multiselect-react-dropdown";
 import { faClose, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+interface Category {
+  _id: string;
+  jobs: string[];
+  jobCategory: string;
+}
+
 interface ViewJobModal {
   viewJobs: boolean;
   isCloseJobs: () => void;
@@ -16,10 +22,12 @@ interface ViewJobModal {
     jobSkills: string[];
     jobSetUp: string;
     jobExperience: number;
-    jobSalary: [number, number];
+    jobFromSalary: number;
+    jobToSalary: number;
     date_created: string;
   } | null;
   title: string;
+  categories: Category[];
 }
 
 export default function ViewEditJobsModal({
@@ -27,6 +35,7 @@ export default function ViewEditJobsModal({
   isCloseJobs,
   title,
   job,
+  categories,
 }: ViewJobModal) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedJobName, setEditedJobName] = useState("");
@@ -40,24 +49,24 @@ export default function ViewEditJobsModal({
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [categories, setCategories] = useState([
-    {
-      id: 0,
-      jobCategory: "IT/Computer",
-    },
-    {
-      id: 1,
-      jobCategory: "Financial Associate",
-    },
-    {
-      id: 2,
-      jobCategory: "Advetising/Media",
-    },
-    {
-      id: 3,
-      jobCategory: "Fullstack Developer",
-    },
-  ]);
+  // const [categories, setCategories] = useState([
+  //   {
+  //     id: 0,
+  //     jobCategory: "IT/Computer",
+  //   },
+  //   {
+  //     id: 1,
+  //     jobCategory: "Financial Associate",
+  //   },
+  //   {
+  //     id: 2,
+  //     jobCategory: "Advetising/Media",
+  //   },
+  //   {
+  //     id: 3,
+  //     jobCategory: "Fullstack Developer",
+  //   },
+  // ]);
   const skills = [
     { id: 0, name: "Hardworking", value: "Hardworking" },
     { id: 1, name: "Time Management", value: "Time Management" },
@@ -381,11 +390,11 @@ export default function ViewEditJobsModal({
                       <span className="text-red-600 pr-1">*</span>Choose a
                       category for this job
                     </h6>
-                    <div className="grid grid-cols-3 mt-2 gap-2">
+                    <div className="grid grid-cols-4 mt-2 gap-2">
                       {isEditing
                         ? categories.map((category) => (
                             <button
-                              key={category.id}
+                              key={category._id}
                               onClick={() =>
                                 handleCategoryClick(category.jobCategory)
                               }
@@ -396,7 +405,7 @@ export default function ViewEditJobsModal({
                           ))
                         : categories.map((category) => (
                             <button
-                              key={category.id}
+                              key={category._id}
                               className={`text-blue-700 h-10 cursor-not-allowed border border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:focus:ring-blue-800 ${
                                 job?.jobCategory === category.jobCategory
                                   ? "text-white bg-blue-800"
@@ -424,7 +433,7 @@ export default function ViewEditJobsModal({
                     {isEditing ? (
                       <MultiSelect
                         options={skills}
-                        selectedValues={selectedSkills} // Pass the initial selected skills here
+                        selectedValues={selectedSkills}
                         onSelect={handleSelectSkills}
                         onRemove={handleRemoveSkills}
                         displayValue="name"
@@ -433,14 +442,19 @@ export default function ViewEditJobsModal({
                       />
                     ) : (
                       <div className="flex flex-wrap pt-2">
-                        {job?.jobSkills.map((skill, index) => (
-                          <div
-                            key={index}
-                            className="bg-blue-600 cursor-not-allowed text-white px-3 py-1 rounded-full text-sm mr-2 mb-2"
-                          >
-                            {skill}
-                          </div>
-                        ))}
+                        {(job?.jobSkills || []).map(
+                          (skill: string | { name: string }, index: number) => (
+                            <div
+                              key={index}
+                              className="bg-blue-600 cursor-not-allowed text-white px-3 py-1 rounded-full text-sm mr-2 mb-2"
+                            >
+                              {/* Check if skill is an object */}
+                              {typeof skill === "object"
+                                ? (skill as { name: string }).name
+                                : skill}
+                            </div>
+                          )
+                        )}
                       </div>
                     )}
                   </div>
@@ -514,13 +528,6 @@ export default function ViewEditJobsModal({
                           <input
                             type="number"
                             value={job?.jobExperience}
-                            // onChange={(e) => {
-                            //   // Update the job experience value
-                            //   const newValue = e.target.value;
-                            //   // You can handle the change event if needed
-                            //   // For example, you can update the state with the new value
-                            //   setJob(prevJob => ({ ...prevJob, jobExperience: newValue }));
-                            // }}
                             className="bg-gray-50 h-10 border w-52 capitalize text-center border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           />
                         </div>
@@ -545,37 +552,15 @@ export default function ViewEditJobsModal({
                     <div className="flex space-x-4">
                       <div className="flex flex-col">
                         <h6 className="text-[15px]">From</h6>
-                        {/* <input
-                          type="number"
-                          value={formData.jobSalary[0]}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[0],
-                              ],
-                            })
-                          }
-                          className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        /> */}
+                        <span className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          {job?.jobFromSalary}
+                        </span>
                       </div>
                       <div className="flex flex-col">
                         <h6 className="text-[15px]">To</h6>
-                        {/* <input
-                          type="number"
-                          value={formData.jobSalary[1]}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              jobSalary: [
-                                parseInt(e.target.value), // Convert to number
-                                formData.jobSalary[1],
-                              ],
-                            })
-                          }
-                          className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        /> */}
+                        <span className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          {job?.jobToSalary}
+                        </span>
                       </div>
                     </div>
                   </div>
