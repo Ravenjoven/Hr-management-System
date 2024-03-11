@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -43,7 +42,7 @@ const Calendar: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   const handleDateClick = (info: any) => {
-    setSelectedDate(info.date);
+    setSelectedDate(info.dateStr);
     setIsAddModalOpen(true);
   };
   const handleEventClick = (info: any) => {
@@ -68,7 +67,7 @@ const Calendar: React.FC = () => {
 
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-      
+
         initialView="dayGridMonth"
         headerToolbar={{
           start: "prev,next",
@@ -81,9 +80,9 @@ const Calendar: React.FC = () => {
         height={"400px"}
       />
     </div>
-    
+
   );
 };
 
-
 export default Calendar;
+

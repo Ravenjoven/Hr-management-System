@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 interface ModalProps {
   onClose: () => void;
-  selectedDate: Date; // Assuming date is a string
+  selectedDate: any; // Assuming date is a string
   
 }
 
@@ -10,7 +10,30 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
   const handleClose = () => {
     onClose && onClose();
   };
-  
+ 
+  const [formData, setFormData] = useState({
+    date: selectedDate,
+    reminders: '',
+    time: '',
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handleSave = () => {
+    // Construct FormData object
+    const formDataObject = new FormData();
+
+    formDataObject.append('date', selectedDate);
+    formDataObject.append('event', formData.reminders);
+    formDataObject.append('time', formData.time);
+
+    handleClose();
+  };
+
   return (
     <>
     
@@ -46,7 +69,8 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                       <label htmlFor="date-of-Event">Date</label>
                       <input type="text"
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                      value={selectedDate.toLocaleDateString()}/>
+                      value={selectedDate}/>
+               
                      {/* {selectedDate && <p>Add event for: {selectedDate.toLocaleDateString()}</p>}
                      */}
                     </div>
@@ -56,6 +80,8 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                         type="text"
                         placeholder="Create Event"
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                        value={formData.reminders}
+                        onChange={handleChange} 
                       />
                     </div>
                    
@@ -64,8 +90,9 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                       <input
                         type="time"
                         placeholder="Time"
-                        
+                        value={formData.time}
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -75,6 +102,7 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
               <button
                 type="button"
+                onClick={handleSave}
                 className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
               >
                 Save
@@ -90,7 +118,6 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };
