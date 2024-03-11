@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navar from "./Navar";
 import { jwtDecode } from "jwt-decode";
 import { ReactSession } from "react-client-session";
-import axios from "axios";
+import axios , { AxiosError } from "axios";
 import UserProfile from "./OJT/UserDetail";
 // import { Redirect } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSignIn = async (e) => {
+  const handleSignIn = async (e: { preventDefault: () => void; }) => {
     e.preventDefault(); // Prevents the default form submit action
 
     try {
@@ -39,7 +39,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
 
       // Redirect or update UI
-    } catch (error) {
+    } catch (error: any) {
       // Handle error (e.g., displaying an error message)
       console.error(error);
       if (error.response && error.response.data) {
