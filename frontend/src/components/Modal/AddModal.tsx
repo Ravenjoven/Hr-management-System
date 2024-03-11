@@ -1,17 +1,16 @@
 import axios from "axios";
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 
 interface ModalProps {
   onClose: () => void;
-  selectedDate: any; // Assuming date is a string
-  
+  selectedDate: string; // Assuming date is a string
 }
 
-const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
+const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose }) => {
   const handleClose = () => {
     onClose && onClose();
   };
- 
+
   const [formData, setFormData] = useState({
     date: selectedDate,
     reminders: '',
@@ -19,36 +18,38 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
   });
 
   const handleSave = () => {
-    console.log("Form Data:", formData);
+    // Make POST request when the Save button is clicked
+    axios
+      .post("http://localhost:9000/api/event/addevent", formData, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*", // Make sure to configure CORS on the server properly
+        },
+      })
+      .then((response) => {
+        alert("Event added successfully");
+        console.log("Response:", response.data);
+        handleClose(); // Close the modal after successful save
+      })
+      .catch((error) => {
+        console.error("An error occurred while adding the event:", error);
+        // Handle error, e.g., show error message to the user
+      });
   };
 
-  useEffect(() => {
-    if (formData) {
-      // Check if user is defined
-      axios
-        .post("http://localhost:9000/api/event/addevent", formData, {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then((response) => {
-          alert("User added successfully");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-          console.log("Response:", response.data);
-        })
-        .catch((error) => {
-          // alert("An error occurred while adding the user");
-          console.log(formData);
-          console.error("An error occurred while adding the event:", error);
-        });
-    }
-  }, [formData]);
+  const { date, reminders, time } = formData;
 
   return (
     <>
-    
-        <div className="fixed z-50 inset-0 overflow-y-auto">
+      <div className="fixed z-50 inset-0 overflow-y-auto">
         <div className="flex items-center justify-center min-w-screen min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <div
             className="fixed inset-0 transition-opacity"
@@ -73,52 +74,44 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
               <div className="mt-3 text-center sm:mt-0 sm:text-left">
                 <span>Events And Reminders</span>
                 <hr />
-               
                 <div className="mt-4 text-black flex flex-col">
                   <div className="flex flex-col p-4">
-                  <div>
-                      <label htmlFor="date-of-Event">Date</label>
-                      <input type="text"
-                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                      value={selectedDate}
-                      // onChange={(e) =>
-                      //   setFormData({ ...formData, date: e.target.value })
-                      // }
-                      />
-                
-                     {/* {selectedDate && <p>Add event for: {selectedDate.toLocaleDateString()}</p>}
-                     */}
-                    </div>
                     <div>
-                      <label htmlFor="firstname">Event</label>
+                      <label htmlFor="date-of-Event">Date</label>
                       <input
                         type="text"
-                        placeholder="Create Event"
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                        value={formData.reminders}
-                        onChange={(e) =>
-                          setFormData({ ...formData, reminders: e.target.value })
-                        }
+                        value={date}
+                        readOnly // Assuming date should not be editable
                       />
                     </div>
-                   
+                    <div>
+                      <label htmlFor="reminder">Event</label>
+                      <input
+                        type="text"
+                        name="reminders"
+                        placeholder="Create Event"
+                        className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                        value={reminders}
+                        onChange={handleChange}
+                      />
+                    </div>
                     <div>
                       <label htmlFor="time-of-Event">HH:MM AM/PM</label>
                       <input
                         type="time"
+                        name="time"
                         placeholder="Time"
-                        value={formData.time}
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                        onChange={(e) =>
-                          setFormData({ ...formData, time: e.target.value })
-                        }
+                        value={time}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
+            <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
               <button
                 type="button"
                 onClick={handleSave}

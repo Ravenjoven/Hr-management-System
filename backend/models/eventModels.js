@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: [true, "date is required"],
   },
-  event: {
+  reminders: {
     type: String,
     trim: true,
     required: [true, "event is required"],
