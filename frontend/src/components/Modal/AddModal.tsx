@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import axios from "axios";
+import React, {useState, useEffect} from "react";
 
 interface ModalProps {
   onClose: () => void;
@@ -20,6 +21,29 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
   const handleSave = () => {
     console.log("Form Data:", formData);
   };
+
+  useEffect(() => {
+    if (formData) {
+      // Check if user is defined
+      axios
+        .post("http://localhost:9000/api/event/addevent", formData, {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((response) => {
+          alert("User added successfully");
+
+          console.log("Response:", response.data);
+        })
+        .catch((error) => {
+          // alert("An error occurred while adding the user");
+          console.log(formData);
+          console.error("An error occurred while adding the user:", error);
+        });
+    }
+  }, [formData]);
 
   return (
     <>
