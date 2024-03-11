@@ -15,6 +15,8 @@ const jobRoute = require("./routes/jobsRoutes");
 const sendContractRoutes = require("./routes/sendContractRoutes");
 const addJobsRoutes = require("./routes/addJobsRoutes");
 const addCategoryRoutes = require("./routes/addCategoryRoutes");
+const jobApplicationRoutes = require("./routes/jobApplicationRoutes");
+
 // const jobTypeModels = require("./models/jobTypeModels");
 //database connection
 mongoose
@@ -29,11 +31,11 @@ mongoose
 
 //Middleware
 app.use(morgan("dev"));
-app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.json({ limit: "5mb", extended: true })); // Specify extended option
 app.use(
   bodyParser.urlencoded({
     limit: "5mb",
-    extended: true,
+    extended: true, // Specify extended option
   })
 );
 app.use(cookieParser());
@@ -50,6 +52,7 @@ app.use("/api", jobRoute);
 app.use("/api", sendContractRoutes);
 app.use("/api", addJobsRoutes);
 app.use("/api", addCategoryRoutes);
+app.use("/api", jobApplicationRoutes);
 
 //error middleware
 app.use(errorHandler);

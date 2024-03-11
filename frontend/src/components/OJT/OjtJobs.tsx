@@ -24,6 +24,10 @@ const OjtJobList: React.FC = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   useEffect(() => {
+    setSelectedJob(jobs[0] || null);
+  }, [jobs]);
+
+  useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get("http://localhost:9000/api/jobs/get");
@@ -70,10 +74,9 @@ const OjtJobList: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleClick = (job: Job) => {
+  const handleClick = (job: any) => {
     setSelectedJob(job);
   };
-
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
       <>
@@ -149,43 +152,37 @@ const OjtJobList: React.FC = () => {
                     {jobs.length} jobs posted
                   </span>
                 </div>
-                <div className="w-96 h-[450px] overflow-y-auto scrollbar-thin overflow-hidden rounded-3xl mr-2">
-                  {filteredJobs
-                    .sort(
-                      (a, b) =>
-                        new Date(b.createdAt).getTime() -
-                        new Date(a.createdAt).getTime()
-                    )
-                    .map((job, index) => (
-                      <div
-                        key={job._id}
-                        onClick={() => handleClick(job)}
-                        className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700"
-                      >
-                        <div>
-                          <span className="text-custom-text-orange text-xs">
-                            {formattedJobs[index] &&
-                              formattedJobs[index].createdAt}
-                          </span>
-                        </div>
-                        <div className="text-custom-text-black">
-                          <span>{job.jobName}</span>
-                        </div>
-                        <div className="text-xs">
-                          {selectedJob === job &&
-                            job.jobSkills.map((skill, index) => (
-                              <span key={index} className="text-green-600">
-                                {index === 0 ? "" : ", "} {skill.name}
-                              </span>
-                            ))}
-                        </div>
-                        <div>
-                          <span className="text-[10px] text-custom-text-black">
-                            {job.jobSlots} slots
-                          </span>
-                        </div>
+                <div className=" w-96 h-[450px] overflow-y-auto scrollbar-thin overflow-hidden rounded-3xl mr-2">
+                  {filteredJobs.map((job, index) => (
+                    <div
+                      key={job._id}
+                      onClick={() => handleClick(job)}
+                      className="w-96 bg-white rounded-3xl p-4 mt-2 cursor-pointer text-white hover:transition ease-in-out delay-70 hover:bg-orange-700 hover:bg-opacity-[25%] active:bg-orange-700"
+                    >
+                      <div>
+                        <span className="text-custom-text-orange text-xs">
+                          {formattedJobs[index] &&
+                            formattedJobs[index].createdAt}
+                        </span>
                       </div>
-                    ))}
+                      <div className="text-custom-text-black">
+                        <span className="capitalize">{job.jobName}</span>
+                      </div>
+                      <div className="text-xs">
+                        {selectedJob === job &&
+                          job.jobSkills.map((skill, index) => (
+                            <span key={index} className="text-green-600">
+                              {index === 0 ? "" : ", "} {skill.name}
+                            </span>
+                          ))}
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-custom-text-black">
+                          {job.jobSlots} slots
+                        </span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="bg-white md:ml-4 rounded-3xl right-div w-full mt-4 md:overflow-hidden overflow-x-scroll pl-4 ml-4">
@@ -220,11 +217,15 @@ const OjtJobList: React.FC = () => {
                         </g>
                       </svg>
                     </button>
-                    <Modal isOpen={isModalOpen} onClose={closeModal} />
+                    <Modal
+                      isOpen={isModalOpen}
+                      onClose={closeModal}
+                      selectedJob={selectedJob}
+                    />
                   </div>
                   <div className="mt-10  w-2">
                     <div className="text-custom-text-black ml-9 text-5xl font-bold">
-                      <span className="">
+                      <span className="capitalize">
                         {selectedJob ? selectedJob.jobName : ""}
                       </span>
                     </div>
@@ -232,7 +233,7 @@ const OjtJobList: React.FC = () => {
                   <div className="ml-9 mt-9 text-custom-text-black">
                     <span>Description</span>
                   </div>
-                  <div className="ml-9 mt-4 mr-9 text-[12px] text-custom-text-black">
+                  <div className="ml-9 mt-4 mr-9 text-[12px] text-custom-text-black font-medium">
                     <p className="mb-10">
                       {selectedJob ? selectedJob.jobDescription : ""}
                     </p>
