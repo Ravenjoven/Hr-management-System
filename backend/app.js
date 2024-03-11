@@ -18,7 +18,7 @@ const addCategoryRoutes = require("./routes/addCategoryRoutes");
 const addEmployeeRoutes = require("./routes/addEmployeeRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
 const addUser=require("./routes/addUser");
-
+const event=require("./routes/eventRoutes")
 const dotenv = require('dotenv');
 dotenv.config();
 const {OAuth2Client} = require('google-auth-library');
@@ -65,7 +65,7 @@ app.use("/api", addCategoryRoutes);
 app.use("/api", addEmployeeRoutes);
 
 app.use("/api", addUser);
-
+app.use("/api", event    );
 
 
 //error middleware
