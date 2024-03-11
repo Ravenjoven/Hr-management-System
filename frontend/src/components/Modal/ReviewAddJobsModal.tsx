@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import axios from "axios";
 
 interface Skill {
   name: string;
@@ -10,12 +12,13 @@ interface FormData {
   jobName: string;
   jobDescription: string;
   jobType: string;
-  jobRoles: string;
+  jobSlots: number;
   jobCategory: string;
   jobSkills: Skill[];
   jobSetUp: string;
-  jobExperience: string;
-  jobSalary: [number, number];
+  jobExperience: number;
+  jobFromSalary: number;
+  jobToSalary: number;
 }
 
 interface ReviewAddJobsModalProps {
@@ -32,6 +35,26 @@ const ReviewAddJobsModal: React.FC<ReviewAddJobsModalProps> = ({
   const handleClose = () => {
     isClose && isClose();
   };
+
+  const addJobs = () => {
+    axios
+      .post("http://localhost:9000/api/jobs/add", formData, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then(() => {
+        alert("Send Successfully");
+        setTimeout(() => {
+          isClose(); // Close modal after 3 seconds
+        }, 3000);
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+
   return (
     <>
       {isOpen && (
@@ -96,7 +119,7 @@ const ReviewAddJobsModal: React.FC<ReviewAddJobsModalProps> = ({
                       <h4 className="font-semibold">
                         Job Slot:
                         <span className="font-normal capitalize pl-2">
-                          {formData.jobRoles}
+                          {formData.jobSlots}
                         </span>
                       </h4>
                     </div>
@@ -120,7 +143,7 @@ const ReviewAddJobsModal: React.FC<ReviewAddJobsModalProps> = ({
                       <h4 className="font-semibold">
                         Salary:
                         <span className="font-normal capitalize pl-2">
-                          {formData.jobSalary[0]} - {formData.jobSalary[1]}
+                          {formData.jobFromSalary} - {formData.jobToSalary}
                         </span>
                       </h4>
                     </div>
@@ -151,6 +174,7 @@ const ReviewAddJobsModal: React.FC<ReviewAddJobsModalProps> = ({
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
                   <button
                     type="button"
+                    onClick={addJobs}
                     className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                   >
                     Post now

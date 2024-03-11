@@ -3,7 +3,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "../Sidebar";
 import AdminNavar from "../AdminNavar";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 function AdminProfile() {

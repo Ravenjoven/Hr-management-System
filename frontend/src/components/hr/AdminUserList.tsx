@@ -7,7 +7,7 @@ import {
   faTrash,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import React, { useState } from "react";
 import ViewEmployeeModal from "../Modal/ViewEmployeeModal";
 
 interface FormData {

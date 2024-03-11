@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Navar from "./Navar";
 import { jwtDecode } from "jwt-decode";
+import { ReactSession } from "react-client-session";
+import axios from "axios";
+import UserProfile from "./OJT/UserDetail";
+// import { Redirect } from 'react-router-dom';
 
 const data = [
   {
@@ -13,82 +17,106 @@ const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 
 const Login = () => {
-  // interface userI{
-  //   name: string | null;
-  //   iat?: number;
-  //   iss?: string;
-
-  // }
-
-  // const [user, setUser] = useState<userI>({ name:null });
-
-  // function handleCallbackResponse(response: { credential: any; }){
-  //   console.log("Encoded JWT ID Token: "+ response.credential);
-
-  // const userObject =response.credential;
-
-  // setUser(userObject as userI);
-  // document.getElementById("SignInDiv")!.hidden =true;
-  // }
-  // function handleSignOut(){
-  //   setUser({name:null});
-  //   document.getElementById("SigninDiv")!.hidden=true;
-  // }
-
-  //@ts-ignore
-  //   const google=window.google;
-
-  // useEffect(()=>{
-  /* global google  */
-  //   google.accounts!.id.initialize({
-  //     client_id: "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
-  //     callback: handleCallbackResponse
-  //   });
-
-  // const SignIn = document.getElementById("SignInDiv")!;
-  // google.accounts.id.renderButton(SignIn,{
-  //   theme:"outline",
-  //   size:"large",
-  //   type: "standard"
-  // });
-  // google.accounts.id.prompt();
-  // google.accounts.id.renderButton(
-  //   document.getElementById("SignInDiv"),
-  //   { theme: "outline", size:"large"}
-
-  // );
-  // },[]);
-
-  interface userI {
-    name: string | null;
+  interface User {
+    name?: string | null;
     iat?: number;
     iss?: string;
     picture?: string;
-  };
-  const [user, setUser] = useState<userI>({ name: null });
+    family_name?: string;
+    given_name?: string;
+    email?: string | null;
+    jti?: string;
+  }
+
+  const [user, setUser] = useState<User>({ email: null });
+  const [logIn, setLogIn] = useState(false);
+
   //@ts-ignore
   const google = window.google;
-  /* global google  */
-  function handleCallbackResponse(response: { credential: any }) {
-    console.log("Encoded JWT ID Token: " + response.credential);
-
-    const userObject = jwtDecode(response.credential);
-    console.log(userObject);
-    // setUser(userObject as userI);
-    // document.getElementById("SignInDiv")!.hidden =true;
-  }
   useEffect(() => {
     google.accounts.id.initialize({
       client_id:
         "335370154466-jlrgvk1qbnhte3kc6hcsp7kg64fl95jt.apps.googleusercontent.com",
       callback: handleCallbackResponse,
     });
+    /* global google  */
 
     google.accounts.id.renderButton(document.getElementById("SignInDiv"), {
       theme: "outline",
       size: "large",
     });
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      // Check if user is defined
+      axios
+        .post("http://localhost:9000/api/user/addUser", user, {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((response) => {
+          alert("User added successfully");
+
+          console.log("Response:", response.data);
+        })
+        .catch((error) => {
+          // alert("An error occurred while adding the user");
+          console.log(user);
+          console.error("An error occurred while adding the user:", error);
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      await ReactSession.setStoreType("localStorage");
+      await ReactSession.set("mail", user.email);
+      await ReactSession.set("name", user.name);
+
+      const mail = await ReactSession.get("mail");
+      if (mail) {
+        setLogIn(true);
+      } else {
+        setLogIn(false);
+      }
+    };
+
+    checkLoggedIn();
+  }, [user]);
+
+  // Render user profile component once authentication is complete
+
+  // useEffect(() => {
+  //     if (ReactSession.get("mail")) {
+  //         setLogIn(true);
+  //     }
+  // }, []);
+
+  // const handleLogIn = () => {
+  //   ReactSession.setStoreType("localStorage");
+  //     ReactSession.set("mail", user.email);
+  //     setLogIn(true);
+  // }
+  // useEffect(() => {
+  //     if (ReactSession.get("mail")===user) {
+  //         setLogIn(true);
+  //     }
+  // }, []);
+
+  if (logIn) {
+    window.location.href = "/UserProfile";
+  }
+
+  function handleCallbackResponse(response: { credential: any }) {
+    const userObject = jwtDecode(response.credential);
+    setUser(userObject as User);
+
+    console.log(user.name);
+  }
+
   return (
     <>
       <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen  bg-white font-montserrat">
@@ -137,6 +165,8 @@ const Login = () => {
                   <input
                     className="w-[200px] [border:none] [outline:none]  font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block whitespace-nowrap z-[2]"
                     placeholder="Email@gmail.com"
+                    name="email"
+                    // onChange={handleInput}
                     type="text"
                   />
                 </div>
@@ -146,6 +176,8 @@ const Login = () => {
                     <input
                       className="w-[200px] [border:none] [outline:none] font-semibold font-montserrat text-xs bg-[transparent] h-4 relative text-black text-left inline-block z-[2]"
                       placeholder="Password"
+                      name="password"
+                      // onChange={handleInput}
                       type="password"
                     />
                   </div>
@@ -161,18 +193,8 @@ const Login = () => {
                     </b>
                   </div>
                 </div>
-                {/* <button
-                  type="button"
-                  className="flex justify-center items-center bg-white rounded-xl p-2.5 w-full m-[2px]"
-                >
-                  <img
-                    src="../images/Gmail.png"
-                    alt=""
-                    className="w-[20px] mr-[20px] inline "
-                  />
-                  <span className="text-xs">Log in with Google</span>
-                </button> */}
-                <div id="SignInDiv"></div>
+
+                <button id="SignInDiv"></button>
                 <div className="w-[204px] flex flex-row items-start justify-start py-0 px-2 box-border">
                   <b className="flex-1 relative text-3xs font-inter text-left z-[1]">
                     <span className="text-white">Don’t have account?</span>

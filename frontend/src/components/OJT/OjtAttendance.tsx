@@ -1,3 +1,4 @@
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OjtNavar from "../OJT/OjtNavar";
 import OjtSidebar from "../OJT/OjtSidebar";

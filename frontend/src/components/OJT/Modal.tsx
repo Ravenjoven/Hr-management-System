@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useRef } from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -19,23 +19,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     console.log('Form submitted:', { fullName, email, contact, skills , resume, application, profile});
     onClose();
   };
-    const [appName, setAppName] = useState('');
-    const AppHandleFileChange = (event: any) => {
-        const file = event.target.files[0];
-        if (file) {
-            setAppName(file.name);
-        }
-        
-    };
-    const fileInputRef = useRef(null);
-    const handleFileChange = (event: any) => {
-        const selectedFiles = event.target.files;
-        if (selectedFiles.length > 0) {
-            // Here you can perform any action with the selected file(s)
-           console.log(selectedFiles)
-        }
-      };
-      
+  const handleFileChange = (e: any) => {
+    const fileName = e.target.files[0].name;
+    setResume(fileName);
+  };
+
   return (
     <>
       {isOpen && (
@@ -44,9 +32,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className="fixed inset-0 transition-opacity">
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+            &#8203;
             <div
               className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
               role="dialog"
@@ -57,8 +44,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:text-left w-full">
-                      <h3 className="text- leading-6 font-medium text-gray-900" id="modal-headline">
-                        Enter Your Information
+                      <h3
+                        className="text- leading-6 font-medium text-gray-900"
+                        id="modal-headline"
+                      >
+                        Sent Application
                       </h3>
                       <div className="mt-5 font-normal">
                         <div className="mb-4">

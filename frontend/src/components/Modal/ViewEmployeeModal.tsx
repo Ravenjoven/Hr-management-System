@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-
+import React from "react";
 interface ModalProps {
   isView: boolean;
   isClose: () => void;

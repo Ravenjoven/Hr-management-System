@@ -1,8 +1,9 @@
 
+
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../OJT/Style.css";
-
+import React from "react";
 
 const data = [
   {
@@ -34,7 +35,6 @@ interface SidebarProps {
 
 function UnEmpSidebar({ expanded }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedJob, setSelectedJob] = useState(null as any);
