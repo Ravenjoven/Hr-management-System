@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-const data = [
+import SignUpModal from "../Modal/SignUpModal"; // Import the SignUpModal component
+
+interface DataItem {
+  id: number;
+  label: string;
+  to: string;
+}
+
+const data: DataItem[] = [
   {
     id: 1,
     label: "Sign In",
     to: "/Dashboard",
   },
 ];
-const firstRoute = data[0].to;
-const firstLabel = data[0].label;
-const OjtLogin = () => {
+
+const OjtLogin: React.FC = () => {
+  const [showSignUpModal, setShowSignUpModal] = useState<boolean>(false);
+
+  const toggleSignUpModal = () => {
+    setShowSignUpModal(!showSignUpModal);
+  };
+
+  const firstRoute: string = data[0].to;
+  const firstLabel: string = data[0].label;
   return (
     <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat h-full">
       <>
@@ -183,6 +198,7 @@ const OjtLogin = () => {
             rights reserved
           </div>
         </footer>
+        {showSignUpModal && <SignUpModal closeModal={toggleSignUpModal} />}
       </>
     </div>
   );
