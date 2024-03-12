@@ -3,6 +3,7 @@ import Navar from "./Navar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import {
   faCalendarDays,
   faFileText,
@@ -10,6 +11,14 @@ import {
   faSuitcase,
   faTh,
 } from "@fortawesome/free-solid-svg-icons";
+
+const data = [
+  {
+    to: "/login",
+  },
+];
+
+const loginRoute = data[0].to;
 
 interface Skill {
   id: number;
@@ -64,13 +73,15 @@ export default function JobCategory() {
       <>
         <Navar />
         <div className="bg-sky-800 w-full h-40 flex justify-center items-center">
-          <button
-            type="button"
-            className="text-white bg-blue-700  justify-center items-center w-60 h-16 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex  me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            <FontAwesomeIcon icon={faSuitcase} className="pr-2" />
-            Apply job
-          </button>
+          <Link to={loginRoute}>
+            <button
+              type="button"
+              className="text-white bg-blue-700  justify-center items-center w-60 h-16 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex  me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <FontAwesomeIcon icon={faSuitcase} className="pr-2" />
+              Apply job
+            </button>
+          </Link>
         </div>
         <header className="h-full max-w-screen-xl mx-auto mt-10 border-gray-400">
           <section className="w-full h-52 bg-white rounded-2xl flex flex-col shadow-2xl">

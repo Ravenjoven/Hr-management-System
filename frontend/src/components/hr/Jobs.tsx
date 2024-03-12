@@ -59,6 +59,7 @@ function Jobs() {
     setSelectedApplicant(null);
   };
   const openViewJobsModal = (job: any) => {
+    localStorage.setItem("id", job._id);
     setSelectedJob(job);
     setViewJobs(true);
   };
@@ -75,6 +76,7 @@ function Jobs() {
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -85,9 +87,9 @@ function Jobs() {
       }
     };
     fetchJobs();
-  }, [jobs]);
+  }, []);
+
   useEffect(() => {
-    // Function to fetch jobs when component mounts
     const fetCategory = async () => {
       try {
         const response = await axios.get(
@@ -99,7 +101,8 @@ function Jobs() {
       }
     };
     fetCategory();
-  }, [category]);
+  }, []);
+
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",

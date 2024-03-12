@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Navar from "./Navar";
-
 import { Link } from "react-router-dom";
 import axios from "axios";
 const data = [
