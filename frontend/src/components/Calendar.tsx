@@ -7,35 +7,35 @@ import listPlugin from "@fullcalendar/list";
 import ModalComponent from "./Modal/EventModal";
 import "../App.css";
 import AddModal from "./Modal/AddModal";
+import axios from "axios";
+
+interface Event {
+  _id:string;
+  date: string;
+  title: string;
+}
 
 const Calendar: React.FC = () => {
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      title: "event",
-      date: "2024-03-02",
-    },
-    {
-      id: 2,
-      title: "new event",
-      date: "2024-03-03",
-    },
-    {
-      id: 3,
-      title: "another event",
-      date: "2024-03-04T09:00:00",
-    },
-    {
-      id: 4,
-      title: "Meeting",
-      date: "2024-03-01T11:00:00",
-    },
-    {
-      id: 5,
-      title: "Meeting",
-      date: "2024-03-05",
-    },
-  ]);
+
+  const [vent, setEvent] = useState<Event[]>([]);
+ 
+  useEffect(() => {
+    // Function to fetch jobs when component mounts
+    const getEvent = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/event/getEvent"
+        );
+        setEvent(response.data.event);
+    
+    // console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+    getEvent();   
+  }, [vent]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -46,7 +46,7 @@ const Calendar: React.FC = () => {
     setIsAddModalOpen(true);
   };
   const handleEventClick = (info: any) => {
-    setSelectedEvent(info.event);
+    setSelectedEvent(info.vent);
     setIsModalOpen(true);
   };
 
@@ -54,7 +54,6 @@ const Calendar: React.FC = () => {
     setIsModalOpen(false);
     setSelectedDate(null);
   };
-
   return (
     <div className="z-50   text-black ">
       {isAddModalOpen && selectedDate !== null && (
@@ -65,7 +64,7 @@ const Calendar: React.FC = () => {
         <ModalComponent event={selectedEvent} onClose={closeModal} />
       )}
 
-      <FullCalendar
+      <FullCalendar 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
 
         initialView="dayGridMonth"
@@ -75,7 +74,7 @@ const Calendar: React.FC = () => {
           end: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         dateClick={handleDateClick}
-        events={events}
+        events={vent}
         eventClick={handleEventClick}
         height={"400px"}
       />

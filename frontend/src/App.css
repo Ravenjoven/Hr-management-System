@@ -4,12 +4,16 @@
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 20px;
-    
+ 
 }
 
 .fc-day-today {
     background-color: rgba(255, 150, 0, 0.5) !important;
+    
     /* You can adjust other styles like text color, border, etc. */
+}
+.fc-day{
+  cursor: pointer;
 }
 /* .fc .fc-button{
   background-color: blue;

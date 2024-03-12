@@ -19,13 +19,10 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
   });
 
   const handleSave = () => {
-    if (formData) {
       // Check if user is defined
-      axios
-        .post("http://localhost:9000/api/event/addevent", formData, {
+      axios.post("http://localhost:9000/api/event/addevent", formData, {
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
           },
         })
         .then((response) => {
@@ -37,13 +34,10 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
           console.log(formData);
           console.error("An error occurred while adding the event:", error);
         });
-    }
+
     console.log("Form Data:", formData);
   };
 
-  // useEffect(() => {
-    
-  // }, [formData]);
 
   return (
     <>

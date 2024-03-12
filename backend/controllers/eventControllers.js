@@ -21,13 +21,17 @@ exports.addEvent = async (req, res) => {
 
 exports.getEvent = async(req,res, next)=>{
   try {
-    const getEvent = Event.find();
+    const event = await Event.find();
+    if (!event || event.length === 0) {
+      return res.status(404).json({ success: false, message: "No event found" });
+    }
     res.status(200).json({
       success:true,
-      getEvent
+      event
     })
   } catch (error) {
     next(error);
-    console.error(error)
+    console.error(error);
+   
   }
 };

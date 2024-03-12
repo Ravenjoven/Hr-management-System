@@ -10,6 +10,6 @@ const router = express.Router();
 router.post("/event/addevent", addEvent);
 
 //fetch event routes
-router.get("/event/getevent", getEvent);
+router.get("/event/getEvent", getEvent);
 
 module.exports = router;
