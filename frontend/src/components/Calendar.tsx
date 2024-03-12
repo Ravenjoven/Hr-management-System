@@ -45,8 +45,8 @@ const Calendar: React.FC = () => {
     setSelectedDate(info.dateStr);
     setIsAddModalOpen(true);
   };
-  const handleEventClick = (info: any) => {
-    setSelectedEvent(info.vent);
+  const handleEventClick = (vent: any) => {
+    setSelectedEvent(vent);
     setIsModalOpen(true);
   };
 

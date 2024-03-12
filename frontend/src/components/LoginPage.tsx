@@ -108,6 +108,7 @@ const Login = () => {
       await ReactSession.setStoreType("localStorage");
       await ReactSession.set("mail", user.email);
       await ReactSession.set("name", user.name);
+      await ReactSession.set("picture", user.picture);
 
       const mail = await ReactSession.get("mail");
       if (mail) {
