@@ -66,6 +66,7 @@ function Jobs() {
   const [showFirstRow, setShowFirstRow] = useState(false);
   const [isViewApplicantModal, setViewApplicantModal] = useState(false);
   const [viewJobs, setViewJobs] = useState(false);
+  const [jobId, setJobId] = useState("");
 
   const openViewApplicantModal = (user: any) => {
     setSelectedApplicant(user);
@@ -100,7 +101,7 @@ function Jobs() {
         const response = await axios.get("http://localhost:9000/api/jobs/get");
         setJobs(response.data.jobs);
       } catch (error) {
-        console.error("Error fetching jobs:", error);
+        console.error("Error fetching jobs:");
       }
     };
     fetchJobs();
@@ -114,7 +115,7 @@ function Jobs() {
         );
         setCategory(response.data.category);
       } catch (error) {
-        console.error("Error fetching jobs:", error);
+        console.error("Error fetching category:");
       }
     };
     fetCategory();
@@ -127,9 +128,8 @@ function Jobs() {
           "http://localhost:9000/api/jobs/getApplicant"
         );
         setApplicant(response.data.applicant);
-        console.log(response.data.applicant);
       } catch (error) {
-        console.error("Error fetching applicant:", error);
+        console.error("Error fetching applicant:");
       }
     };
     fetchApplicant();
@@ -291,9 +291,7 @@ function Jobs() {
   }
 
   const handleClick = (jobId: string) => {
-    const filteredApplicants = applicant.filter((req) =>
-      req.jobs.includes(jobId)
-    );
+    setJobId(jobId);
     setShowAllData(!showAllData);
     setShowFirstRow(!showFirstRow);
   };
@@ -553,43 +551,46 @@ function Jobs() {
                     {/*individual data*/}
                     {!showAllData &&
                       currentApplicants.map((jobApplicant, index) => (
-                        <tr
-                          key={jobApplicant._id}
-                          className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          >
-                            {index + 1}
-                          </th>
-                          <td className="px-6 py-4 ">
-                            {jobApplicant.fullName}
-                          </td>
-                          <td className="px-6 py-4">{jobApplicant.jobType}</td>
-                          <td className="px-6 py-4">
-                            {formattedApplicant[index] &&
-                              formattedApplicant[index].createdAt}
-                          </td>
-                          <td className="px-6 py-4 text-center">
-                            <button
-                              onClick={() =>
-                                openViewApplicantModal(jobApplicant)
-                              }
-                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            >
-                              <FontAwesomeIcon
-                                icon={faEye}
-                                className="hover:text-green-500"
+                        <React.Fragment key={jobApplicant._id}>
+                          {jobApplicant.jobs.includes(jobId) && (
+                            <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              >
+                                {index + 1}
+                              </th>
+                              <td className="px-6 py-4 ">
+                                {jobApplicant.fullName}
+                              </td>
+                              <td className="px-6 py-4">
+                                {jobApplicant.jobType}
+                              </td>
+                              <td className="px-6 py-4">
+                                {formattedApplicant[index] &&
+                                  formattedApplicant[index].createdAt}
+                              </td>
+                              <td className="px-6 py-4 text-center">
+                                <button
+                                  onClick={() =>
+                                    openViewApplicantModal(jobApplicant)
+                                  }
+                                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faEye}
+                                    className="hover:text-green-500"
+                                  />
+                                </button>
+                              </td>
+                              <ViewApplicantDetails
+                                isOpen={isViewApplicantModal}
+                                isClose={closeViewModal}
+                                user={selectedApplicant}
                               />
-                            </button>
-                          </td>
-                          <ViewApplicantDetails
-                            isOpen={isViewApplicantModal}
-                            isClose={closeViewModal}
-                            user={selectedApplicant}
-                          />
-                        </tr>
+                            </tr>
+                          )}
+                        </React.Fragment>
                       ))}
                   </tbody>
                 </table>
