@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navar from "./Navar";
 import axios from "axios";
 import { ReactSession } from 'react-client-session';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -41,6 +42,24 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  //Google Log in 
+  const navigate = useNavigate(); // Step 2: Initialize useNavigate
+  
+  const googleLogin = useGoogleLogin({
+    onSuccess: (credentialResponse) => {
+      console.log('Login Success! Current user:', credentialResponse);
+      // Handle the successful login
+      
+      // Step 3: Redirect to the user profile page
+      navigate('/userProfile'); // Replace '/userProfile' with your user profile path
+    },
+    onError: () => {
+      console.log('Login Failed');
+      // Handle login failure
+    },
+    scope: 'openid email profile',
+  });
+
   
 
 
@@ -143,17 +162,17 @@ const Login = () => {
               </div>
 
               <button
-                type="button"
-                className="flex justify-center items-center mt-4 bg-white rounded-xl p-2.5 w-full m-[2px]"
-              >
-                <img
-                  src="../images/Gmail.png"
-                  alt=""
-                  className="w-[20px] mr-[20px] inline "
-                />
-                <span className="text-xs">Log in with Google</span>
-              </button>
-
+      type="button"
+      className="flex justify-center items-center mt-4 bg-white rounded-xl p-2.5 w-full m-[2px]"
+      onClick={() => googleLogin()} // Attach the login function to your button's onClick event
+    >
+      <img
+        src="../images/Gmail.png"
+        alt="Google"
+        className="w-[20px] mr-[20px] inline"
+      />
+      <span className="text-xs">Log in with Google</span>
+    </button>
               <p
                 id="helper-text-explanation"
                 className="mt-8 text-xs text-white"
@@ -185,3 +204,5 @@ const Login = () => {
 };
 
 export default Login;
+
+// function App () {
