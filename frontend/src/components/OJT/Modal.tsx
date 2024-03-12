@@ -4,9 +4,11 @@ import axios from "axios";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  selectedJob: selectedJob;
+  selectedJob: Job | null;
 }
-
+interface Job {
+  jobName: string;
+}
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
   const [jobName, setJobName] = useState("");
   const [fullName, setFullName] = useState("");
@@ -17,12 +19,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
   const [application, setApplication] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [jobType, setJobType] = useState("");
-
-  interface Job {
-    jobName: string;
-    jobSkills: any[];
-    createdAt: Date;
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const jobApplicationSchema = new mongoose.Schema({
   jobName: {
     type: String,
-    required: true,
   },
   fullName: {
     type: String,
@@ -24,6 +23,9 @@ const jobApplicationSchema = new mongoose.Schema({
   jobType: {
     type: String,
     required: true,
+  },
+  roles: {
+    type: Number,
   },
   skills: {
     type: Object,

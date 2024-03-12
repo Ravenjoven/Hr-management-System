@@ -23,6 +23,7 @@ exports.createJobApplication = async (req, res) => {
       contact,
       linkedIn,
       jobType,
+      roles: 0,
       skills,
       resume,
       application,
