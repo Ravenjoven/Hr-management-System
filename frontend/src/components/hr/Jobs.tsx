@@ -21,6 +21,7 @@ interface Job {
   jobSlots: number;
   jobCategory: string;
   jobSkills: Object[];
+  applicant: string[];
   jobSetup: string;
   jobExperience: number;
   jobFromSalary: number;
@@ -34,9 +35,25 @@ interface Category {
   jobCategory: string;
 }
 
+interface Applicant {
+  _id: string;
+  jobs: string[];
+  fullName: string;
+  email: string;
+  contact: string;
+  linkedIn: string;
+  jobType: string;
+  roles: number;
+  skills: string;
+  resume: string;
+  application: string;
+  createdAt: Date;
+}
+
 function Jobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [category, setCategory] = useState<Category[]>([]);
+  const [applicant, setApplicant] = useState<Applicant[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -103,6 +120,21 @@ function Jobs() {
     fetCategory();
   }, []);
 
+  useEffect(() => {
+    const fetchApplicant = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/jobs/getApplicant"
+        );
+        setApplicant(response.data.applicant);
+        console.log(response.data.applicant);
+      } catch (error) {
+        console.error("Error fetching applicant:", error);
+      }
+    };
+    fetchApplicant();
+  }, []);
+
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
@@ -116,113 +148,120 @@ function Jobs() {
     };
   });
 
-  const [applicants, setApplicants] = useState([
-    {
-      id: 0,
-      applicantName: "Jezrael Suliano",
-      position: "Fullstack Developer",
-      year_experience: "1",
-      status: 0,
-      date_applied: "03/15/24",
-      files: "./files/formal.pdf",
-      letter:
-        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-      img: "./images/cv1.png",
-      email: "jezraelsuliano@gmail.com",
-      contact_number: "099191912013",
-      linkedIn:
-        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-      skills: ["hardworking", "technical", "time management"],
-    },
-    {
-      id: 1,
-      applicantName: "Ranel Soliano",
-      position: "Fullstack Developer",
-      year_experience: "1",
-      status: 0,
-      date_applied: "03/15/24",
-      files: "./files/formal.pdf",
-      letter:
-        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-      img: "./images/cv1.png",
-      email: "jezraelsuliano@gmail.com",
-      contact_number: "099191912013",
-      linkedIn:
-        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-      skills: ["hardworking", "technical", "time management"],
-    },
-    {
-      id: 2,
-      applicantName: "Arnel Carcella",
-      position: "Fullstack Developer",
-      year_experience: "1",
-      status: 0,
-      date_applied: "03/15/24",
-      files: "./files/formal.pdf",
-      letter:
-        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-      img: "./images/cv1.png",
-      email: "jezraelsuliano@gmail.com",
-      contact_number: "099191912013",
-      linkedIn:
-        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-      skills: ["hardworking", "technical", "time management"],
-    },
-    {
-      id: 3,
-      applicantName: "Raven Joven",
-      position: "Fullstack Developer",
-      year_experience: "1",
-      status: 0,
-      date_applied: "03/15/24",
-      files: "./files/formal.pdf",
-      letter:
-        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-      img: "./images/cv1.png",
-      email: "jezraelsuliano@gmail.com",
-      contact_number: "099191912013",
-      linkedIn:
-        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-      skills: ["hardworking", "technical", "time management"],
-    },
-    {
-      id: 4,
-      applicantName: "Aijem Aijem",
-      position: "Fullstack Developer",
-      year_experience: "1",
-      status: 0,
-      date_applied: "03/15/24",
-      files: "./files/formal.pdf",
-      letter:
-        "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-      img: "./images/cv1.png",
-      email: "jezraelsuliano@gmail.com",
-      contact_number: "099191912013",
-      linkedIn:
-        "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-      skills: ["hardworking", "technical", "time management"],
-    },
-  ]);
+  const formattedApplicant = applicant.map((req) => {
+    const formattedDate = new Date(req.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    return {
+      ...req,
+      createdAt: formattedDate,
+    };
+  });
+
+  // const [applicants, setApplicants] = useState([
+  //   {
+  //     id: 0,
+  //     applicantName: "Jezrael Suliano",
+  //     position: "Fullstack Developer",
+  //     year_experience: "1",
+  //     status: 0,
+  //     date_applied: "03/15/24",
+  //     files: "./files/formal.pdf",
+  //     letter:
+  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+  //     img: "./images/cv1.png",
+  //     email: "jezraelsuliano@gmail.com",
+  //     contact_number: "099191912013",
+  //     linkedIn:
+  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+  //     skills: ["hardworking", "technical", "time management"],
+  //   },
+  //   {
+  //     id: 1,
+  //     applicantName: "Ranel Soliano",
+  //     position: "Fullstack Developer",
+  //     year_experience: "1",
+  //     status: 0,
+  //     date_applied: "03/15/24",
+  //     files: "./files/formal.pdf",
+  //     letter:
+  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+  //     img: "./images/cv1.png",
+  //     email: "jezraelsuliano@gmail.com",
+  //     contact_number: "099191912013",
+  //     linkedIn:
+  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+  //     skills: ["hardworking", "technical", "time management"],
+  //   },
+  //   {
+  //     id: 2,
+  //     applicantName: "Arnel Carcella",
+  //     position: "Fullstack Developer",
+  //     year_experience: "1",
+  //     status: 0,
+  //     date_applied: "03/15/24",
+  //     files: "./files/formal.pdf",
+  //     letter:
+  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+  //     img: "./images/cv1.png",
+  //     email: "jezraelsuliano@gmail.com",
+  //     contact_number: "099191912013",
+  //     linkedIn:
+  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+  //     skills: ["hardworking", "technical", "time management"],
+  //   },
+  //   {
+  //     id: 3,
+  //     applicantName: "Raven Joven",
+  //     position: "Fullstack Developer",
+  //     year_experience: "1",
+  //     status: 0,
+  //     date_applied: "03/15/24",
+  //     files: "./files/formal.pdf",
+  //     letter:
+  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+  //     img: "./images/cv1.png",
+  //     email: "jezraelsuliano@gmail.com",
+  //     contact_number: "099191912013",
+  //     linkedIn:
+  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+  //     skills: ["hardworking", "technical", "time management"],
+  //   },
+  //   {
+  //     id: 4,
+  //     applicantName: "Aijem Aijem",
+  //     position: "Fullstack Developer",
+  //     year_experience: "1",
+  //     status: 0,
+  //     date_applied: "03/15/24",
+  //     files: "./files/formal.pdf",
+  //     letter:
+  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
+  //     img: "./images/cv1.png",
+  //     email: "jezraelsuliano@gmail.com",
+  //     contact_number: "099191912013",
+  //     linkedIn:
+  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
+  //     skills: ["hardworking", "technical", "time management"],
+  //   },
+  // ]);
   const filteredJobs = jobs.filter((job) => {
     const searchQueryLower = searchQuery.toLowerCase();
     return (
       job.jobName.toLowerCase().includes(searchQueryLower) ||
       job.jobDescription.toLowerCase().includes(searchQueryLower) ||
-      job.jobSlots.toString().includes(searchQueryLower) || // Assuming jobLimit refers to jobSlots
+      job.jobSlots.toString().includes(searchQueryLower) ||
       job.createdAt.toString().toLowerCase().includes(searchQueryLower)
     );
   });
-  const filteredApplicants = applicants.filter((applicant) => {
+  const filteredApplicants = applicant.filter((res) => {
     return (
-      applicant.applicantName
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      applicant.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      applicant.year_experience
-        .toString()
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      applicant.date_applied.toLowerCase().includes(searchQuery.toLowerCase())
+      res.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.jobType.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      res.createdAt.toString().toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
   const handlePageClick = (pageNumber: number) => {
@@ -247,12 +286,14 @@ function Jobs() {
     indexOfLastApplicants
   );
   const pageApplicantNumbers = [];
-  for (let i = 1; i <= Math.ceil(applicants.length / ApplicantPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(applicant.length / ApplicantPerPage); i++) {
     pageApplicantNumbers.push(i);
   }
 
   const handleClick = (jobId: string) => {
-    console.log(`Clicked job with ID ${jobId}`);
+    const filteredApplicants = applicant.filter((req) =>
+      req.jobs.includes(jobId)
+    );
     setShowAllData(!showAllData);
     setShowFirstRow(!showFirstRow);
   };
@@ -441,9 +482,6 @@ function Jobs() {
                         Position
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Year Experience
-                      </th>
-                      <th scope="col" className="px-6 py-3">
                         Date Applied
                       </th>
                       <th scope="col" className="px-6 py-3 text-center">
@@ -472,7 +510,7 @@ function Jobs() {
                             className="px-6 py-4 cursor-pointer text-blue-600 font-semibold"
                           >
                             <div className="rounded-full w-10 text-center hover:text-green-600">
-                              {job.jobSlots}
+                              {job.applicant.length}
                             </div>
                           </td>
                           <td className="px-6 py-4">
@@ -516,7 +554,7 @@ function Jobs() {
                     {!showAllData &&
                       currentApplicants.map((jobApplicant, index) => (
                         <tr
-                          key={jobApplicant.id}
+                          key={jobApplicant._id}
                           className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
                           <th
@@ -526,14 +564,12 @@ function Jobs() {
                             {index + 1}
                           </th>
                           <td className="px-6 py-4 ">
-                            {jobApplicant.applicantName}
+                            {jobApplicant.fullName}
                           </td>
-                          <td className="px-6 py-4">{jobApplicant.position}</td>
+                          <td className="px-6 py-4">{jobApplicant.jobType}</td>
                           <td className="px-6 py-4">
-                            {jobApplicant.year_experience}
-                          </td>
-                          <td className="px-6 py-4">
-                            {jobApplicant.date_applied}
+                            {formattedApplicant[index] &&
+                              formattedApplicant[index].createdAt}
                           </td>
                           <td className="px-6 py-4 text-center">
                             <button

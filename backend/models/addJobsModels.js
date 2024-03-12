@@ -51,6 +51,7 @@ const jobSchema = new mongoose.Schema(
       trim: true,
     },
     category: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
+    applicant: [{ type: mongoose.Schema.Types.ObjectId, ref: "applyjobs" }],
   },
   { timestamps: true }
 );
