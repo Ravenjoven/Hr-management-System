@@ -270,19 +270,19 @@ function AdminEmployeeManagement() {
                           No.
                         </th>
                         <th scope="col" className="px-6 py-3">
+                          Applicant Name
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                           Email
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                          JOB CATEGORY
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                          POSITION
                         </th>
                         <th scope="col" className="px-6 py-3">
                           Type
                         </th>
                         <th scope="col" className="px-6 py-3">
-                          ACTIONS
+                          Date
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                          Actions
                         </th>
                       </tr>
                     </thead>
@@ -308,7 +308,7 @@ function AdminEmployeeManagement() {
                           <td className="px-6 py-4">
                             {jobApplicant.date_applied}
                           </td>
-                          <td className="px-6 py-4 text-center">
+                          <td className="px-10 py-4">
                             <button
                               onClick={() =>
                                 openViewApplicantModal(jobApplicant)
