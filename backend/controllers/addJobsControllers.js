@@ -1,6 +1,7 @@
 //this is add category created by ranel
 const addJobsModels = require("../models/addJobsModels");
 const addCategoryModels = require("../models/addCategoryModels");
+const jobApplicationModels = require("../models/jobApplicationModels");
 const { validationResult } = require("express-validator");
 
 exports.createJobs = async (req, res, next) => {
@@ -39,6 +40,15 @@ exports.createJobs = async (req, res, next) => {
     // Associate the job with the category
     category.jobs.push(job._id);
     await category.save();
+
+    // Now, you can also associate job applications with the job
+    const jobApplications = req.body.jobApplications; // Assuming you have an array of job application IDs in the request body
+
+    if (jobApplications && jobApplications.length > 0) {
+      // Add references to job applications to the job document
+      job.applications = jobApplications;
+      await job.save();
+    }
 
     res.status(201).json({
       success: true,
@@ -119,6 +129,22 @@ exports.deleteJobs = async (req, res, next) => {
     res
       .status(200)
       .json({ success: true, message: "Job deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getApplicant = async (req, res, next) => {
+  try {
+    const applicant = await jobApplicationModels.find();
+
+    if (!applicant || applicant.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No applicant found" });
+    }
+
+    res.status(200).json({ success: true, applicant });
   } catch (error) {
     next(error);
   }

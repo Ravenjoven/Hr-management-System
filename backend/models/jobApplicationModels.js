@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
-
+const Schema = mongoose.Schema;
 const jobApplicationSchema = new mongoose.Schema({
-  jobName: {
-    type: String,
-  },
   fullName: {
     type: String,
     required: true,
@@ -43,8 +40,11 @@ const jobApplicationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  jobs: [{ type: Schema.Types.ObjectId, ref: "addjobs" }],
 });
 
-const JobApplication = mongoose.model("applyjobs", jobApplicationSchema);
+module.exports = mongoose.model("applyjobs", jobApplicationSchema);
 
-module.exports = JobApplication;
+// const JobApplication = mongoose.model("applyjobs", jobApplicationSchema);
+
+// module.exports = JobApplication;

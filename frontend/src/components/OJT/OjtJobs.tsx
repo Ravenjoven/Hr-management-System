@@ -24,7 +24,10 @@ const OjtJobList: React.FC = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   useEffect(() => {
-    setSelectedJob(jobs[0] || null);
+    if (jobs.length > 0) {
+      setSelectedJob(jobs[0]);
+      localStorage.setItem("id", jobs[0]._id);
+    }
   }, [jobs]);
 
   useEffect(() => {
@@ -75,6 +78,7 @@ const OjtJobList: React.FC = () => {
   };
 
   const handleClick = (job: any) => {
+    localStorage.setItem("id", job?._id);
     setSelectedJob(job);
   };
   return (

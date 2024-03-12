@@ -23,7 +23,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const jobId = localStorage.getItem("id");
       const response = await axios.post("http://localhost:9000/api/apply", {
+        jobId,
         jobName,
         fullName,
         email,
