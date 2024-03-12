@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import { faClose, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 interface Category {
   _id: string;
@@ -13,7 +14,7 @@ interface ViewJobModal {
   viewJobs: boolean;
   isCloseJobs: () => void;
   job: {
-    id: number;
+    _id: string;
     jobName: string;
     jobDescription: string;
     jobType: string;
@@ -38,17 +39,27 @@ export default function ViewEditJobsModal({
   categories,
 }: ViewJobModal) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedJobName, setEditedJobName] = useState("");
-  const [editedJobDescription, setEditedJobDescription] = useState("");
-  const [editedJobSlot, setEditedJobSlot] = useState(0);
   const [buttonJobTypeMessage, setButtonJobTypeMessage] = useState("");
   const [buttonJobCategoryMessage, setButtonJobCategoryMessage] = useState("");
   const [buttonSetUpMessage, setButtonSetUpMessage] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isExperienceRequired, setIsExperienceRequired] = useState(true);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const id = localStorage.getItem("id");
+  const [formData, setFormData] = useState({
+    jobId: id,
+    jobName: "",
+    jobDescription: "",
+    jobType: "",
+    jobSlots: 0,
+    jobCategory: "",
+    jobSkills: [],
+    jobSetUp: "",
+    jobExperience: 0,
+    jobFromSalary: 0,
+    jobToSalary: 0,
+  });
+
   const skills = [
     { id: 0, name: "Hardworking", value: "Hardworking" },
     { id: 1, name: "Time Management", value: "Time Management" },
@@ -58,24 +69,24 @@ export default function ViewEditJobsModal({
 
   const handleSetupButtonClick = (val: any) => {
     setButtonSetUpMessage(val);
-    // setFormData({
-    //   ...formData,
-    //   jobSetUp: val,
-    // });
+    setFormData({
+      ...formData,
+      jobSetUp: val,
+    });
   };
   const handleSelectSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
-    // setFormData({
-    //   ...formData,
-    //   jobSkills: selectedList,
-    // });
+    setFormData({
+      ...formData,
+      jobSkills: selectedList,
+    });
   };
   const handleRemoveSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
-    // setFormData({
-    //   ...formData,
-    //   jobSkills: selectedList,
-    // });
+    setFormData({
+      ...formData,
+      jobSkills: selectedList,
+    });
   };
   const handleClose = () => {
     setCurrentPage(1);
@@ -84,24 +95,23 @@ export default function ViewEditJobsModal({
   const handleEditSaveToggle = () => {
     setIsExperienceRequired(false);
     setIsEditing((prevState) => !prevState);
-    if (isEditing) {
-      // Save the edited data
-      const editedJob = {
-        ...job,
-        jobName: editedJobName,
-        jobDescription: editedJobDescription,
-        // Update other fields similarly
-      };
-      console.log("Edited Job Data:", editedJob);
+  };
 
-      // Exit edit mode
-      setIsEditing(false);
-    } else {
-      // Enter edit mode
-      setIsEditing(true);
-
-      setEditedJobName(job?.jobName || "");
-      setEditedJobDescription(job?.jobDescription || "");
+  const handleSaveData = async () => {
+    try {
+      await axios.put("http://localhost:9000/api/jobs/edit", formData, {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      alert("Update Successfully");
+      localStorage.clear();
+      setTimeout(() => {
+        isCloseJobs();
+      }, 1000);
+    } catch (error) {
+      console.log("error", error);
     }
   };
 
@@ -110,10 +120,10 @@ export default function ViewEditJobsModal({
   };
   const handleCategoryClick = (category: any) => {
     setButtonJobCategoryMessage(category);
-    // setFormData({
-    //   ...formData,
-    //   jobCategory: category,
-    // });
+    setFormData({
+      ...formData,
+      jobCategory: category,
+    });
   };
   const handleCheckboxChange = (event: any) => {
     setIsExperienceRequired(event.target.checked);
@@ -127,10 +137,10 @@ export default function ViewEditJobsModal({
   };
   const handleTypeButtonClick = (type: string) => {
     setButtonJobTypeMessage(type);
-    // setFormData({
-    //   ...formData,
-    //   jobType: type,
-    // });
+    setFormData({
+      ...formData,
+      jobType: type,
+    });
   };
   return (
     <>
@@ -168,7 +178,7 @@ export default function ViewEditJobsModal({
                       className="text-lg font-medium leading-6 text-gray-900"
                       id="modal-headline"
                     >
-                      {title}{" "}
+                      {title}
                       <span className="pl-2">
                         <button
                           onClick={handleEditSaveToggle}
@@ -201,8 +211,13 @@ export default function ViewEditJobsModal({
                       {isEditing ? (
                         <input
                           type="text"
-                          value={editedJobName}
-                          onChange={(e) => setEditedJobName(e.target.value)}
+                          value={formData.jobName}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              jobName: e.target.value,
+                            })
+                          }
                           className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                       ) : (
@@ -218,11 +233,14 @@ export default function ViewEditJobsModal({
                       </h6>
                       {isEditing ? (
                         <textarea
-                          value={editedJobDescription}
+                          value={formData.jobDescription}
                           onChange={(e) =>
-                            setEditedJobDescription(e.target.value)
+                            setFormData({
+                              ...formData,
+                              jobDescription: e.target.value,
+                            })
                           }
-                          className="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                       ) : (
                         <span className="bg-gray-50 border cursor-not-allowed  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -311,9 +329,12 @@ export default function ViewEditJobsModal({
                       {isEditing ? (
                         <input
                           type="number"
-                          value={job?.jobSlots}
+                          value={formData.jobSlots}
                           onChange={(e) =>
-                            setEditedJobSlot(parseInt(e.target.value, 10))
+                            setFormData({
+                              ...formData,
+                              jobSlots: parseInt(e.target.value),
+                            })
                           }
                           className="bg-gray-50 border w-52 capitalize text-center mt-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
@@ -557,7 +578,7 @@ export default function ViewEditJobsModal({
                   <div>
                     <button
                       type="button"
-                      // onClick={handleSaveData}
+                      onClick={handleSaveData}
                       className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-800 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                     >
                       Save
