@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import MultiSelect from "multiselect-react-dropdown";
 import axios from "axios";
 
 interface ModalProps {
@@ -12,14 +13,20 @@ interface Job {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
   const [jobName, setJobName] = useState("");
   const [fullName, setFullName] = useState("");
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
-  const [skills, setSkills] = useState("");
-  const [resume, setResume] = useState("Upload Files");
+  const [resume, setResume] = useState("Upload Files . pdf");
   const [application, setApplication] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [jobType, setJobType] = useState("");
 
+  const skills = [
+    { id: 0, name: "Hardworking", value: "Hardworking" },
+    { id: 1, name: "Time Management", value: "Time Management" },
+    { id: 2, name: "Critical Thinking", value: "Critical Thinking" },
+    { id: 3, name: "Technincal", value: "Technincal" },
+  ];
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -42,6 +49,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
     } catch (error) {
       console.error("Error submitting form:", error);
     }
+  };
+  const handleSelectSkills = (selectedList: any) => {
+    setSelectedSkills(selectedList);
+  };
+  const handleRemoveSkills = (selectedList: any) => {
+    setSelectedSkills(selectedList);
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileName =
@@ -72,56 +85,65 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:text-left w-full">
                       <h3
-                        className="text- leading-6 font-medium text-gray-700"
+                        className=" leading-6 font-medium text-gray-100 rounded-2xl p-4 flex justify-center items-center bg-custom-text-green "
                         id="modal-headline"
                       >
-                        Applying for{" "}
-                        <span className="text-custom-text-green">
+                        APPLYING FOR{" "}
+                        <span className="uppercase text-custom-text-blue font-bold pl-2">
                           {selectedJob ? selectedJob.jobName : ""}
                         </span>
                       </h3>
                       <div className="mt-5 font-normal">
                         <div className="mb-4">
+                          <label htmlFor="fullName">Full Name</label>
                           <input
                             type="text"
+                            name="fullName"
                             placeholder="Full Name"
-                            className="w-full px-3 py-2 placeholder-gray-700 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             onChange={(e) => setFullName(e.target.value)}
                             required
                           />
                         </div>
+                        <label htmlFor="enail">Email</label>
                         <div className="mb-4">
                           <input
+                            name="email"
                             type="email"
-                            placeholder="Email Address"
-                            className="w-full px-3 py-2 placeholder-gray-700 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="Example@gmail.com"
+                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             onChange={(e) => setEmail(e.target.value)}
                             required
                           />
                         </div>
                         <div className="mb-4">
+                          <label htmlFor="contact">Contact No.</label>
                           <input
                             type="tel"
-                            placeholder="Contact Number"
-                            className="w-full px-3 py-2 placeholder-gray-700 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            name="contact"
+                            placeholder="+1234567890"
+                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             onChange={(e) => setContact(e.target.value)}
                             required
                           />
                         </div>
                         <div className="mb-4">
+                          <label htmlFor="link">LinkedIn Profile</label>
                           <input
+                            name="link"
                             type="tel"
                             placeholder="LinkedIn Profile"
-                            className="w-full px-3 py-2 placeholder-gray-700 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             onChange={(e) => setLinkedIn(e.target.value)}
                             required
                           />
                         </div>
                         <div className="mb-4">
+                          <label htmlFor="jobType">Job Type</label>
                           <select
                             name="jobType"
                             id=""
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700"
+                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-400"
                             onChange={(e) => setJobType(e.target.value)} // Add this line
                           >
                             <option value="">Select Job Type</option>
@@ -131,11 +153,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                           </select>
                         </div>
                         <div className="mb-4">
+                          <label htmlFor="application">
+                            Application Letter
+                          </label>
                           <textarea
                             rows={4}
                             placeholder="Application Letter"
                             onChange={(e) => setApplication(e.target.value)}
-                            className="w-full px-3 py-2 placeholder-gray-700 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             name="application"
                             id="application"
                           ></textarea>
@@ -146,8 +171,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                               htmlFor="fileInput"
                               className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer"
                             >
+                              {" "}
                               {resume && (
-                                <span className="block p-2 text-sm text-gray-700">
+                                <span className="block p-2 text-sm text-gray-400">
                                   {resume}
                                 </span>
                               )}
@@ -172,13 +198,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                           </div>
                         </div>
                         <div className="mb-4">
-                          <textarea
-                            placeholder="Skills"
-                            className="w-full px-3 py-2 placeholder-gray-700 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                            rows={4}
-                            onChange={(e) => setSkills(e.target.value)}
-                            required
-                          ></textarea>
+                          <label htmlFor="skill">Skills</label>
+                          <MultiSelect
+                            options={skills}
+                            selectedValues={selectedSkills}
+                            onSelect={handleSelectSkills}
+                            onRemove={handleRemoveSkills}
+                            displayValue="name"
+                            placeholder="Input skills here..."
+                            className="pt-2 h-full"
+                          />
                         </div>
                       </div>
                     </div>
