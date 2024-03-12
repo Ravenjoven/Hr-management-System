@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Navar from "./Navar";
-
 import { Link } from "react-router-dom";
 import axios from "axios";
 const data = [
@@ -14,11 +13,17 @@ const data = [
     label: "Ojt",
     to: "/ojt",
   },
+  {
+    id: 3,
+    label: "category",
+    to: "/JobCategory",
+  },
 ];
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const SecondRoute = data[1].to;
 const SecondLabel = data[1].label;
+const thirdRoute = data[2].to;
 
 interface Category {
   _id: string;
@@ -41,12 +46,12 @@ function HomePage() {
       }
     };
     fetCategory();
-  }, [category]);
+  }, []);
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">
       <>
         <Navar />
-        <header className="h-90 bg-custom-bg-gray">
+        <header className="h-90 bg-custom-bg-gray" id="home">
           <section className="max-w-screen-xl flex mx-auto">
             <div className="w-full pl-5 pt-2">
               <h1 className="font-bold text-custom-text-gray text-4xl">
@@ -167,7 +172,7 @@ function HomePage() {
           <div className="bg-orange-400 w-full h-80 absolute bottom-0 z-0"></div>
         </body>
         <>
-          <div className="my-24">
+          <div className="my-24" id="jobs">
             <section className="max-w-screen-xl mx-auto my-4 h-40 flex flex-col items-center justify-center text-center">
               <h4 className="text-xl font-medium text-custom-text-orange">
                 Popular Job Categories
@@ -189,21 +194,20 @@ function HomePage() {
             <section className="flex flex-col mt-24 h-full max-w-screen-xl mx-auto">
               <div className="grid grid-cols-4 gap-4">
                 {category.map((categories, index) => (
-                  <div
-                    key={index}
-                    className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black"
-                  >
-                    <h5 className="font-bold text-custom-text-black capitalize">
-                      {categories.jobCategory}
-                    </h5>
-                    <span className="text-custom-text-black">
-                      {categories.jobs
-                        ? categories.jobs.length === 1
-                          ? "1 job available"
-                          : `${categories.jobs.length} job's available`
-                        : "No job's available"}
-                    </span>
-                  </div>
+                  <Link to={thirdRoute} state={categories._id} key={index}>
+                    <div className="h-28 bg-custom-bg-gray rounded-xl text-center pt-8 cursor-pointer hover:bg-transparent hover:border-2 border-black">
+                      <h5 className="font-bold text-custom-text-black capitalize">
+                        {categories.jobCategory}
+                      </h5>
+                      <span className="text-custom-text-black">
+                        {categories.jobs
+                          ? categories.jobs.length === 1
+                            ? "1 job available"
+                            : `${categories.jobs.length} job's available`
+                          : "No job's available"}
+                      </span>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </section>

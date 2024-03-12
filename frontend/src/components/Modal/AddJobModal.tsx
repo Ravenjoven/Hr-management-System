@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import ReviewAddJobsModal from "./ReviewAddJobsModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,24 +30,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     jobToSalary: 0,
   });
   const [category, setCategory] = useState<Category[]>([]);
-  // const [categories, setCategories] = useState([
-  //   {
-  //     id: 0,
-  //     jobCategory: "IT/Computer",
-  //   },
-  //   {
-  //     id: 1,
-  //     jobCategory: "Financial Associate",
-  //   },
-  //   {
-  //     id: 2,
-  //     jobCategory: "Advetising/Media",
-  //   },
-  //   {
-  //     id: 3,
-  //     jobCategory: "Fullstack Developer",
-  //   },
-  // ]);
   const [buttonJobTypeMessage, setButtonJobTypeMessage] = useState("");
   const [buttonJobCategoryMessage, setButtonJobCategoryMessage] = useState("");
   const [buttonSetUpMessage, setButtonSetUpMessage] = useState("");
@@ -55,6 +37,7 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
   const [isExperienceRequired, setIsExperienceRequired] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
+  const firstRender = useRef(true);
 
   const skills = [
     { id: 0, name: "Hardworking", value: "Hardworking" },
@@ -76,6 +59,37 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     };
     fetCategory();
   }, []);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+    } else {
+      const getName = localStorage.getItem("name");
+
+      if (getName === "success") {
+        setFormData({
+          jobName: "",
+          jobDescription: "",
+          jobType: "",
+          jobSlots: 0,
+          jobCategory: "",
+          jobSkills: [],
+          jobSetUp: "",
+          jobExperience: 0,
+          jobFromSalary: 0,
+          jobToSalary: 0,
+        });
+        setSelectedSkills([]);
+        setButtonJobTypeMessage("");
+        setButtonJobCategoryMessage("");
+        setButtonSetUpMessage("");
+        localStorage.clear();
+      }
+      if (!getName) {
+        firstRender.current = false;
+      }
+    }
+  });
 
   const handleCheckboxChange = (event: any) => {
     setIsExperienceRequired(event.target.checked);
@@ -125,7 +139,6 @@ function Modal({ isOpen, onClose, title }: ModalProps) {
     });
   };
   const handleSaveData = () => {
-    console.log("Form Data:", formData);
     setIsReviewModalOpen(true);
   };
   const handleCloseReviewModal = () => {

@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ViewApplicantDetails from "../Modal/ViewApplicantDetails";
 import ViewEditJobsModal from "../Modal/ViewEditJobsModal";
+import Swal from "sweetalert2";
 
 interface Job {
   _id: string;
@@ -58,6 +59,7 @@ function Jobs() {
     setSelectedApplicant(null);
   };
   const openViewJobsModal = (job: any) => {
+    localStorage.setItem("id", job._id);
     setSelectedJob(job);
     setViewJobs(true);
   };
@@ -74,6 +76,7 @@ function Jobs() {
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -84,9 +87,9 @@ function Jobs() {
       }
     };
     fetchJobs();
-  }, [jobs]);
+  }, []);
+
   useEffect(() => {
-    // Function to fetch jobs when component mounts
     const fetCategory = async () => {
       try {
         const response = await axios.get(
@@ -98,11 +101,12 @@ function Jobs() {
       }
     };
     fetCategory();
-  }, [category]);
+  }, []);
+
   const formattedJobs = jobs.map((job) => {
     const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
       year: "numeric",
-      month: "long",
+      month: "2-digit",
       day: "2-digit",
     });
 
@@ -254,16 +258,50 @@ function Jobs() {
   };
 
   const deleteJobs = async (jobId: string) => {
-    try {
-      const response = await axios.delete(
-        "http://localhost:9000/api/jobs/delete",
-        {
-          data: { jobId },
-        }
+    // Show confirmation dialog
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    // If user confirms deletion
+    if (confirmation.isConfirmed) {
+      try {
+        // Send delete request to API
+        const response = await axios.delete(
+          "http://localhost:9000/api/jobs/delete",
+          { data: { jobId } }
+        );
+
+        // Show success message
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+
+        console.log("Job deleted successfully:", response.data);
+      } catch (error) {
+        // Show error message
+        console.error("Error deleting job:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "An error occurred while deleting the job.",
+          icon: "error",
+        });
+      }
+    } else {
+      // Show cancellation message if user cancels
+      Swal.fire(
+        "Cancelled",
+        "Your job deletion request has been cancelled.",
+        "info"
       );
-      console.log("Job deleted successfully:", response.data);
-    } catch (error) {
-      console.error("Error deleting job:", error);
     }
   };
 
