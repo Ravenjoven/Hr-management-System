@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import React from "react";
+import LoadingFileAnimation from "../LoadingFileAnimation";
 
 interface ModalProps {
   isClick: boolean;
@@ -22,7 +23,9 @@ export default function SendContractForm({
   const [fileMessage, setFileMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [fileName, setFileName] = useState<string>("");
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
   const sendMail = () => {
+    setLoadingAnimation(true);
     const formData = new FormData();
     formData.append("email", to);
     formData.append("subject", subjects);
@@ -36,12 +39,14 @@ export default function SendContractForm({
       })
       .then(() => {
         setFileMessage("Send Successfully");
+        setLoadingAnimation(false);
         setTimeout(() => {
           isClose(); // Close modal after 3 seconds
-        }, 3000);
+        }, 2000);
       })
       .catch((e) => {
         console.log("error", e);
+        setLoadingAnimation(false);
       });
   };
 
@@ -173,6 +178,7 @@ export default function SendContractForm({
           </div>
         </div>
       )}
+      {loadingAnimation && <LoadingFileAnimation />}
     </>
   );
 }
