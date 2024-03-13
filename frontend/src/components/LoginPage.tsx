@@ -187,8 +187,8 @@ const Login = () => {
                   onClick={openModal}
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
-                 <Link to="/Registration" className="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign up here!</Link>
-                </a>  
+                  Sign up here!
+                </a>
               </p>
               {isOpen && (
                 <RegisterModal
