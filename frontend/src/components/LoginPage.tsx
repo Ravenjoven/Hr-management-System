@@ -2,24 +2,26 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navar from "./Navar";
 import axios from "axios";
-import { ReactSession } from 'react-client-session';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ReactSession } from "react-client-session";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useGoogleLogin } from "@react-oauth/google";
+import RegisterModal from "./Modal/RegisterModal";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [logIn, setLogIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:9000/api/signin",
-        { email, password }
-      );
+      const response = await axios.post("http://localhost:9000/api/signin", {
+        email,
+        password,
+      });
 
       // Assuming the response contains user role information
       const userRole = response.data.role;
@@ -42,38 +44,40 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  //Google Log in 
+  //Google Log in
   const navigate = useNavigate(); // Step 2: Initialize useNavigate
-  
+
   const googleLogin = useGoogleLogin({
     onSuccess: (credentialResponse) => {
-      console.log('Login Success! Current user:', credentialResponse);
+      console.log("Login Success! Current user:", credentialResponse);
       // Handle the successful login
-      
+
       // Step 3: Redirect to the user profile page
-      navigate('/userProfile'); // Replace '/userProfile' with your user profile path
+      navigate("/userProfile"); // Replace '/userProfile' with your user profile path
     },
     onError: () => {
-      console.log('Login Failed');
+      console.log("Login Failed");
       // Handle login failure
     },
-    scope: 'openid email profile',
+    scope: "openid email profile",
   });
 
-  
+  const openModal = () => {
+    setIsOpen(true);
+  };
 
-
-
-
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <div className="flex flex-col h-screen justify-between min-h-screen max-w-screen bg-white font-montserrat">
         <Navar />
         <section className="max-w-screen-xl flex ml-8 mr-8">
           <div className="w-full pl-5 pt-2">
-          <svg
+            <svg
               className="w-560 h-auto sm:w-full"
               xmlns="http://www.w3.org/2000/svg"
               version="1.1"
@@ -125,30 +129,30 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-<div className="relative">
-      <input
-        type={showPassword ? "text" : "password"}
-        id="password"
-        aria-describedby="helper-text-explanation"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-12 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-[20px]"
-        placeholder="Enter your password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-        {showPassword ? (
-          <FaEyeSlash
-            className="text-gray-400 cursor-pointer"
-            onClick={togglePasswordVisibility}
-          />
-        ) : (
-          <FaEye
-            className="text-gray-400 cursor-pointer"
-            onClick={togglePasswordVisibility}
-          />
-        )}
-      </div>
-    </div>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  aria-describedby="helper-text-explanation"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-12 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-[20px]"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  {showPassword ? (
+                    <FaEyeSlash
+                      className="text-gray-400 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    />
+                  ) : (
+                    <FaEye
+                      className="text-gray-400 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    />
+                  )}
+                </div>
+              </div>
               <button
                 type="submit"
                 className="flex justify-center items-center mt-4 mx-auto text-sm border border-white bg-transparent hover:bg-gray-600 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 "
@@ -162,17 +166,17 @@ const Login = () => {
               </div>
 
               <button
-      type="button"
-      className="flex justify-center items-center mt-4 bg-white rounded-xl p-2.5 w-full m-[2px]"
-      onClick={() => googleLogin()} // Attach the login function to your button's onClick event
-    >
-      <img
-        src="../images/Gmail.png"
-        alt="Google"
-        className="w-[20px] mr-[20px] inline"
-      />
-      <span className="text-xs">Log in with Google</span>
-    </button>
+                type="button"
+                className="flex justify-center items-center mt-4 bg-white rounded-xl p-2.5 w-full m-[2px]"
+                onClick={() => googleLogin()} // Attach the login function to your button's onClick event
+              >
+                <img
+                  src="../images/Gmail.png"
+                  alt="Google"
+                  className="w-[20px] mr-[20px] inline"
+                />
+                <span className="text-xs">Log in with Google</span>
+              </button>
               <p
                 id="helper-text-explanation"
                 className="mt-8 text-xs text-white"
@@ -180,11 +184,19 @@ const Login = () => {
                 Don't have account?
                 <a
                   href="#"
+                  onClick={openModal}
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                  <Link to="/Registration" className="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign up here!</Link>
                 </a>  
               </p>
+              {isOpen && (
+                <RegisterModal
+                  isOpen={isOpen}
+                  onClose={closeModal}
+                  title="Sign Up"
+                ></RegisterModal>
+              )}
             </form>
           </div>
         </section>
