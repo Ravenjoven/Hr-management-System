@@ -10,29 +10,51 @@ interface ModalProps {
 interface Job {
   jobName: string;
 }
-
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
+  const [jobName, setJobName] = useState("");
   const [fullName, setFullName] = useState("");
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
-  const [skills, setSkills] = useState("");
-  const [resume, setResume] = useState("Upload Files");
-  const [application, setApplicaton] = useState("");
-  const [profile, setProfile] = useState("");
+  const [resume, setResume] = useState("Upload Files . pdf");
+  const [application, setApplication] = useState("");
+  const [linkedIn, setLinkedIn] = useState("");
+  const [jobType, setJobType] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const skills = [
+    { id: 0, name: "Hardworking", value: "Hardworking" },
+    { id: 1, name: "Time Management", value: "Time Management" },
+    { id: 2, name: "Critical Thinking", value: "Critical Thinking" },
+    { id: 3, name: "Technincal", value: "Technincal" },
+  ];
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here, you can send data to server or do something else
-    console.log("Form submitted:", {
-      fullName,
-      email,
-      contact,
-      skills,
-      resume,
-      application,
-      profile,
-    });
-    onClose();
+    try {
+      const jobId = localStorage.getItem("id");
+      const response = await axios.post("http://localhost:9000/api/apply", {
+        jobId,
+        jobName,
+        fullName,
+        email,
+        contact,
+        jobType,
+        skills,
+        resume,
+        application,
+        linkedIn,
+      });
+      console.log("Form submitted successfully:", response.data);
+      alert("Form Submitted!");
+      onClose(); // Close the modal after successful submission
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+  const handleSelectSkills = (selectedList: any) => {
+    setSelectedSkills(selectedList);
+  };
+  const handleRemoveSkills = (selectedList: any) => {
+    setSelectedSkills(selectedList);
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileName =
@@ -117,13 +139,30 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                           />
                         </div>
                         <div className="mb-4">
+                          <label htmlFor="jobType">Job Type</label>
+                          <select
+                            name="jobType"
+                            id=""
+                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-400"
+                            onChange={(e) => setJobType(e.target.value)} // Add this line
+                          >
+                            <option value="">Select Job Type</option>
+                            <option value="fullTime">Full Time</option>
+                            <option value="partTime">Part Time</option>
+                            <option value="intern">Intern</option>
+                          </select>
+                        </div>
+                        <div className="mb-4">
+                          <label htmlFor="application">
+                            Application Letter
+                          </label>
                           <textarea
                             rows={4}
                             placeholder="Application Letter"
-                            onChange={(e) => setApplicaton(e.target.value)}
+                            onChange={(e) => setApplication(e.target.value)}
                             className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             name="application"
-                            id="applicaion"
+                            id="application"
                           ></textarea>
                         </div>
                         <div className=" mb-4 flex flex-row justify-between">
@@ -132,8 +171,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                               htmlFor="fileInput"
                               className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer"
                             >
+                              {" "}
                               {resume && (
-                                <span className="block p-2 text-sm text-gray-500">
+                                <span className="block p-2 text-sm text-gray-400">
                                   {resume}
                                 </span>
                               )}

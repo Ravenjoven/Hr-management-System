@@ -1,17 +1,7 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LoginPage from "./components/LoginPage";
-import Registration from "./components/Registration";
-
+import Router from "./Router/route";
 function App() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={LoginPage} />
-        <Route exact path="/registration" component={RegistrationForm} />
-      </Switch>
-    </BrowserRouter>
-  );
+  return <Router />;
 }
 
 export default App;
