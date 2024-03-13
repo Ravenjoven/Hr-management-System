@@ -5,6 +5,7 @@ const {
   getJobs,
   editJobs,
   deleteJobs,
+  getApplicant,
 } = require("../controllers/addJobsControllers");
 const router = express.Router();
 
@@ -13,6 +14,9 @@ router.post("/jobs/add", createJobs);
 
 //fetch job routes
 router.get("/jobs/get", getJobs);
+
+//fetch applicant in jobs routes
+router.get("/jobs/getApplicant", getApplicant);
 
 //edit job routes
 router.put("/jobs/edit", editJobs);

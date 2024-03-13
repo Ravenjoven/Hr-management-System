@@ -1,27 +1,45 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+import MultiSelect from "multiselect-react-dropdown";
+import axios from "axios";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedJob: Job | null;
+}
+interface Job {
+  jobName: string;
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [contact, setContact] = useState('');
-  const [skills, setSkills] = useState('');
-  const [resume, setResume] = useState('');
-  const [application, setApplicaton] = useState('');
-  const [profile, setProfile] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [skills, setSkills] = useState("");
+  const [resume, setResume] = useState("Upload Files");
+  const [application, setApplicaton] = useState("");
+  const [profile, setProfile] = useState("");
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here, you can send data to server or do something else
-    console.log('Form submitted:', { fullName, email, contact, skills , resume, application, profile});
+    console.log("Form submitted:", {
+      fullName,
+      email,
+      contact,
+      skills,
+      resume,
+      application,
+      profile,
+    });
     onClose();
   };
-  const handleFileChange = (e: any) => {
-    const fileName = e.target.files[0].name;
-    setResume(fileName);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileName =
+      e.target.files && e.target.files[0] && e.target.files[0].name;
+    if (fileName) {
+      setResume(fileName);
+    }
   };
 
   return (
@@ -45,88 +63,111 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:text-left w-full">
                       <h3
-                        className="text- leading-6 font-medium text-gray-900"
+                        className=" leading-6 font-medium text-gray-100 rounded-2xl p-4 flex justify-center items-center bg-custom-text-green "
                         id="modal-headline"
                       >
-                        Sent Application
+                        APPLYING FOR{" "}
+                        <span className="uppercase text-custom-text-blue font-bold pl-2">
+                          {selectedJob ? selectedJob.jobName : ""}
+                        </span>
                       </h3>
                       <div className="mt-5 font-normal">
                         <div className="mb-4">
+                          <label htmlFor="fullName">Full Name</label>
                           <input
                             type="text"
+                            name="fullName"
                             placeholder="Full Name"
                             className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             onChange={(e) => setFullName(e.target.value)}
                             required
                           />
                         </div>
+                        <label htmlFor="enail">Email</label>
                         <div className="mb-4">
                           <input
+                            name="email"
                             type="email"
-                            placeholder="Email Address"
+                            placeholder="Example@gmail.com"
                             className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             onChange={(e) => setEmail(e.target.value)}
                             required
                           />
                         </div>
                         <div className="mb-4">
+                          <label htmlFor="contact">Contact No.</label>
                           <input
                             type="tel"
-                            placeholder="Contact Number"
+                            name="contact"
+                            placeholder="+1234567890"
                             className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             onChange={(e) => setContact(e.target.value)}
                             required
                           />
                         </div>
                         <div className="mb-4">
+                          <label htmlFor="link">LinkedIn Profile</label>
                           <input
+                            name="link"
                             type="tel"
                             placeholder="LinkedIn Profile"
                             className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                            onChange={(e) => setProfile(e.target.value)}
+                            onChange={(e) => setLinkedIn(e.target.value)}
                             required
                           />
                         </div>
-                        <div className="mb-4" >
-                          <textarea 
-                           rows={4}
-                           placeholder='Application Letter'
-                           onChange={(e) => setApplicaton(e.target.value)}
-                           className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                          name="application" id="applicaion"></textarea>
-                          
-                        </div>
-                        <div className=' mb-4 flex flex-row justify-between'>
-                        <div className="relative">
-            <label htmlFor="fileInput" className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer">
-                <span className="mr-2">RESUME</span>
-                {appName && (
-                <span className="block p-2 text-sm text-gray-500">{appName}</span>
-            )}
-                <input
-                     name="fileInput"
-                     id="fileInput"
-                    type="file"
-                    className="hidden"
-                    onChange={(e) => setResume(e.target.value)}
-                    onClick={AppHandleFileChange}
-                />
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24">
-                    <path fill="#6e6e6e" d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
-                </svg>
-            </label>
-           
-        </div>
-
-                        </div>
                         <div className="mb-4">
                           <textarea
-                            placeholder="Skills"
-                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             rows={4}
-                            onChange={(e) => setSkills(e.target.value)}
-                            required
+                            placeholder="Application Letter"
+                            onChange={(e) => setApplicaton(e.target.value)}
+                            className="w-full px-3 py-2 placeholder-gray-400 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            name="application"
+                            id="applicaion"
                           ></textarea>
+                        </div>
+                        <div className=" mb-4 flex flex-row justify-between">
+                          <div className="relative">
+                            <label
+                              htmlFor="fileInput"
+                              className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer"
+                            >
+                              {resume && (
+                                <span className="block p-2 text-sm text-gray-500">
+                                  {resume}
+                                </span>
+                              )}
+                              <input
+                                name="fileInput"
+                                id="fileInput"
+                                type="file"
+                                className="hidden"
+                                onChange={handleFileChange}
+                              />
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-6 h-6"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  fill="#6e6e6e"
+                                  d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"
+                                />
+                              </svg>
+                            </label>
+                          </div>
+                        </div>
+                        <div className="mb-4">
+                          <label htmlFor="skill">Skills</label>
+                          <MultiSelect
+                            options={skills}
+                            selectedValues={selectedSkills}
+                            onSelect={handleSelectSkills}
+                            onRemove={handleRemoveSkills}
+                            displayValue="name"
+                            placeholder="Input skills here..."
+                            className="pt-2 h-full"
+                          />
                         </div>
                       </div>
                     </div>

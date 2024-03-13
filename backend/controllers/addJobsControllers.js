@@ -1,6 +1,7 @@
 //this is add category created by ranel
 const addJobsModels = require("../models/addJobsModels");
 const addCategoryModels = require("../models/addCategoryModels");
+const jobApplicationModels = require("../models/jobApplicationModels");
 const { validationResult } = require("express-validator");
 
 exports.createJobs = async (req, res, next) => {
@@ -40,6 +41,15 @@ exports.createJobs = async (req, res, next) => {
     category.jobs.push(job._id);
     await category.save();
 
+    // Now, you can also associate job applications with the job
+    const jobApplications = req.body.jobApplications; // Assuming you have an array of job application IDs in the request body
+
+    if (jobApplications && jobApplications.length > 0) {
+      // Add references to job applications to the job document
+      job.applications = jobApplications;
+      await job.save();
+    }
+
     res.status(201).json({
       success: true,
       job,
@@ -51,7 +61,7 @@ exports.createJobs = async (req, res, next) => {
 
 exports.getJobs = async (req, res, next) => {
   try {
-    const jobs = await addJobsModels.find();
+    const jobs = await addJobsModels.find().sort({ createdAt: -1 });
 
     if (!jobs || jobs.length === 0) {
       return res.status(404).json({ success: false, message: "No jobs found" });
@@ -103,22 +113,41 @@ exports.editJobs = async (req, res, next) => {
 
 exports.deleteJobs = async (req, res, next) => {
   try {
-    // Delete the job
     const deletedJob = await addJobsModels.deleteOne({ _id: req.body.jobId });
 
     if (deletedJob.deletedCount === 0) {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
 
-    // Remove the job from categories
     await addCategoryModels.updateMany(
       { jobs: req.body.jobId },
+      { $pull: { jobs: req.body.jobId } }
+    );
+
+    await jobApplicationModels.updateMany(
+      { jobs: { $in: [req.body.jobId] } },
       { $pull: { jobs: req.body.jobId } }
     );
 
     res
       .status(200)
       .json({ success: true, message: "Job deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getApplicant = async (req, res, next) => {
+  try {
+    const applicant = await jobApplicationModels.find();
+
+    if (!applicant || applicant.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No applicant found" });
+    }
+
+    res.status(200).json({ success: true, applicant });
   } catch (error) {
     next(error);
   }
