@@ -10,6 +10,7 @@ interface ModalProps {
 interface Job {
   jobName: string;
 }
+
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
   const [jobName, setJobName] = useState("");
   const [fullName, setFullName] = useState("");
@@ -20,6 +21,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
   const [application, setApplication] = useState("");
   const [linkedIn, setLinkedIn] = useState("");
   const [jobType, setJobType] = useState("");
+  const [isPdf, setIsPdf] = useState(false); // State to track if the selected file is a PDF
+  const [fileMessage, setFileMessage] = useState("");
 
   const skills = [
     { id: 0, name: "Hardworking", value: "Hardworking" },
@@ -27,8 +30,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
     { id: 2, name: "Critical Thinking", value: "Critical Thinking" },
     { id: 3, name: "Technincal", value: "Technincal" },
   ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isPdf) {
+      alert("Please select a PDF file.");
+      return;
+    }
     try {
       const jobId = localStorage.getItem("id");
       const response = await axios.post("http://localhost:9000/api/apply", {
@@ -50,17 +58,28 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
       console.error("Error submitting form:", error);
     }
   };
+
   const handleSelectSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
   };
+
   const handleRemoveSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
   };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileName =
-      e.target.files && e.target.files[0] && e.target.files[0].name;
-    if (fileName) {
-      setResume(fileName);
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const fileName = file.name;
+      const fileExtension = fileName.split(".").pop()?.toLowerCase();
+      if (fileExtension === "pdf") {
+        setResume(fileName);
+        setIsPdf(true);
+        setFileMessage("File Accepted");
+      } else {
+        setIsPdf(false);
+        setFileMessage("Accept only PDF file.");
+      }
     }
   };
 
@@ -165,7 +184,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                             id="application"
                           ></textarea>
                         </div>
-                        <div className=" mb-4 flex flex-row justify-between">
+                        <div className=" mb-4 flex flex-col">
                           <div className="relative">
                             <label
                               htmlFor="fileInput"
@@ -196,6 +215,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                               </svg>
                             </label>
                           </div>
+                          <div className="my-2">
+                            <span
+                              className={
+                                isPdf ? "text-green-600" : "text-red-600"
+                              }
+                            >
+                              {fileMessage}
+                            </span>
+                          </div>
                         </div>
                         <div className="mb-4">
                           <label htmlFor="skill">Skills</label>
@@ -216,10 +244,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="submit"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm ${
+                      isPdf ? "" : "opacity-50"
+                    }`}
+                    disabled={!isPdf}
                   >
                     Submit
                   </button>
+
                   <button
                     type="button"
                     onClick={onClose}
