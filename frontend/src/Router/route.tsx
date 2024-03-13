@@ -20,6 +20,8 @@ import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 import JobCategory from "../components/JobCategory";
 import { ReactSession } from "react-client-session";
 import SelectedJobs from "../components/SelectedJob";
+import RegistrationForm from "../components/Registration" // Adjust the import path as necessary
+
 
 function router() {
   ReactSession.setStoreType("localStorage");
@@ -28,6 +30,7 @@ function router() {
     <>
       <Router>
         <Routes>
+          <Route path="/Registration" element={<RegistrationForm />} />
           <Route path="/FileLeave" element={<FileLeaves />} />
           <Route path="/ojt" element={<UnEmpJobList />} />
           <Route path="/ojt/Application" element={<Applications />} />
