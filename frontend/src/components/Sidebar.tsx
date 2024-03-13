@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import { Link } from "react-router-dom";
 const data = [
   {
@@ -28,8 +28,8 @@ const data = [
   },
   {
     id: 6,
-    label: "My Details",
-    to: "/Profile",
+    label: "Company Details",
+    to: "/Company",
   },
   {
     id: 7,

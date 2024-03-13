@@ -6,8 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { useState } from "react";
-import DatePicker from "react-datepicker";
+import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
 function CompDetails() {
@@ -59,7 +58,7 @@ function CompDetails() {
                 COMPANY PROFILE
               </span>
             </div>
-          
+            <div className="lower-div w-full h-full">
               <div className=" m-14 flex flex-row ">
                 <div className=" font-bold text-custom-text-black w-96 flex justify-center items-center">
                   <span className="text-xl">
@@ -67,11 +66,11 @@ function CompDetails() {
                   </span>
                 </div>
                 <div>
-                <img
-                  className="pl-[660px] md:h-20 md:w-full self-start "
-                  src="../images/img2.png"
-                  alt=""
-                />
+                  <img
+                    className="pl-[660px] md:h-20 md:w-full self-start "
+                    src="../images/img2.png"
+                    alt=""
+                  />
                 </div>
             </div>
             <div className=" ml-20  text-custom-text-black flex flex-row">
@@ -131,19 +130,20 @@ function CompDetails() {
                 <span>Details</span>
               </div>
               <div className=" flex mt-4 justify-space-between">
-              <div className=" w-20 ml-20  font-semibold text-custom-text-black">
-                <span>CEO</span>
+                <div className=" w-20 ml-20  font-semibold text-custom-text-black">
+                  <span>CEO</span>
+                </div>
+                <div className=" w-[150px] text-sm ml-[310px]  text-custom-text-black">
+                  <span>Mark Monzon</span>
+                </div>
+                <div className=" w-20 ml-20 font-semibold text-custom-text-black">
+                  <span>Employees</span>
+                </div>
+                <div className=" w-[150px] text-sm ml-[210px]  text-custom-text-black">
+                  <span>123123</span>
+                </div>
               </div>
-              <div className=" w-[150px] text-sm ml-[310px]  text-custom-text-black">
-                <span>Mark Monzon</span>
-              </div>
-              <div className=" w-20 ml-20 font-semibold text-custom-text-black">
-                <span>Employees</span>
-              </div>
-              <div className=" w-[150px] text-sm ml-[210px]  text-custom-text-black">
-                <span>123123</span>
-              </div>
-              </div>
+            </div>
           </div>
         </div>
       </>

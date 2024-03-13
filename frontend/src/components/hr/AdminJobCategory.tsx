@@ -1,6 +1,6 @@
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import AddCategory from "../Modal/AddCategoryModal";
 import axios from "axios";
 
@@ -39,7 +39,7 @@ function AdminJobCategory() {
       }
     };
     fetCategory();
-  }, [category]);
+  }, []);
 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Navar from "./Navar";
+import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 const data = [
@@ -114,7 +115,7 @@ function HomePage() {
             </div>
           </section>
         </header>
-        <body className="h-full relative">
+        <body className="h-full relative" id="about">
           <section className="max-w-screen-xl mx-auto my-24 h-40 flex items-center justify-center text-center">
             <h2 className="text-3xl font-semibold text-custom-text-black">
               We're ready to <br />
