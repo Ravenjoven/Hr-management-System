@@ -185,7 +185,7 @@ const Login = () => {
                  <Link to="/Registration" className="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign up here!</Link>
                 </a>  
               </p>
-            </form>s
+            </form>
           </div>
         </section>
         <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs">
