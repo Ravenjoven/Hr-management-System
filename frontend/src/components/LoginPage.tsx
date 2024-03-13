@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navar from "./Navar";
 import { jwtDecode } from "jwt-decode";
-import { ReactSession } from "react-client-session";
+import { ReactSession, history } from "react-client-session";
 import axios , { AxiosError } from "axios";
+
 import UserProfile from "./OJT/UserDetail";
 // import { Redirect } from 'react-router-dom';
 
@@ -103,33 +104,35 @@ const Login = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      await ReactSession.setStoreType("localStorage");
-      await ReactSession.set("mail", user.email);
-      await ReactSession.set("name", user.name);
-      await ReactSession.set("picture", user.picture);
+  // useEffect(() => {
+  //   const checkLoggedIn = async () => {
+  //     await ReactSession.setStoreType("localStorage");
+  //     await ReactSession.set("mail", user.email);
+  //     await ReactSession.set("name", user.name);
+  //     await ReactSession.set("picture", user.picture);
 
-      const mail = await ReactSession.get("mail");
-      if (mail) {
-        setLogIn(true);
-      } else {
-        setLogIn(false);
-      }
-    };
+  //     const mail = await ReactSession.get("mail");
+  //     if (mail) {
+  //       setLogIn(true);
+  //     } else {
+  //       setLogIn(false);
+  //     }
+  //   };
 
-    checkLoggedIn();
-  }, [user]);
+  //   checkLoggedIn();
+  // }, [user]);
 
-  if (logIn) {
-    window.location.href = "/UserProfile";
-  }
+  // if (logIn) {
+  //   window.location.href = "/UserProfile";
+  // }
 
   function handleCallbackResponse(response: { credential: any }) {
     const userObject = jwtDecode(response.credential);
     setUser(userObject as User);
 
-    console.log(user.name);
+    ReactSession.set("user", userObject);
+
+    window.location.href = "/UserProfile";
   }
 
   return (
