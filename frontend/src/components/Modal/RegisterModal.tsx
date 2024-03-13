@@ -8,6 +8,15 @@ interface ModalProps {
   title: string;
 }
 
+const months = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+const currentYear = new Date().getFullYear();
+const startYear = currentYear - 100; // Starting from 100 years ago
+const years = Array.from({length: 101}, (_, index) => startYear + index);
+
 export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
   const handleClose = () => {
     onClose && onClose();
@@ -91,35 +100,35 @@ export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
                     </div>
                     <div className="flex flex-col">
                       <label
-                        htmlFor="Birthday"
+                        htmlFor="Birthdate"
                         className="text-[12px] font-semibold text-custom-text-gray"
                       >
-                        Birthday
+                        Birthdate
                       </label>
                       <div className="grid grid-cols-3 gap-4">
                         <div>
-                          <select
-                            name="month"
-                            className="w-full border border-gray-400 h-10 rounded-md pl-2"
-                          >
-                            <option value=""></option>
-                          </select>
+                          <select name="month" className="w-full border border-gray-400 h-10 rounded-md pl-2" required>
+                    <option value="">Month</option>
+                    {months.map((month, index) => (
+                    <option value={index + 1}>{month}</option> 
+                       ))}
+                      </select>
                         </div>
                         <div>
-                          <select
-                            name="day"
-                            className="w-full border border-gray-400 h-10 rounded-md pl-2"
-                          >
-                            <option value=""></option>
-                          </select>
+                        <select name="day" className="w-full border border-gray-400 h-10 rounded-md pl-2" required>
+                        <option value="">Day</option>
+                       {[...Array(31)].map((_, index) => (
+                        <option value={index + 1}>{index + 1}</option>
+                        ))}
+                        </select>
                         </div>
                         <div>
-                          <select
-                            name="year"
-                            className="w-full border border-gray-400 h-10 rounded-md pl-2"
-                          >
-                            <option value=""></option>
-                          </select>
+                        <select name="year" className="w-full border border-gray-400 h-10 rounded-md pl-2" required>
+                        <option value="">Year</option>
+                         {years.map(year => (
+                       <option value={year}>{year}</option>
+                         ))}
+                        </select>
                         </div>
                       </div>
                     </div>
