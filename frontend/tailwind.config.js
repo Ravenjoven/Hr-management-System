@@ -29,19 +29,9 @@ module.exports = {
         'custom-text-red' : '#F61010',
         'custom-text-green' : '#4ECB71',
         //
-        'white': "#fff",
-        'darkgray': "#9b9b9b",
-        'chocolate': "#c46605",
-        'gainsboro': {
-          "100": "#e6e6e6",
-          "200": "#d9d9d9",
-        },
-        whitesmoke: "#f5f5f5",
-        mediumslateblue: "#6e5be7",
-        black: "#000",
-        gray: "#7b7777",
-      },
       
+        },
+        
       
     },
   },
