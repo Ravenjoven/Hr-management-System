@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -13,17 +14,27 @@ const Calendar: React.FC = () => {
     {
       id: 1,
       title: "event",
-      date: "2024-02-16",
+      date: "2024-03-02",
     },
     {
       id: 2,
       title: "new event",
-      date: "2024-02-17",
+      date: "2024-03-03",
     },
     {
-      id: 2,
-      title: "sadsahdjsajd",
-      date: "2024-02-18T09:00:00",
+      id: 3,
+      title: "another event",
+      date: "2024-03-04T09:00:00",
+    },
+    {
+      id: 4,
+      title: "Meeting",
+      date: "2024-03-01T11:00:00",
+    },
+    {
+      id: 5,
+      title: "Meeting",
+      date: "2024-03-05",
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,29 +51,24 @@ const Calendar: React.FC = () => {
     setIsModalOpen(true);
   };
 
-
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedDate(null);
   };
 
   return (
-    <div>
+    <div className="z-50   text-black ">
       {isAddModalOpen && selectedDate !== null && (
         <AddModal selectedDate={selectedDate} onClose={closeModal} />
       )}
-      
+
       {isModalOpen && (
-        <ModalComponent
-          
-          event={selectedEvent}
-          onClose={closeModal}
-          
-        />
+        <ModalComponent event={selectedEvent} onClose={closeModal} />
       )}
 
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+      
         initialView="dayGridMonth"
         headerToolbar={{
           start: "prev,next",
@@ -70,12 +76,14 @@ const Calendar: React.FC = () => {
           end: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         dateClick={handleDateClick}
-        eventClick={handleEventClick}
         events={events}
+        eventClick={handleEventClick}
         height={"400px"}
       />
     </div>
+    
   );
 };
+
 
 export default Calendar;

@@ -13,15 +13,17 @@ import Jobs from "../components/hr/Jobs";
 import OjtJobList from "../components/OJT/OjtJobs";
 import Applications from "../components/OJT/Applications";
 import CompDetails from "../components/hr/CompanyDetails";
-import OjtLogin from "../components/OJT/OjtLogin";
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
 import FileLeaves from "../components/OJT/FileLeave";
 import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 import JobCategory from "../components/JobCategory";
+import { ReactSession } from "react-client-session";
 import SelectedJobs from "../components/SelectedJob";
 
 function router() {
+  ReactSession.setStoreType("localStorage");
+
   return (
     <>
       <Router>

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
 import AddJobModal from "../Modal/AddJobModal";
+
 import {
   faMagnifyingGlass,
   faTrash,
@@ -106,7 +107,6 @@ function Jobs() {
     };
     fetchJobs();
   }, []);
-
   useEffect(() => {
     const fetCategory = async () => {
       try {

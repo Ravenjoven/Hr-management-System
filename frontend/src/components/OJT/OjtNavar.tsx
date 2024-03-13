@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 function OjtNavar() {
   return (
     <nav className="border-b-2 border-gray-400 bg-custom-bg-smooth top-0 sticky z-50">

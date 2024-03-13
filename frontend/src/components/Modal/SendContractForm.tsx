@@ -2,8 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import LoadingFileAnimation from "../LoadingFileAnimation";
-
+import React from "react";
 interface ModalProps {
   isClick: boolean;
   isClose: () => void;
@@ -21,15 +20,14 @@ export default function SendContractForm({
 }: ModalProps) {
   const [fileMessage, setFileMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
-  const [loadingAnimation, setLoadingAnimation] = useState(false);
+
   const sendMail = () => {
-    setLoadingAnimation(true);
     const formData = new FormData();
     formData.append("email", to);
     formData.append("subject", subjects);
     files.forEach((file) => formData.append("file", file));
     axios
-      .post("http://localhost:9000/api/sendmail", formData, {
+      .post("http://localhost:9000/sendemail", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Access-Control-Allow-Origin": "*",
@@ -37,14 +35,12 @@ export default function SendContractForm({
       })
       .then(() => {
         setFileMessage("Send Successfully");
-        setLoadingAnimation(false);
         setTimeout(() => {
           isClose(); // Close modal after 3 seconds
         }, 3000);
       })
       .catch((e) => {
         console.log("error", e);
-        setLoadingAnimation(false);
       });
   };
 
@@ -69,7 +65,10 @@ export default function SendContractForm({
             >
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <span className="hidden" aria-hidden="true">
+            <span
+              className="hidden"
+              aria-hidden="true"
+            >
               &#8203;
             </span>
             <div
@@ -121,15 +120,8 @@ export default function SendContractForm({
                         <input type="text" className="w-full" value={to} />
                       </div>
                       <div className="flex">
-                        <label htmlFor="upload" className="pr-2 font-semibold">
-                          Upload File:
-                        </label>
-                        <input
-                          type="file"
-                          name="file"
-                          onChange={handleFileChange}
-                          className="cursor-pointer"
-                        />
+                        <label htmlFor="upload" className="pr-2 font-semibold">Upload File:</label>
+                        <input type="file" name="file" onChange={handleFileChange} className="cursor-pointer"/>
                       </div>
                     </form>
                     <span
@@ -157,7 +149,6 @@ export default function SendContractForm({
           </div>
         </div>
       )}
-      {loadingAnimation && <LoadingFileAnimation />}
     </>
   );
 }

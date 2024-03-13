@@ -19,6 +19,17 @@ const jobApplicationRoutes = require("./routes/jobApplicationRoutes");
 
 const addEmployeeRoutes = require("./routes/addEmployeeRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
+const addUser=require("./routes/addUser");
+
+const dotenv = require('dotenv');
+dotenv.config();
+const {OAuth2Client} = require('google-auth-library');
+
+
+//test
+const auth =require("./routes/auth");
+const request =require("./routes/request");
+
 //database connection
 mongoose
   .connect(process.env.DATABASE, {
@@ -41,7 +52,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(cors());
-
+ 
 //Routes middleware
 //app.get('/', (req, res)=>{
 //  res.send("Test React JS");
@@ -56,9 +67,13 @@ app.use("/api", addCategoryRoutes);
 app.use("/api", jobApplicationRoutes);
 app.use("/api", addEmployeeRoutes);
 
+app.use("/api", addUser);
+
+
+
 //error middleware
 app.use(errorHandler);
-
+ 
 //port
 const port = process.env.PORT || 9000;
 
