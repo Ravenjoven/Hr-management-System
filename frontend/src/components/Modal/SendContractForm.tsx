@@ -21,7 +21,7 @@ export default function SendContractForm({
 }: ModalProps) {
   const [fileMessage, setFileMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
-
+  const [fileName, setFileName] = useState<string>("");
   const sendMail = () => {
     const formData = new FormData();
     formData.append("email", to);
@@ -45,12 +45,12 @@ export default function SendContractForm({
       });
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFiles(Array.from(e.target.files));
+      setFileName(e.target.files[0].name); // Store the file name
     }
   };
-
   const handleClose = () => {
     isClose && isClose();
   };
@@ -85,7 +85,7 @@ export default function SendContractForm({
                       {title}
                     </h3>
                     <button
-                      onClick={handleClose}
+                      onClick={isClose}
                       className="text-lg font-medium leading-6 text-gray-900"
                     >
                       <FontAwesomeIcon
@@ -117,16 +117,35 @@ export default function SendContractForm({
                         </label>
                         <input type="text" className="w-full" value={to} />
                       </div>
-                      <div className="flex">
-                        <label htmlFor="upload" className="pr-2 font-semibold">
-                          Upload File:
+                      <div className="relative">
+                        <label
+                          htmlFor="upload"
+                          className=" border rounded-md  w-[170px] flex items-center justify-center cursor-pointer"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="50px"
+                            height="20px"
+                            viewBox="0 0 24 24"
+                            className="pl-4"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M3 1h12.414L21 6.586V12h-2V9h-6V3H5v18h7v2H3zm12 2.414V7h3.586zM14 15.5a2.5 2.5 0 0 1 5 0V20h-2v-4.5a.5.5 0 0 0-1 0V20a2 2 0 1 0 4 0v-4h2v4a4 4 0 0 1-8 0z"
+                            />
+                          </svg>
+                          <input
+                            type="file"
+                            name="file"
+                            className="cursor-pointer opacity-0 flex justify-center items-center"
+                            onChange={handleFileChange}
+                            accept=".pdf,.doc,.docx"
+                            id="upload"
+                          />
+                          <span className="absolute flex justify-center items-center">
+                            {fileName ? fileName : "Upload files"}
+                          </span>
                         </label>
-                        <input
-                          type="file"
-                          name="file"
-                          onChange={handleFileChange}
-                          className="cursor-pointer"
-                        />
                       </div>
                     </form>
                     <span
