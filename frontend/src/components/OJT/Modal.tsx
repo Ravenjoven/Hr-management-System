@@ -78,7 +78,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
         setFileMessage("File Accepted");
       } else {
         setIsPdf(false);
-        setFileMessage("Accept only PDF file.");
+        setFileMessage("PDF file only.");
       }
     }
   };
@@ -215,7 +215,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                               </svg>
                             </label>
                           </div>
-                          <div className="my-2">
+                          <div className="my-2 text-xs">
                             <span
                               className={
                                 isPdf ? "text-green-600" : "text-red-600"

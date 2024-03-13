@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Modal from './Modal';
+import React, { useState } from "react";
+import Modal from "./Modal";
 
-const AppplyModal: React.FC = () => {
+const ApplyModal: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -20,9 +20,9 @@ const AppplyModal: React.FC = () => {
       >
         Open Modal
       </button>
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <Modal isOpen={isModalOpen} onClose={closeModal} selectedJob={null} />
     </div>
   );
 };
 
-export default AppplyModal;
+export default ApplyModal;
