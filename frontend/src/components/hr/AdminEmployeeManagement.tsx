@@ -181,7 +181,7 @@ function AdminEmployeeManagement() {
       }
     };
     fetchJobs();
-  }, [employees]);
+  }, []);
 
   return (
     <div className="min-h-screen max-w-screen bg-white font-montserrat">

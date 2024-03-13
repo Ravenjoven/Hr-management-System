@@ -2,7 +2,6 @@ const express = require("express");
 const { uploadFiles } = require("../controllers/sendContractControllers");
 const router = express.Router();
 
-// Route to fetch all users
-router.post("/sendmail", uploadFiles);
+router.post("/sendemail", uploadFiles);
 
 module.exports = router;

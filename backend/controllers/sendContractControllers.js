@@ -76,6 +76,7 @@ const sendEmail = async (to, subject, path) => {
 };
 
 exports.uploadFiles = (req, res) => {
+  console.log(req);
   uploadFile(req, res, function (err) {
     if (err) {
       console.log(err);
