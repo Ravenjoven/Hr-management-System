@@ -61,7 +61,7 @@ exports.createJobs = async (req, res, next) => {
 
 exports.getJobs = async (req, res, next) => {
   try {
-    const jobs = await addJobsModels.find();
+    const jobs = await addJobsModels.find().sort({ createdAt: -1 });
 
     if (!jobs || jobs.length === 0) {
       return res.status(404).json({ success: false, message: "No jobs found" });
@@ -113,16 +113,19 @@ exports.editJobs = async (req, res, next) => {
 
 exports.deleteJobs = async (req, res, next) => {
   try {
-    // Delete the job
     const deletedJob = await addJobsModels.deleteOne({ _id: req.body.jobId });
 
     if (deletedJob.deletedCount === 0) {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
 
-    // Remove the job from categories
     await addCategoryModels.updateMany(
       { jobs: req.body.jobId },
+      { $pull: { jobs: req.body.jobId } }
+    );
+
+    await jobApplicationModels.updateMany(
+      { jobs: { $in: [req.body.jobId] } },
       { $pull: { jobs: req.body.jobId } }
     );
 
