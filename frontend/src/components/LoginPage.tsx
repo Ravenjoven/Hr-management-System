@@ -57,9 +57,41 @@ const Login = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: async  (credentialResponse) => {
       console.log("Login Success! Current user:", credentialResponse);
-
+      const accessToken = credentialResponse.access_token;
+      try {
+        // Fetch user info from Google API
+        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+  
+        // Parse user info response
+        const userInfo = await userInfoResponse.json();
+  
+        console.log("User Info:", userInfo);
+  
+        // Now you can access the user's name, email, and picture from userInfo object
+        const userName = userInfo.name;
+        const userEmail = userInfo.email;
+        const userProfilePicture = userInfo.picture;
+  
+        console.log("User Name:", userName);
+        console.log("User Email:", userEmail);
+        console.log("User Profile Picture:", userProfilePicture);
+  
+        // Handle the successful login
+        ReactSession.set("user", userInfo);
+  
+        // Redirect to the user profile page if needed
+        // navigate("/userProfile"); 
+  
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        // Handle error
+      }
     // Handle the successful login
-    ReactSession.set("user", credentialResponse); 
+    // ReactSession.set("user", credentialResponse); 
       // ReactSession.set("user", credentialResponse);
 
       // if(ReactSession.get("user")!==""){
