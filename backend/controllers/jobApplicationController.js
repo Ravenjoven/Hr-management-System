@@ -1,6 +1,22 @@
-// controllers/JobApplicationController.js
 const addJobsModels = require("../models/addJobsModels");
 const JobApplication = require("../models/jobApplicationModels");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+const fileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    cb(null, Date.now() + ext);
+  },
+});
+
+const uploadFile = multer({
+  storage: fileStorage,
+}).single("resume");
 
 async function updateAddJobWithApplicant(jobId, applicantId) {
   try {
@@ -18,42 +34,53 @@ async function updateAddJobWithApplicant(jobId, applicantId) {
 }
 
 exports.createJobApplication = async (req, res) => {
-  try {
-    const {
-      jobId,
-      jobName,
-      fullName,
-      email,
-      contact,
-      linkedIn,
-      jobType,
-      skills,
-      resume,
-      application,
-    } = req.body;
+  console.log(req.body);
+  uploadFile(req, res, async function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(400).send("File upload failed");
+    }
 
-    const newApplication = new JobApplication({
-      jobName,
-      fullName,
-      email,
-      contact,
-      linkedIn,
-      jobType,
-      roles: 0,
-      skills,
-      resume,
-      application,
-      jobs: jobId,
-    });
+    try {
+      const {
+        jobId,
+        fullName,
+        email,
+        contact,
+        linkedIn,
+        jobType,
+        skills,
+        application,
+      } = req.body;
 
-    const savedApplication = await newApplication.save();
+      let resume = null;
 
-    // Update the addjobs document with the applicant ID
-    await updateAddJobWithApplicant(req.body.jobId, savedApplication._id);
+      if (req.file) {
+        resume = req.file.filename;
+      }
 
-    res.status(201).json(savedApplication);
-  } catch (error) {
-    console.error("Error saving job application:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+      const newApplication = new JobApplication({
+        jobId,
+        fullName,
+        email,
+        contact,
+        linkedIn,
+        jobType,
+        roles: 0,
+        skills,
+        resume,
+        application,
+      });
+
+      const savedApplication = await newApplication.save();
+
+      // Update the addjobs document with the applicant ID
+      await updateAddJobWithApplicant(jobId, savedApplication._id);
+
+      res.status(201).json(savedApplication);
+    } catch (error) {
+      console.error("Error saving job application:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
 };
