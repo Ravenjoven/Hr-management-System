@@ -8,6 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useGoogleLogin } from "@react-oauth/google";
 import RegisterModal from "./Modal/RegisterModal";
+interface User {
+  profileObj?: string | null;
+  name?: string;
+  email?: string | null;
+  imageUrl?: string;
+}
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +21,7 @@ const Login = () => {
   const [logIn, setLogIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [ user , setUser ] =useState<User>({ email: null });
 
   const handleSignIn = async () => {
     try {
@@ -48,12 +55,18 @@ const Login = () => {
   const navigate = useNavigate(); // Step 2: Initialize useNavigate
 
   const googleLogin = useGoogleLogin({
-    onSuccess: (credentialResponse) => {
+    onSuccess: async  (credentialResponse) => {
       console.log("Login Success! Current user:", credentialResponse);
-      // Handle the successful login
 
+    // Handle the successful login
+    ReactSession.set("user", credentialResponse); 
+      // ReactSession.set("user", credentialResponse);
+
+      // if(ReactSession.get("user")!==""){
+      //   navigate("/userProfile");
+      // }
       // Step 3: Redirect to the user profile page
-      navigate("/userProfile"); // Replace '/userProfile' with your user profile path
+      // navigate("/userProfile"); // Replace '/userProfile' with your user profile path
     },
     onError: () => {
       console.log("Login Failed");

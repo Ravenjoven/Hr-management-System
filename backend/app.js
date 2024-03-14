@@ -21,8 +21,8 @@ const addEmployeeRoutes = require("./routes/addEmployeeRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
 const addUser = require("./routes/addUser");
 
-const dotenv = require("dotenv");
-const addUser=require("./routes/addUser");
+
+
 const event=require("./routes/eventRoutes");
 const profile=require("./routes/profileRoutes");
 const dotenv = require('dotenv');
