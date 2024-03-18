@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import axios from "axios";
+import React, {useState, useEffect} from "react";
 
 interface ModalProps {
   onClose: () => void;
-  selectedDate: Date; // Assuming date is a string
+  selectedDate: any; // Assuming date is a string
   
 }
 
@@ -10,7 +11,34 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
   const handleClose = () => {
     onClose && onClose();
   };
-  
+ 
+  const [formData, setFormData] = useState({
+    date: selectedDate,
+    title: '',
+    time: '',
+  });
+
+  const handleSave = () => {
+      // Check if user is defined
+      axios.post("http://localhost:9000/api/event/addevent", formData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log("Response:", response.data);
+          handleClose();
+        })
+        .catch((error) => {
+          // alert("An error occurred while adding the user");
+          console.log(formData);
+          console.error("An error occurred while adding the event:", error);
+        });
+
+    console.log("Form Data:", formData);
+  };
+
+
   return (
     <>
     
@@ -46,7 +74,12 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                       <label htmlFor="date-of-Event">Date</label>
                       <input type="text"
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
-                      value={selectedDate.toLocaleDateString()}/>
+                      value={selectedDate}
+                      // onChange={(e) =>
+                      //   setFormData({ ...formData, date: e.target.value })
+                      // }
+                      />
+                
                      {/* {selectedDate && <p>Add event for: {selectedDate.toLocaleDateString()}</p>}
                      */}
                     </div>
@@ -56,6 +89,10 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                         type="text"
                         placeholder="Create Event"
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                        value={formData.title}
+                        onChange={(e) =>
+                          setFormData({ ...formData, title: e.target.value })
+                        }
                       />
                     </div>
                    
@@ -64,8 +101,11 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
                       <input
                         type="time"
                         placeholder="Time"
-                        
+                        value={formData.time}
                         className="border border-custom-text-gray rounded pl-2 w-full h-10"
+                        onChange={(e) =>
+                          setFormData({ ...formData, time: e.target.value })
+                        }
                       />
                     </div>
                   </div>
@@ -75,6 +115,7 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
             <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
               <button
                 type="button"
+                onClick={handleSave}
                 className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
               >
                 Save
@@ -90,7 +131,6 @@ const AddModal: React.FC<ModalProps> = ({ selectedDate, onClose  }) => {
           </div>
         </div>
       </div>
-     
     </>
   );
 };

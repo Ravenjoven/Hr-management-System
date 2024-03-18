@@ -123,6 +123,7 @@ export default function Modal({ isOpen, onClose, selectedJob }: ModalProps) {
     });
   };
 
+
   const handleRemoveSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
   };
@@ -328,6 +329,7 @@ export default function Modal({ isOpen, onClose, selectedJob }: ModalProps) {
                   >
                     Submit
                   </button>
+
                   <button
                     type="button"
                     onClick={onClose}
