@@ -36,7 +36,7 @@ export default function ViewApplicantDetails({
   user,
 }: ModalProps) {
   const [isFilesClicked, setIsFilesClicked] = useState(false);
-  const [fileImage, setFileImage] = useState([]);
+  const [fileImage, setFileImage] = useState<File>();
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     isClose && isClose();
@@ -153,7 +153,7 @@ export default function ViewApplicantDetails({
                           onClick={handleImageClick}
                           className="h-full w-full cursor-pointer overflow-y-scroll overflow-x-hidden"
                         >
-                          <PdfViewer files={user?.resume} />
+                          <PdfViewer userId={user._id} fileName={user.resume} />
                         </div>
                       ) : (
                         <h1>No File Uploaded</h1>
@@ -184,7 +184,7 @@ export default function ViewApplicantDetails({
             <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-75">
               <div className="max-w-screen-lg">
                 <div className="max-w-screen max-h-screen overflow-y-auto">
-                  <PdfViewer files={user.resume} />
+                  <PdfViewer userId={user._id} fileName={user.resume} />
                 </div>
                 <button
                   onClick={handleCloseImage}
