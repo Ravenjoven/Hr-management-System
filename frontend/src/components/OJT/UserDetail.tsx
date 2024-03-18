@@ -26,7 +26,7 @@ function UserProfile() {
   const user = ReactSession.get("user");
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
-
+  console.log(user);
   const [ser, setUser] = useState<User[]>([]);
   useEffect(() => {
     const getUser = async () => {
@@ -41,7 +41,7 @@ function UserProfile() {
     };
     getUser();
   }, []);
-  if(user){
+  if (user) {
     return (
       <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
         <>
@@ -97,11 +97,19 @@ function UserProfile() {
                     icon={faUser}
                     className="flex w-[105px] h-[100px] border-[5px] border-gray-300 rounded-full p-3 m-8"
                   /> */}
-                  <img src={user.picture}  className="flex w-40 h-40 border-2 border-black rounded-full mx-24"></img>
+                  <img
+                    src={user.picture}
+                    className="flex w-40 h-40 border-2 border-black rounded-full mx-8"
+                  ></img>
                 </div>
-                <div className=" flex flex-col text-center justify-center items-center p-2">
-                  <p className="text-custom-text-black font-bold text-2xl">
-                    <EditText name="email" type="email" style={{width: '220px'}} defaultValue={user.name}/>
+                <div className=" flex flex-col text-center justify-center items-center">
+                  <p className="text-custom-text-black font-bold text-xl">
+                    <EditText
+                      name="email"
+                      type="email"
+                      style={{ width: "auto" }}
+                      defaultValue={user.name}
+                    />
                   </p>
                   <span className="text-custom-text-orange font-semibold p-1 text-sm">
                     Software Developer
@@ -109,15 +117,27 @@ function UserProfile() {
                 </div>
                 <div className="flex flex-col mx-8 my-12">
                   <div className="p-2 ">
-                    <h4 className="text-custom-text-black font-bold">EMAIL ID</h4>
+                    <h4 className="text-custom-text-black font-bold">
+                      EMAIL ID
+                    </h4>
                     <span className="text-custom-text-gray font-semibold">
-                    <EditText name="email" type="email" style={{width: '220px'}} defaultValue={user.email}/>
+                      <EditText
+                        name="email"
+                        type="email"
+                        style={{ width: "auto" }}
+                        defaultValue={user.email}
+                      />
                     </span>
                   </div>
                   <div className="p-2">
                     <h4 className="text-custom-text-black font-bold">NUMBER</h4>
                     <span className="text-custom-text-gray font-semibold">
-                    <EditText name="email" type="email" style={{width: '220px'}} defaultValue="129329177"/>
+                      <EditText
+                        name="email"
+                        type="email"
+                        style={{ width: "220px" }}
+                        defaultValue="129329177"
+                      />
                     </span>
                   </div>
                 </div>
@@ -125,14 +145,25 @@ function UserProfile() {
                   <div className="p-2">
                     <h4 className="text-custom-text-black font-bold">MENTOR</h4>
                     <span className="text-custom-text-gray font-semibold ">
-                      <EditText name="email" type="email" style={{width: '220px'}} defaultValue="johndoe"/>
+                      <EditText
+                        name="email"
+                        type="email"
+                        style={{ width: "220px" }}
+                        defaultValue="johndoe"
+                      />
                     </span>
                   </div>
                   <div className="p-2">
-                    <h4 className="text-custom-text-black font-bold">SCHEDULE</h4>
+                    <h4 className="text-custom-text-black font-bold">
+                      SCHEDULE
+                    </h4>
                     <span className="text-custom-text-gray font-semibold">
-                      
-                      <EditText name="email" type="email" style={{width: '220px'}} defaultValue="6am - 3pm"/>
+                      <EditText
+                        name="email"
+                        type="email"
+                        style={{ width: "220px" }}
+                        defaultValue="6am - 3pm"
+                      />
                     </span>
                   </div>
                 </div>
@@ -232,7 +263,7 @@ function UserProfile() {
                     <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
                       <div>
                         <h1 className=" text-xl">SKILLS</h1>
-  
+
                         <EditTextarea
                           name="description"
                           rows={4}
@@ -270,10 +301,8 @@ function UserProfile() {
         </>
       </div>
     );
-  }else{
-    return(
-      window.location.href="/login"
-    )
+  } else {
+    return (window.location.href = "/login");
   }
 }
 
