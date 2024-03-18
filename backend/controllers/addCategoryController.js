@@ -4,6 +4,7 @@ const addCategoryModels = require("../models/addCategoryModels");
 const { validationResult } = require("express-validator");
 
 exports.createCategory = async (req, res, next) => {
+  console.log(req);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(500).send("Missing parameters");

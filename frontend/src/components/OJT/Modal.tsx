@@ -42,31 +42,77 @@ export default function Modal({ isOpen, onClose, selectedJob }: ModalProps) {
       return;
     }
 
+    const skillsString = JSON.stringify(formData.jobSkills);
+
+    // Create FormData objects for form data and files separately
     const formDataToSend = new FormData();
+    const filesToSend = new FormData();
+
+    // Append form data to formDataToSend
     formDataToSend.append("jobId", jobId || "");
     formDataToSend.append("fullName", formData.fullName);
     formDataToSend.append("email", formData.email);
     formDataToSend.append("contact", formData.contact);
     formDataToSend.append("linkedIn", formData.linkedIn);
     formDataToSend.append("jobType", formData.jobType);
+    formDataToSend.append("skills", skillsString);
     formDataToSend.append("application", formData.application);
-    formDataToSend.append("resume", files);
+    formDataToSend.append("resume", files.name); // Assuming files is an array and you want to send the first file
+
+    // Append files to filesToSend
+    filesToSend.append("files", files); // Assuming files is an array and you want to send the first file
+
     console.log(formDataToSend);
 
-    const result = await axios
-      .post("http://localhost:9000/api/apply/jobs", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-      .then(() => {
-        console.log(result);
-        alert("Sent Successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      // Send form data to the first endpoint
+      const result1 = await axios.post(
+        "http://localhost:9000/api/apply",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      );
+
+      // If form data is successfully sent to the first endpoint
+      if (result1.status === 201) {
+        // Send files to the second endpoint
+        const result2 = await axios.post(
+          "http://localhost:9000/api/saveFiles",
+          filesToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        );
+
+        // If files are successfully sent to the second endpoint
+        if (result2.status === 200) {
+          alert("Sent Successfully");
+          setFormData({
+            jobId: jobId,
+            fullName: "",
+            email: "",
+            contact: "",
+            linkedIn: "",
+            jobType: "",
+            jobSkills: [],
+            application: "",
+          });
+        } else {
+          console.error("Error sending files");
+        }
+      } else {
+        console.error("Error sending form data");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const handleSelectSkills = (selectedList: any) => {
