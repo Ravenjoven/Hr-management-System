@@ -5,6 +5,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import OjtNavar from "./OjtNavar";
 import Modal from "./Modal";
 import OjtSidebar from "./OjtSidebar";
+import { data } from "autoprefixer";
 
 interface Job {
   _id: string;

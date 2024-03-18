@@ -23,8 +23,10 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen max-w-full bg-white font-montserrat">
-      <AdminNavar />
+    <>
+    <AdminNavar />
+    <div className="min-h-screen max-w-full bg-white font-montserrat px-4">
+      
       <ToastContainer /> {/* Add ToastContainer here */}
       <div className="fixed z-50">
         <button
@@ -188,6 +190,7 @@ function Dashboard() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
