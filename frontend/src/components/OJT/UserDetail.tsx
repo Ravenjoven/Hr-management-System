@@ -84,14 +84,14 @@ function UserProfile() {
               )}
             </button>
           </div>
-          <div className="relative w-full mt-8">
+          <div className="relative w-full mt-2 px-8">
             <OjtSidebar expanded={expanded} />
             <div
               className={`content h-full max-w-full z-1  ${
                 expanded ? "ml-0" : "ml-[280px]"
               }`}
             >
-              <div className="upper-div md:min-w-full h-full font-bol rounded flex bg-white text-black p-4">
+              <div className="upper-div md:min-w-full h-full font-bold rounded flex bg-white text-black p-4 md:overflow-hidden overflow-x-scroll">
                 <div className="flex items-center justify-center">
                   {/* <FontAwesomeIcon
                     icon={faUser}
@@ -107,7 +107,7 @@ function UserProfile() {
                     Software Developer
                   </span>
                 </div>
-                <div className="flex flex-col m-12">
+                <div className="flex flex-col mx-8 my-12">
                   <div className="p-2 ">
                     <h4 className="text-custom-text-black font-bold">EMAIL ID</h4>
                     <span className="text-custom-text-gray font-semibold">
@@ -121,7 +121,7 @@ function UserProfile() {
                     </span>
                   </div>
                 </div>
-                <div className="flex flex-col m-12">
+                <div className="flex flex-col my-12">
                   <div className="p-2">
                     <h4 className="text-custom-text-black font-bold">MENTOR</h4>
                     <span className="text-custom-text-gray font-semibold ">
@@ -229,7 +229,7 @@ function UserProfile() {
                 </div>
                 <div className="right-div w-full h-full mt-4 md:overflow-hidden overflow-x-scroll">
                   <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl">
-                    <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3">
+                    <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
                       <div>
                         <h1 className=" text-xl">SKILLS</h1>
   
@@ -247,11 +247,10 @@ function UserProfile() {
                       <h3 className="my-4 uppercase font-bold md:ml-8 text-xl text-custom-text-black">
                         certification
                       </h3>
-                      <div className="text-custom-text-black text-left md:ml-8 capitalize space-y-2 mb-4">
+                      <div className="text-custom-text-black text-left md:ml-8 capitalize space-y-2 mb-4 pr-8">
                         <EditTextarea
                           name="description"
                           rows={4}
-                          style={{ paddingTop: 0 }}
                           placeholder="Creative Web Design Technical Education and Skills
                           Development Authority(TESDA
                           December 0, 0000 -
