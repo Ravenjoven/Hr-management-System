@@ -44,7 +44,6 @@ function OjtSidebar({ expanded }: SidebarProps) {
           />
         </a>
         <ol className="space-y-2 font-medium">
-        
           <li className="m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
             <svg
               className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -91,7 +90,7 @@ function OjtSidebar({ expanded }: SidebarProps) {
             </Link>
           </li>
         </ol>
-        <div className="mt-[200px] m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
+        <div className="mt-20 m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
           <svg
             className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             aria-hidden="true"

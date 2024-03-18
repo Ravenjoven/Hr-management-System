@@ -158,7 +158,7 @@ const OjtJobList: React.FC = () => {
                 <div className="left-div mt-4 w-[400px] rounded-2xl">
                   <div>
                     <span className="text-4xl font-bold text-custom-text-black">
-                      Hello,<span> {user.family_name}</span>
+                      Hello,<span> {user.family_name}</span> !
                     </span>
                   </div>
                   <div className="flex items-center justify-center flex-grow pt-9">
