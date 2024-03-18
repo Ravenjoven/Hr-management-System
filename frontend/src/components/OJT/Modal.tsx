@@ -10,6 +10,12 @@ interface ModalProps {
 interface Job {
   jobName: string;
 }
+
+interface Skill {
+  name: string;
+  value: string;
+}
+
 export default function Modal({ isOpen, onClose, selectedJob }: ModalProps) {
   const jobId = localStorage.getItem("id");
   const [files, setFiles] = useState<File | null>(null);
@@ -104,6 +110,7 @@ export default function Modal({ isOpen, onClose, selectedJob }: ModalProps) {
             jobSkills: [],
             application: "",
           });
+          setSelectedSkills([]);
         } else {
           console.error("Error sending files");
         }
@@ -122,7 +129,6 @@ export default function Modal({ isOpen, onClose, selectedJob }: ModalProps) {
       jobSkills: selectedList,
     });
   };
-
 
   const handleRemoveSkills = (selectedList: any) => {
     setSelectedSkills(selectedList);
