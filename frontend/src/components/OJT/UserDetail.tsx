@@ -26,7 +26,7 @@ function UserProfile() {
   const user = ReactSession.get("user");
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
-
+  console.log(user);
   const [ser, setUser] = useState<User[]>([]);
   useEffect(() => {
     const getUser = async () => {
@@ -99,15 +99,15 @@ function UserProfile() {
                   /> */}
                   <img
                     src={user.picture}
-                    className="flex w-40 h-40 border-2 border-black rounded-full mx-24"
+                    className="flex w-40 h-40 border-2 border-black rounded-full mx-8"
                   ></img>
                 </div>
-                <div className=" flex flex-col text-center justify-center items-center p-2">
-                  <p className="text-custom-text-black font-bold text-2xl">
+                <div className=" flex flex-col text-center justify-center items-center">
+                  <p className="text-custom-text-black font-bold text-xl">
                     <EditText
                       name="email"
                       type="email"
-                      style={{ width: "220px" }}
+                      style={{ width: "auto" }}
                       defaultValue={user.name}
                     />
                   </p>
@@ -124,7 +124,7 @@ function UserProfile() {
                       <EditText
                         name="email"
                         type="email"
-                        style={{ width: "220px" }}
+                        style={{ width: "auto" }}
                         defaultValue={user.email}
                       />
                     </span>
