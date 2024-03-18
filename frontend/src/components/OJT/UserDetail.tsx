@@ -29,6 +29,7 @@ function UserProfile() {
   if(ReactSession.get("user")===""){
     navigate("/login");
   }
+
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
   console.log(user);
