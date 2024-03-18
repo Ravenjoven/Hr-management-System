@@ -188,7 +188,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                           <div className="relative">
                             <label
                               htmlFor="fileInput"
-                              className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-lg w-[200px] flex items-center justify-center cursor-pointer"
+                              className="p-4 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 w-[200px] flex items-center justify-center cursor-pointer"
                             >
                               {" "}
                               {resume && (
@@ -197,6 +197,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, selectedJob }) => {
                                 </span>
                               )}
                               <input
+                                accept="application-pdf"
                                 name="fileInput"
                                 id="fileInput"
                                 type="file"

@@ -111,9 +111,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -133,9 +131,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -155,9 +151,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -177,9 +171,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -199,9 +191,7 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
+                      <span className="text-custom-text-green">Frontend</span>
                     </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
@@ -221,10 +211,8 @@ function OjtJobList() {
                       </span>
                     </div>
                     <div className="text-xs font-bold text-custom-text-black">
-                      <span className="text-custom-text-green">
-                      Frontend 
-                      </span>
-                    </div>  
+                      <span className="text-custom-text-green">Frontend</span>
+                    </div>
                     <div>
                       <span className="text-[10px] text-custom-text-black">
                         10 applicants
@@ -243,7 +231,10 @@ function OjtJobList() {
                     />
                   </div>
                   <div className="flex justify-end">
-                    <button onClick={openModal}  className="bg-custom-bg-orange mt-12 mr-12 p-2 rounded-xl text-white flex items-center">
+                    <button
+                      onClick={openModal}
+                      className="bg-custom-bg-orange mt-12 mr-12 p-2 rounded-xl text-white flex items-center"
+                    >
                       Apply now
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -262,7 +253,11 @@ function OjtJobList() {
                         </g>
                       </svg>
                     </button>
-                    <Modal isOpen={isModalOpen} onClose={closeModal} />
+                    <Modal
+                      isOpen={isModalOpen}
+                      onClose={closeModal}
+                      selectedJob={null}
+                    />
                   </div>
                   <div className="mt-10  w-2">
                     <span className="text-custom-text-black ml-9 text-5xl font-bold">

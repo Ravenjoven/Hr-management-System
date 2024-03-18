@@ -4,20 +4,18 @@ import { faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import UserSidebar from "../UserSidebar";
 import UserNavar from "../UserNavar";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import UnEmpSidebar from "./UnEmpSidebar";
 import OjtSidebar from "./OjtSidebar";
 import OjtNavar from "./OjtNavar";
 import axios from "axios";
-import { ReactSession } from 'react-client-session';
+import { ReactSession } from "react-client-session";
 
 function UserProfile() {
-
   interface User {
     name: string;
-   email:string;
+    email: string;
   }
-
 
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
@@ -30,7 +28,9 @@ function UserProfile() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axios.get("http://localhost:9000/api/user/getUser");
+        const response = await axios.get(
+          "http://localhost:9000/api/user/getUser"
+        );
         setUser(response.data.getUser);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -41,7 +41,7 @@ function UserProfile() {
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
       <>
-      <OjtNavar />
+        <OjtNavar />
         <div className="hamburger-menu items-center">
           <button
             className="menu-toggle focus:outline-none"
@@ -81,12 +81,13 @@ function UserProfile() {
           </button>
         </div>
         <div className="relative w-full mt-8">
-        <OjtSidebar expanded={expanded} />
+          <OjtSidebar expanded={expanded} />
           <div
-            className={`content h-full max-w-full z-1  ${expanded ? "ml-0" : "ml-[280px]"
-              }`}
+            className={`content h-full max-w-full z-1  ${
+              expanded ? "ml-0" : "ml-[280px]"
+            }`}
           >
-            <div className="upper-div md:min-w-full h-full font-bol rounded flex bg-white text-black p-4">
+            <div className="upper-div md:min-w-full h-full font-bol rounded-2xl flex bg-white text-black p-4">
               <div>
                 <FontAwesomeIcon
                   icon={faUser}
@@ -94,7 +95,9 @@ function UserProfile() {
                 />
               </div>
               <div className=" flex flex-col text-center justify-center items-center  ">
-                <p className="text-custom-text-black font-bold text-2xl">{name}</p>
+                <p className="text-custom-text-black font-bold text-2xl">
+                  {name}
+                </p>
                 <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
@@ -103,7 +106,7 @@ function UserProfile() {
                 <div className="p-2 ">
                   <h4 className="text-custom-text-black font-bold">EMAIL ID</h4>
                   <span className="text-custom-text-gray font-semibold">
-                  {mail}
+                    {mail}
                   </span>
                 </div>
                 <div className="p-2">
@@ -129,11 +132,11 @@ function UserProfile() {
               </div>
             </div>
             <div className="flex">
-              <div className="left-div mt-4 w-[400px] min-h-screen border-[3px] rounded-2xl bg-white text-black p-4">
+              <div className="left-div mt-4 w-[400px] min-h-screen  rounded-2xl bg-white text-black p-4">
                 <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3">
-                <div>
-                    <h1 className="font-bold p-2  text-xl" >PERSONAL INFO</h1>
-                </div>
+                  <div>
+                    <h1 className="font-bold p-2  text-xl">PERSONAL INFO</h1>
+                  </div>
                   <div>
                     Fullname :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
@@ -203,28 +206,42 @@ function UserProfile() {
                 </div>
               </div>
               <div className="right-div w-full h-full mt-4 md:overflow-hidden overflow-x-scroll">
-                <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl">
-                  <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3">
+                <div className=" bg-white text-black md:ml-4 rounded-2xl w-[370px]">
+                  <div className="font-bold text-custom-text-black  ml-8 space-y-3 ">
                     <div>
-                        <h1 className=" text-xl">SKILLS</h1>
+                      <h1 className=" text-xl flex justify-center items-center">
+                        SKILLS
+                      </h1>
 
-                        {user.map((users, i)=>(
-                          <div
-                          key={i}
-                          >
-                            <h5>
-                              {users.name}
-                              {users.email}
-                            </h5>
+                      {user.map((users, i) => (
+                        <div key={i}>
+                          <h5>
+                            {users.name}
+                            {users.email}
+                          </h5>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="font-bold text-custom-text-black  ml-8 space-y-3 ">
+                    <div>
+                      <h1 className=" text-xl flex justify-center items-center">
+                        SKILLS
+                      </h1>
 
-                          </div>
-
-                        ))}
+                      {user.map((users, i) => (
+                        <div key={i}>
+                          <h5>
+                            {users.name}
+                            {users.email}
+                          </h5>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
                 <div className="w-full h-full">
-                  <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl mt-4">
+                  <div className=" bg-white text-black md:ml-4 rounded-2xl mt-4">
                     <h3 className="my-4 uppercase font-bold md:ml-8 text-xl text-custom-text-black">
                       certification
                     </h3>
