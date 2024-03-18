@@ -12,18 +12,23 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
+import { useNavigate } from "react-router-dom";
 
 function UserProfile() {
   interface User {
     name: string;
     email: string;
   }
-
+  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
   const user = ReactSession.get("user");
+
+  if(ReactSession.get("user")===""){
+    navigate("/login");
+  }
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
   console.log(user);
@@ -32,7 +37,7 @@ function UserProfile() {
     const getUser = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/api/user/getUser"
+          "http://localhost:9000/api/profile/addProfile"
         );
         setUser(response.data.getUser);
       } catch (error) {
