@@ -2,9 +2,11 @@
 
 const express = require("express");
 const router = express.Router();
-const jobApplicationController = require("../controllers/jobApplicationController");
+const {
+  createJobApplication,
+} = require("../controllers/jobApplicationController");
 
 // Route to create a new job application
-router.post("/apply", jobApplicationController.createJobApplication);
+router.post("/apply/jobs", createJobApplication);
 
 module.exports = router;
