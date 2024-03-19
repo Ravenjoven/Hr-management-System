@@ -85,3 +85,20 @@ const Calendar: React.FC = () => {
 
 export default Calendar;
 
+export function Scheduler(){
+  return <div>
+    
+    <FullCalendar 
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+
+        initialView="dayGridMonth"
+        headerToolbar={{
+          start: "prev,next",
+          center: "title",
+          end: "dayGridMonth,timeGridDay",
+        }}
+        
+        
+      />
+  </div>;
+}

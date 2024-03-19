@@ -20,6 +20,8 @@ import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 import JobCategory from "../components/JobCategory";
 import { ReactSession } from "react-client-session";
 import SelectedJobs from "../components/SelectedJob";
+import Sched from  "../components/OJT/scheduler"
+
 
 function router() {
   ReactSession.setStoreType("localStorage");
@@ -50,6 +52,11 @@ function router() {
           <Route path="/UserProfile" element={<UserDetail />} />
           <Route path="/OjtAttendance" element={<OjtAttendance />} />
           <Route path="/JobCategory" element={<JobCategory />} />
+
+
+          {/* schdeule in progress */}
+          <Route path="/sched" element={<Sched />} />
+
         </Routes>
       </Router>
     </>

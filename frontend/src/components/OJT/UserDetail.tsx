@@ -13,6 +13,7 @@ import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import { useNavigate } from "react-router-dom";
+import {Scheduler} from "../Calendar";
 
 function UserProfile() {
   interface User {
@@ -285,6 +286,7 @@ function UserProfile() {
                         certification
                       </h3>
                       <div className="text-custom-text-black text-left md:ml-8 capitalize space-y-2 mb-4 pr-8">
+                       
                         <EditTextarea
                           name="description"
                           rows={4}
