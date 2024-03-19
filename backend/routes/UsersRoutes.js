@@ -4,6 +4,7 @@ const {
   createEmployee,
   getAllUsers,
   getEmployee,
+  registerUser
 } = require("../controllers/UsersControllers");
 const router = express.Router();
 
@@ -15,5 +16,8 @@ router.get("/user/getAllUsers", getAllUsers);
 
 //get employee
 router.get("/user/getEmployee", getEmployee);
+
+// Route to handle POST requests to save registration data
+router.post("/registrations", registerUser);
 
 module.exports = router;

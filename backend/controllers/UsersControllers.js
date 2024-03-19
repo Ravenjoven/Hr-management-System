@@ -138,3 +138,32 @@ exports.getEmployee = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.registerUser = async (req, res) => {
+  try {
+    // Extract registration data from the request body
+    const { fullName, contactNumber, email, password, birthMonth, birthDay, birthYear, gender } = req.body;
+
+    // Create a new registration document
+    const newRegistration = new Registration({
+      fullName,
+      contactNumber,
+      email,
+      password,
+      birthMonth,
+      birthDay,
+      birthYear,
+      gender,
+    });
+
+    // Save the new registration document to the database
+    await newRegistration.save();
+
+    // Respond with a success message
+    res.status(201).json({ message: 'Registration successful' });
+  } catch (error) {
+    // Handle any errors
+    console.error('Registration failed:', error);
+    res.status(500).json({ error: 'Registration failed' });
+  }
+};
