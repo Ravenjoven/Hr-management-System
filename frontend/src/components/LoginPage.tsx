@@ -149,15 +149,19 @@ const Login = () => {
                 </svg>
               </div>
               <div className="flex relative justify-center items-center">
-                <h1 className=" font-bold text-custom-text-gray lg:text-[250%] md:text-[100%] xs:text-[50%] ">
+                <h1 className=" font-bold text-custom-text-gray lg:text-[150%] md:text-[60%] xs:text-[50%] ">
                   We're passionate about helping entrepreneurs change the world
                   and build a better tomorrow.
                 </h1>
               </div>
             </div>
-          <div className="w-full flex justify-end mt-4">
+          <div 
+          // className="w-full flex justify-end mt-4"
+          className="mx-8 w-[341px] bg-custom-text-orange mr-8 rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] p-[45px] h-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1"
+              
+          >
             <form
-              className="mx-8 w-[341px] bg-custom-text-orange mr-8 rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] p-[45px] h-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1"
+              //className="mx-8 w-[341px] bg-custom-text-orange mr-8 rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] p-[45px] h-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1"
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSignIn();
@@ -223,7 +227,9 @@ const Login = () => {
                 />
                 <span className="text-xs">Log in with Google</span>
               </button>
-              <p
+              
+            </form>
+            <p
                 id="helper-text-explanation"
                 className="mt-8 text-xs text-white"
               >
@@ -243,7 +249,6 @@ const Login = () => {
                   title="Sign Up"
                 ></RegisterModal>
               )}
-            </form>
           </div>
         </section>
         <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs">
