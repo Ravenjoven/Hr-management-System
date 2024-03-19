@@ -8,24 +8,20 @@ var cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/error");
 //import routes
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const jobTypeRoutes = require("./routes/jobTypeRoutes");
-const jobRoute = require("./routes/jobsRoutes");
+// const authRoutes = require("./routes/authRoutes");
+// const userRoutes = require("./routes/userRoutes");
+// const jobTypeRoutes = require("./routes/jobTypeRoutes");
 const sendContractRoutes = require("./routes/sendContractRoutes");
-const addJobsRoutes = require("./routes/addJobsRoutes");
-const addCategoryRoutes = require("./routes/addCategoryRoutes");
-const jobApplicationRoutes = require("./routes/jobApplicationRoutes");
-
-const addEmployeeRoutes = require("./routes/addEmployeeRoutes");
+const JobsRoutes = require("./routes/JobsRoutes");
+const CategoryRoutes = require("./routes/CategoryRoutes");
+const ApplicationRoutes = require("./routes/ApplicationRoutes");
+const UsersRoutes = require("./routes/UsersRoutes");
 // const jobTypeModels = require("./models/jobTypeModels");
-const addUser = require("./routes/addUser");
+// const addUser = require("./routes/addUser");
 
-
-
-const event=require("./routes/eventRoutes");
-const profile=require("./routes/profileRoutes");
-const dotenv = require('dotenv');
+const event = require("./routes/eventRoutes");
+const profile = require("./routes/profileRoutes");
+const dotenv = require("dotenv");
 dotenv.config();
 const { OAuth2Client } = require("google-auth-library");
 
@@ -61,16 +57,16 @@ app.use("/uploads", express.static("uploads"));
 //app.get('/', (req, res)=>{
 //  res.send("Test React JS");
 //})
-app.use("/api", authRoutes);
-app.use("/api", userRoutes);
-app.use("/api", jobTypeRoutes);
-app.use("/api", jobRoute);
+// app.use("/api", authRoutes);
+// app.use("/api", userRoutes);
+// app.use("/api", jobTypeRoutes);
+// app.use("/api", jobRoute);
+// app.use("/api", addUser);
 app.use("/api", sendContractRoutes);
-app.use("/api", addJobsRoutes);
-app.use("/api", addCategoryRoutes);
-app.use("/api", jobApplicationRoutes);
-app.use("/api", addEmployeeRoutes);
-app.use("/api", addUser);
+app.use("/api", JobsRoutes);
+app.use("/api", CategoryRoutes);
+app.use("/api", ApplicationRoutes);
+app.use("/api", UsersRoutes);
 app.use("/api", event);
 app.use("/api", profile);
 

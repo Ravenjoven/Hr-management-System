@@ -5,6 +5,7 @@ import { pdfjs } from "react-pdf";
 import PdfViewer from "../pdf/PdfViewer";
 import React from "react";
 import axios from "axios";
+import MoveApplicantModal from "./MovePendingModal";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -36,7 +37,8 @@ export default function ViewApplicantDetails({
   user,
 }: ModalProps) {
   const [isFilesClicked, setIsFilesClicked] = useState(false);
-  const [fileImage, setFileImage] = useState<File>();
+  const [selectedApplicant, setSelectedApplicant] = useState("");
+  const [openModal, setOpenModal] = useState(false);
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     isClose && isClose();
@@ -49,22 +51,15 @@ export default function ViewApplicantDetails({
     setIsFilesClicked(false);
   };
 
-  useEffect(() => {
-    const fetchFile = async () => {
-      try {
-        if (user) {
-          const response = await axios.get(
-            `http://localhost:9000/api/getFiles/${user._id}/${user.resume}`
-          );
-          console.log(response.data);
-          setFileImage(response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching files:", error);
-      }
-    };
-    fetchFile();
-  }, [user]);
+  const handeSend = (id: string | undefined) => {
+    setOpenModal(true);
+    setSelectedApplicant(id ? id : "");
+  };
+
+  const closeViewModal = () => {
+    setOpenModal(false);
+    setSelectedApplicant("");
+  };
 
   return (
     <>
@@ -172,11 +167,17 @@ export default function ViewApplicantDetails({
                 </button>
                 <button
                   type="button"
+                  onClick={() => handeSend(user?._id)}
                   className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Move to pending
                 </button>
               </div>
+              <MoveApplicantModal
+                isClick={openModal}
+                isClose={closeViewModal}
+                id={selectedApplicant}
+              />
             </div>
           </div>
           {/* Modal for displaying the pdf */}

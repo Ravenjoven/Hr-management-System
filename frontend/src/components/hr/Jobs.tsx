@@ -371,6 +371,9 @@ function Jobs() {
                         Applicants
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Slots
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Date Created
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -424,6 +427,7 @@ function Jobs() {
                               {job.applicant.length}
                             </div>
                           </td>
+                          <td className="px-6 py-4">{job.jobSlots}</td>
                           <td className="px-6 py-4">
                             {formattedJobs[index] &&
                               formattedJobs[index].createdAt}

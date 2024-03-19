@@ -50,10 +50,10 @@ const jobSchema = new mongoose.Schema(
       type: Number,
       trim: true,
     },
-    category: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
-    applicant: [{ type: mongoose.Schema.Types.ObjectId, ref: "applyjobs" }],
+    category: [{ type: mongoose.Schema.Types.ObjectId, ref: "jobs" }],
+    applicant: [{ type: mongoose.Schema.Types.ObjectId, ref: "applications" }],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("addjobs", jobSchema);
+module.exports = mongoose.model("jobs", jobSchema);

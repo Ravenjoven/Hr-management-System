@@ -6,7 +6,8 @@ const {
   createJobApplication,
   saveFiles,
   getFiles,
-} = require("../controllers/jobApplicationController");
+  updateApplicant,
+} = require("../controllers/ApplicationControllers");
 
 // Route to create a new job application
 router.post("/apply", createJobApplication);
@@ -14,5 +15,7 @@ router.post("/apply", createJobApplication);
 router.post("/saveFiles", saveFiles);
 
 router.get("/getFiles/:userId/:filename", getFiles);
+
+router.put("/updateApplicant", updateApplicant);
 
 module.exports = router;

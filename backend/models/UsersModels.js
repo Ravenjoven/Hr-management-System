@@ -46,11 +46,11 @@ const employeeSchema = new mongoose.Schema(
       required: [true, "address is required"],
     },
     status: {
-      type: Number,
+      type: String,
       trim: true,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("employees", employeeSchema);
+module.exports = mongoose.model("users", employeeSchema);

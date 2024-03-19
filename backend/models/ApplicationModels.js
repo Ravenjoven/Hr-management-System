@@ -27,8 +27,8 @@ const jobApplicationSchema = new mongoose.Schema(
       trim: true,
       required: [true, "Job type is required"],
     },
-    roles: {
-      type: Number,
+    Status: {
+      type: String,
     },
     skills: {
       type: Object,
@@ -45,9 +45,14 @@ const jobApplicationSchema = new mongoose.Schema(
       trim: true,
       required: [true, "Applications is required"],
     },
-    jobs: [{ type: Schema.Types.ObjectId, ref: "addjobs" }],
+    comment: {
+      type: String,
+      trim: true,
+    },
+    jobs: [{ type: Schema.Types.ObjectId, ref: "jobs" }],
+    user: [{ type: Schema.Types.ObjectId, ref: "users" }],
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("applyjobs", jobApplicationSchema);
+module.exports = mongoose.model("application", jobApplicationSchema);

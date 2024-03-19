@@ -81,7 +81,7 @@ function AddEmployeeModal({
       });
 
       const response = await axios.post(
-        "http://localhost:9000/api/employee/add",
+        "http://localhost:9000/api/user/add",
         formData,
         {
           headers: {

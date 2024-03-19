@@ -1,48 +1,55 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import React from "react";
+import LoadingFileAnimation from "../LoadingFileAnimation";
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
+  isClick: boolean;
+  isClose: () => void;
+  id: string;
 }
 
-export default function AddCategory({ isOpen, onClose, title }: ModalProps) {
-  const [categoryMessage, setCategoryMessage] = useState("");
-  const [formData, setFormData] = useState({
-    jobCategory: "",
-  });
+export default function MoveApplicantModal({
+  isClick,
+  isClose,
+  id,
+}: ModalProps) {
+  const [message, setMessage] = useState("");
+  const [comment, setComment] = useState("");
+  const [loadingAnimation, setLoadingAnimation] = useState(false);
 
-  const addCategory = () => {
-    axios
-      .post("http://localhost:9000/api/jobs/addcategory", formData, {
+  const handleClose = () => {
+    isClose && isClose();
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("comment", comment);
+
+    try {
+      await axios.put("http://localhost:9000/api/updateApplicant", formData, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
         },
-      })
-      .then(() => {
-        setCategoryMessage("Add Successfully");
-        setFormData((prevState) => ({
-          ...prevState,
-          jobCategory: "",
-        }));
-      })
-      .catch((e) => {
-        console.log("error", e);
       });
-  };
-
-  const handleClose = () => {
-    onClose && onClose();
+      alert("Move Successfully");
+      setMessage("Move Successfully");
+      setTimeout(() => {
+        isClose();
+      }, 1000);
+    } catch (error) {
+      setMessage("Move Unsuccessfully");
+    }
   };
 
   return (
     <>
-      {isOpen && (
-        <div className="fixed z-50 inset-0 overflow-y-auto font-montserrat top-40">
+      {isClick && (
+        <div className="fixed z-50 inset-0 overflow-y-auto font-montserrat">
           <div className="flex items-center justify-center min-w-screen px-4 pt-4 pb-20 text-center sm:p-0">
             <div
               className="fixed inset-0 transition-opacity"
@@ -65,11 +72,9 @@ export default function AddCategory({ isOpen, onClose, title }: ModalProps) {
                     <h3
                       className="text-lg font-medium leading-6 text-gray-900"
                       id="modal-headline"
-                    >
-                      {title}
-                    </h3>
+                    ></h3>
                     <button
-                      onClick={handleClose}
+                      onClick={isClose}
                       className="text-lg font-medium leading-6 text-gray-900"
                     >
                       <FontAwesomeIcon
@@ -80,43 +85,35 @@ export default function AddCategory({ isOpen, onClose, title }: ModalProps) {
                   </div>
                   <hr />
                   <div className="mt-4 text-black flex flex-col">
-                    <form
-                      method="post"
-                      encType="multipart/form-data"
-                      className="space-y-2"
-                    >
-                      <div>
+                    <form method="post" className="space-y-2">
+                      <div className="flex-col">
                         <label
-                          htmlFor="inputname"
-                          className="block text-gray-800 font-semibold text-sm"
+                          htmlFor="message"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Category Name
+                          Comment
                         </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            name="inputname"
-                            value={formData.jobCategory}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                jobCategory: e.target.value,
-                              })
-                            }
-                            required
-                            className="block w-full capitalize rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 focus:text-gray-800"
-                          />
-                        </div>
+                        <textarea
+                          id="message"
+                          rows={4}
+                          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Write your comment here..."
+                          value={comment}
+                          onChange={(e) => {
+                            setComment(e.target.value);
+                          }}
+                          required
+                        ></textarea>
                       </div>
                     </form>
                     <span
                       className={
-                        categoryMessage === "Add Successfully"
+                        message === "Move Successfully"
                           ? "text-green-600 pt-4"
                           : "text-red-600 pt-2"
                       }
                     >
-                      {categoryMessage}
+                      {message}
                     </span>
                   </div>
                 </div>
@@ -124,16 +121,17 @@ export default function AddCategory({ isOpen, onClose, title }: ModalProps) {
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse ">
                 <button
                   type="button"
-                  onClick={addCategory}
+                  onClick={handleSubmit}
                   className="w-full md:inline-flex inline-block mb-2 justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  Add now
+                  Confirm
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
+      {loadingAnimation && <LoadingFileAnimation />}
     </>
   );
 }

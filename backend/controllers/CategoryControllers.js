@@ -1,6 +1,6 @@
 //this is add job controller created by ranel
-const addJobsModels = require("../models/addJobsModels");
-const addCategoryModels = require("../models/addCategoryModels");
+const JobsModels = require("../models/JobsModels");
+const CategoryModels = require("../models/CategoryModels");
 const { validationResult } = require("express-validator");
 
 exports.createCategory = async (req, res, next) => {
@@ -12,7 +12,7 @@ exports.createCategory = async (req, res, next) => {
 
   try {
     // Create the category
-    const category = await addCategoryModels.create({
+    const category = await CategoryModels.create({
       jobCategory: req.body.jobCategory,
     });
 
@@ -21,7 +21,7 @@ exports.createCategory = async (req, res, next) => {
 
     // Update the category with the IDs of the associated jobs
     if (jobIds && jobIds.length > 0) {
-      await addJobsModels.updateMany(
+      await JobsModels.updateMany(
         { _id: { $in: jobIds } },
         { $addToSet: { jobCategory: category._id } } // Associate each job with the category
       );
@@ -38,7 +38,7 @@ exports.createCategory = async (req, res, next) => {
 
 exports.getCategory = async (req, res, next) => {
   try {
-    const category = await addCategoryModels.find();
+    const category = await CategoryModels.find();
 
     if (!category || category.length === 0) {
       return res
@@ -56,7 +56,7 @@ exports.getJobs = async (req, res) => {
   try {
     const categoryId = req.params.id;
 
-    const category = await addCategoryModels.findById(categoryId);
+    const category = await CategoryModels.findById(categoryId);
 
     if (!category) {
       return res
@@ -66,7 +66,7 @@ exports.getJobs = async (req, res) => {
 
     const jobsIds = category.jobs;
 
-    const jobs = await addJobsModels.find({
+    const jobs = await JobsModels.find({
       _id: { $in: jobsIds },
     });
 
@@ -86,7 +86,7 @@ exports.getJob = async (req, res, next) => {
   const jobId = req.params.id;
 
   try {
-    const job = await addJobsModels.findById(jobId);
+    const job = await JobsModels.findById(jobId);
 
     if (!job || job.length === 0) {
       return res.status(404).json({ success: false, message: "No job found" });

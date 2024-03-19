@@ -3,8 +3,8 @@ import axios from "axios";
 import { Document, Page } from "react-pdf";
 
 interface PdfViewerProps {
-  userId: string; // Assuming you have user ID
-  fileName: string; // Assuming you have file name
+  userId: string;
+  fileName: string;
 }
 
 export default function PdfViewer({ userId, fileName }: PdfViewerProps) {
@@ -18,7 +18,7 @@ export default function PdfViewer({ userId, fileName }: PdfViewerProps) {
         const response = await axios.get(
           `http://localhost:9000/api/getFiles/${userId}/${fileName}`,
           {
-            responseType: "blob", // Ensure correct response type
+            responseType: "blob",
           }
         );
         const fileReader = new FileReader();

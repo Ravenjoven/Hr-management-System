@@ -5,7 +5,7 @@ const {
   getCategory,
   getJobs,
   getJob,
-} = require("../controllers/addCategoryController");
+} = require("../controllers/CategoryControllers");
 const router = express.Router();
 
 //add category routes

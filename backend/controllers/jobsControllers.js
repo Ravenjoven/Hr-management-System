@@ -1,96 +1,154 @@
-const Job = require('../models/jobModels');
-const JobType = require('../models/jobTypeModels');
-const ErrorResponse = require('../utils/errorResponse');
+//this is add category created by ranel
+const addJobsModels = require("../models/JobsModels");
+const addCategoryModels = require("../models/CategoryModels");
+const jobApplicationModels = require("../models/ApplicationModels");
+const { validationResult } = require("express-validator");
 
-//create job
-exports.createJob = async (req, res, next) => {
-    try {
-        const job = await Job.create({
-            title: req.body.title,
-            description: req.body.description,
-            salary: req.body.salary,
-            location: req.body.location,
-            jobType: req.body.jobType,
-            user: req.user.id
-        });
-        res.status(201).json({
-            success: true,
-            job
-        })
-    } catch (error) {
-        next(error);
-    }
-}
+exports.createJobs = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(500).send("Missing parameters");
+  }
 
-//single job
-exports.singleJob = async (req, res, next) => {
-    try {
-        const job = await Job.findById(req.params.id);
-        res.status(200).json({
-            success: true,
-            job
-        })
-    } catch (error) {
-        next(error);
+  try {
+    // Check if the provided category exists in the database
+    let category = await addCategoryModels.findOne({
+      jobCategory: req.body.jobCategory,
+    });
+    if (!category) {
+      // If the category doesn't exist, create it
+      category = await addCategoryModels.create({
+        jobCategory: req.body.jobCategory,
+      });
     }
-}
 
-//update job by id.
-exports.updateJob = async (req, res, next) => {
-    try {
-        const job = await Job.findByIdAndUpdate(req.params.job_id, req.body, { new: true }).populate('jobType', 'jobTypeName').populate('user', 'firstName');
-        res.status(200).json({
-            success: true,
-            job
-        })
-    } catch (error) {
-        next(error);
-    }
-    
-}
-//update job by id.
-exports.showJobs = async (req, res, next) => {
-    //enable search
-    const keyword = req.query.keyword ? {
-        title:{
-            $regex: req.query.keyword,
-            $options: 'i'
-        }
-    } :{}
-//filter jobs by category ids
-let ids=[];
-const jobTypeCategory = await JobType.find({}, {_id:1});
-jobTypeCategory.forEach(cat =>{
-    ids.push(cat._id);
-})
-let cat = req.query.cat;
-let categ = cat !== '' ? cat: ids;
+    // Create the job
+    const job = await addJobsModels.create({
+      category: category._id,
+      jobName: req.body.jobName,
+      jobDescription: req.body.jobDescription,
+      jobType: req.body.jobType,
+      jobSlots: req.body.jobSlots,
+      jobCategory: req.body.jobCategory,
+      jobSkills: req.body.jobSkills,
+      jobSetUp: req.body.jobSetUp,
+      jobExperience: req.body.jobExperience,
+      jobFromSalary: req.body.jobFromSalary,
+      jobToSalary: req.body.jobToSalary,
+    });
 
-//jobs by location
-let locations = [];
-const jobByLocation = await Job.find({}, {location: 1});
-jobByLocation.forEach(val => {
-    locations.push(val.location);
-});
-let setUniqueLocation = [...new Set(locations)];
-let location = req.query.location;
-let locationFilter = location !== '' ? location : setUniqueLocation;
-    //enable pagination
-    const pageSize = 5;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await Job.find({...keyword,jobType: categ, location: locationFilter}).countDocuments();
-    try {
-        const jobs = await Job.find({...keyword,jobType: categ, location: locationFilter}).sort({ createdAt: -1 }).skip(pageSize * (page -1)).limit()
-        res.status(200).json({
-            success: true,
-            jobs,
-            page,
-            pages:Math.ceil(count / pageSize),
-            count,
-            setUniqueLocation
-            
-        })
-    } catch (error) {
-        next(error);
+    // Associate the job with the category
+    category.jobs.push(job._id);
+    await category.save();
+
+    // Now, you can also associate job applications with the job
+    const jobApplications = req.body.jobApplications; // Assuming you have an array of job application IDs in the request body
+
+    if (jobApplications && jobApplications.length > 0) {
+      // Add references to job applications to the job document
+      job.applications = jobApplications;
+      await job.save();
     }
-}
+
+    res.status(201).json({
+      success: true,
+      job,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getJobs = async (req, res, next) => {
+  try {
+    const jobs = await addJobsModels.find().sort({ createdAt: -1 });
+
+    if (!jobs || jobs.length === 0) {
+      return res.status(404).json({ success: false, message: "No jobs found" });
+    }
+
+    res.status(200).json({ success: true, jobs });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.editJobs = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Missing parameters" });
+  }
+
+  try {
+    const updatedJob = await addJobsModels.findOneAndUpdate(
+      { _id: req.body.jobId },
+      {
+        $set: {
+          jobName: req.body.jobName,
+          jobDescription: req.body.jobDescription,
+          jobType: req.body.jobType,
+          jobSlots: req.body.jobSlots,
+          jobCategory: req.body.jobCategory,
+          jobSkills: req.body.jobSkills,
+          jobSetUp: req.body.jobSetUp,
+          jobExperience: req.body.jobExperience,
+          jobFromSalary: req.body.jobFromSalary,
+          jobToSalary: req.body.jobToSalary,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedJob) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    res.status(200).json({ success: true, job: updatedJob });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteJobs = async (req, res, next) => {
+  try {
+    const deletedJob = await addJobsModels.deleteOne({ _id: req.body.jobId });
+
+    if (deletedJob.deletedCount === 0) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    await addCategoryModels.updateMany(
+      { jobs: req.body.jobId },
+      { $pull: { jobs: req.body.jobId } }
+    );
+
+    await jobApplicationModels.updateMany(
+      { jobs: { $in: [req.body.jobId] } },
+      { $pull: { jobs: req.body.jobId } }
+    );
+
+    res
+      .status(200)
+      .json({ success: true, message: "Job deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getApplicant = async (req, res, next) => {
+  try {
+    const applicant = await jobApplicationModels.find({ roles: 0 });
+
+    if (!applicant || applicant.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No applicant found" });
+    }
+
+    res.status(200).json({ success: true, applicant });
+  } catch (error) {
+    next(error);
+  }
+};
