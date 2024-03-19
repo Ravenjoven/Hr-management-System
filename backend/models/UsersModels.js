@@ -49,6 +49,7 @@ const employeeSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    application: [{ type: Schema.Types.ObjectId, ref: "applications" }],
   },
   { timestamps: true }
 );
