@@ -1,9 +1,8 @@
-const addJobsModels = require("../models/addJobsModels");
-const jobApplicationModels = require("../models/jobApplicationModels");
+const addJobsModels = require("../models/JobsModels");
+const jobApplicationModels = require("../models/ApplicationModels");
 const { validationResult } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 
 const fileStorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -53,9 +52,11 @@ exports.createJobApplication = async (req, res) => {
       skills: req.body.skills,
       application: req.body.application,
       jobId: req.body.jobId,
-      roles: 0,
+      status: "Applied",
       resume: req.body.resume,
+      comment: "",
       jobs: req.body.jobId,
+      user: req.body.userId,
     });
 
     const savedApplication = await newApplication.save();
@@ -85,4 +86,58 @@ exports.saveFiles = async (req, res) => {
     // File upload successful
     res.status(200).json({ message: "File uploaded successfully" });
   });
+};
+
+exports.getFiles = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const filename = req.params.filename;
+
+    // Check if user exists
+    const user = await jobApplicationModels.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (user.resume !== filename) {
+      return res.status(400).json({ error: "Filename does not match" });
+    }
+
+    const filePath = path.join(__dirname, "..", "uploads", filename);
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error("Error sending file:", err);
+        res.status(err.status).end();
+      } else {
+        console.log("File sent successfully");
+      }
+    });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.updateApplicant = async (req, res) => {
+  const { id, comment } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const applicant = await jobApplicationModels.findById(id);
+    if (!applicant) {
+      console.log("Applicant not found");
+      return;
+    }
+
+    applicant.comment = comment;
+    applicant.roles = 1;
+
+    await applicant.save();
+    return res.status(200).json({ message: "Applicant updated successfully" });
+  } catch (error) {
+    console.error("Error updating applicant:", error);
+  }
 };

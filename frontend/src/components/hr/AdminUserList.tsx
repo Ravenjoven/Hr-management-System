@@ -7,14 +7,29 @@ import {
   faTrash,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ViewEmployeeModal from "../Modal/ViewEmployeeModal";
+import axios from "axios";
 
 interface FormData {
   [key: string]: any;
 }
 
+interface Users {
+  _id: string;
+  fullname: string;
+  dateOfBirth: string;
+  email: string;
+  phoneNumber: number;
+  position: string;
+  type: string;
+  address: string;
+  jobSkills: Object[];
+  createdAt: Date;
+}
+
 function AdminUserList() {
+  const [users, setUsers] = useState<Users[]>([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,104 +37,135 @@ function AdminUserList() {
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
-  const [users, setUsers] = useState([
-    {
-      id: 0,
-      name: "Jezrael Suliano",
-      position: "Project Manager",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "03/01/2024",
-    },
-    {
-      id: 1,
-      name: "Ranel Soliano",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Freelance",
-      date_hire: "04/01/2024",
-    },
-    {
-      id: 2,
-      name: "Arnel Carcella",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Partime",
-      date_hire: "05/01/2024",
-    },
-    {
-      id: 3,
-      name: "Raven Joven",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "OJT",
-      date_hire: "06/01/2024",
-    },
-    {
-      id: 4,
-      name: "Aijem Aijem",
-      position: "Fullstack Developer",
-      contact: "090991231",
-      type: "Full Time",
-      date_hire: "07/10/2024",
-    },
-    {
-      id: 5,
-      name: "Jezrael Suliano",
-      position: "Project Manager",
-      contact: "0912345678",
-      type: "OJT",
-      date_hire: "02/09/2024",
-    },
-    {
-      id: 6,
-      name: "Ranel Soliano",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/08/2024",
-    },
-    {
-      id: 7,
-      name: "Arnel Carcella",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/07/2024",
-    },
-    {
-      id: 8,
-      name: "Raven Joven",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/06/2024",
-    },
-    {
-      id: 9,
-      name: "Aijem Aijem",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/03/2024",
-    },
-    {
-      id: 10,
-      name: "Aijem Aijem",
-      position: "Fullstack Developer",
-      contact: "0912345678",
-      type: "Full Time",
-      date_hire: "02/04/2024",
-    },
-  ]);
+  // const [users, setUsers] = useState([
+  //   {
+  //     id: 0,
+  //     name: "Jezrael Suliano",
+  //     position: "Project Manager",
+  //     contact: "0912345678",
+  //     type: "Full Time",
+  //     date_hire: "03/01/2024",
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "Ranel Soliano",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "Freelance",
+  //     date_hire: "04/01/2024",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Arnel Carcella",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "Partime",
+  //     date_hire: "05/01/2024",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Raven Joven",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "OJT",
+  //     date_hire: "06/01/2024",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Aijem Aijem",
+  //     position: "Fullstack Developer",
+  //     contact: "090991231",
+  //     type: "Full Time",
+  //     date_hire: "07/10/2024",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Jezrael Suliano",
+  //     position: "Project Manager",
+  //     contact: "0912345678",
+  //     type: "OJT",
+  //     date_hire: "02/09/2024",
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Ranel Soliano",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "Full Time",
+  //     date_hire: "02/08/2024",
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Arnel Carcella",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "Full Time",
+  //     date_hire: "02/07/2024",
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Raven Joven",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "Full Time",
+  //     date_hire: "02/06/2024",
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Aijem Aijem",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "Full Time",
+  //     date_hire: "02/03/2024",
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Aijem Aijem",
+  //     position: "Fullstack Developer",
+  //     contact: "0912345678",
+  //     type: "Full Time",
+  //     date_hire: "02/04/2024",
+  //   },
+  // ]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/user/getAllUsers"
+        );
+        setUsers(response.data.users);
+      } catch (error) {
+        console.error("Error fetching employee:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const formattedUser = users.map((user) => {
+    const formattedDate = new Date(user.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    return {
+      ...user,
+      createdAt: formattedDate,
+    };
+  });
+
   const [searchQuery, setSearchQuery] = useState("");
   const filteredUsers = users.filter((user) => {
     return (
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.fullname.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.contact.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.phoneNumber
+        .toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
       user.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.date_hire.toLowerCase().includes(searchQuery.toLowerCase())
+      user.createdAt.toString().toLowerCase().includes(searchQuery)
     );
   });
   const [isOpen, setIsOpen] = useState(false);
@@ -242,7 +288,7 @@ function AdminUserList() {
                   >
                     {currentUsers.map((user, index) => (
                       <tr
-                        key={user.id}
+                        key={user._id}
                         className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       >
                         <th
@@ -251,11 +297,14 @@ function AdminUserList() {
                         >
                           {index + 1}
                         </th>
-                        <td className="px-6 py-4">{user.name}</td>
+                        <td className="px-6 py-4">{user.fullname}</td>
                         <td className="px-6 py-4">{user.position}</td>
-                        <td className="px-6 py-4">{user.contact}</td>
+                        <td className="px-6 py-4">{user.phoneNumber}</td>
                         <td className="px-6 py-4">{user.type}</td>
-                        <td className="px-6 py-4">{user.date_hire}</td>
+                        <td className="px-6 py-4">
+                          {formattedUser[index] &&
+                            formattedUser[index].createdAt}
+                        </td>
                         <td className="px-6 py-4 space-x-2">
                           <button
                             onClick={() => openViewModal(user)}

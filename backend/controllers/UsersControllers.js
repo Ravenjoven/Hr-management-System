@@ -7,6 +7,7 @@ const cors = require("cors");
 const fs = require("fs");
 const ejs = require("ejs");
 const app = express();
+const UsersModels = require("../models/UsersModels");
 
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(
@@ -24,7 +25,6 @@ app.use((req, res, next) => {
   next();
 });
 
-const addEmployeeModels = require("../models/addEmployeeModels");
 const { validationResult } = require("express-validator");
 
 const transporter = nodemailer.createTransport({
@@ -36,7 +36,6 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.createEmployee = async (req, res, next) => {
-  console.log(req.body);
   const link = "http://localhost:5173/login";
   const errors = validationResult(req);
 
@@ -46,7 +45,7 @@ exports.createEmployee = async (req, res, next) => {
 
   try {
     // Create the employee
-    const employee = await addEmployeeModels.create({
+    const employee = await UsersModels.create({
       fullname: req.body.fullname,
       dateOfBirth: req.body.dateOfBirth,
       email: req.body.email,
@@ -56,7 +55,7 @@ exports.createEmployee = async (req, res, next) => {
       position: req.body.position,
       type: req.body.type,
       address: req.body.address,
-      status: 0,
+      status: "Employee",
     });
 
     const fullName = req.body.fullname;
@@ -108,9 +107,25 @@ exports.createEmployee = async (req, res, next) => {
   }
 };
 
+exports.getAllUsers = async (req, res, next) => {
+  try {
+    const users = await UsersModels.find();
+
+    if (!users || users.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No users found" });
+    }
+
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getEmployee = async (req, res, next) => {
   try {
-    const employee = await addEmployeeModels.find();
+    const employee = await UsersModels.find({ status: "Employee" });
 
     if (!employee || employee.length === 0) {
       return res
@@ -121,5 +136,40 @@ exports.getEmployee = async (req, res, next) => {
     res.status(200).json({ success: true, employee });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.registerUser = async (req, res) => {
+  console.log(req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    // Create a new registration document
+    const newRegistration = new UsersModels({
+      fullname: req.body.fullName,
+      phoneNumber: req.body.contactNumber,
+      email: req.body.email,
+      password: req.body.password,
+      dateOfBirth: req.body.dateOfBirth,
+      gender: req.body.gender,
+      jobSkills: [],
+      position: "NA",
+      type: "NA",
+      address: "NA",
+      status: "User",
+    });
+
+    // Save the new registration document to the database
+    await newRegistration.save();
+
+    // Respond with a success message
+    res.status(201).json({ message: "Registration successful" });
+  } catch (error) {
+    // Handle any errors
+    console.error("Registration failed:", error);
+    res.status(500).json({ error: "Registration failed" });
   }
 };

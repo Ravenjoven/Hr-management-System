@@ -1,14 +1,27 @@
-const express = require('express');
+//this is add jobs routes created by ranel
+const express = require("express");
+const {
+  createJobs,
+  getJobs,
+  editJobs,
+  deleteJobs,
+  getApplicant,
+} = require("../controllers/JobsControllers");
 const router = express.Router();
-const { createJob, singleJob, updateJob, showJobs} = require('../controllers/jobsControllers');
-const { isAuthenticated, isAdmin } = require('../middleware/auth');
 
-router.post('/job/create', isAuthenticated, isAdmin, createJob)
-// /api/job/id
-router.get('/job/:id', singleJob);
-// /api/job/update/job_id
-router.put('/job/update/:job_id', isAuthenticated, isAdmin, updateJob);
-// /api/jobs/show
-router.get('/jobs/show', showJobs);
+//add job routes
+router.post("/jobs/add", createJobs);
+
+//fetch job routes
+router.get("/jobs/get", getJobs);
+
+//fetch applicant in jobs routes
+router.get("/jobs/getApplicant", getApplicant);
+
+//edit job routes
+router.put("/jobs/edit", editJobs);
+
+//delete job routes
+router.delete("/jobs/delete", deleteJobs);
 
 module.exports = router;

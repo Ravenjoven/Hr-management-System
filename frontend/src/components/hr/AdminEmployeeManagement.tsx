@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminNavar from "../AdminNavar";
-import AddEmployeeModal from "../Modal/AddEmployeeModal";
+import AddEmployeeModal from "../Modal/AddUserModal";
 import Sidebar from "../Sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -170,17 +170,17 @@ function AdminEmployeeManagement() {
   };
 
   useEffect(() => {
-    const fetchJobs = async () => {
+    const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/api/employee/getEmployee"
+          "http://localhost:9000/api/user/getEmployee"
         );
         setEmployees(response.data.employee);
       } catch (error) {
         console.error("Error fetching employee:", error);
       }
     };
-    fetchJobs();
+    fetchEmployee();
   }, []);
 
   return (

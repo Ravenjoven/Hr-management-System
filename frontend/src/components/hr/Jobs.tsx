@@ -161,93 +161,6 @@ function Jobs() {
     };
   });
 
-  // const [applicants, setApplicants] = useState([
-  //   {
-  //     id: 0,
-  //     applicantName: "Jezrael Suliano",
-  //     position: "Fullstack Developer",
-  //     year_experience: "1",
-  //     status: 0,
-  //     date_applied: "03/15/24",
-  //     files: "./files/formal.pdf",
-  //     letter:
-  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-  //     img: "./images/cv1.png",
-  //     email: "jezraelsuliano@gmail.com",
-  //     contact_number: "099191912013",
-  //     linkedIn:
-  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-  //     skills: ["hardworking", "technical", "time management"],
-  //   },
-  //   {
-  //     id: 1,
-  //     applicantName: "Ranel Soliano",
-  //     position: "Fullstack Developer",
-  //     year_experience: "1",
-  //     status: 0,
-  //     date_applied: "03/15/24",
-  //     files: "./files/formal.pdf",
-  //     letter:
-  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-  //     img: "./images/cv1.png",
-  //     email: "jezraelsuliano@gmail.com",
-  //     contact_number: "099191912013",
-  //     linkedIn:
-  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-  //     skills: ["hardworking", "technical", "time management"],
-  //   },
-  //   {
-  //     id: 2,
-  //     applicantName: "Arnel Carcella",
-  //     position: "Fullstack Developer",
-  //     year_experience: "1",
-  //     status: 0,
-  //     date_applied: "03/15/24",
-  //     files: "./files/formal.pdf",
-  //     letter:
-  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-  //     img: "./images/cv1.png",
-  //     email: "jezraelsuliano@gmail.com",
-  //     contact_number: "099191912013",
-  //     linkedIn:
-  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-  //     skills: ["hardworking", "technical", "time management"],
-  //   },
-  //   {
-  //     id: 3,
-  //     applicantName: "Raven Joven",
-  //     position: "Fullstack Developer",
-  //     year_experience: "1",
-  //     status: 0,
-  //     date_applied: "03/15/24",
-  //     files: "./files/formal.pdf",
-  //     letter:
-  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-  //     img: "./images/cv1.png",
-  //     email: "jezraelsuliano@gmail.com",
-  //     contact_number: "099191912013",
-  //     linkedIn:
-  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-  //     skills: ["hardworking", "technical", "time management"],
-  //   },
-  //   {
-  //     id: 4,
-  //     applicantName: "Aijem Aijem",
-  //     position: "Fullstack Developer",
-  //     year_experience: "1",
-  //     status: 0,
-  //     date_applied: "03/15/24",
-  //     files: "./files/formal.pdf",
-  //     letter:
-  //       "I am writing to express my interest in the [Job Title] position advertised on [Where You Found the Job Posting]. With a [Your Years of Experience]-year background in [Your Field/Area of Expertise], I am confident in my ability to contribute effectively to your team.",
-  //     img: "./images/cv1.png",
-  //     email: "jezraelsuliano@gmail.com",
-  //     contact_number: "099191912013",
-  //     linkedIn:
-  //       "https://in.linkedin.com/in/r-88165a58?trk=people-guest_people_search-card",
-  //     skills: ["hardworking", "technical", "time management"],
-  //   },
-  // ]);
   const filteredJobs = jobs.filter((job) => {
     const searchQueryLower = searchQuery.toLowerCase();
     return (
@@ -458,6 +371,9 @@ function Jobs() {
                         Applicants
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Slots
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Date Created
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -511,6 +427,7 @@ function Jobs() {
                               {job.applicant.length}
                             </div>
                           </td>
+                          <td className="px-6 py-4">{job.jobSlots}</td>
                           <td className="px-6 py-4">
                             {formattedJobs[index] &&
                               formattedJobs[index].createdAt}

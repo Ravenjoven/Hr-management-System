@@ -7,7 +7,7 @@ const categorySchema = new Schema(
       trim: true,
       required: [true, "Category is required"],
     },
-    jobs: [{ type: Schema.Types.ObjectId, ref: "addjobs" }],
+    jobs: [{ type: Schema.Types.ObjectId, ref: "jobs" }],
   },
   { timestamps: true }
 );
