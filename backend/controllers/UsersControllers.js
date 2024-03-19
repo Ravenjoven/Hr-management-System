@@ -7,6 +7,7 @@ const cors = require("cors");
 const fs = require("fs");
 const ejs = require("ejs");
 const app = express();
+const UsersModels = require("../models/UsersModels");
 
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(
@@ -24,7 +25,6 @@ app.use((req, res, next) => {
   next();
 });
 
-const UsersModels = require("../models/UsersModels");
 const { validationResult } = require("express-validator");
 
 const transporter = nodemailer.createTransport({
@@ -140,30 +140,36 @@ exports.getEmployee = async (req, res, next) => {
 };
 
 exports.registerUser = async (req, res) => {
-  try {
-    // Extract registration data from the request body
-    const { fullName, contactNumber, email, password, birthMonth, birthDay, birthYear, gender } = req.body;
+  console.log(req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
+  try {
     // Create a new registration document
-    const newRegistration = new Registration({
-      fullName,
-      contactNumber,
-      email,
-      password,
-      birthMonth,
-      birthDay,
-      birthYear,
-      gender,
+    const newRegistration = new UsersModels({
+      fullname: req.body.fullName,
+      phoneNumber: req.body.contactNumber,
+      email: req.body.email,
+      password: req.body.password,
+      dateOfBirth: req.body.dateOfBirth,
+      gender: req.body.gender,
+      jobSkills: [],
+      position: "NA",
+      type: "NA",
+      address: "NA",
+      status: "User",
     });
 
     // Save the new registration document to the database
     await newRegistration.save();
 
     // Respond with a success message
-    res.status(201).json({ message: 'Registration successful' });
+    res.status(201).json({ message: "Registration successful" });
   } catch (error) {
     // Handle any errors
-    console.error('Registration failed:', error);
-    res.status(500).json({ error: 'Registration failed' });
+    console.error("Registration failed:", error);
+    res.status(500).json({ error: "Registration failed" });
   }
 };
