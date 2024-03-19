@@ -308,7 +308,6 @@ const Login = () => {
                 </div>
                 <div className="self-stretch flex flex-col items-center justify-center gap-[14px_0px]">
                   <div className="self-stretch my-2 rounded-mini bg-gray-50 rounded-[15px] flex flex-row items-center justify-start py-[11px] px-[15px] z-[1] border-[1px] border-solid border-gainsboro-200">
-                    <div className="h-[38px] w-[220px] relative rounded-mini bg-whitesmoke box-border hidden border-[1px] border-solid border-gainsboro-200" />
                     <input
                       type={showPassword ? "text" : "password"}
                       id="password"
@@ -320,6 +319,13 @@ const Login = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="inline-block ml-2 focus:outline-none"
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
                   </div>
                   <button
                     type="submit"
