@@ -10,34 +10,13 @@ interface ModalProps {
   title: string;
 }
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const currentYear = new Date().getFullYear();
-const startYear = currentYear - 100; // Starting from 100 years ago
-const years = Array.from({ length: 101 }, (_, index) => startYear + index);
-
 export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
   const [formData, setFormData] = useState({
     fullName: "",
     contactNumber: "",
     email: "",
     password: "",
-    birthMonth: "",
-    birthDay: "",
-    birthYear: "",
+    dateOfBirth: "",
     gender: "",
   });
 
@@ -55,10 +34,10 @@ export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleRegister = async () => {
     console.log("Test");
     try {
-      await axios.post("http://localhost:9000/api/registrations", formData); // Update the URL with your backend server address and port
+      await axios.post("http://localhost:9000/api/user/registration", formData); // Update the URL with your backend server address and port
       toast.success("Successfully created an account"); // Display success toast
       onClose();
     } catch (error) {
@@ -165,55 +144,20 @@ export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
                   >
                     Birthdate
                   </label>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <select
-                        name="birthMonth"
-                        className="w-full border border-gray-400 h-10 rounded-md pl-2"
-                        value={formData.birthMonth}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Month</option>
-                        {months.map((month, index) => (
-                          <option key={index} value={index + 1}>
-                            {month}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <select
-                        name="birthDay"
-                        className="w-full border border-gray-400 h-10 rounded-md pl-2"
-                        value={formData.birthDay}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Day</option>
-                        {[...Array(31)].map((_, index) => (
-                          <option key={index} value={index + 1}>
-                            {index + 1}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <select
-                        name="birthYear"
-                        className="w-full border border-gray-400 h-10 rounded-md pl-2"
-                        value={formData.birthYear}
-                        onChange={handleChange}
-                        required
-                      >
-                        <option value="">Year</option>
-                        {years.map((year) => (
-                          <option key={year} value={year}>
-                            {year}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                  <div>
+                    <input
+                      type="date"
+                      id="date-of-birth"
+                      value={formData.dateOfBirth}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          dateOfBirth: e.target.value,
+                        })
+                      }
+                      placeholder="Birthday"
+                      className="w-full border border-gray-400 h-10 rounded-md pl-2"
+                    />
                   </div>
                 </div>
                 <div className="flex flex-col">
@@ -269,7 +213,7 @@ export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
             <div className="mt-5 flex items-center justify-center">
               <button
                 type="submit"
-                onClick={handleSubmit}
+                onClick={handleRegister}
                 className="w-60 bg-custom-text-orange font-bold text-[20px] text-white h-10 rounded-md hover:bg-orange-500"
               >
                 Sign Up

@@ -212,30 +212,33 @@ const Login = () => {
                 <hr className="border-black" />
               </div>
 
-              <button
-                type="button"
-                className="flex justify-center items-center mt-4 bg-white rounded-xl p-2.5 w-full m-[2px]"
-                onClick={() => googleLogin()} // Attach the login function to your button's onClick event
-              >
-                <img
-                  src="../images/Gmail.png"
-                  alt="Google"
-                  className="w-[20px] mr-[20px] inline"
-                />
-                <span className="text-xs">Log in with Google</span>
-              </button>
+              <div>
+                <button
+                  type="button"
+                  className="flex justify-center items-center mt-4 bg-white rounded-xl p-2.5 w-full m-[2px]"
+                  onClick={() => googleLogin()} // Attach the login function to your button's onClick event
+                >
+                  <img
+                    src="../images/Gmail.png"
+                    alt="Google"
+                    className="w-[20px] mr-[20px] inline"
+                  />
+                  <span className="text-xs">Log in with Google</span>
+                </button>
+              </div>
+            </form>
+            <div>
               <p
                 id="helper-text-explanation"
-                className="mt-8 text-xs text-white"
+                className="mt-8 text-xs text-white flex"
               >
                 Don't have account?
-                <a
-                  href="#"
+                <div
                   onClick={openModal}
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
                   Sign up here!
-                </a>
+                </div>
               </p>
               {isOpen && (
                 <RegisterModal
@@ -244,7 +247,7 @@ const Login = () => {
                   title="Sign Up"
                 ></RegisterModal>
               )}
-            </form>
+            </div>
           </div>
         </section>
         <footer className="w-full bg-custom-bg-black static bottom-0 text-center text-white p-4 text-xs">

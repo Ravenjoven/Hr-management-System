@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const employeeSchema = new mongoose.Schema(
   {
     fullname: {
@@ -35,6 +36,10 @@ const employeeSchema = new mongoose.Schema(
       trim: true,
       required: [true, "position is required"],
     },
+    gender: {
+      type: String,
+      trim: true,
+    },
     type: {
       type: String,
       trim: true,
@@ -49,6 +54,7 @@ const employeeSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    application: [{ type: Schema.Types.ObjectId, ref: "applications" }],
   },
   { timestamps: true }
 );
