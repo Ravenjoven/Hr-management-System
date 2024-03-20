@@ -142,11 +142,11 @@ exports.getEmployee = async (req, res, next) => {
 
 exports.signinUser = async (req, res, next) => {
   try {
-    const email = req.body.email;
+    const emails = req.body.email;
     const password = req.body.password;
 
     // Find user by email
-    const user = await UsersModels.findOne({ email: email });
+    const user = await UsersModels.findOne({ email: emails });
 
     // Check if user exists
     if (!user) {
@@ -165,7 +165,8 @@ exports.signinUser = async (req, res, next) => {
     }
 
     const stat = user.status;
-    res.status(200).json({ success: true, stat });
+    const email = user.email;
+    res.status(200).json({ success: true, stat, email });
   } catch (error) {
     next(error);
   }
