@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MultiSelect from "multiselect-react-dropdown";
 import axios from "axios";
+import { ReactSession } from "react-client-session";
 
 interface ModalProps {
   isOpen: boolean;
@@ -50,11 +51,13 @@ export default function Modal({ isOpen, onClose, selectedJob }: ModalProps) {
 
     const skillsString = JSON.stringify(formData.jobSkills);
 
+    const id = ReactSession.get("user");
     // Create FormData objects for form data and files separately
     const formDataToSend = new FormData();
     const filesToSend = new FormData();
 
     // Append form data to formDataToSend
+    formDataToSend.append("userId", id || "");
     formDataToSend.append("jobId", jobId || "");
     formDataToSend.append("fullName", formData.fullName);
     formDataToSend.append("email", formData.email);

@@ -1,5 +1,7 @@
-const addJobsModels = require("../models/JobsModels");
-const jobApplicationModels = require("../models/ApplicationModels");
+const JobsModels = require("../models/JobsModels");
+const ApplicationModels = require("../models/ApplicationModels");
+const UsersModels = require("../models/UsersModels");
+const CommentModels = require("../models/CommentModels");
 const { validationResult } = require("express-validator");
 const multer = require("multer");
 const path = require("path");
@@ -19,18 +21,59 @@ const uploadFile = multer({
   storage: fileStorage,
 }).single("files");
 
-async function updateAddJobWithApplicant(jobId, applicantId) {
+async function updateJobWithApplicantion(jobId, applicantId) {
   try {
-    const addJob = await addJobsModels.findById(jobId);
-    if (!addJob) {
+    const job = await JobsModels.findById(jobId);
+    if (!job) {
       console.log("Job not found");
       return;
     }
 
-    addJob.applicant.push(applicantId);
-    await addJob.save();
+    job.applicant.push(applicantId);
+    await job.save();
   } catch (error) {
-    console.error("Error updating addjob with applicant:", error);
+    console.error("Error updating job with applicant:", error);
+  }
+}
+
+async function updateUserWithApplication(userId, applicantId) {
+  try {
+    const user = await UsersModels.findById(userId);
+    if (!user) {
+      console.log("user not found");
+      return;
+    }
+
+    user.application.push(applicantId);
+    await user.save();
+  } catch (error) {
+    console.error("Error updating user with applicant:", error);
+  }
+}
+
+async function updateApplicationWithComment(applicantionId, commentId, status) {
+  try {
+    const application = await ApplicationModels.findById(applicantionId);
+    if (!application) {
+      console.log("application not found");
+      return;
+    }
+
+    application.comment.push(commentId);
+
+    await ApplicationModels.findOneAndUpdate(
+      { _id: applicantionId },
+      {
+        $set: {
+          Status: status,
+        },
+      },
+      { new: true }
+    );
+
+    console.log("Application updated successfully");
+  } catch (error) {
+    console.error("Error updating application:", error);
   }
 }
 
@@ -43,7 +86,7 @@ exports.createJobApplication = async (req, res) => {
 
   try {
     // Save job application data to the database
-    const newApplication = new jobApplicationModels({
+    const newApplication = new ApplicationModels({
       fullName: req.body.fullName,
       email: req.body.email,
       contact: req.body.contact,
@@ -52,22 +95,22 @@ exports.createJobApplication = async (req, res) => {
       skills: req.body.skills,
       application: req.body.application,
       jobId: req.body.jobId,
-      status: "Applied",
+      Status: "Applied",
       resume: req.body.resume,
-      comment: "",
       jobs: req.body.jobId,
       user: req.body.userId,
     });
 
     const savedApplication = await newApplication.save();
 
-    // Update the addjobs document with the applicant ID
-    await updateAddJobWithApplicant(req.body.jobId, savedApplication._id);
+    // Update the jobs document with the applicant ID
+    await updateJobWithApplicantion(req.body.jobId, savedApplication._id);
+
+    await updateUserWithApplication(req.body.userId, savedApplication._id);
 
     res.status(201).json({
       success: true,
       savedApplication,
-      status: 1,
     });
   } catch (error) {
     console.error("Error saving job application:", error);
@@ -94,7 +137,7 @@ exports.getFiles = async (req, res) => {
     const filename = req.params.filename;
 
     // Check if user exists
-    const user = await jobApplicationModels.findById(userId);
+    const user = await ApplicationModels.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -118,26 +161,34 @@ exports.getFiles = async (req, res) => {
   }
 };
 
-exports.updateApplicant = async (req, res) => {
-  const { id, comment } = req.body;
+exports.movePending = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
   try {
-    const applicant = await jobApplicationModels.findById(id);
-    if (!applicant) {
-      console.log("Applicant not found");
-      return;
-    }
+    // Save job application data to the database
+    const newComment = new CommentModels({
+      comment: req.body.comment,
+      application: req.body.id,
+    });
 
-    applicant.comment = comment;
-    applicant.roles = 1;
+    const saveComment = await newComment.save();
 
-    await applicant.save();
-    return res.status(200).json({ message: "Applicant updated successfully" });
+    // Update the application document with the comment ID
+    await updateApplicationWithComment(
+      req.body.id,
+      saveComment._id,
+      req.body.status
+    );
+
+    res.status(201).json({
+      success: true,
+      saveComment,
+    });
   } catch (error) {
-    console.error("Error updating applicant:", error);
+    console.error("Error saving job application:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
