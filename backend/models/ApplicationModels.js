@@ -51,6 +51,7 @@ const jobApplicationSchema = new mongoose.Schema(
     },
     jobs: [{ type: Schema.Types.ObjectId, ref: "jobs" }],
     user: [{ type: Schema.Types.ObjectId, ref: "users" }],
+    application: [{type: Schema.Types.ObjectId, ref:"jobs" }],
     comment: [{ type: Schema.Types.ObjectId, ref: "comments" }],
   },
   { timestamps: true }
