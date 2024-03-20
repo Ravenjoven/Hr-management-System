@@ -1,4 +1,4 @@
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import axios from "axios";
@@ -19,6 +19,7 @@ export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
     dateOfBirth: "",
     gender: "",
   });
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const handleClose = () => {
     onClose && onClose();
@@ -34,6 +35,10 @@ export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
     }));
   };
 
+  //show password function
+  const togglePasswordVisibility = () => {
+    setPasswordShown(!passwordShown);
+  };
   const handleRegister = async () => {
     console.log("Test");
     try {
@@ -127,15 +132,33 @@ export default function RegisterModal({ isOpen, onClose, title }: ModalProps) {
                     className="w-full border border-gray-400 h-10 rounded-md pl-2"
                   />
                 </div>
-                <div>
-                  <input
-                    type="password"
-                    name="password" // Set the name attribute to match the state property
-                    placeholder="Password"
-                    value={formData.password} // Bind input value to state
-                    onChange={handleChange} // Update state on change
-                    className="w-full border border-gray-400 h-10 rounded-md pl-2"
-                  />
+                <div className="relative ">
+                  <div>
+                    <input
+                      type={passwordShown ? "text" : "password"}
+                      name="password"
+                      placeholder="Password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full border border-gray-400 h-10 rounded-md pl-2"
+                    />
+                    <i
+                      onClick={togglePasswordVisibility}
+                      className="password-icon"
+                      style={{
+                        position: "absolute",
+                        right: "10px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {/* Toggle icon based on passwordShown state */}
+                      <FontAwesomeIcon
+                        icon={passwordShown ? faEyeSlash : faEye}
+                      />
+                    </i>
+                  </div>
                 </div>
                 <div className="flex flex-col">
                   <label
