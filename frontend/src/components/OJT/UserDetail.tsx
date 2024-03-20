@@ -12,8 +12,7 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
-
-interface User {
+interface UserData {
   fullname: string | null;
   email: string;
   address: string;
@@ -35,7 +34,7 @@ function UserProfile() {
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
 
-  const [ser, setUser] = useState<User[]>([]);
+  const [ser, setUser] = useState<UserData[]>([]);
   useEffect(() => {
     const getUser = async () => {
       const id = ReactSession.get("user");
@@ -43,10 +42,9 @@ function UserProfile() {
         const response = await axios.get(
           `http://localhost:9000/api/user/getUser/${id}`
         );
-        setUser(response.data);
-        console.log(response.data);
+        setUser(response.data.users);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching user:", error);
       }
     };
     getUser();
@@ -121,6 +119,7 @@ function UserProfile() {
                     defaultValue={user.fullname}
                   />
                 </p>
+
                 <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
@@ -133,7 +132,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "auto" }}
-                      defaultValue={user.email}
+                      defaultValue={ser.email}
                     />
                   </span>
                 </div>
@@ -144,7 +143,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "220px" }}
-                      defaultValue="129329177"
+                      defaultValue={ser.phoneNumber}
                     />
                   </span>
                 </div>
@@ -185,7 +184,7 @@ function UserProfile() {
                     <span className="text-custom-text-gray font-semibold p-2">
                       <EditText
                         name="textbox1"
-                        defaultValue="Teravault Inc"
+                        defaultValue={ser.fullname}
                         inline
                       />
                     </span>
@@ -195,7 +194,7 @@ function UserProfile() {
                     <span className="text-custom-text-gray font-semibold p-2">
                       <EditText
                         name="textbox1"
-                        defaultValue="00/00/0000"
+                        defaultValue={ser.dateOfBirth}
                         inline
                       />
                     </span>
@@ -215,7 +214,7 @@ function UserProfile() {
                     <span className="text-custom-text-gray font-semibold p-2">
                       <EditText
                         name="textbox1"
-                        defaultValue="Ayala Center, Cebu Business Park"
+                        defaultValue={ser.address}
                         inline
                       />
                     </span>
@@ -229,7 +228,11 @@ function UserProfile() {
                   <div>
                     Gender :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <EditText
+                        name="textbox1"
+                        defaultValue={ser.gender}
+                        inline
+                      />
                     </span>
                   </div>
                   <div>
@@ -270,12 +273,7 @@ function UserProfile() {
                     <div>
                       <h1 className=" text-xl">SKILLS</h1>
 
-                      <EditTextarea
-                        name="description"
-                        rows={4}
-                        style={{ paddingTop: 0 }}
-                        placeholder="Enter a description"
-                      />
+                     <textarea name="" value={ser.jobSkills} id="" ></textarea>
                     </div>
                   </div>
                 </div>
@@ -293,10 +291,6 @@ function UserProfile() {
                           December 0, 0000 -
                           January 00, 0000"
                       />
-                      {/* Creative Web Design Technical Education and Skills <br />
-                        Development Authority(TESDA){" "}
-                        <br className="md:hidden block" /> December 0, 0000 -
-                        January 00, 0000 */}
                     </div>
                   </div>
                 </div>
