@@ -12,7 +12,7 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
-interface User {
+interface UserData {
   fullname: string | null;
   email: string;
   address: string;
@@ -33,7 +33,7 @@ function UserProfile() {
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
 
-  const [ser, setUser] = useState<User[]>([]);
+  const [ser, setUser] = useState<UserData[]>([]);
   useEffect(() => {
     const getUser = async () => {
       const id = ReactSession.get("user");
@@ -41,16 +41,15 @@ function UserProfile() {
         const response = await axios.get(
           `http://localhost:9000/api/user/getUser/${id}`
         );
-        setUser(response.data);
+        setUser(response.data.users);
+        
+        console.log("User data:", response.data.users);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching user:", error);
       }
     };
     getUser();
   }, []);
-  useEffect(() => {
-    console.log(ser);
-  }, [ser]);
 
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
@@ -118,10 +117,10 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={ser.fullname}
+                    // defaultValue={ser.fullname}
                   />
                 </p>
-          
+
                 <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
@@ -134,7 +133,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "auto" }}
-                      defaultValue={user.email}
+                      // defaultValue={userInfo.email}
                     />
                   </span>
                 </div>
@@ -294,10 +293,6 @@ function UserProfile() {
                           December 0, 0000 -
                           January 00, 0000"
                       />
-                      {/* Creative Web Design Technical Education and Skills <br />
-                        Development Authority(TESDA){" "}
-                        <br className="md:hidden block" /> December 0, 0000 -
-                        January 00, 0000 */}
                     </div>
                   </div>
                 </div>
