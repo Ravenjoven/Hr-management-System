@@ -165,8 +165,8 @@ exports.signinUser = async (req, res, next) => {
     }
 
     const stat = user.status;
-    const email = user.email;
-    res.status(200).json({ success: true, stat, email });
+    const id = user._id;
+    res.status(200).json({ success: true, stat, id });
   } catch (error) {
     next(error);
   }
