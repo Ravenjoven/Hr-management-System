@@ -35,16 +35,22 @@ const Login = () => {
         }
       );
 
-      console.log(response.data);
       const userRole = response.data.stat;
+      const userId = response.data.id;
 
       // Redirect based on user role
       if (userRole === "Admin") {
+        ReactSession.set("user", userId);
+        if (ReactSession.get("user") !== "") {
+          navigate("/Dashboard");
+        }
         // Redirect to dashboard
-        navigate("/Dashboard");
       } else if (userRole === "User") {
-        // Redirect to UserProfile
-        navigate("/UserProfile");
+        // Redirect to UserProfil
+        ReactSession.set("user", userId);
+        if (ReactSession.get("user") !== "") {
+          navigate("/UserProfile");
+        }
       }
       toast.success("Login successful");
     } catch (error) {

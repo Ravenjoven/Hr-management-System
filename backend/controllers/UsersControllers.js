@@ -205,3 +205,21 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ error: "Registration failed" });
   }
 };
+
+exports.getUser = async (req, res, next) => {
+  const id= req.params.id;
+  try {
+    
+    const users = await UsersModels.findById(id);
+
+    if (!users || users.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No users found" });
+    }
+
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    next(error);
+  }
+};
