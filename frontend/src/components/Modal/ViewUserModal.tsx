@@ -6,11 +6,17 @@ interface ModalProps {
   isClose: () => void;
   user: {
     id: number;
-    name: string;
+    fullname: string;
+    dateOfBirth: string;
+    email: string;
+    phoneNumber: number;
     position: string;
-    contact: string;
+    age: string;
+    gender: string;
     type: string;
-    date_hire: string;
+    address: string;
+    jobSkills: Object[];
+    createdAt: Date;
   } | null;
 }
 
@@ -82,19 +88,19 @@ export default function ViewEmployeeModal({
                     </div>
                     <div className="details flex flex-col pl-10 py-2 space-y-2">
                       <div>
-                        Name: <span>{user?.name}</span>
+                        Name: <span>{user?.fullname}</span>
                       </div>
                       <div>
-                        Email: <span>test123@gmail.com</span>
+                        Email: <span>{user?.email}</span>
                       </div>
                       <div>
-                        Contact: <span>{user?.contact}</span>
+                        Contact: <span>{user?.phoneNumber}</span>
                       </div>
                       <div>
-                        Date of Birth: <span>Feb, 02, 2024</span>
+                        Date of Birth: <span>{user?.dateOfBirth}</span>
                       </div>
                       <div>
-                        Age: <span>25</span>
+                        Age: <span>{user?.age}</span>
                       </div>
                     </div>
                   </div>
