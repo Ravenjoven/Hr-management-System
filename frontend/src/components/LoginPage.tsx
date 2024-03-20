@@ -35,21 +35,19 @@ const Login = () => {
         }
       );
 
-      console.log(response.data);
       const userRole = response.data.stat;
-      const userEmail = response.data.email;
+      const userId = response.data.id;
 
       // Redirect based on user role
       if (userRole === "Admin") {
-        ReactSession.set("user", userEmail);
+        ReactSession.set("user", userId);
         if (ReactSession.get("user") !== "") {
           navigate("/Dashboard");
         }
         // Redirect to dashboard
       } else if (userRole === "User") {
-        // Redirect to UserProfile
-
-        ReactSession.set("user", userEmail);
+        // Redirect to UserProfil
+        ReactSession.set("user", userId);
         if (ReactSession.get("user") !== "") {
           navigate("/UserProfile");
         }
