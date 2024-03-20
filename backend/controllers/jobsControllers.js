@@ -139,7 +139,7 @@ exports.deleteJobs = async (req, res, next) => {
 
 exports.getApplicant = async (req, res, next) => {
   try {
-    const applicant = await jobApplicationModels.find({ roles: 0 });
+    const applicant = await jobApplicationModels.find({ Status: "Applied" });
 
     if (!applicant || applicant.length === 0) {
       return res
