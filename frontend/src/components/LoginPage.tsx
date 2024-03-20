@@ -161,13 +161,13 @@ const Login = () => {
                 </svg>
               </div>
               <div className="flex relative justify-center items-center">
-                <h1 className=" font-bold text-custom-text-gray lg:text-[300%] xs:text-[100%]">
+                <h1 className=" font-bold text-custom-text-gray lg:text-2xl xs:text-sm">
                   We're passionate about helping entrepreneurs change the world
                   and build a better tomorrow.
                 </h1>
               </div>
             </div>
-            <div className="m-8 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-custom-bg-orange shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-[100px] px-[55px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
+            <div className="m-4 w-[341px] rounded-tl-none rounded-tr-[50px] rounded-br-none rounded-bl-[50px] bg-custom-bg-orange shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-[100px] px-[55px] box-border gap-[29px] min-w-[341px] max-w-full mq750:min-w-full mq450:pt-[90px] mq450:px-5 mq450:pb-[75px] mq450:box-border mq1050:flex-1">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
