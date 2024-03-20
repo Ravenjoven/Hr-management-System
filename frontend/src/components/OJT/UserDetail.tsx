@@ -24,6 +24,7 @@ interface UserData {
   jobSkills: Object[];
   createdAt: Date;
 }
+
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
@@ -115,7 +116,7 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={ser.fullname}
+                    defaultValue={user.fullname}
                   />
                 </p>
 
