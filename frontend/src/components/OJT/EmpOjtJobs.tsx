@@ -10,7 +10,6 @@ import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
 import OjtSidebar from "./OjtSidebar";
 import Modal from "./Modal";
-import UnEmpSidebar from "./UnEmpSidebar";
 
 function OjtJobList() {
   const [isModalOpen, setIsModalOpen] = useState(false);

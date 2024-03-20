@@ -8,8 +8,8 @@ import {
 import { useState } from "react";
 import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
-import UnEmpSidebar from "./UnEmpSidebar";
 import CancelModal from "./CancelModal";
+import OjtSidebar from "./OjtSidebar";
 
 function Applications() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,6 +50,12 @@ function Applications() {
     },
     {
       id: 3,
+      jobName: "Financial Associate",
+
+      date_createad: new Date().toLocaleDateString(),
+    },
+    {
+      id: 4,
       jobName: "Financial Associate",
 
       date_createad: new Date().toLocaleDateString(),
@@ -122,7 +128,7 @@ function Applications() {
             )}
           </button>
         </div>
-        <UnEmpSidebar expanded={expanded} />
+        <OjtSidebar expanded={expanded} />
         <div
           className={`content h-full max-w-full z-1  ${
             expanded ? "ml-0" : "ml-[280px]"
