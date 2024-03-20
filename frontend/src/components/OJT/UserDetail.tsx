@@ -42,8 +42,6 @@ function UserProfile() {
           `http://localhost:9000/api/user/getUser/${id}`
         );
         setUser(response.data.users);
-        
-        console.log("User data:", response.data.users);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -117,7 +115,7 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    // defaultValue={ser.fullname}
+                    defaultValue={ser.fullname}
                   />
                 </p>
 
@@ -133,7 +131,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "auto" }}
-                      // defaultValue={userInfo.email}
+                      defaultValue={ser.email}
                     />
                   </span>
                 </div>
@@ -144,7 +142,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "220px" }}
-                      defaultValue="129329177"
+                      defaultValue={ser.phoneNumber}
                     />
                   </span>
                 </div>
@@ -185,7 +183,7 @@ function UserProfile() {
                     <span className="text-custom-text-gray font-semibold p-2">
                       <EditText
                         name="textbox1"
-                        defaultValue="Teravault Inc"
+                        defaultValue={ser.fullname}
                         inline
                       />
                     </span>
@@ -195,7 +193,7 @@ function UserProfile() {
                     <span className="text-custom-text-gray font-semibold p-2">
                       <EditText
                         name="textbox1"
-                        defaultValue="00/00/0000"
+                        defaultValue={ser.dateOfBirth}
                         inline
                       />
                     </span>
@@ -215,7 +213,7 @@ function UserProfile() {
                     <span className="text-custom-text-gray font-semibold p-2">
                       <EditText
                         name="textbox1"
-                        defaultValue="Ayala Center, Cebu Business Park"
+                        defaultValue={ser.address}
                         inline
                       />
                     </span>
@@ -229,7 +227,11 @@ function UserProfile() {
                   <div>
                     Gender :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <EditText
+                        name="textbox1"
+                        defaultValue={ser.gender}
+                        inline
+                      />
                     </span>
                   </div>
                   <div>
@@ -270,12 +272,7 @@ function UserProfile() {
                     <div>
                       <h1 className=" text-xl">SKILLS</h1>
 
-                      <EditTextarea
-                        name="description"
-                        rows={4}
-                        style={{ paddingTop: 0 }}
-                        placeholder="Enter a description"
-                      />
+                     <textarea name="" value={ser.jobSkills} id="" ></textarea>
                     </div>
                   </div>
                 </div>
