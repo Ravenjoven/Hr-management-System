@@ -52,7 +52,7 @@ exports.createJobApplication = async (req, res) => {
       skills: req.body.skills,
       application: req.body.application,
       jobId: req.body.jobId,
-      status: "Applied",
+      Status: "Applied",
       resume: req.body.resume,
       comment: "",
       jobs: req.body.jobId,

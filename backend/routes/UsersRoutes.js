@@ -6,6 +6,7 @@ const {
   getEmployee,
   signinUser,
   registerUser,
+  getUser,
 } = require("../controllers/UsersControllers");
 const router = express.Router();
 
@@ -23,5 +24,7 @@ router.post("/user/signin", signinUser);
 
 // Route to handle POST requests to save registration data
 router.post("/user/registration", registerUser);
+
+router.get("/user/getUser/:id",getUser)
 
 module.exports = router;

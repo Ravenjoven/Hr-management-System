@@ -142,11 +142,11 @@ exports.getEmployee = async (req, res, next) => {
 
 exports.signinUser = async (req, res, next) => {
   try {
-    const email = req.body.email;
+    const emails = req.body.email;
     const password = req.body.password;
 
     // Find user by email
-    const user = await UsersModels.findOne({ email: email });
+    const user = await UsersModels.findOne({ email: emails });
 
     // Check if user exists
     if (!user) {
@@ -165,7 +165,8 @@ exports.signinUser = async (req, res, next) => {
     }
 
     const stat = user.status;
-    res.status(200).json({ success: true, stat });
+    const id = user._id;
+    res.status(200).json({ success: true, stat, id });
   } catch (error) {
     next(error);
   }
@@ -202,5 +203,23 @@ exports.registerUser = async (req, res) => {
     // Handle any errors
     console.error("Registration failed:", error);
     res.status(500).json({ error: "Registration failed" });
+  }
+};
+
+exports.getUser = async (req, res, next) => {
+  const id= req.params.id;
+  try {
+    
+    const users = await UsersModels.findById(id);
+
+    if (!users || users.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No users found" });
+    }
+
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    next(error);
   }
 };
