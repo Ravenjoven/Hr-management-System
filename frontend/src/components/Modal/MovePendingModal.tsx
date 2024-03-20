@@ -28,9 +28,10 @@ export default function MoveApplicantModal({
     const formData = new FormData();
     formData.append("id", id);
     formData.append("comment", comment);
+    formData.append("status", "Pending");
 
     try {
-      await axios.put("http://localhost:9000/api/updateApplicant", formData, {
+      await axios.put("http://localhost:9000/api/movePending", formData, {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",

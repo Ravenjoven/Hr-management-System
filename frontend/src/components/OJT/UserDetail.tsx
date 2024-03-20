@@ -12,6 +12,7 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
+
 interface User {
   fullname: string | null;
   email: string;
@@ -24,6 +25,7 @@ interface User {
   jobSkills: Object[];
   createdAt: Date;
 }
+
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
@@ -42,15 +44,13 @@ function UserProfile() {
           `http://localhost:9000/api/user/getUser/${id}`
         );
         setUser(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
     getUser();
   }, []);
-  useEffect(() => {
-    console.log(ser);
-  }, [ser]);
 
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
@@ -118,10 +118,9 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={ser.fullname}
+                    defaultValue={user.fullname}
                   />
                 </p>
-          
                 <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
