@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useGoogleLogin } from "@react-oauth/google";
 import RegisterModal from "./Modal/RegisterModal";
+
 interface User {
   profileObj?: string | null;
   name?: string;
@@ -22,24 +23,27 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User>({ email: null });
+  const navigate = useNavigate();
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post("http://localhost:9000/api/signin", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:9000/api/user/signin",
+        {
+          email,
+          password,
+        }
+      );
 
-      // Assuming the response contains user role information
-      const userRole = response.data.role;
+      const userRole = response.data.stat;
 
       // Redirect based on user role
-      if (userRole === 1) {
+      if (userRole === "Admin") {
         // Redirect to dashboard
-        window.location.href = "/Dashboard";
+        navigate("/Dashboard");
       } else {
         // Redirect to UserProfile
-        window.location.href = "/UserProfile";
+        navigate("/UserProfile");
       }
       toast.success("Login successful");
     } catch (error) {
@@ -52,7 +56,6 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
   //Google Log in
-  const navigate = useNavigate(); // Step 2: Initialize useNavigate
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (credentialResponse) => {
