@@ -262,8 +262,6 @@ function AdminAttendance() {
                 </div>
               </div>
             </div>
-             
-            
           </div>
         </div>
       </>
