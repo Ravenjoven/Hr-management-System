@@ -54,12 +54,6 @@ function Applications() {
 
       date_createad: new Date().toLocaleDateString(),
     },
-    {
-      id: 4,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
   ]);
   const [searchQuery, setSearchQuery] = useState("");
   const [jobCount, setJobCount] = useState(jobs.length);

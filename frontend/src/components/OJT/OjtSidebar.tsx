@@ -64,6 +64,12 @@ function OjtSidebar({ expanded }: SidebarProps) {
 
       date_createad: new Date().toLocaleDateString(),
     },
+    {
+      id: 5,
+      jobName: "Financial Associate",
+
+      date_createad: new Date().toLocaleDateString(),
+    },
   ]);
   const [jobCount, setJobCount] = useState(jobs.length);
   const filteredJobs = jobs.filter((job) => {
