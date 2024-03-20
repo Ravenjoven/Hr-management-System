@@ -8,6 +8,7 @@ const fs = require("fs");
 const ejs = require("ejs");
 const app = express();
 const UsersModels = require("../models/UsersModels");
+const bcrypt = require("bcrypt");
 
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(
@@ -139,20 +140,50 @@ exports.getEmployee = async (req, res, next) => {
   }
 };
 
+exports.signinUser = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    // Find user by email
+    const user = await UsersModels.findOne({ email: email });
+
+    // Check if user exists
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    // Check if the provided password matches the stored password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect password" });
+    }
+
+    const stat = user.status;
+    res.status(200).json({ success: true, stat });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.registerUser = async (req, res) => {
-  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
   try {
     // Create a new registration document
     const newRegistration = new UsersModels({
       fullname: req.body.fullName,
       phoneNumber: req.body.contactNumber,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
       dateOfBirth: req.body.dateOfBirth,
       gender: req.body.gender,
       jobSkills: [],
