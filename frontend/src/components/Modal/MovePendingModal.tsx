@@ -38,6 +38,7 @@ export default function MoveApplicantModal({
         },
       });
       alert("Move Successfully");
+
       setMessage("Move Successfully");
       setTimeout(() => {
         isClose();

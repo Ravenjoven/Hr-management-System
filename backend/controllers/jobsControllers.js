@@ -1,7 +1,8 @@
 //this is add category created by ranel
-const addJobsModels = require("../models/JobsModels");
-const addCategoryModels = require("../models/CategoryModels");
-const jobApplicationModels = require("../models/ApplicationModels");
+const JobsModels = require("../models/JobsModels");
+const CategoryModels = require("../models/CategoryModels");
+const ApplicationModels = require("../models/ApplicationModels");
+const CommentModels = require("../models/CommentModels");
 const { validationResult } = require("express-validator");
 
 exports.createJobs = async (req, res, next) => {
@@ -12,18 +13,18 @@ exports.createJobs = async (req, res, next) => {
 
   try {
     // Check if the provided category exists in the database
-    let category = await addCategoryModels.findOne({
+    let category = await CategoryModels.findOne({
       jobCategory: req.body.jobCategory,
     });
     if (!category) {
       // If the category doesn't exist, create it
-      category = await addCategoryModels.create({
+      category = await CategoryModels.create({
         jobCategory: req.body.jobCategory,
       });
     }
 
     // Create the job
-    const job = await addJobsModels.create({
+    const job = await JobsModels.create({
       category: category._id,
       jobName: req.body.jobName,
       jobDescription: req.body.jobDescription,
@@ -61,7 +62,7 @@ exports.createJobs = async (req, res, next) => {
 
 exports.getJobs = async (req, res, next) => {
   try {
-    const jobs = await addJobsModels.find().sort({ createdAt: -1 });
+    const jobs = await JobsModels.find().sort({ createdAt: -1 });
 
     if (!jobs || jobs.length === 0) {
       return res.status(404).json({ success: false, message: "No jobs found" });
@@ -82,7 +83,7 @@ exports.editJobs = async (req, res, next) => {
   }
 
   try {
-    const updatedJob = await addJobsModels.findOneAndUpdate(
+    const updatedJob = await JobsModels.findOneAndUpdate(
       { _id: req.body.jobId },
       {
         $set: {
@@ -113,18 +114,18 @@ exports.editJobs = async (req, res, next) => {
 
 exports.deleteJobs = async (req, res, next) => {
   try {
-    const deletedJob = await addJobsModels.deleteOne({ _id: req.body.jobId });
+    const deletedJob = await JobsModels.deleteOne({ _id: req.body.jobId });
 
     if (deletedJob.deletedCount === 0) {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
 
-    await addCategoryModels.updateMany(
+    await CategoryModels.updateMany(
       { jobs: req.body.jobId },
       { $pull: { jobs: req.body.jobId } }
     );
 
-    await jobApplicationModels.updateMany(
+    await ApplicationModels.updateMany(
       { jobs: { $in: [req.body.jobId] } },
       { $pull: { jobs: req.body.jobId } }
     );
@@ -139,7 +140,7 @@ exports.deleteJobs = async (req, res, next) => {
 
 exports.getApplicant = async (req, res, next) => {
   try {
-    const applicant = await jobApplicationModels.find({ Status: "Applied" });
+    const applicant = await ApplicationModels.find({ Status: "Applied" });
 
     if (!applicant || applicant.length === 0) {
       return res
@@ -148,6 +149,40 @@ exports.getApplicant = async (req, res, next) => {
     }
 
     res.status(200).json({ success: true, applicant });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getPendingApplicant = async (req, res, next) => {
+  try {
+    const applicant = await ApplicationModels.find({ Status: "Pending" });
+
+    if (!applicant || applicant.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No applicant found" });
+    }
+
+    res.status(200).json({ success: true, applicant });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getComment = async (req, res, next) => {
+  const id = req.params.id;
+
+  try {
+    const comments = await CommentModels.find({ application: id });
+
+    if (!comments || comments.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No applicant comment found" });
+    }
+
+    res.status(200).json({ success: true, comments });
   } catch (error) {
     next(error);
   }
