@@ -121,7 +121,7 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={user.fullname}
+                    defaultValue={ser.fullname}
                   />
                 </p>
 
