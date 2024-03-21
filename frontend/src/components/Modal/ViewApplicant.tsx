@@ -1,10 +1,11 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pdfjs } from "react-pdf";
 import PdfViewer from "../pdf/PdfViewer";
 import SendContractForm from "./SendContractForm";
 import React from "react";
+import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -15,20 +16,24 @@ interface ModalProps {
   viewApplicant: boolean;
   closeApplicant: () => void;
   user: {
-    id: number;
-    applicantName: string;
-    position: string;
-    year_experience: string;
-    status: number;
-    letter: string;
-    date_applied: string;
-    img: string;
+    _id: string;
+    jobs: string[];
+    fullName: string;
     email: string;
-    contact_number: string;
+    contact: string;
     linkedIn: string;
-    skills: string[];
-    files: string;
+    jobType: string;
+    roles: number;
+    skills: string;
+    resume: string;
+    application: string;
+    createdAt: Date;
   } | null;
+}
+
+interface Comments {
+  comment: string;
+  createdAt: Date;
 }
 
 export default function ViewApplicantDetails({
@@ -37,6 +42,7 @@ export default function ViewApplicantDetails({
   user,
 }: ModalProps) {
   const [isOpenForm, setIsOpenForm] = useState(false);
+  const [comments, setComments] = useState<Comments[]>([]);
   const [isFilesClicked, setIsFilesClicked] = useState(false);
   const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation(); // Prevent event bubbling
@@ -54,6 +60,21 @@ export default function ViewApplicantDetails({
   const handleCloseImage = () => {
     setIsFilesClicked(false);
   };
+
+  useEffect(() => {
+    const fetchApplicantComment = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/api/jobs/getComment/${user?._id}`
+        );
+        setComments(response.data.comment);
+        console.log(response.data.comment);
+      } catch (error) {
+        console.error("Error fetching comment:");
+      }
+    };
+    fetchApplicantComment();
+  }, []);
   return (
     <>
       {viewApplicant && (
@@ -72,7 +93,7 @@ export default function ViewApplicantDetails({
                     className="text-lg font-medium leading-6 text-gray-900"
                     id="modal-headline"
                   >
-                    {user?.applicantName}
+                    {user?.fullName}
                   </h3>
                   <button
                     onClick={handleClose}
@@ -91,7 +112,7 @@ export default function ViewApplicantDetails({
                       <div className="text-left py-2">
                         <span className="font-bold">Application Letter</span>
                         <div className="mt-2 break-words normal-case">
-                          {user?.letter}
+                          {user?.application}
                         </div>
                       </div>
                       <div className="text-left py-2 mt-2">
@@ -103,9 +124,7 @@ export default function ViewApplicantDetails({
                           </div>
                           <div>
                             Contact Number:{" "}
-                            <span className="normal-case">
-                              {user?.contact_number}
-                            </span>
+                            <span className="normal-case">{user?.contact}</span>
                           </div>
                           <div>
                             LinkedIn:{" "}
@@ -121,11 +140,16 @@ export default function ViewApplicantDetails({
                       <div className="text-left py-2 mt-2">
                         <span className="font-bold">Skills</span>
                         <div className="mt-2 flex flex-col">
-                          {user?.skills.map((skill, index) => (
-                            <div key={index} className="mb-1">
-                              {skill}
-                            </div>
-                          ))}
+                          {user?.skills &&
+                            JSON.parse(user.skills).map(
+                              (skill: any, index: any) => (
+                                <div key={index} className="mb-2">
+                                  <span className="text-white bg-blue-500 text-[18px] rounded">
+                                    {skill.name}
+                                  </span>
+                                </div>
+                              )
+                            )}
                         </div>
                       </div>
                     </div>
@@ -133,12 +157,12 @@ export default function ViewApplicantDetails({
                       title="Click to view the image"
                       className="right-details border-4 border-gray-400 w-full md:h-[440px] h-full flex justify-center items-center"
                     >
-                      {user?.files ? (
+                      {user?.resume ? (
                         <div
                           onClick={handleImageClick}
                           className="h-full w-full cursor-pointer overflow-y-scroll overflow-x-hidden"
                         >
-                          <PdfViewer files={user?.files} />
+                          <PdfViewer userId={user._id} fileName={user.resume} />
                         </div>
                       ) : (
                         <h1>No File Uploaded</h1>
@@ -175,11 +199,11 @@ export default function ViewApplicantDetails({
             </div>
           </div>
           {/* Modal for displaying the pdf */}
-          {isFilesClicked && user?.files && (
+          {isFilesClicked && user?.resume && (
             <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-75">
               <div className="max-w-screen-lg">
                 <div className="max-w-screen max-h-screen overflow-y-auto">
-                  <PdfViewer files={user.files} />
+                  <PdfViewer userId={user._id} fileName={user.resume} />
                 </div>
                 <button
                   onClick={handleCloseImage}

@@ -6,6 +6,8 @@ const {
   editJobs,
   deleteJobs,
   getApplicant,
+  getPendingApplicant,
+  getComment,
 } = require("../controllers/JobsControllers");
 const router = express.Router();
 
@@ -17,6 +19,10 @@ router.get("/jobs/get", getJobs);
 
 //fetch applicant in jobs routes
 router.get("/jobs/getApplicant", getApplicant);
+
+router.get("/jobs/getPendingApplicant", getPendingApplicant);
+
+router.get("/jobs/getComment/:id", getComment);
 
 //edit job routes
 router.put("/jobs/edit", editJobs);

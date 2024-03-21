@@ -52,11 +52,11 @@ export default function PdfViewer({ userId, fileName }: PdfViewerProps) {
           />
         </Document>
       )}
-      {numPages && (
+      {/* {numPages && (
         <p className="text-black w-full bg-white pl-2">
           Page {pageNumber} of {numPages}
         </p>
-      )}
+      )} */}
     </div>
   );
 }
