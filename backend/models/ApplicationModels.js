@@ -45,12 +45,9 @@ const jobApplicationSchema = new mongoose.Schema(
       trim: true,
       required: [true, "Applications is required"],
     },
-    comment: {
-      type: String,
-      trim: true,
-    },
     jobs: [{ type: Schema.Types.ObjectId, ref: "jobs" }],
     user: [{ type: Schema.Types.ObjectId, ref: "users" }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "comments" }],
   },
   { timestamps: true }
 );
