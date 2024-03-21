@@ -47,12 +47,9 @@ const jobApplicationSchema = new mongoose.Schema(
     },
     jobs: [{ type: Schema.Types.ObjectId, ref: "jobs" }],
     user: [{ type: Schema.Types.ObjectId, ref: "users" }],
-<<<<<<< HEAD
-    application: [{type: Schema.Types.ObjectId, ref:"jobs" }],
+    application: [{ type: Schema.Types.ObjectId, ref: "jobs" }],
     comment: [{ type: Schema.Types.ObjectId, ref: "comments" }],
-=======
     comments: [{ type: Schema.Types.ObjectId, ref: "comments" }],
->>>>>>> ab62f31c7f2c4a562ce2e59ad1105b12f47cf549
   },
   { timestamps: true }
 );

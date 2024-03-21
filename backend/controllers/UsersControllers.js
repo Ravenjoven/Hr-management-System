@@ -8,7 +8,6 @@ const fs = require("fs");
 const ejs = require("ejs");
 const app = express();
 const UsersModels = require("../models/UsersModels");
-const bcrypt = require("bcrypt");
 
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(
@@ -207,9 +206,8 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.getUser = async (req, res, next) => {
-  const id= req.params.id;
+  const id = req.params.id;
   try {
-    
     const users = await UsersModels.findById(id);
 
     if (!users || users.length === 0) {
