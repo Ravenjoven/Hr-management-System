@@ -12,6 +12,7 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
+
 interface User {
   fullname: string | null;
   email: string;
@@ -29,6 +30,7 @@ function UserProfile() {
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+
   const user = ReactSession.get("user");
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
@@ -118,10 +120,10 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={ser.fullname}
+                    defaultValue={user.fullname}
                   />
                 </p>
-          
+
                 <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
