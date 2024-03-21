@@ -193,3 +193,19 @@ exports.movePending = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getAppliedJobs = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Fetch applied jobs for the user and populate the 'user' field to get user details
+    const appliedJobs = await ApplicationModels.find({ user: userId }).populate(
+      "user"
+    );
+
+    res.status(200).json(appliedJobs);
+  } catch (error) {
+    console.error("Error fetching applied jobs:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

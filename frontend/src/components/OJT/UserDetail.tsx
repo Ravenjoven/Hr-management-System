@@ -273,7 +273,7 @@ function UserProfile() {
                     <div>
                       <h1 className=" text-xl">SKILLS</h1>
 
-                     <textarea name="" value={ser.jobSkills} id="" ></textarea>
+                      <textarea name="" value={ser.jobSkills} id=""></textarea>
                     </div>
                   </div>
                 </div>

@@ -4,28 +4,19 @@ import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
 import CancelModal from "./CancelModal";
 import OjtSidebar from "./OjtSidebar";
-import { ReactSession } from "react-client-session";
 import axios from "axios";
+import { ReactSession } from "react-client-session";
 
-interface Applicant {
-  _id: string;
-  jobs: string[];
-  createdAt: Date;
-}
 interface Job {
   _id: string;
   jobName: string;
+  createdAt: Date;
 }
 
 function Applications() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [JobsPerPage] = useState(10);
-  const [ApplicantPerPage] = useState(10);
-  const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [applicant, setApplicant] = useState<Applicant[]>([]);
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [appliedJobs, setAppliedJobs] = useState<Job[]>([]);
   const handleCancel = () => {
     setIsModalOpen(false);
     // Add any cancel logic here
@@ -45,58 +36,22 @@ function Applications() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  useEffect(() => {
-    const fetchApplicant = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:9000/api/jobs/getApplicant"
-        );
-        setApplicant(response.data.applicant);
-      } catch (error) {
-        console.error("Error fetching applicant:");
-      }
-    };
-    fetchApplicant();
-  }, []);
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get("http://localhost:9000/api/jobs/get");
-        setJobs(response.data.jobs);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-    fetchJobs();
-  }, []);
-  const formattedApplicant = applicant.map((req) => {
-    const formattedDate = new Date(req.createdAt).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
 
-    return {
-      ...req,
-      createdAt: formattedDate,
+  useEffect(() => {
+    const fetchAppliedJobs = async () => {
+      try {
+        const userId = ReactSession.get("user");
+        const response = await axios.get(
+          `http://localhost:9000/api//getAppliedJobs/${userId}`
+        );
+        setAppliedJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching applied jobs:", error);
+      }
     };
-  });
-  const filteredApplicants = applicant.filter((res) => {
-    return res.createdAt
-      .toString()
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-  });
-  const indexOfLastApplicants = currentPage * ApplicantPerPage;
-  const indexOfFirstApplicants = indexOfLastApplicants - ApplicantPerPage;
-  const currentApplicants = filteredApplicants.slice(
-    indexOfFirstApplicants,
-    indexOfLastApplicants
-  );
-  const findJobName = (jobId: string) => {
-    const matchedJob = jobs.find((job) => job._id.trim() === jobId.trim());
-    return matchedJob ? matchedJob.jobName : "";
-  };
+
+    fetchAppliedJobs();
+  }, []);
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
       <>
@@ -170,26 +125,28 @@ function Applications() {
                 </thead>
 
                 <tbody>
-                  {currentApplicants.map((jobApplicant, index) => (
-                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  {appliedJobs.map((job, index) => (
+                    <tr
+                      key={index}
+                      className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    >
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white font-montserrat"
                       >
                         <span>{index + 1}</span>
                       </th>
-                      <td className="px-6 py-4">{jobApplicant._id}</td>
+                      <td className="px-6 py-4">{job.jobName}</td>
                       <td className="px-6 py-4">
-                        {formattedApplicant[index] &&
-                          formattedApplicant[index].createdAt}
+                        {new Date(job.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4">Pending</td>
                       <td
                         onClick={() => setIsModalOpen(true)}
                         className="px-12 py-4 cursor-pointer"
                       >
-                        X{" "}
-                      </td>{" "}
+                        X
+                      </td>
                       <CancelModal
                         isOpen={isModalOpen}
                         onCancel={handleCancel}
