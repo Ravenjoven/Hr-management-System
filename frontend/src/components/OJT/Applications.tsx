@@ -1,10 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
-import {
-  faMagnifyingGlass,
-  faTrash,
-  faPen,
-} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
@@ -13,17 +7,25 @@ import OjtSidebar from "./OjtSidebar";
 import { ReactSession } from "react-client-session";
 import axios from "axios";
 
+interface Applicant {
+  _id: string;
+  jobs: string[];
+  createdAt: Date;
+}
 interface Job {
   _id: string;
   jobName: string;
-  createdAt: Date;
 }
 
 function Applications() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
+  const [ApplicantPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
+  const [applicant, setApplicant] = useState<Applicant[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const handleCancel = () => {
     setIsModalOpen(false);
     // Add any cancel logic here
@@ -43,41 +45,58 @@ function Applications() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const jobs = ReactSession.get("jobs");
-  const [application, setApplication] = useState<Job[]>([]);
   useEffect(() => {
-    const getJobs = async () => {
-      const id = ReactSession.get("jobs");
+    const fetchApplicant = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:9000/api/jobs/get/${id}`
+          "http://localhost:9000/api/jobs/getApplicant"
         );
-        setApplication(response.data);
-        console.log(response.data);
-      }catch (error){
-        console.error("Error fecthing jobs:", error );
+        setApplicant(response.data.applicant);
+      } catch (error) {
+        console.error("Error fetching applicant:");
       }
     };
-    getJobs();
+    fetchApplicant();
   }, []);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [applicationCount, setApplicationCount] = useState(application.length);
-  
-
-  const handleAddJob = () => {
-    // Add your logic to add a new job here
-    // For example:
-    const newJob = {
-      id: application.length, // You might want to use a more reliable way to generate IDs
-      jobName: "New Job", // Default values for the new job
- 
-      createdAt: new Date().toLocaleDateString(), // Current date
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:9000/api/jobs/get");
+        setJobs(response.data.jobs);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
     };
-    setApplication([...application]); // Update the jobs array
-    setApplicationCount(applicationCount + 1); // Increment job count
+    fetchJobs();
+  }, []);
+  const formattedApplicant = applicant.map((req) => {
+    const formattedDate = new Date(req.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    return {
+      ...req,
+      createdAt: formattedDate,
+    };
+  });
+  const filteredApplicants = applicant.filter((res) => {
+    return res.createdAt
+      .toString()
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+  });
+  const indexOfLastApplicants = currentPage * ApplicantPerPage;
+  const indexOfFirstApplicants = indexOfLastApplicants - ApplicantPerPage;
+  const currentApplicants = filteredApplicants.slice(
+    indexOfFirstApplicants,
+    indexOfLastApplicants
+  );
+  const findJobName = (jobId: string) => {
+    const matchedJob = jobs.find((job) => job._id.trim() === jobId.trim());
+    return matchedJob ? matchedJob.jobName : "";
   };
-  const indexOfLastJobs = currentPage * JobsPerPage;
-  const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
       <>
@@ -151,19 +170,19 @@ function Applications() {
                 </thead>
 
                 <tbody>
-                
-                    <tr
-                    
-                      className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
+                  {currentApplicants.map((jobApplicant, index) => (
+                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white font-montserrat"
                       >
-                        <span>{}</span>
+                        <span>{index + 1}</span>
                       </th>
-                      <td className="px-6 py-4">{jobs.id}</td>
-                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4">{jobApplicant._id}</td>
+                      <td className="px-6 py-4">
+                        {formattedApplicant[index] &&
+                          formattedApplicant[index].createdAt}
+                      </td>
                       <td className="px-6 py-4">Pending</td>
                       <td
                         onClick={() => setIsModalOpen(true)}
@@ -177,7 +196,7 @@ function Applications() {
                         onConfirm={handleConfirm}
                       />
                     </tr>
-           
+                  ))}
                 </tbody>
               </table>
             </div>
