@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -86,18 +86,27 @@ const Calendar: React.FC = () => {
 export default Calendar;
 
 export function Scheduler(){
+  // const [view, setView] = useState('dayGridMonth');
+
+
+  const calendarRef = useRef(null);
+  const handleDateClick = (arg) => {
+    const calendarApi = calendarRef.current.getApi();
+    calendarApi.changeView('timeGridDay', arg.dateStr);
+  };
   return <div>
     
     <FullCalendar 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-
         initialView="dayGridMonth"
-        headerToolbar={{
-          start: "prev,next",
-          center: "title",
-          end: "dayGridMonth,timeGridDay",
-        }}
-        
+weekends={true}
+        // initialView="dayGridMonth"
+        // headerToolbar={{
+        //   start: "prev,next",
+        //   center: "title",
+        //   end: "dayGridMonth,timeGridDay",
+        // }}
+        // dateClick={handleDateClick}
         
       />
   </div>;
