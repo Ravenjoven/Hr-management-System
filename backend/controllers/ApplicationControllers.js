@@ -59,7 +59,8 @@ async function updateApplicationWithComment(applicantionId, commentId, status) {
       return;
     }
 
-    application.comment.push(commentId);
+    application.comments.push(commentId);
+    await application.save();
 
     await ApplicationModels.findOneAndUpdate(
       { _id: applicantionId },

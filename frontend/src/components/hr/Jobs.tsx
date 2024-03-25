@@ -44,7 +44,7 @@ interface Applicant {
   contact: string;
   linkedIn: string;
   jobType: string;
-  roles: number;
+  Status: number;
   skills: string;
   resume: string;
   application: string;
