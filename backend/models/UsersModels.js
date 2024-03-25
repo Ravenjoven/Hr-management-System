@@ -31,6 +31,10 @@ const employeeSchema = new mongoose.Schema(
       type: Object,
       required: [true, "skills is required"],
     },
+    jobExperience: {
+      type: Object,
+      required: [true, "Experience is required"],
+    },
     position: {
       type: String,
       trim: true,

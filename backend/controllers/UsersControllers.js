@@ -53,6 +53,7 @@ exports.createEmployee = async (req, res, next) => {
       password: "7110eda4d09e062aa5e4a390b0a572ac0d2c0220f5f89400", // 1234 hashed password
       phoneNumber: req.body.phoneNumber,
       jobSkills: req.body.jobSkills,
+      jobExperience: req.body.jobExperience,
       position: req.body.position,
       type: req.body.type,
       address: req.body.address,
@@ -188,6 +189,7 @@ exports.registerUser = async (req, res) => {
       dateOfBirth: req.body.dateOfBirth,
       gender: req.body.gender,
       jobSkills: [],
+      jobExperience: [],
       position: "NA",
       type: "NA",
       address: "NA",

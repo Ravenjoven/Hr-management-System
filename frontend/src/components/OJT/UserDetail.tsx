@@ -22,6 +22,7 @@ interface UserData {
   position: string;
   type: string;
   jobSkills: Object[];
+  jobExperience:Object[];
   createdAt: Date;
 }
 
@@ -104,7 +105,7 @@ function UserProfile() {
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:min-w-full h-full font-bold rounded flex bg-white text-black p-4 md:overflow-hidden overflow-x-scroll">
+            <div className="upper-div md:min-w-full h-full font-bold rounded-3xl flex bg-white text-black p-4 md:overflow-hidden overflow-x-scroll">
               <div className="flex items-center justify-center">
                 {/* <FontAwesomeIcon
                     icon={faUser}
@@ -273,7 +274,8 @@ function UserProfile() {
                 </div>
               </div>
               <div className="right-div w-full h-full mt-4 md:overflow-hidden overflow-x-scroll">
-                <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl">
+                <div className="flex flex-row">
+                <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
                   <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
                     <div>
                       <h1 className=" text-xl">SKILLS</h1>
@@ -281,6 +283,16 @@ function UserProfile() {
                       <textarea name="" value={ser.jobSkills} id=""></textarea>
                     </div>
                   </div>
+                </div>
+                <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
+                  <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
+                    <div>
+                      <h1 className=" text-xl">EXPERIENCE</h1>
+
+                      <textarea className="text-sm font-semibold" name="" value={ser.jobExperience} id=""></textarea>
+                    </div>
+                  </div>
+                </div>
                 </div>
                 <div className="w-full h-full">
                   <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl mt-4">
