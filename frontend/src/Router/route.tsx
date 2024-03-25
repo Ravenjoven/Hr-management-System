@@ -16,7 +16,6 @@ import CompDetails from "../components/hr/CompanyDetails";
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
 import FileLeaves from "../components/OJT/FileLeave";
-import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 import JobCategory from "../components/JobCategory";
 import { ReactSession } from "react-client-session";
 import SelectedJobs from "../components/SelectedJob";
@@ -31,8 +30,8 @@ function router() {
       <Router>
         <Routes>
           <Route path="/FileLeave" element={<FileLeaves />} />
-          <Route path="/ojt" element={<UnEmpJobList />} />
-          <Route path="/ojt/Application" element={<Applications />} />
+          <Route path="/ojt" element={<OjtJobList />} />
+          <Route path="/Applications" element={<Applications />} />
           <Route path="/OjtDetails" element={<UserDetail />} />
           <Route path="/OjtJoblist" element={<OjtJobList />} />
           <Route index path="/" element={<HomePage />} />

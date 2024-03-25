@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   faMagnifyingGlass,
   faTrash,
@@ -8,14 +8,17 @@ import {
 import { useState } from "react";
 import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
-import UnEmpSidebar from "./UnEmpSidebar";
 import CancelModal from "./CancelModal";
+import OjtSidebar from "./OjtSidebar";
 
 function Applications() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
   const [expanded, setExpanded] = useState(false);
+
+  
+
   const handleCancel = () => {
     setIsModalOpen(false);
     // Add any cancel logic here
@@ -35,51 +38,9 @@ function Applications() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 2,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 3,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-  ]);
+  const [jobs, setJobs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [jobCount, setJobCount] = useState(jobs.length);
-
-  const filteredJobs = jobs.filter((job) => {
-    return (
-      job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.date_createad.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  });
-  const handleAddJob = () => {
-    // Add your logic to add a new job here
-    // For example:
-    const newJob = {
-      id: jobs.length, // You might want to use a more reliable way to generate IDs
-      jobName: "New Job", // Default values for the new job
-      jobDescription: "Description of the new job",
-      jobLimit: 1,
-      date_created: new Date().toLocaleDateString(), // Current date
-    };
-    setJobs([...jobs]); // Update the jobs array
-    setJobCount(jobCount + 1); // Increment job count
-  };
-  const indexOfLastJobs = currentPage * JobsPerPage;
-  const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
       <>
@@ -122,7 +83,7 @@ function Applications() {
             )}
           </button>
         </div>
-        <UnEmpSidebar expanded={expanded} />
+        <OjtSidebar expanded={expanded} />
         <div
           className={`content h-full max-w-full z-1  ${
             expanded ? "ml-0" : "ml-[280px]"
@@ -153,19 +114,18 @@ function Applications() {
                 </thead>
 
                 <tbody>
-                  {currentJobs.map((job, index) => (
-                    <tr
-                      key={index}
+                               <tr
+                     
                       className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     >
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white font-montserrat"
                       >
-                        <span>{job.id}</span>
+                       
                       </th>
-                      <td className="px-6 py-4">{job.jobName}</td>
-                      <td className="px-6 py-4">{job.date_createad}</td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
                       <td className="px-6 py-4">Pending</td>
                       <td
                         onClick={() => setIsModalOpen(true)}
@@ -179,7 +139,7 @@ function Applications() {
                         onConfirm={handleConfirm}
                       />
                     </tr>
-                  ))}
+      
                 </tbody>
               </table>
             </div>
