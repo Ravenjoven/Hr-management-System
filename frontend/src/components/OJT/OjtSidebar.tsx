@@ -17,6 +17,11 @@ const data = [
     label: "Leave & Attendance",
     to: "/OjtAttendance",
   },
+  {
+    id: 4,
+    label: "Application",
+    to: "/Applications",
+  },
 ];
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
