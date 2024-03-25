@@ -6,25 +6,13 @@ import axios from "axios";
 const data = [
   {
     id: 1,
-    label: "HR",
-    to: "/login",
-  },
-  {
-    id: 2,
-    label: "Ojt",
-    to: "/ojt",
-  },
-  {
-    id: 3,
     label: "category",
     to: "/JobCategory",
   },
 ];
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
-const SecondRoute = data[1].to;
-const SecondLabel = data[1].label;
-const thirdRoute = data[2].to;
+const thirdRoute = data[0].to;
 
 interface Category {
   _id: string;
@@ -68,20 +56,12 @@ function HomePage() {
               </p>
               <div className="flex space-x-4 mx-auto my-auto pt-4">
                 <button className="border-2 bg-orange-400 rounded-3xl hover:border-2 hover:border-orange-400 hover:text-custom-text-gray hover:bg-transparent text-white w-52 h-10">
-                  <Link
-                    to={firstRoute}
+                  <a
+                    href="#"
                     className="w-full h-full flex justify-center items-center"
                   >
-                    {firstLabel}
-                  </Link>
-                </button>
-                <button className="border-2 border-orange-400 hover:text-white hover:bg-orange-400 rounded-3xl text-custom-text-gray w-52 h-10">
-                  <Link
-                    to={SecondRoute}
-                    className="w-full h-full flex justify-center items-center"
-                  >
-                    {SecondLabel}
-                  </Link>
+                    Get Started
+                  </a>
                 </button>
               </div>
             </div>
