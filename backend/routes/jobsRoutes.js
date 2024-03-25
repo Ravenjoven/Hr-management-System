@@ -8,6 +8,7 @@ const {
   getApplicant,
   getPendingApplicant,
   getComment,
+  getUserJobs,
 } = require("../controllers/JobsControllers");
 const router = express.Router();
 
@@ -29,5 +30,7 @@ router.put("/jobs/edit", editJobs);
 
 //delete job routes
 router.delete("/jobs/delete", deleteJobs);
+
+router.get("/jobs/getUserJobs/:userId", getUserJobs);
 
 module.exports = router;

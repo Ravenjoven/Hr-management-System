@@ -52,6 +52,7 @@ exports.getCategory = async (req, res, next) => {
   }
 };
 
+//get all the jobs
 exports.getJobs = async (req, res) => {
   try {
     const categoryId = req.params.id;
@@ -82,6 +83,7 @@ exports.getJobs = async (req, res) => {
   }
 };
 
+//get specific job
 exports.getJob = async (req, res, next) => {
   const jobId = req.params.id;
 
