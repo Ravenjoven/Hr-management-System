@@ -7,7 +7,7 @@ const {
   saveFiles,
   getFiles,
   movePending,
-} = require("../controllers/ApplicationControllers");
+  } = require("../controllers/ApplicationControllers");
 
 // Route to create a new job application
 router.post("/apply", createJobApplication);

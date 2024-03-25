@@ -27,6 +27,7 @@ const OjtJobList: React.FC = () => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [expanded, setExpanded] = useState<boolean>(false);
+  const [jobCount, setJobCount] = useState(0);
 
   useEffect(() => {
     if (jobs.length > 0) {
