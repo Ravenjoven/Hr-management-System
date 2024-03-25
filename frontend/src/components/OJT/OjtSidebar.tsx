@@ -17,11 +17,6 @@ const data = [
     label: "Leave & Attendance",
     to: "/OjtAttendance",
   },
-  {
-    id: 4,
-    label: "Application",
-    to: "/Applications",
-  },
 ];
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
@@ -199,7 +194,7 @@ function OjtSidebar({ expanded }: SidebarProps) {
               d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
             />
           </svg>
-          Kyut
+          Logout
         </div>
       </aside>
     </div>
