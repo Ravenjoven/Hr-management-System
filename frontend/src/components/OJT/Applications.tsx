@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   faMagnifyingGlass,
   faTrash,
@@ -10,8 +10,15 @@ import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
 import UnEmpSidebar from "./UnEmpSidebar";
 import CancelModal from "./CancelModal";
+import axios from "axios";
+
+interface Jobs {
+  _id: string;
+  jobName: string;
+}
 
 function Applications() {
+  const [jobs, setJobs] = useState<Jobs[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
@@ -35,35 +42,31 @@ function Applications() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      jobName: "Financial Associate",
 
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 2,
-      jobName: "Financial Associate",
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const userId = localStorage.getItem("id");
+        const response = await axios.get(
+          `http://localhost:9000/api/jobs/getUserJobs/${userId}`
+        );
+        setJobs(response.data.jobs);
+      } catch (error) {
+        console.error("Error fetching applicant:");
+      }
+    };
+    fetchJobs();
+  }, []);
 
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 3,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-  ]);
   const [searchQuery, setSearchQuery] = useState("");
   const [jobCount, setJobCount] = useState(jobs.length);
 
-  const filteredJobs = jobs.filter((job) => {
-    return (
-      job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.date_createad.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  });
+  // const filteredJobs = jobs.filter((job) => {
+  //   return (
+  //     job.jobName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     job.date_createad.toLowerCase().includes(searchQuery.toLowerCase())
+  //   );
+  // });
   const handleAddJob = () => {
     // Add your logic to add a new job here
     // For example:
@@ -79,7 +82,7 @@ function Applications() {
   };
   const indexOfLastJobs = currentPage * JobsPerPage;
   const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
+  // const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
       <>
@@ -153,7 +156,7 @@ function Applications() {
                 </thead>
 
                 <tbody>
-                  {currentJobs.map((job, index) => (
+                  {/* {currentJobs.map((job, index) => (
                     <tr
                       key={index}
                       className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -179,7 +182,7 @@ function Applications() {
                         onConfirm={handleConfirm}
                       />
                     </tr>
-                  ))}
+                  ))} */}
                 </tbody>
               </table>
             </div>
