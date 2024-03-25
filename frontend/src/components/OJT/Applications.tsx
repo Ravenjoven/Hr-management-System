@@ -10,14 +10,49 @@ import "../OJT/Style.css";
 import OjtNavar from "./OjtNavar";
 import CancelModal from "./CancelModal";
 import OjtSidebar from "./OjtSidebar";
-
+import axios from "axios";
+import { ReactSession } from "react-client-session";
+interface Job {
+  _id: string;
+  jobName: string;
+  createdAt: Date;
+}
 function Applications() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
   const [expanded, setExpanded] = useState(false);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [jobCount, setJobCount] = useState(jobs.length);
 
-  
+  useEffect(() => {
+    const fetchJobs = async () => {
+      const id = ReactSession.get("user");
+      try {
+        const response = await axios.get(
+          `http://localhost:9000/api/jobs/getUserJobs/${id}`
+        );
+        setJobs(response.data.jobs);
+        console.log(response.data.jobs);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchJobs();
+  }, []);
+  const formattedJobs = jobs.map((job) => {
+    const formattedDate = new Date(job.createdAt).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+    });
+
+    return {
+      ...job,
+      createdAt: formattedDate,
+    };
+  });
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -38,9 +73,7 @@ function Applications() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const [jobs, setJobs] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [jobCount, setJobCount] = useState(jobs.length);
+
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
       <>
@@ -114,32 +147,32 @@ function Applications() {
                 </thead>
 
                 <tbody>
-                               <tr
-                     
-                      className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
+                  {formattedJobs.map((job, index) => (
+                    <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                       <th
                         scope="row"
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white font-montserrat"
                       >
-                       
+                        <span>{index + 1}</span>
                       </th>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4">{job.jobName}</td>
+                      <td className="px-6 py-4">
+                        {formattedJobs[index] && formattedJobs[index].createdAt}
+                      </td>
                       <td className="px-6 py-4">Pending</td>
                       <td
                         onClick={() => setIsModalOpen(true)}
                         className="px-12 py-4 cursor-pointer"
                       >
-                        X{" "}
-                      </td>{" "}
+                        X
+                      </td>
                       <CancelModal
                         isOpen={isModalOpen}
                         onCancel={handleCancel}
                         onConfirm={handleConfirm}
                       />
                     </tr>
-      
+                  ))}
                 </tbody>
               </table>
             </div>

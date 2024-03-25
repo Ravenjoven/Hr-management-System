@@ -5,7 +5,6 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import UserSidebar from "../UserSidebar";
 import UserNavar from "../UserNavar";
 import { useState, useEffect } from "react";
-import UnEmpSidebar from "./UnEmpSidebar";
 import OjtSidebar from "./OjtSidebar";
 import OjtNavar from "./OjtNavar";
 import axios from "axios";

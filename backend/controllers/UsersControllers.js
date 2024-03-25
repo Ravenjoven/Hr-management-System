@@ -209,7 +209,8 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.getUser = async (req, res, next) => {
-  const id= req.params.id;
+  const id = req.params.id;
+  console.log(id)
   try {
     
     const users = await UsersModels.findById(id);
