@@ -20,14 +20,13 @@ interface Job {
   jobSkills: any[];
   createdAt: Date;
 }
-
 const OjtJobList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [expanded, setExpanded] = useState<boolean>(false);
-  const [jobCount, setJobCount] = useState(0);
+  const [jobCount, setJobCount] = useState("•");
 
   useEffect(() => {
     if (jobs.length > 0) {
@@ -149,7 +148,7 @@ const OjtJobList: React.FC = () => {
             </button>
           </div>
           <div className="relative w-full mt-2 bg-custom-bg-smooth">
-            <OjtSidebar expanded={expanded} />
+            <OjtSidebar expanded={expanded} jobCount={jobCount} />
             <div
               className={`content h-full max-w-full z-1  ${
                 expanded ? "ml-0" : "ml-[280px]"

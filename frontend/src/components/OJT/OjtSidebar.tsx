@@ -33,45 +33,14 @@ const FourthRoute = data[3].to;
 const FourthLabel = data[3].label;
 interface SidebarProps {
   expanded: boolean;
+  jobCount: number | string; // Adjust the type to accept string
 }
-function OjtSidebar({ expanded }: SidebarProps) {
+function OjtSidebar({ expanded, jobCount }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null as any);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 2,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 3,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 4,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-    {
-      id: 5,
-      jobName: "Financial Associate",
-
-      date_createad: new Date().toLocaleDateString(),
-    },
-  ]);
-  const [jobCount, setJobCount] = useState(jobs.length);
+  const [jobs, setJobs] = useState([]);
   const filteredJobs = jobs.filter((job) => {
     useEffect(() => {
       setSelectedJob(jobs[0] || null);
@@ -90,18 +59,7 @@ function OjtSidebar({ expanded }: SidebarProps) {
       jobLimit: 1,
       date_created: new Date().toLocaleDateString(), // Current date
     };
-    setJobs([...jobs]); // Update the jobs array
-    setJobCount(jobCount + 1); // Increment job count
   };
-  // Get current users
-  const indexOfLastJobs = currentPage * JobsPerPage;
-  const indexOfFirstJobs = indexOfLastJobs - JobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJobs, indexOfLastJobs);
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(jobs.length / JobsPerPage); i++) {
-    pageNumbers.push(i);
-  }
 
   return (
     <div>

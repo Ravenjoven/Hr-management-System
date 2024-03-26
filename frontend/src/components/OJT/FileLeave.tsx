@@ -5,6 +5,7 @@ import LeaveDetailsModal from "../Modal/LeaveDetails";
 import OjtSidebar from "./OjtSidebar";
 
 function FileLeaves() {
+  const [jobCount, setJobCount] = useState("•");
   const [expanded, setExpanded] = useState(false);
   const [leaveData, setLeaveData] = useState({
     leaveType: "",
@@ -93,7 +94,7 @@ function FileLeaves() {
             )}
           </button>
         </div>
-        <OjtSidebar expanded={expanded} />
+        <OjtSidebar expanded={expanded} jobCount={jobCount} />
         <div
           className={`content h-full max-w-full z-1  ${
             expanded ? "ml-0" : "ml-[280px]"
