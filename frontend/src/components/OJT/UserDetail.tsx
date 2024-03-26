@@ -21,12 +21,14 @@ interface UserData {
   position: string;
   type: string;
   jobSkills: Object[];
-  jobExperience:Object[];
+  jobExperience: Object[];
   createdAt: Date;
 }
 
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
+  const [jobCount, setJobCount] = useState("•");
+
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -98,7 +100,7 @@ function UserProfile() {
           </button>
         </div>
         <div className="relative w-full mt-2 px-8">
-          <OjtSidebar expanded={expanded} />
+          <OjtSidebar expanded={expanded} jobCount={jobCount} />
           <div
             className={`content h-full max-w-full z-1  ${
               expanded ? "ml-0" : "ml-[280px]"
@@ -274,24 +276,33 @@ function UserProfile() {
               </div>
               <div className="right-div w-full h-full mt-4 md:overflow-hidden overflow-x-scroll">
                 <div className="flex flex-row">
-                <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
-                  <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
-                    <div>
-                      <h1 className=" text-xl">SKILLS</h1>
+                  <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
+                    <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
+                      <div>
+                        <h1 className=" text-xl">SKILLS</h1>
 
-                      <textarea name="" value={ser.jobSkills} id=""></textarea>
+                        <textarea
+                          name=""
+                          value={ser.jobSkills}
+                          id=""
+                        ></textarea>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
-                  <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
-                    <div>
-                      <h1 className=" text-xl">EXPERIENCE</h1>
+                  <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
+                    <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
+                      <div>
+                        <h1 className=" text-xl">EXPERIENCE</h1>
 
-                      <textarea className="text-sm font-semibold" name="" value={ser.jobExperience} id=""></textarea>
+                        <textarea
+                          className="text-sm font-semibold"
+                          name=""
+                          value={ser.jobExperience}
+                          id=""
+                        ></textarea>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </div>
                 <div className="w-full h-full">
                   <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl mt-4">

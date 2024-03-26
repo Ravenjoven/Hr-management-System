@@ -5,51 +5,52 @@ import LeaveDetailsModal from "../Modal/LeaveDetails";
 import OjtSidebar from "./OjtSidebar";
 
 function FileLeaves() {
+  const [jobCount, setJobCount] = useState("•");
   const [expanded, setExpanded] = useState(false);
   const [leaveData, setLeaveData] = useState({
     leaveType: "",
     fromDate: "",
     toDate: "",
-    reason: ""
+    reason: "",
   });
 
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
-  }
+  };
 
   const handleLeaveTypeChange = (event: any) => {
     setLeaveData({
       ...leaveData,
-      leaveType: event.target.value
+      leaveType: event.target.value,
     });
-  }
+  };
 
   const handleFromDateChange = (event: any) => {
     setLeaveData({
       ...leaveData,
-      fromDate: event.target.value
+      fromDate: event.target.value,
     });
-  }
+  };
 
   const handleToDateChange = (event: any) => {
     setLeaveData({
       ...leaveData,
-      toDate: event.target.value
+      toDate: event.target.value,
     });
-  }
+  };
 
   const handleReasonChange = (event: any) => {
     setLeaveData({
       ...leaveData,
-      reason: event.target.value
+      reason: event.target.value,
     });
-  }
+  };
 
   const handleSubmit = () => {
     // Do something with leaveData, like sending it to other components
     // For now, just logging it to console
     console.log(leaveData);
-  }
+  };
 
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat font-bold">
@@ -93,16 +94,18 @@ function FileLeaves() {
             )}
           </button>
         </div>
-        <OjtSidebar expanded={expanded} />
+        <OjtSidebar expanded={expanded} jobCount={jobCount} />
         <div
-          className={`content h-full max-w-full z-1  ${expanded ? "ml-0" : "ml-[280px]"
-            }`}
+          className={`content h-full max-w-full z-1  ${
+            expanded ? "ml-0" : "ml-[280px]"
+          }`}
         >
-          <div
-            className="bg-white lower-div w-full min-h-screen border-[3px] rounded-3xl mt-4">
+          <div className="bg-white lower-div w-full min-h-screen border-[3px] rounded-3xl mt-4">
             <div className="m-20">
               <div className="pb-10">
-                <span className="text-[30px] text-custom-text-black">File for leave</span>
+                <span className="text-[30px] text-custom-text-black">
+                  File for leave
+                </span>
               </div>
               <div className="pb-8">
                 <select
