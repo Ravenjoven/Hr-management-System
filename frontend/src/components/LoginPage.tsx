@@ -37,6 +37,7 @@ const Login = () => {
 
       const userRole = response.data.stat;
       const userId = response.data.id;
+      const name = response.data.name;
 
       // Redirect based on user role
       if (userRole === "Admin") {
@@ -49,6 +50,7 @@ const Login = () => {
         // Redirect to UserProfil
         ReactSession.set("user", userId);
         localStorage.setItem("status", userRole);
+        localStorage.setItem("name", name);
         if (ReactSession.get("user") !== "") {
           navigate("/UserProfile");
         }
