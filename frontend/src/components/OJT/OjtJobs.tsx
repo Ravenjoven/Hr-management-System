@@ -86,6 +86,10 @@ const OjtJobList: React.FC = () => {
     localStorage.setItem("id", job?._id);
     setSelectedJob(job);
   };
+
+  const fullName = localStorage.getItem("name");
+  const firstName = fullName ? fullName.split(" ")[0] : "";
+
   const user = ReactSession.get("user");
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
@@ -158,7 +162,11 @@ const OjtJobList: React.FC = () => {
                 <div className="left-div mt-4 w-[400px] rounded-2xl">
                   <div>
                     <span className="text-4xl font-bold text-custom-text-black">
-                      Hello,<span> {user.family_name}</span>
+                      Hello,
+                      <span>
+                        {" "}
+                        {user.family_name} {firstName}
+                      </span>
                     </span>
                   </div>
                   <div className="flex items-center justify-center flex-grow pt-9">

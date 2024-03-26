@@ -166,7 +166,9 @@ exports.signinUser = async (req, res, next) => {
 
     const stat = user.status;
     const id = user._id;
-    res.status(200).json({ success: true, stat, id });
+    const name = user.fullname;
+
+    res.status(200).json({ success: true, stat, id, name });
   } catch (error) {
     next(error);
   }
@@ -208,9 +210,8 @@ exports.registerUser = async (req, res) => {
 
 exports.getUser = async (req, res, next) => {
   const id = req.params.id;
-  console.log(id)
+  console.log(id);
   try {
-    
     const users = await UsersModels.findById(id);
 
     if (!users || users.length === 0) {
