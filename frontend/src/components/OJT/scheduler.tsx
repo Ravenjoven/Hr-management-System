@@ -79,7 +79,7 @@ export default function sched() {
           <div>
             <p>web conference</p>
           </div>
-          <div className="w-full h-1/4 bg-white rounded-[20px] border-2 border-black my-8">
+          <div className="w-full h-1/4 bg-white rounded-[20px] border-2 border-black my-8 flex justify-center items-center">
             <p>No shedule set yet</p>
           </div>
           <div>
