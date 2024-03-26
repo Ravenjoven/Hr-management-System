@@ -2,6 +2,7 @@
 const JobsModels = require("../models/JobsModels");
 const CategoryModels = require("../models/CategoryModels");
 const ApplicationModels = require("../models/ApplicationModels");
+const UsersModels = require("../models/UsersModels");
 const CommentModels = require("../models/CommentModels");
 const { validationResult } = require("express-validator");
 
@@ -185,5 +186,53 @@ exports.getComment = async (req, res, next) => {
     res.status(200).json({ success: true, comments });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.getUserJobs = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+
+    // Find the user
+    const user = await UsersModels.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "No user found" });
+    }
+
+    // Retrieve application IDs associated with the user
+    const applicationIds = user.application;
+
+    // Find applications based on application IDs
+    const applications = await ApplicationModels.find({
+      _id: { $in: applicationIds },
+    });
+
+    if (!applications || applications.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No applications found for this user",
+      });
+    }
+
+    // Extract job IDs from all found applications
+    const jobIds = applications.map((application) => application.jobs).flat();
+
+    // Find jobs based on job IDs
+    const jobs = await JobsModels.find({
+      _id: { $in: jobIds },
+    });
+
+    if (!jobs || jobs.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No jobs found for this user",
+      });
+    }
+
+    res.status(200).json({ success: true, jobs });
+  } catch (error) {
+    console.error("Failed to get jobs:", error);
+    res.status(500).send("Server error");
   }
 };

@@ -16,10 +16,10 @@ import CompDetails from "../components/hr/CompanyDetails";
 import UserDetail from "../components/OJT/UserDetail";
 import OjtAttendance from "../components/OJT/OjtAttendance";
 import FileLeaves from "../components/OJT/FileLeave";
-import UnEmpJobList from "../components/OJT/UnEmpJobPage";
 import JobCategory from "../components/JobCategory";
 import { ReactSession } from "react-client-session";
 import SelectedJobs from "../components/SelectedJob";
+import Sched from "../components/OJT/scheduler";
 
 function router() {
   ReactSession.setStoreType("localStorage");
@@ -29,8 +29,8 @@ function router() {
       <Router>
         <Routes>
           <Route path="/FileLeave" element={<FileLeaves />} />
-          <Route path="/ojt" element={<UnEmpJobList />} />
-          <Route path="/ojt/Application" element={<Applications />} />
+          <Route path="/ojt" element={<OjtJobList />} />
+          <Route path="/Applications" element={<Applications />} />
           <Route path="/OjtDetails" element={<UserDetail />} />
           <Route path="/OjtJoblist" element={<OjtJobList />} />
           <Route index path="/" element={<HomePage />} />
@@ -50,6 +50,9 @@ function router() {
           <Route path="/UserProfile" element={<UserDetail />} />
           <Route path="/OjtAttendance" element={<OjtAttendance />} />
           <Route path="/JobCategory" element={<JobCategory />} />
+
+          {/* schdeule in progress */}
+          <Route path="/sched" element={<Sched />} />
         </Routes>
       </Router>
     </>

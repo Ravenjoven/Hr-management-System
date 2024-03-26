@@ -5,15 +5,13 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import UserSidebar from "../UserSidebar";
 import UserNavar from "../UserNavar";
 import { useState, useEffect } from "react";
-import UnEmpSidebar from "./UnEmpSidebar";
 import OjtSidebar from "./OjtSidebar";
 import OjtNavar from "./OjtNavar";
 import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
-
-interface User {
+interface UserData {
   fullname: string | null;
   email: string;
   address: string;
@@ -23,6 +21,7 @@ interface User {
   position: string;
   type: string;
   jobSkills: Object[];
+  jobExperience: Object[];
   createdAt: Date;
 }
 
@@ -40,10 +39,15 @@ function UserProfile() {
   };
 
   const user = ReactSession.get("user");
+
+  if (ReactSession.get("user") === "") {
+    navigate("/login");
+  }
+
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
 
-  const [ser, setUser] = useState<User[]>([]);
+  const [ser, setUser] = useState<UserData[]>([]);
   useEffect(() => {
     const getUser = async () => {
       const id = ReactSession.get("user");
@@ -51,10 +55,9 @@ function UserProfile() {
         const response = await axios.get(
           `http://localhost:9000/api/user/getUser/${id}`
         );
-        setUser(response.data);
-        console.log(response.data);
+        setUser(response.data.users);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching user:", error);
       }
     };
     getUser();
@@ -172,13 +175,13 @@ function UserProfile() {
           </button>
         </div>
         <div className="relative w-full mt-2 px-8">
-          <OjtSidebar expanded={expanded} />
+          <OjtSidebar expanded={expanded} jobCount={jobCount} />
           <div
             className={`content h-full max-w-full z-1  ${
               expanded ? "ml-0" : "ml-[280px]"
             }`}
           >
-            <div className="upper-div md:min-w-full h-full font-bold rounded flex bg-white text-black p-4 md:overflow-hidden overflow-x-scroll">
+            <div className="upper-div md:min-w-full h-full font-bold rounded-3xl flex bg-white text-black p-4 md:overflow-hidden overflow-x-scroll">
               <div className="flex items-center justify-center">
                 {/* <FontAwesomeIcon
                     icon={faUser}
@@ -195,9 +198,10 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={user.fullname}
+                    defaultValue={ser.fullname}
                   />
                 </p>
+
                 <span className="text-custom-text-orange font-semibold p-1 text-sm">
                   Software Developer
                 </span>
@@ -210,7 +214,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "auto" }}
-                      defaultValue={user.email}
+                      defaultValue={ser.email}
                     />
                   </span>
                 </div>
@@ -221,7 +225,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "220px" }}
-                      defaultValue="129329177"
+                      defaultValue={ser.phoneNumber}
                     />
                   </span>
                 </div>
@@ -357,17 +361,32 @@ function UserProfile() {
                 </div>
               </div>
               <div className="right-div w-full h-full mt-4 md:overflow-hidden overflow-x-scroll">
-                <div className="border-[3px] bg-white text-black md:ml-4 rounded-2xl">
-                  <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
-                    <div>
-                      <h1 className=" text-xl">SKILLS</h1>
+                <div className="flex flex-row">
+                  <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
+                    <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
+                      <div>
+                        <h1 className=" text-xl">SKILLS</h1>
 
-                      <EditTextarea
-                        name="description"
-                        rows={4}
-                        style={{ paddingTop: 0 }}
-                        placeholder="Enter a description"
-                      />
+                        <textarea
+                          name=""
+                          value={ser.jobSkills}
+                          id=""
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="py-2 bg-white text-black md:ml-4 rounded-2xl w-[450px]">
+                    <div className="font-bold text-custom-text-black my-4 ml-8 space-y-3 pr-8.">
+                      <div>
+                        <h1 className=" text-xl">EXPERIENCE</h1>
+
+                        <textarea
+                          className="text-sm font-semibold"
+                          name=""
+                          value={ser.jobExperience}
+                          id=""
+                        ></textarea>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -385,10 +404,6 @@ function UserProfile() {
                           December 0, 0000 -
                           January 00, 0000"
                       />
-                      {/* Creative Web Design Technical Education and Skills <br />
-                        Development Authority(TESDA){" "}
-                        <br className="md:hidden block" /> December 0, 0000 -
-                        January 00, 0000 */}
                     </div>
                   </div>
                 </div>

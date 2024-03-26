@@ -9,11 +9,21 @@
 
 .fc-day-today {
     background-color: rgba(255, 150, 0, 0.5) !important;
-    
-    /* You can adjust other styles like text color, border, etc. */
 }
 .fc-day{
   cursor: pointer;
+}
+.fc-day:hover{
+  background:orange;
+}
+.fc-day-sun {
+  pointer-events: none;
+}
+.fc-day-sat {
+  pointer-events: none;
+}
+.fc-day-past{
+  pointer-events:none;
 }
 /* .fc .fc-button{
   background-color: blue;

@@ -1,7 +1,28 @@
 import React from "react";
 import { Link } from "react-scroll";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+
+const data = [
+  {
+    id: 1,
+    label: "Login",
+    to: "/login",
+  },
+];
+const firstRoute = data[0].to;
+const firstLabel = data[0].label;
 
 function Navar() {
+  const navigate = useNavigate();
+
+  const handleLinkClick = useCallback(
+    (event: { preventDefault: () => void }) => {
+      event.preventDefault();
+      navigate(firstRoute);
+    },
+    [navigate, firstRoute]
+  );
   return (
     <nav className="bg-custom-bg-gray top-0 sticky z-50">
       <div className="sm:max-w-screen md:max-w-screen flex mx-20 flex-wrap items-center justify-between p-4 h-full ">
@@ -83,6 +104,15 @@ function Navar() {
               >
                 Contact
               </Link>
+            </li>
+            <li>
+              <a
+                href={firstRoute}
+                onClick={handleLinkClick}
+                className="cursor-pointer block py-2 px-3 md:text-custom-text-gray rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-400 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                {firstLabel}
+              </a>
             </li>
           </ul>
         </div>

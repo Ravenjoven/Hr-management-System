@@ -15,6 +15,7 @@ import { Link, Route } from "react-router-dom";
 
 function OjtAttendance() {
   const [expanded, setExpanded] = useState(false);
+  const [jobCount, setJobCount] = useState("•");
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -61,7 +62,7 @@ function OjtAttendance() {
           </button>
         </div>
         <div className="relative w-full mt-2 bg-custom-bg-smooth">
-          <OjtSidebar expanded={expanded} />
+          <OjtSidebar expanded={expanded} jobCount={jobCount} />
           <div
             className={`content h-full max-w-full z-1  ${
               expanded ? "ml-0" : "ml-[280px]"
@@ -102,12 +103,18 @@ function OjtAttendance() {
                           Time out
                         </button>
                       </div>
-                    
                     </div>
                     <div className="text-xs p-2 text-custom-text-blue">
-                        <span>Other options, <a className="border-b-2 no-wrap border-blue-600" href="/FileLeave" >
-                           learn more !</a></span>
-                      </div>
+                      <span>
+                        Other options,{" "}
+                        <a
+                          className="border-b-2 no-wrap border-blue-600"
+                          href="/FileLeave"
+                        >
+                          learn more !
+                        </a>
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="flex flex-col w-[70%]">
@@ -190,37 +197,49 @@ function OjtAttendance() {
                         <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <td className="px-6 py-4">John Doe</td>
                           <td className="px-6 py-4">Time in</td>
-                          <td className="px-6 py-4">7 : 00 : 14 am Cebu, Philippines</td>
+                          <td className="px-6 py-4">
+                            7 : 00 : 14 am Cebu, Philippines
+                          </td>
                           <td className="px-6 py-4">Software Department</td>
                         </tr>
                         <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <td className="px-6 py-4">John Doe</td>
                           <td className="px-6 py-4">Time in</td>
-                          <td className="px-6 py-4">7 : 00 : 14 am Cebu, Philippines</td>
+                          <td className="px-6 py-4">
+                            7 : 00 : 14 am Cebu, Philippines
+                          </td>
                           <td className="px-6 py-4">Software Department</td>
                         </tr>
                         <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <td className="px-6 py-4">John Doe</td>
                           <td className="px-6 py-4">Time in</td>
-                          <td className="px-6 py-4">7 : 00 : 14 am Cebu, Philippines</td>
+                          <td className="px-6 py-4">
+                            7 : 00 : 14 am Cebu, Philippines
+                          </td>
                           <td className="px-6 py-4">Software Department</td>
                         </tr>
                         <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <td className="px-6 py-4">John Doe</td>
                           <td className="px-6 py-4">Time in</td>
-                          <td className="px-6 py-4">7 : 00 : 14 am Cebu, Philippines</td>
+                          <td className="px-6 py-4">
+                            7 : 00 : 14 am Cebu, Philippines
+                          </td>
                           <td className="px-6 py-4">Software Department</td>
                         </tr>
                         <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <td className="px-6 py-4">John Doe</td>
                           <td className="px-6 py-4">Time in</td>
-                          <td className="px-6 py-4">7 : 00 : 14 am Cebu, Philippines</td>
+                          <td className="px-6 py-4">
+                            7 : 00 : 14 am Cebu, Philippines
+                          </td>
                           <td className="px-6 py-4">Software Department</td>
                         </tr>
                         <tr className="bg-white capitalize border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <td className="px-6 py-4">John Doe</td>
                           <td className="px-6 py-4">Time in</td>
-                          <td className="px-6 py-4">7 : 00 : 14 am Cebu, Philippines</td>
+                          <td className="px-6 py-4">
+                            7 : 00 : 14 am Cebu, Philippines
+                          </td>
                           <td className="px-6 py-4">Software Department</td>
                         </tr>
                       </tbody>

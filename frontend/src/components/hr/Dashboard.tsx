@@ -3,6 +3,7 @@ import AdminNavar from "../AdminNavar";
 import Sidebar from "../Sidebar";
 import Calendar from "../Calendar";
 import { ToastContainer, toast } from 'react-toastify';
+import { ReactSession } from "react-client-session";
 import 'react-toastify/dist/ReactToastify.css';
 
 function Dashboard() {
@@ -13,14 +14,16 @@ function Dashboard() {
     setExpanded((prevState) => !prevState);
   };
 
-  const handleLogin = () => {
-    // Your login logic here
-    // Assuming login was successful
-    setLoggedIn(true);
+  const user = ReactSession.get("user");
 
-    // Display success message using toast
-    toast.success("Login successful!");
-  };
+  // const handleLogin = () => {
+  //   // Your login logic here
+  //   // Assuming login was successful
+  //   setLoggedIn(true);
+
+  //   // Display success message using toast
+  //   toast.success("Login successful!");
+  // };
 
   return (
     <>
