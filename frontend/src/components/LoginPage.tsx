@@ -45,9 +45,10 @@ const Login = () => {
           navigate("/Dashboard");
         }
         // Redirect to dashboard
-      } else if (userRole === "User") {
+      } else if (userRole === "User" || userRole === "Employee") {
         // Redirect to UserProfil
         ReactSession.set("user", userId);
+        localStorage.setItem("status", userRole);
         if (ReactSession.get("user") !== "") {
           navigate("/UserProfile");
         }
