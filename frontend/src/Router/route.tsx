@@ -55,7 +55,8 @@ function router() {
 
 
           {/* schdeule in progress */}
-          <Route path="/sched" element={<Sched />} />
+          <Route path="/sched" element={<Sched  />} />
+        
 
         </Routes>
       </Router>
