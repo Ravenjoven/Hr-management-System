@@ -11,6 +11,7 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
+
 interface UserData {
   fullname: string | null;
   email: string;

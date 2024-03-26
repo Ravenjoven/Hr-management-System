@@ -36,11 +36,20 @@ interface SidebarProps {
   jobCount: number | string; // Adjust the type to accept string
 }
 function OjtSidebar({ expanded, jobCount }: SidebarProps) {
+  const [status, setStatus] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null as any);
   const [currentPage, setCurrentPage] = useState(1);
   const [JobsPerPage] = useState(10);
   const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const roles = localStorage.getItem("status");
+    if (roles !== null) {
+      setStatus(roles);
+    }
+  }, []);
+
   const filteredJobs = jobs.filter((job) => {
     useEffect(() => {
       setSelectedJob(jobs[0] || null);
@@ -106,21 +115,23 @@ function OjtSidebar({ expanded, jobCount }: SidebarProps) {
               {secondLabel}
             </Link>
           </li>
-          <li className="m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
-            <svg
-              className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="white"
-              viewBox="0 0 20 21"
-            >
-              <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
-              <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
-            </svg>
-            <Link to={ThirdRoute} className="block w-full h-full">
-              {ThirdLabel}
-            </Link>
-          </li>
+          {status === "Employee" && (
+            <li className="m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
+              <svg
+                className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="white"
+                viewBox="0 0 20 21"
+              >
+                <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
+                <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
+              </svg>
+              <Link to={ThirdRoute} className="block w-full h-full">
+                {ThirdLabel}
+              </Link>
+            </li>
+          )}
           <li className="m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
             <svg
               className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

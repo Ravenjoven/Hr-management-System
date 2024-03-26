@@ -124,10 +124,10 @@ function Applications() {
             expanded ? "ml-0" : "ml-[280px]"
           }`}
         >
-          <div className="lower-div w-full h-full border-[3px] rounded-md mt-4">
-            <div className="relative overflow-x-auto shadow-md">
-              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-black bg-white  uppercase">
+          <div className="lower-div w-full h-full rounded-md mt-4">
+            <div className="relative overflow-x-auto shadow-md rounded-3xl">
+              <table className=" w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-black bg-white  uppercase fix overlay-scroll">
                   <tr className="capitalize">
                     <th scope="col" className="px-6 py-3">
                       No.
