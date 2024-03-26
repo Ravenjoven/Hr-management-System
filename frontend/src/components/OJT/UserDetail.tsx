@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +28,13 @@ interface User {
 
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
+  const [fullname, setFullname] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [placeOfBirth, setPlaceOfBirth] = useState("");
+  const [address, setAddress] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [nationality, setNationality] = useState("");
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
@@ -52,6 +59,75 @@ function UserProfile() {
     };
     getUser();
   }, []);
+
+  // Effect hook to load the saved fullname from localStorage when the component mounts
+  useEffect(() => {
+    // Construct a unique key for localStorage based on the user's id (or email)
+    const localStorageKey = `fullname_${user.email}`; // or `fullname_${user.email}` if using email
+    const savedFullName = localStorage.getItem(localStorageKey);
+    if (savedFullName) {
+      setFullname(savedFullName);
+    }
+    // For dateOfBirth
+    const dobKey = `dateOfBirth_${user.email}`;
+    const savedDOB = localStorage.getItem(dobKey);
+    if (savedDOB) {
+      setDateOfBirth(savedDOB);
+    }
+    const pobKey = `placeOfBirth_${user.email}`;
+    const savedPOB = localStorage.getItem(pobKey);
+    if (savedPOB) {
+      setPlaceOfBirth(savedPOB);
+    }
+    const userKey = user.email; // Assuming `user.email` is unique
+    setAddress(localStorage.getItem(`address_${userKey}`) || "");
+    setAge(localStorage.getItem(`age_${userKey}`) || "");
+    setNationality(localStorage.getItem(`nationality_${userKey}`) || "");
+    const savedGender = localStorage.getItem(`gender_${user.email}`); // Load the saved gender
+    if (savedGender) {
+      setGender(savedGender); // Update the state if a saved gender exists
+    }
+  }, [user.email]); // or [user.email] if using email
+
+  const handleFullNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newFullName = e.target.value;
+    setFullname(newFullName);
+    // Again, using a unique localStorage key
+    const localStorageKey = `fullname_${user.email}`; // or `fullname_${user.email}`
+    localStorage.setItem(localStorageKey, newFullName);
+  };
+  const handleDateOfBirthChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newDOB = e.target.value;
+    setDateOfBirth(newDOB);
+    const dobKey = `dateOfBirth_${user.email}`;
+    localStorage.setItem(dobKey, newDOB);
+  };
+  const handlePlaceOfBirthChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newPlaceOfBirth = e.target.value;
+    setPlaceOfBirth(newPlaceOfBirth);
+    const pobKey = `placeOfBirth_${user.email}`;
+    localStorage.setItem(pobKey, newPlaceOfBirth);
+  };
+  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newAddress = e.target.value;
+    setAddress(newAddress);
+    localStorage.setItem(`address_${user.email}`, newAddress);
+  };
+  const handleAgeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newAge = e.target.value;
+    setAge(newAge);
+    localStorage.setItem(`age_${user.email}`, newAge);
+  };
+  const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newGender = e.target.value;
+    setGender(newGender);
+    localStorage.setItem(`gender_${user.email}`, newGender);
+  };
+  const handleNationalityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newNationality = e.target.value;
+    setNationality(newNationality);
+    localStorage.setItem(`nationality_${user.email}`, newNationality);
+  };
 
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
@@ -182,61 +258,76 @@ function UserProfile() {
                     <h1 className="font-bold p-2  text-xl">PERSONAL INFO</h1>
                   </div>
                   <div>
-                    Fullname:
+                    Fullname: Fullname:
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText
-                        name="textbox1"
-                        defaultValue="Teravault Inc"
-                        inline
+                      <input
+                        type="text"
+                        name="fullname"
+                        value={fullname}
+                        onChange={handleFullNameChange}
+                        style={{ display: "inline", margin: "0 8px" }}
                       />
                     </span>
                   </div>
                   <div>
                     Date of Birth:
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText
-                        name="textbox1"
-                        defaultValue="00/00/0000"
-                        inline
+                      <input
+                        type="date"
+                        value={dateOfBirth}
+                        onChange={handleDateOfBirthChange}
                       />
                     </span>
                   </div>
                   <div>
                     Place of Birth:{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText
-                        name="textbox1"
-                        defaultValue="Cebu Business Park"
-                        inline
+                      <input
+                        type="placeOfBirth"
+                        value={placeOfBirth}
+                        onChange={handlePlaceOfBirthChange}
                       />
                     </span>
                   </div>
                   <div>
                     Address :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText
-                        name="textbox1"
-                        defaultValue="Ayala Center, Cebu Business Park"
-                        inline
+                      <input
+                        type="Address"
+                        value={address}
+                        onChange={handleAddressChange}
                       />
                     </span>
                   </div>
                   <div>
                     Age :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="00" inline />
+                      <input
+                        type="Age"
+                        value={age}
+                        onChange={handleAgeChange}
+                      />
                     </span>
                   </div>
                   <div>
                     Gender :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <select value={gender} onChange={handleGenderChange}>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Custom">Custom</option>
+                      </select>
                     </span>
                   </div>
                   <div>
                     Nationality :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <input
+                        type="Nationality"
+                        value={nationality}
+                        onChange={handleNationalityChange}
+                      />
                     </span>
                   </div>
                   <div>
