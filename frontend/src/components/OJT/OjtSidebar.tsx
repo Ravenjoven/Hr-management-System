@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const data = [
   {
@@ -23,14 +23,13 @@ const data = [
     to: "/Applications",
   },
 ];
+
 const firstRoute = data[0].to;
 const firstLabel = data[0].label;
 const secondRoute = data[1].to;
 const secondLabel = data[1].label;
 const ThirdRoute = data[2].to;
 const ThirdLabel = data[2].label;
-const FourthRoute = data[3].to;
-const FourthLabel = data[3].label;
 interface SidebarProps {
   expanded: boolean;
   jobCount: number | string; // Adjust the type to accept string
@@ -38,36 +37,18 @@ interface SidebarProps {
 function OjtSidebar({ expanded, jobCount }: SidebarProps) {
   const [status, setStatus] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedJob, setSelectedJob] = useState(null as any);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [JobsPerPage] = useState(10);
-  const [jobs, setJobs] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const roles = localStorage.getItem("status");
-    if (roles !== null) {
-      setStatus(roles);
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      // Clear session
+      // Example:
+      localStorage.removeItem("token");
+
+      // Redirect to login page
+      navigate("/login");
     }
-  }, []);
-
-  const filteredJobs = jobs.filter((job) => {
-    useEffect(() => {
-      setSelectedJob(jobs[0] || null);
-    }, [jobs]);
-    const handleClick = (job: any) => {
-      setSelectedJob(job);
-    };
-  });
-  const handleAddJob = () => {
-    // Add your logic to add a new job here
-    // For example:
-    const newJob = {
-      id: jobs.length, // You might want to use a more reliable way to generate IDs
-      jobName: "New Job", // Default values for the new job
-      jobDescription: "Description of the new job",
-      jobLimit: 1,
-      date_created: new Date().toLocaleDateString(), // Current date
-    };
   };
 
   return (
@@ -152,7 +133,10 @@ function OjtSidebar({ expanded, jobCount }: SidebarProps) {
             </Link>
           </li>
         </ol>
-        <div className="mt-[50px] m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300">
+        <div
+          className="mt-[200px] m-2 cursor-pointer flex items-center px-2 py-5 hover:mx-2 hover:py-5 text-white hover:rounded-3xl hover:transition ease-in-out delay-100 hover:bg-gray-100 hover:bg-opacity-[25%] active:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300"
+          onClick={handleLogout}
+        >
           <svg
             className="flex-shrink-0 w-10 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             aria-hidden="true"
