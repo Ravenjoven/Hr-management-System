@@ -28,6 +28,7 @@ interface UserData {
 function UserProfile() {
   const [expanded, setExpanded] = useState(false);
   const [fullname, setFullname] = useState("");
+  const [jobCount, setJobCount] = useState("•");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [placeOfBirth, setPlaceOfBirth] = useState("");
   const [address, setAddress] = useState("");

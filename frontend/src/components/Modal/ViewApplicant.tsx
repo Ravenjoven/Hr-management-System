@@ -64,17 +64,19 @@ export default function ViewApplicantDetails({
   useEffect(() => {
     const fetchApplicantComment = async () => {
       try {
+        const applicantId = user?._id;
         const response = await axios.get(
-          `http://localhost:9000/api/jobs/getComment/${user?._id}`
+          `http://localhost:9000/api/jobs/getComment/${applicantId}`
         );
         setComments(response.data.comment);
         console.log(response.data.comment);
       } catch (error) {
-        console.error("Error fetching comment:");
+        console.error("Error fetching comment");
       }
     };
     fetchApplicantComment();
   }, []);
+
   return (
     <>
       {viewApplicant && (

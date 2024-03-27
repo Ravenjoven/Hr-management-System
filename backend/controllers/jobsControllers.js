@@ -172,10 +172,20 @@ exports.getPendingApplicant = async (req, res, next) => {
 };
 
 exports.getComment = async (req, res, next) => {
-  const id = req.params.id;
+  const applicationId = req.params.id;
 
   try {
-    const comments = await CommentModels.find({ application: id });
+    const application = await ApplicationModels.findById(applicationId);
+
+    if (!application || application.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No application found" });
+    }
+
+    const commentIds = application.comments;
+
+    const comments = await CommentModels.find({ _id: { $in: commentIds } });
 
     if (!comments || comments.length === 0) {
       return res
