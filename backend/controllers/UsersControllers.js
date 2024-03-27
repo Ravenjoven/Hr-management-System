@@ -206,16 +206,41 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-exports.getUser = async (req, res, next) => {
-  const id= req.params.id;
-  try {
+// exports.getUser = async (req, res, next) => {
+//   const id= req.params.id;
+//   try {
     
-    const users = await UsersModels.findById(id);
+//     const users = await UsersModels.findById(id);
 
-    if (!users || users.length === 0) {
-      return res
-        .status(404)
-        .json({ success: false, message: "No users found" });
+//     if (!users || users.length === 0) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "No users found" });
+//     }
+
+//     res.status(200).json({ success: true, users });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+exports.getUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const email = req.params.email;
+    
+    let users;
+
+    if (id) {
+      users = await UsersModels.findById(id);
+    } else if (email) {
+      users = await UsersModels.findOne(email);
+    } else {
+      return res.status(400).json({ success: false, message: "No valid parameter provided" });
+    }
+
+    if (!users) {
+      return res.status(404).json({ success: false, message: "No users found" });
     }
 
     res.status(200).json({ success: true, users });

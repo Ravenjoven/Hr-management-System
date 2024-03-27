@@ -34,7 +34,7 @@ const Login = () => {
           password,
         }
       );
-
+console.log(response);
       const userRole = response.data.stat;
       const userId = response.data.id;
 
@@ -45,13 +45,13 @@ const Login = () => {
           navigate("/Dashboard");
         }
         // Redirect to dashboard
-      } else if (userRole === "User") {
+      } else if (userRole === "User" || userRole === "Employee") {
         // Redirect to UserProfil
         ReactSession.set("user", userId);
         if (ReactSession.get("user") !== "") {
           navigate("/UserProfile");
         }
-      }
+      } 
       toast.success("Login successful");
     } catch (error) {
       // Handle login error
@@ -78,24 +78,20 @@ const Login = () => {
             },
           }
         );
-
         // Parse user info response
         const userInfo = await userInfoResponse.json();
-
-        console.log("User Info:", userInfo);
-
+        // console.log("User Info:", userInfo);
         // Now you can access the user's name, email, and picture from userInfo object
         const userName = userInfo.name;
         const userEmail = userInfo.email;
         const userProfilePicture = userInfo.picture;
-
-        console.log("User Name:", userName);
-        console.log("User Email:", userEmail);
-        console.log("User Profile Picture:", userProfilePicture);
-
+        // console.log("User Name:", userName);
+        // console.log("User Email:", userEmail);
+        // console.log("User Profile Picture:", userProfilePicture);
         // Handle the successful login
-        ReactSession.set("user", userInfo);
-        if (ReactSession.get("user") !== "") {
+        ReactSession.set("info", userInfo);
+        ReactSession.set("email", userEmail);
+        if (ReactSession.get("email") !== "") {
           navigate("/userProfile");
         }
         // Redirect to the user profile page if needed
@@ -107,7 +103,6 @@ const Login = () => {
       // Handle the successful login
       // ReactSession.set("user", credentialResponse);
       // ReactSession.set("user", credentialResponse);
-
       // Step 3: Redirect to the user profile page
       // navigate("/userProfile"); // Replace '/userProfile' with your user profile path
     },

@@ -27,4 +27,6 @@ router.post("/user/registration", registerUser);
 
 router.get("/user/getUser/:id",getUser)
 
+router.get("/user/getUser/:email",getUser)
+
 module.exports = router;

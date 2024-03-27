@@ -12,6 +12,7 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
+import { useNavigate } from "react-router-dom";
 interface UserData {
   fullname: string | null;
   email: string;
@@ -30,7 +31,11 @@ function UserProfile() {
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
+  const navigate = useNavigate();
+  const info =ReactSession.get("info");
   const user = ReactSession.get("user");
+
+
 
   if (ReactSession.get("user") === "") {
     navigate("/login");
@@ -43,6 +48,7 @@ function UserProfile() {
   useEffect(() => {
     const getUser = async () => {
       const id = ReactSession.get("user");
+      const email = ReactSession.get("email")
       try {
         const response = await axios.get(
           `http://localhost:9000/api/user/getUser/${id}`
@@ -54,6 +60,8 @@ function UserProfile() {
     };
     getUser();
   }, []);
+
+ 
 
   return (
     <div className="min-h-screen max-w-screen bg-custom-bg-smooth font-montserrat">
@@ -111,7 +119,7 @@ function UserProfile() {
                     className="flex w-[105px] h-[100px] border-[5px] border-gray-300 rounded-full p-3 m-8"
                   /> */}
                 <img
-                  src={user.picture}
+                  src={info.picture}
                   className="flex w-40 h-40 border-2 border-black rounded-full mx-8"
                 ></img>
               </div>
@@ -121,7 +129,7 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={ser.fullname}
+                    defaultValue={ser.fullname }
                   />
                 </p>
 
@@ -137,7 +145,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "auto" }}
-                      defaultValue={ser.email}
+                      defaultValue={ser.email }
                     />
                   </span>
                 </div>
@@ -189,7 +197,7 @@ function UserProfile() {
                     <span className="text-custom-text-gray font-semibold p-2">
                       <EditText
                         name="textbox1"
-                        defaultValue={ser.fullname}
+                        defaultValue={ser.fullname  }
                         inline
                       />
                     </span>
