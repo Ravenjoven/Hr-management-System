@@ -228,7 +228,8 @@ exports.getUser = async (req, res, next) => {
   try {
     const id = req.params.id;
     const email = req.params.email;
-    
+    console.log(id);
+    console.log(email);
     let users;
 
     if (id) {
