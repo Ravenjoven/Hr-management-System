@@ -11,6 +11,15 @@ import axios from "axios";
 import { ReactSession } from "react-client-session";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
+import Select from "react-select";
+import ValueType from "react-select";
+import { MultiValue, ActionMeta } from "react-select";
+
+type OptionType = {
+  value: string;
+  label: string;
+};
+
 interface UserData {
   fullname: string | null;
   email: string;
@@ -29,20 +38,48 @@ function UserProfile() {
   const [expanded, setExpanded] = useState(false);
   const [fullname, setFullname] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [jobCount, setJobCount] = useState("•");
   const [placeOfBirth, setPlaceOfBirth] = useState("");
   const [address, setAddress] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [nationality, setNationality] = useState("");
+  const [tin, setTin] = useState("");
+  const [sss, setSSS] = useState("");
+  const [pg, setPg] = useState("");
+  const [ph, setPh] = useState("");
+  const [selectedMentor, setSelectedMentor] = useState("");
+  const mentorOptions = [
+    { id: "1", name: "Sir Brandon" },
+    { id: "2", name: "Ms. Precious" },
+    { id: "3", name: "Ms. Kara Pearl" },
+  ];
+  const [selectedSkills, setSelectedSkills] = useState<OptionType[]>([]);
+
+  const skillOptions: OptionType[] = [
+    { value: "html", label: "HTML" },
+    { value: "css", label: "CSS" },
+    { value: "github", label: "GitHub" },
+    { value: "mysql", label: "MySql" },
+    { value: "typescript", label: "TypeScript" },
+    { value: "javascript", label: "JavaScript" },
+    { value: "mongodb", label: "MongoDb" },
+    { value: "tailwind", label: "Tailwind" },
+    { value: ".net", label: ".Net" },
+    { value: "c++", label: "c++" },
+    { value: "csharp", label: "C#" },
+    { value: "python", label: "Python" },
+    { value: "cybersecurity", label: "Cybersecurity" },
+    { value: "problemsolving", label: "Problem Solving" },
+    { value: "communication", label: "Communication" },
+    // Add more skills as needed
+  ];
+
   const toggleExpanded = () => {
     setExpanded((prevState) => !prevState);
   };
 
   const user = ReactSession.get("user");
-
-  if (ReactSession.get("user") === "") {
-    navigate("/login");
-  }
 
   // const name = ReactSession.get("name");
   // const picture = ReactSession.get("picture");
@@ -86,10 +123,23 @@ function UserProfile() {
     setAddress(localStorage.getItem(`address_${userKey}`) || "");
     setAge(localStorage.getItem(`age_${userKey}`) || "");
     setNationality(localStorage.getItem(`nationality_${userKey}`) || "");
+    setTin(localStorage.getItem(`tin_${userKey}`) || "");
+    setSSS(localStorage.getItem(`sss_${userKey}`) || "");
+    setPg(localStorage.getItem(`pg_${userKey}`) || "");
+    setPh(localStorage.getItem(`ph_${userKey}`) || "");
+    const savedMentor = localStorage.getItem("selectedMentor");
+    if (savedMentor) {
+      setSelectedMentor(savedMentor);
+    }
+
     const savedGender = localStorage.getItem(`gender_${user.email}`); // Load the saved gender
     if (savedGender) {
       setGender(savedGender); // Update the state if a saved gender exists
     }
+    const savedSkills = JSON.parse(
+      localStorage.getItem("selectedSkills") || "[]"
+    ) as OptionType[];
+    setSelectedSkills(savedSkills);
   }, [user.email]); // or [user.email] if using email
 
   const handleFullNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -130,6 +180,38 @@ function UserProfile() {
     const newNationality = e.target.value;
     setNationality(newNationality);
     localStorage.setItem(`nationality_${user.email}`, newNationality);
+  };
+  const handleTinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTin = e.target.value;
+    setTin(newTin);
+    localStorage.setItem(`tin_${user.email}`, newTin);
+  };
+  const handleSSSChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newSSS = e.target.value;
+    setSSS(newSSS);
+    localStorage.setItem(`sss_${user.email}`, newSSS);
+  };
+  const handlePgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPg = e.target.value;
+    setPg(newPg);
+    localStorage.setItem(`pg_${user.email}`, newPg);
+  };
+  const handlePhChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPh = e.target.value;
+    setPh(newPh);
+    localStorage.setItem(`ph_${user.email}`, newPh);
+  };
+  const handleMentorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newMentor = e.target.value;
+    setSelectedMentor(newMentor);
+    localStorage.setItem("selectedMentor", newMentor); // Save the selected mentor to local storage
+  };
+  const handleSkillChange = (
+    newValue: MultiValue<OptionType>,
+    actionMeta: ActionMeta<OptionType>
+  ) => {
+    setSelectedSkills(newValue as OptionType[]); // Assuming you need an array of OptionType
+    localStorage.setItem("selectedSkills", JSON.stringify(newValue));
   };
 
   return (
@@ -198,7 +280,7 @@ function UserProfile() {
                     name="email"
                     type="email"
                     style={{ width: "auto" }}
-                    defaultValue={ser.fullname}
+                    defaultValue={user.fullame}
                   />
                 </p>
 
@@ -214,7 +296,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "auto" }}
-                      defaultValue={ser.email}
+                      defaultValue={user.email}
                     />
                   </span>
                 </div>
@@ -225,7 +307,7 @@ function UserProfile() {
                       name="email"
                       type="email"
                       style={{ width: "220px" }}
-                      defaultValue={ser.phoneNumber}
+                      defaultValue={user.phoneNumber}
                     />
                   </span>
                 </div>
@@ -233,13 +315,20 @@ function UserProfile() {
               <div className="flex flex-col my-12">
                 <div className="p-2">
                   <h4 className="text-custom-text-black font-bold">MENTOR</h4>
-                  <span className="text-custom-text-gray font-semibold ">
-                    <EditText
-                      name="email"
-                      type="email"
+                  <span className="text-custom-text-gray font-semibold">
+                    <select
+                      name="mentor"
+                      value={selectedMentor}
+                      onChange={handleMentorChange}
                       style={{ width: "220px" }}
-                      defaultValue="johndoe"
-                    />
+                    >
+                      <option value="">Select a Mentor</option>
+                      {mentorOptions.map((mentor) => (
+                        <option key={mentor.id} value={mentor.id}>
+                          {mentor.name}
+                        </option>
+                      ))}
+                    </select>
                   </span>
                 </div>
                 <div className="p-2">
@@ -337,25 +426,33 @@ function UserProfile() {
                   <div>
                     TIN :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <input
+                        type="Tin"
+                        value={tin}
+                        onChange={handleTinChange}
+                      />
                     </span>
                   </div>
                   <div>
                     SSS :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <input
+                        type="SSS"
+                        value={sss}
+                        onChange={handleSSSChange}
+                      />
                     </span>
                   </div>
                   <div>
                     PAG-IBIG :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <input type="Pg" value={pg} onChange={handlePgChange} />
                     </span>
                   </div>
                   <div>
                     PHILC :{" "}
                     <span className="text-custom-text-gray font-semibold p-2">
-                      <EditText name="textbox1" defaultValue="---" inline />
+                      <input type="Ph" value={ph} onChange={handlePhChange} />
                     </span>
                   </div>
                 </div>
@@ -367,11 +464,13 @@ function UserProfile() {
                       <div>
                         <h1 className=" text-xl">SKILLS</h1>
 
-                        <textarea
-                          name=""
-                          value={ser.jobSkills}
-                          id=""
-                        ></textarea>
+                        <Select
+                          isMulti
+                          options={skillOptions}
+                          value={selectedSkills}
+                          onChange={handleSkillChange}
+                          className="text-black bg-black"
+                        />
                       </div>
                     </div>
                   </div>
@@ -383,7 +482,7 @@ function UserProfile() {
                         <textarea
                           className="text-sm font-semibold"
                           name=""
-                          value={ser.jobExperience}
+                          value={user.jobExperience}
                           id=""
                         ></textarea>
                       </div>

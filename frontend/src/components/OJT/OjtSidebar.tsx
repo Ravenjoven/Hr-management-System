@@ -30,6 +30,9 @@ const secondRoute = data[1].to;
 const secondLabel = data[1].label;
 const ThirdRoute = data[2].to;
 const ThirdLabel = data[2].label;
+const FourthRoute = data[3].to;
+const FourthLabel = data[3].label;
+
 interface SidebarProps {
   expanded: boolean;
   jobCount: number | string; // Adjust the type to accept string
